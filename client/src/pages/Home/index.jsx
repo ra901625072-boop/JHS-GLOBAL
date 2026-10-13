@@ -237,15 +237,15 @@ export const HomePage = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl pointer-events-none animate-ambient-drift" />
         <div className="absolute bottom-0 left-10 w-96 h-96 bg-primary-600/10 rounded-full blur-3xl pointer-events-none animate-ambient-drift" />
 
-        {/* Desktop: World Trade Map with Soft Spatial Presence */}
-        <div className="hero-map hidden lg:flex absolute right-0 top-0 bottom-0 w-1/2 h-full items-center justify-center p-2 xl:p-6 z-10 pointer-events-auto overflow-visible">
+        {/* Desktop: World Trade Map with Expanded Spatial Presence */}
+        <div className="hero-map hidden lg:flex absolute right-0 top-0 bottom-0 w-1/2 h-full items-center justify-center p-1 sm:p-2 lg:p-2 xl:p-2.5 z-10 pointer-events-auto overflow-visible">
           <WorldTradeMap />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-20 w-full py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div className="w-full relative z-20 py-16 lg:py-20 px-4 sm:px-6 lg:px-10 xl:px-12 2xl:px-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-10 items-center">
             {/* Left Column: All Text, Eyebrow, CTAs & Trust Badges */}
-            <div className="lg:col-span-6 xl:col-span-6 text-left space-y-6 max-w-xl">
+            <div className="lg:col-span-6 xl:col-span-6 text-left space-y-6 max-w-xl xl:max-w-2xl">
               <div className="hero-eyebrow inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-800/90 border border-accent-500/40 text-accent-400 text-xs font-semibold shadow-xs">
                 <ShieldCheck className="w-4 h-4 text-accent-400 shrink-0" />
                 <span>GLOBAL B2B EXPORT HOUSE • PERSONAL CARE, NUTRACEUTICAL & FEED INGREDIENTS</span>
