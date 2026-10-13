@@ -3,19 +3,19 @@
 > **Engine:** PostgreSQL 16+  
 > **ORM Layer:** Sequelize 6+ (Node.js ES Modules)  
 > **Architecture:** Normalized Relational Core (3NF) + Pragmatic Hybrid JSONB (for polymorphic specifications)  
-> **Application:** JSH Global — B2B Agricultural & Spice Export Platform  
+> **Application:** JHS GLOBAL — B2B Specialty Chemicals, Botanical Extracts, Nutraceuticals & Animal Feed Export Platform  
 
 ---
 
 ## 1. Executive Summary & Design Philosophy
 
-As an enterprise B2B export platform, JSH Global requires strict data integrity, transactional guarantees (ACID), referential constraints, and auditability. International trade orders involve multi-thousand-dollar transactions, container shipments (FCL/LCL), regulatory trade documents (Phytosanitary, Certificate of Origin, Bill of Lading), and multi-stage sales negotiation pipelines.
+As an enterprise B2B export platform, JHS GLOBAL requires strict data integrity, transactional guarantees (ACID), referential constraints, and auditability. International trade orders involve multi-thousand-dollar transactions, container shipments (FCL/LCL), regulatory trade documents (Phytosanitary, Certificate of Origin, Bill of Lading, COA, SDS), and multi-stage sales negotiation pipelines.
 
 ### Why PostgreSQL Replaces MongoDB:
 1. **Relational Integrity & Foreign Keys:** Prevents orphaned records across Categories, Products, Quotations, Orders, and Customers.
 2. **ACID Transactions:** Ensures multi-table operations (e.g. converting an Inquiry into a Quotation and creating Customer records) execute atomically.
 3. **Advanced Indexing:** Native B-Tree, GIN, and Trigram (`pg_trgm`) indexes provide sub-millisecond lookups and fuzzy product catalogue searching without requiring third-party search engines.
-4. **Hybrid Relational + JSONB Power:** Rigid relational structure for mission-critical trade data, combined with PostgreSQL's high-performance `JSONB` for category-specific polymorphic attributes (e.g. Curcumin % in Turmeric vs. Broken % in Rice vs. Mesh size in powders).
+4. **Hybrid Relational + JSONB Power:** Rigid relational structure for mission-critical trade data, combined with PostgreSQL's high-performance `JSONB` for category-specific polymorphic attributes (e.g. Active withanolides % in extracts vs. protein % in oil meals vs. active matter % in surfactants).
 
 ---
 
@@ -98,16 +98,16 @@ Self-referencing tree supporting 3 levels of category nesting.
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
 | `id` | `INTEGER` | `PRIMARY KEY GENERATED ALWAYS AS IDENTITY` | Primary Key |
-| `name` | `VARCHAR(100)` | `NOT NULL` | E.g., "Spices, Seasonings & Herbs" |
+| `name` | `VARCHAR(100)` | `NOT NULL` | E.g., "Personal Care Raw Materials" |
 | `slug` | `VARCHAR(120)` | `NOT NULL UNIQUE` | URL-safe slug |
 | `description` | `TEXT` | `DEFAULT ''` | Category summary |
 | `parent_id` | `INTEGER` | `REFERENCES categories(id) ON DELETE SET NULL` | Parent category reference |
 | `level` | `SMALLINT` | `NOT NULL DEFAULT 1 CHECK (level BETWEEN 1 AND 3)` | 1 = Master, 2 = Sub, 3 = Micro |
-| `path` | `VARCHAR(255)` | `DEFAULT ''` | Breadcrumb path, e.g. `spices/whole-spices` |
+| `path` | `VARCHAR(255)` | `DEFAULT ''` | Breadcrumb path, e.g. `personal-care-raw-materials/surfactants-cleansing-agents` |
 | `image_url` | `VARCHAR(500)` | `DEFAULT ''` | Banner / icon image URL |
 | `image_alt` | `VARCHAR(255)` | `DEFAULT ''` | Image accessibility text |
 | `icon` | `VARCHAR(100)` | `DEFAULT ''` | SVG/Lucide icon identifier |
-| `hs_chapter` | `VARCHAR(10)` | `DEFAULT ''` | Harmonized System 2-digit chapter (e.g. `09`) |
+| `hs_chapter` | `VARCHAR(10)` | `DEFAULT ''` | Harmonized System 2-digit chapter (e.g. `34`) |
 | `order` | `INTEGER` | `NOT NULL DEFAULT 0` | UI sequence order |
 | `is_active` | `BOOLEAN` | `NOT NULL DEFAULT TRUE` | Catalogue visibility toggle |
 | `seo_title` | `VARCHAR(200)` | `DEFAULT ''` | SEO Title tag |
@@ -128,14 +128,14 @@ The core export catalogue with product metadata and commercial export trade para
 | Column | Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
 | `id` | `INTEGER` | `PRIMARY KEY GENERATED ALWAYS AS IDENTITY` | Primary Key |
-| `name` | `VARCHAR(200)` | `NOT NULL` | E.g. "Black Pepper Bold Malabar" |
+| `name` | `VARCHAR(200)` | `NOT NULL` | E.g. "Ashwagandha extract" |
 | `slug` | `VARCHAR(250)` | `NOT NULL UNIQUE` | Unique URL identifier |
 | `sku` | `VARCHAR(50)` | `DEFAULT ''` | Internal export SKU |
 | `category_id` | `INTEGER` | `NOT NULL REFERENCES categories(id) ON DELETE RESTRICT` | Primary category |
 | `sub_category_id` | `INTEGER` | `REFERENCES categories(id) ON DELETE SET NULL` | Subcategory |
 | `short_description` | `VARCHAR(500)` | `DEFAULT ''` | Card / list preview text |
 | `description` | `TEXT` | `DEFAULT ''` | Full specifications & processing description |
-| `hs_code` | `VARCHAR(20)` | `NOT NULL` | 6-8 digit export HS Code (e.g. `0904.11`) |
+| `hs_code` | `VARCHAR(20)` | `NOT NULL` | 6-8 digit export HS Code (e.g. `1302.19`) |
 | `botanical_name` | `VARCHAR(150)` | `DEFAULT ''` | Scientific botanical nomenclature |
 | `origin` | `JSONB` | `DEFAULT '["India"]'` | Array of origin regions (Gujarat, Kerala, etc.) |
 | `forms` | `JSONB` | `DEFAULT '[]'` | Array: Whole, Powder, Cracked, Flakes |
@@ -146,7 +146,7 @@ The core export catalogue with product metadata and commercial export trade para
 | `shelf_life` | `VARCHAR(100)` | `DEFAULT '24 months'` | Shelf life guarantee |
 | `storage` | `VARCHAR(255)` | `DEFAULT 'Store in cool dry place'` | Storage conditions |
 | `incoterms` | `JSONB` | `DEFAULT '["FOB","CIF","CFR"]'` | Supported Incoterms |
-| `ports` | `JSONB` | `DEFAULT '["Mundra","Nhava Sheva"]'` | Preferred departure sea ports |
+| `ports` | `JSONB` | `DEFAULT '["Hazira (Surat)","Mundra"]'` | Preferred departure sea ports |
 | `lead_time` | `VARCHAR(100)` | `DEFAULT '10–15 business days'` | Production and dispatch turnaround |
 | `tags` | `JSONB` | `DEFAULT '[]'` | Keyword search tags |
 | `is_featured` | `BOOLEAN` | `NOT NULL DEFAULT FALSE` | Homepage featured flag |
@@ -189,7 +189,7 @@ The core export catalogue with product metadata and commercial export trade para
 | :--- | :--- | :--- | :--- |
 | `id` | `INTEGER` | `PRIMARY KEY GENERATED ALWAYS AS IDENTITY` | Primary Key |
 | `product_id` | `INTEGER` | `NOT NULL REFERENCES products(id) ON DELETE CASCADE` | Product FK |
-| `key` | `VARCHAR(100)` | `NOT NULL` | E.g. "Curcumin", "Moisture", "Purity" |
+| `key` | `VARCHAR(100)` | `NOT NULL` | E.g. "Withanolides Content", "Purity", "Moisture" |
 | `value` | `VARCHAR(100)` | `NOT NULL` | E.g. "3.5% min", "≤ 10%" |
 | `unit` | `VARCHAR(30)` | `DEFAULT ''` | E.g. "%", "mesh", "ppm" |
 
@@ -331,7 +331,7 @@ Primary lead generation mechanism. Stores buyer specifications, shipping demands
 | `other_charges` | `NUMERIC(14,2)` | `NOT NULL DEFAULT 0.00` | Certification / inspection charges |
 | `total_amount` | `NUMERIC(14,2)` | `NOT NULL DEFAULT 0.00` | Final commercial total |
 | `incoterm` | `VARCHAR(20)` | `NOT NULL DEFAULT 'CIF'` | Trade term |
-| `port_of_loading` | `VARCHAR(150)` | `DEFAULT 'Mundra Port / JNPT, India'` | Departure port |
+| `port_of_loading` | `VARCHAR(150)` | `DEFAULT 'Hazira Port / Mundra Port, Gujarat, India'` | Departure port |
 | `port_of_discharge`| `VARCHAR(150)` | `DEFAULT ''` | Destination port |
 | `payment_terms` | `VARCHAR(255)` | `DEFAULT '30% Advance TT, 70% against BL copy'`| Agreed terms |
 | `validity_date` | `TIMESTAMPTZ` | `NOT NULL` | Price expiry date |
@@ -389,7 +389,7 @@ Primary lead generation mechanism. Stores buyer specifications, shipping demands
 | `assigned_salesperson`| `INTEGER` | `REFERENCES users(id) ON DELETE SET NULL` | Order supervisor |
 | `container_number` | `VARCHAR(50)` | `DEFAULT ''` | Shipping container # (e.g. `MSCU1234567`) |
 | `shipping_line` | `VARCHAR(100)` | `DEFAULT ''` | Maersk, MSC, Hapag-Lloyd |
-| `port_of_loading` | `VARCHAR(150)` | `DEFAULT 'Mundra Port / JNPT'` | Departure port |
+| `port_of_loading` | `VARCHAR(150)` | `DEFAULT 'Hazira Port / Mundra Port, Gujarat'` | Departure port |
 | `port_of_discharge`| `VARCHAR(150)` | `DEFAULT ''` | Destination port |
 | `etd` | `TIMESTAMPTZ` | `DEFAULT NULL` | Estimated Departure Date |
 | `eta` | `TIMESTAMPTZ` | `DEFAULT NULL` | Estimated Arrival Date |
@@ -475,8 +475,8 @@ Token analytics and semantic RAG store.
 | `buyer` subdocument in Inquiry | Flattened columns (`buyer_name`, `buyer_company`, etc.) + linked to `customers(id)` | Fast relational queries without unnesting; maintains exact snapshot while building CRM history |
 | `items[]` in Inquiry/Quote/Order | Dedicated child tables (`inquiry_items`, `quotation_items`, `order_items`) | Accurate aggregate calculations (`SUM`, `AVG`), relational integrity, line-item status tracking |
 | `documents[]` in Order | `order_documents` child table | Independent file auditing, strict document typing, granular uploads and deletions |
-| `certificateIds[]` on Product | `product_certificates` M:N Junction table | Standard relational joins; allows querying all products certified by ISO 22000 or HACCP instantly |
-| `specs[]` on Product | `product_specs` child table | Normalizes technical parameters (Moisture, Ash, Volatile Oil, Curcumin) for parameter-based search |
+| `certificateIds[]` on Product | `product_certificates` M:N Junction table | Standard relational joins; allows querying all products certified by FSSAI Central License or APEDA instantly |
+| `specs[]` on Product | `product_specs` child table | Normalizes technical parameters (Active Assay, Moisture, Mesh Size, Purity) for parameter-based search |
 | `countries[]` in MarketRegion | `market_region_countries` table | Enables searching export destinations by ISO code or port |
 | Flexible tags / origin arrays | `JSONB` with GIN indexing | High performance without schema bloat for non-relational tags and ports |
 
@@ -492,7 +492,43 @@ The client SPA interface interacts with records using `_id` and `id`. To guarant
 
 ---
 
-## 6. Migration & Seeding Execution
+## 6. Advanced Relational Engineering Patterns
+
+### 6.1 ACID Transaction & Idempotency for RFQ Creation
+The RFQ submission flow writes to `inquiries`, `inquiry_items`, and updates/links `customers`. To prevent partial records or duplicate submissions:
+- **Transaction Scope:** Handled via `sequelize.transaction(async (t) => { ... })`. If item creation or email queue dispatch fails, the transaction automatically rolls back.
+- **Reference Number Sequence:** Generated using a formatted sequence `RFQ-YYYY-XXXXXX` from a dedicated PostgreSQL sequence (`CREATE SEQUENCE rfq_reference_seq START 100001`).
+- **Idempotency Key:** Client passes `Idempotency-Key: <UUID>` header. Stored in `inquiries.idempotency_key` with a `UNIQUE` partial constraint. If a duplicate submission is received within 24 hours, the existing record is returned without re-processing.
+- **Data Snapshots:** Product names, packaging specs, and units are snapshotted directly into `inquiry_items` and `quotation_items` so that future catalogue edits do not alter historical contractual records.
+
+### 6.2 Expiry & Scheduled Cleanup Jobs (Replacing Mongo TTL)
+MongoDB TTL indexes are replaced with a scheduled PostgreSQL cleanup job (executed via `pg_cron` or backend `node-cron` worker):
+```sql
+-- Nightly cleanup of temporary chat sessions older than 30 days
+DELETE FROM ai_usage_logs WHERE at < NOW() - INTERVAL '90 days' AND success = true;
+-- Nightly purge of expired rate-limit buckets and unverified drafts
+DELETE FROM inquiries WHERE status = 'draft' AND created_at < NOW() - INTERVAL '14 days';
+```
+
+### 6.3 Connection Pooling & Performance Tuning
+- **Sequelize Pool Configuration:**
+  - `max`: 20 connections per API instance.
+  - `min`: 5 idle connections.
+  - `acquire`: 30,000 ms.
+  - `idle`: 10,000 ms.
+- **Search Optimization:**
+  - `pg_trgm` extension enables trigram similarity search (`SIMILARITY(name, :query) > 0.3`).
+  - `tsvector` + GIN indexing enables instant keyword full-text search across commodity titles and descriptions.
+- **Embeddings:** `pgvector` extension with an HNSW index (`CREATE INDEX ON embeddings USING hnsw (vector vector_cosine_ops)`) provides vector similarity search for grounded LLM responses.
+
+### 6.4 Backups & Point-In-Time Recovery (PITR)
+- **Daily Full Backups:** Automated `pg_dump -Fc` compressed snapshots uploaded to encrypted private S3 storage.
+- **Continuous Archiving:** Write-Ahead Logging (WAL) archiving enabled for continuous Point-In-Time Recovery (PITR) down to the second.
+- **Zero-Downtime Migration Standard:** Schema migrations use additive changes, non-blocking index creation (`CREATE INDEX CONCURRENTLY`), and phased column deprecation.
+
+---
+
+## 7. Migration & Seeding Execution
 
 ```bash
 # 1. Start PostgreSQL 16 Alpine container
@@ -501,6 +537,6 @@ docker compose up -d postgres
 # 2. Sync database schema (Sequelize auto-syncs models in dev)
 cd server && npm run dev
 
-# 3. Seed initial master data
+# 3. Seed initial master catalogue (3 divisions, 10 subcategories, 20 export products)
 cd server && npm run seed
 ```

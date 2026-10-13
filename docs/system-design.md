@@ -42,7 +42,7 @@ Scale assumption: **B2B catalogue site** — low write volume (tens of RFQs/day)
 
 ### 2.1 Browse → product (read path)
 ```
-Browser → CDN (static) → React → GET /api/v1/products?category=spices
+Browser → CDN (static) → React → GET /api/v1/products?category=personal-care-raw-materials
         → cache middleware (Redis hit?) ── yes → return JSON
                                           └─ no → PostgreSQL → store in cache → return
 ```
@@ -66,7 +66,7 @@ Response time target for step 2–4: **< 500 ms** (AI work is async).
 ```
 User question → POST /api/v1/ai/chat (SSE stream)
   → rate limit + input length cap + abuse filter
-  → embed question → Atlas Vector Search (top 5 products/FAQs)
+  → embed question → PostgreSQL pgvector search (HNSW cosine similarity, top 5 products/FAQs)
   → prompt = system rules + retrieved context + last 6 messages
   → LLM → stream tokens to browser
   → if user shows buying intent → suggest "Add to quote / Send RFQ"
@@ -86,7 +86,7 @@ Admin login (JWT) → create/update product → upload images (signed upload to 
 
 Base: `/api/v1` — JSON — standard response:
 ```json
-{ "success": true, "data": {...}, "meta": { "page":1, "limit":12, "total":84 } }
+{ "success": true, "data": {...}, "meta": { "page":1, "limit":12, "total":20 } }
 { "success": false, "error": { "code":"VALIDATION_ERROR", "message":"...", "details":[...] } }
 ```
 
@@ -235,14 +235,14 @@ If Redis is not used in v1: use a simple in-process queue + `node-cron`, then mi
 - **Uptime:** `/api/v1/health` checked by UptimeRobot; alert on failure.
 - **Analytics:** GA4 / Plausible; events: `view_product`, `add_to_quote`, `submit_rfq`, `click_whatsapp`, `download_catalogue`.
 - **Environments:** `local` → `staging` → `production`; CI (GitHub Actions): lint → test → build → deploy.
-- **Backups:** Atlas snapshots daily; restore drill before launch.
+- **Backups:** Automated `pg_dump` daily snapshots + WAL archiving for Point-In-Time Recovery (PITR); restore drill before launch.
 
 ---
 
 ## 11. Scaling path (if traffic grows)
 
 1. Add Redis cache + second API instance behind a load balancer.
-2. Move worker to its own service.
-3. Use Atlas read replicas / bigger tier; add compound indexes from slow-query log.
-4. Move search to Atlas Search (or Meilisearch) for typo-tolerant search.
+2. Move worker to its own service (pg-boss or BullMQ).
+3. Use PostgreSQL streaming replication with read replicas; add compound and partial indexes from `pg_stat_statements` slow-query log.
+4. Optimize search using PostgreSQL `tsvector` + `pg_trgm` trigram indexes for sub-millisecond typo-tolerant full-text search.
 5. Only then consider splitting AI into its own service.

@@ -1,26 +1,43 @@
 # project.md — Export B2B Website (PERN + LLM)
 
-> Working name: **[BrandName] Exports** — replace with the client's brand.
-> Stack: **React + Node.js + REST API + PostgreSQL + LLM (AI)**
+> Official Brand: **JHS GLOBAL** (Jay Sureshbhai Prajapati, Surat, Gujarat)
+> Stack: **React + Node.js + REST API + PostgreSQL 16+ + LLM (AI)**
 
 ---
 
 ## 1. What is this project?
 
-A **premium international B2B export website** for an Indian agri / food-ingredient exporter. It is not an online shop (no cart, no checkout). Its job is to make overseas **importers, distributors, food manufacturers and brand owners** trust the company, browse products, and send a **Request a Quote (RFQ)**.
+A **premium international B2B export website** for Indian specialty chemicals, botanical extracts, nutraceuticals & animal feed export enterprise **JHS GLOBAL**. It is not an online shop (no cart, no checkout). Its job is to make overseas **importers, distributors, cosmetic/nutraceutical manufacturers and feed compounders** trust the company, browse products, and send a **Request a Quote (RFQ)**.
 
-The business sells to buyers who purchase by the **container / metric tonne**, negotiate price, ask for samples, and verify certificates before paying. So the website works as a **digital catalogue + trust builder + lead-generation machine**.
+The business sells to buyers who purchase by the **container / metric tonne / drum**, negotiate price, ask for samples, and verify certificates before paying. So the website works as a **digital catalogue + trust builder + lead-generation machine**.
 
-### Product categories (from client brief)
+### Product Divisions & Catalogue (Official Source of Truth — 20 Products across 3 Divisions)
 
-1. Spices, Seasonings & Herbs
-2. FMCG & Ethnic Indian Food Products
-3. Pulses, Rice & Agricultural Commodities
-4. Fresh & Dehydrated Fruits and Vegetables
-5. Superfoods
-6. Personal Care Raw Materials
-7. Nutraceutical Raw Materials
-8. Animal Feed
+#### Category 1: Personal Care Raw Materials
+1. Castor oil and its derivatives
+2. Herbal / botanical extracts
+3. Sodium lauryl ether sulfate (SLES)
+4. Salicylic acid
+5. Glycolic acid
+6. Vitamin E acetate
+7. Kaolin clay powder
+
+#### Category 2: Nutraceutical Raw Materials
+1. Ashwagandha extract
+2. Turmeric / curcumin extract
+3. Boswellia serrata extract
+4. Bacopa monnieri extract
+5. Moringa oleifera extract
+6. Amla extract
+7. Green tea and Garcinia cambogia extracts
+8. Pea protein isolate
+9. Xanthan gum
+
+#### Category 3: Animal Feed
+1. Soybean meal
+2. Rapeseed / mustard meal
+3. Cottonseed meal
+4. Feed-grade vitamins and minerals
 
 ---
 
@@ -28,12 +45,12 @@ The business sells to buyers who purchase by the **container / metric tonne**, n
 
 | Site | What they do well | What we copy / improve |
 |---|---|---|
-| shreebharateximx.com | Clear 5 product lines, HS code on every product card, certificate PDFs on-page, "quote in 48h" promise, export-market list, blog | HS code + certificate PDFs + response-time promise |
+| shreebharateximx.com | Clear product lines, HS code on every product card, certificate PDFs on-page, "quote in 48h" promise, export-market list, blog | HS code + certificate PDFs + 48h sourcing promise |
 | jenexglobal.com | Category → product → spec overview, downloadable catalogue PDF, private-label / services section, FAQ (MOQ, packing, shelf life) | Catalogue download, services section, FAQ |
-| fittreeinternational.com | Huge mega-menu (17 categories), private-labeling page, certification logos (FSSAI, APEDA, HACCP, Halal, BRCGS, USDA Organic), quote popup, blog | Private-label page, popup RFQ, cert logo strip |
-| omshreegroup.com/commodities | Category → sub-category → product hierarchy, buyer/supplier/other selector, trade-show banner, "min 1×20ft FCL" rule | 3-level category tree, buyer-type selector |
+| fittreeinternational.com | Mega-menu, private-labeling page, certification strip, quote popup, blog | Private-label page, popup RFQ, verified cert strip |
+| omshreegroup.com/commodities | Category → sub-category → product hierarchy, buyer/supplier selector, trade-show banner, "min 1×20ft FCL" rule | 3-level category tree, buyer-type selector |
 | horizonexim.co.in | Simple category pages, testimonials, FAQ (payment terms, delivery time), gallery, brochure PDF | Testimonials, gallery, payment/FAQ block |
-| jftagro.com | Most advanced: full RFQ form (commodity, MT, port, Incoterm, month), quote/packing/transit calculators, sample request, shipment tracker, export workflow, due-diligence section | Detailed RFQ fields, sample request, workflow section |
+| jftagro.com | Full RFQ form (commodity, MT, port, Incoterm, month), quote/packing/transit calculators, sample request, shipment tracker | Detailed RFQ fields, sample request, workflow section |
 | flowtradeexim.com | 5-step "enquiry → shipment" process, global reach by region, simple product detail pages | Process timeline, region list |
 
 ### Common pattern across all of them
@@ -47,12 +64,12 @@ The business sells to buyers who purchase by the **container / metric tonne**, n
 
 | Page | Purpose |
 |---|---|
-| Home | Hero, 8 category cards, featured products, why choose us, certifications strip, export markets, process, testimonials, RFQ CTA |
-| About / Company Profile | Story, infrastructure, team, export capacity, mission |
-| Products (listing) | All categories, filters (category, origin, form, certification), search |
-| Category page | Products of one category + sub-category tabs |
+| Home | Hero, 3 division cards (with interactive ingredient pill matrix and technical export standards bar), featured products, why choose JHS GLOBAL, certifications strip, export markets, process, testimonials, RFQ CTA |
+| About / Company Profile | Story, Surat headquarters, infrastructure, team, export capacity, mission |
+| Products (listing) | All categories, filters (category, origin, form, certification), search, 48-Hour Unlisted Sourcing Banner |
+| Category page | Products of one category + sub-category tabs + 48-Hour Sourcing Banner |
 | Product detail | Photos, specs table, packing, MOQ, shelf life, HS code, origin, certificates, "Add to Quote" |
-| Quality & Certifications | FSSAI, APEDA, IEC, ISO 22000, HACCP, Halal, Kosher, Organic; PDF downloads; QC process |
+| Quality & Certifications | Verified credentials: FSSAI Central License (10725997001058), APEDA (RCMC/APEDA/15765/2024-2025), Spices Board of India (CRES/SBCB/26585/2025-2026), DGFT IEC, GST, MSME (UDYAM-GJ-22-0460260); PDF downloads; NABL QC matrix |
 | Export Process / Workflow | Enquiry → sample → QC → packing → shipment → docs |
 | Private Label / OEM | Custom packing, branding, formulation |
 | Global Reach | Countries / regions served |
@@ -104,12 +121,12 @@ Sales team replies in 24–48h → sample → proforma invoice → order
 
 ## 6. Where the LLM (AI) helps
 
-1. **Quote assistant (chat widget)** — answers buyer questions from our own product data (RAG): "Do you have 25 kg turmeric finger with 3% curcumin?" → returns matching products + link.
+1. **Quote assistant (chat widget)** — answers buyer questions from our own product data (RAG): "Do you have Ashwagandha extract with 5% withanolides or USP grade Salicylic acid?" → returns matching products + link.
 2. **RFQ summariser & lead scorer** — turns a long enquiry into a 3-line summary, extracts product / quantity / port / Incoterm, scores lead priority (hot / warm / cold).
 3. **Reply drafter** — drafts a professional email reply for the sales team to review and send.
 4. **Product description helper (admin)** — generates SEO title, meta description and spec text from basic fields; admin edits and approves.
 5. **Multi-language enquiry support** — detects the buyer's language and translates the enquiry for the sales team.
-6. **Smart search** — natural-language search ("organic turmeric from Salem") mapped to filters.
+6. **Smart search** — natural-language search ("pharmaceutical grade glycolic acid or non-GMO soybean meal") mapped to filters.
 
 **Rule:** AI never invents prices, certificates or specs. It only answers from database content and says "our team will confirm" otherwise. All AI output to buyers is logged; reply drafts need human approval.
 

@@ -1,6 +1,6 @@
 # agent.md — Instructions for the AI Coding Agent
 
-You are building a **premium international B2B export website** (React + Node.js + Express REST API + PostgreSQL + LLM features) for an Indian food / agri / ingredient exporter.
+You are building a **premium international B2B export website** (React + Node.js + Express REST API + PostgreSQL + LLM features) for an Indian specialty chemicals, botanical extracts, nutraceuticals & animal feed export enterprise (JHS GLOBAL).
 
 **Read these first, in order:** `project.md` → `folder-structure.md` → `database-design.md` → `system-design.md`. They are the source of truth. If code and docs disagree, **update the docs in the same change** (or ask).
 
@@ -15,18 +15,19 @@ Help overseas **importers and manufacturers** (a) trust the company, (b) find th
 ## 2. DO
 
 ### Product and content
-- Build the 8 categories exactly as listed in `database-design.md` §6.
+- Build the 3 master divisions (20 export products across 10 subcategories) exactly as defined in the client-supplied catalogue (Personal Care Raw Materials, Nutraceutical Raw Materials, Animal Feed).
 - Show on every product: name, images, HS code, origin, forms, packing, MOQ, shelf life, certificates, and an **"Add to Quote"** button.
 - Put a **Request a Quote** button in the header and on every product / category page; add a WhatsApp button.
 - Use **"Price on request"** wording. Use clear B2B terms: MOQ, FCL, FOB / CIF / CFR, Incoterms, port, HS code.
 - Make the RFQ form fields: name, company, email, phone/WhatsApp, country, products (from basket), quantity + unit, destination port, Incoterm, packing, target month, private label (yes/no), sample needed (yes/no), message. Required: name, company, email, country, at least one product or message.
 - Use placeholders for client content (brand name, certificate numbers, photos) and **mark them clearly** with `TODO(client)`.
+- Enforce that nutraceutical products contain NO therapeutic or medical claims ("cures", "treats", "prevents"); state them strictly as raw ingredients for dietary supplements and functional formulations. Store unverified client data with `verified = false`.
 
 ### Code
 - Follow `folder-structure.md` exactly: backend `routes → controller → service → model`; frontend `pages → components → features → services`.
 - Validate **every** input on the server (Zod/Joi) — never trust the client.
 - Use `async/await` with a shared `asyncHandler`; return the standard response shape from `system-design.md` §3.
-- Paginate all list endpoints; use `.lean()` and field projection for read queries.
+- Paginate all list endpoints; use raw queries and attribute projection (Sequelize `raw: true`, `attributes: [...]`) for read queries.
 - Add indexes defined in `database-design.md` when creating models.
 - Use environment variables for all secrets/URLs; keep `.env.example` updated.
 - Write small, readable functions and short comments only where the *why* is not obvious.
@@ -150,4 +151,4 @@ Help overseas **importers and manufacturers** (a) trust the company, (b) find th
 | API base | `/api/v1` |
 | Auth | JWT access (15 min) + httpOnly refresh cookie, roles: admin / sales / editor |
 | Main CTA | **Request a Quote** |
-| Categories | 8 (see `database-design.md` §6) |
+| Categories | 10 master categories (84 commodities from master catalogue) |
