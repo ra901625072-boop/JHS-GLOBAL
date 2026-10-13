@@ -1,0 +1,124 @@
+name: Platform Hardening CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ─── Job 1: Architectural Integrity & Quality Guards ─────────────────
+  architecture-and-lint:
+    name: Architecture & Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check circular dependencies (Madge)
+        run: npm run check:circular
+
+      - name: Run code linting
+        run: npm run lint
+
+  # ─── Job 2: Frontend Unit & Component Suites ──────────────────────────
+  frontend-tests:
+    name: Frontend Unit & Component Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run React Testing Library & Vitest Component Tests
+        run: npm test --workspace=client
+
+  # ─── Job 3: Backend Unit, Property & Security Suites ─────────────────
+  backend-tests:
+    name: Backend Unit, Security & Integration Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Backend Property & Security Tests
+        env:
+          NODE_ENV: test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: test_db
+          DB_USER: test_user
+          DB_PASS: test_password
+          JWT_SECRET: ci-test-secret-key-32-chars-long-1234
+          JWT_REFRESH_SECRET: ci-refresh-secret-key-32-chars-long-12
+        run: npm test --workspace=server -- tests/unit-properties.test.js tests/security-resilience.test.js
+
+  # ─── Job 4: Build & Playwright E2E Verification ──────────────────────
+  e2e-and-build:
+    name: Client Production Build & E2E Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify production Vite bundle build
+        run: npm run build --workspace=client
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Run Playwright E2E & WCAG A11y Suite
+        run: npx playwright test --project="Desktop Chrome"
