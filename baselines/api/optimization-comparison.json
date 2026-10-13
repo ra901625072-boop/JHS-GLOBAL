@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-10-13T16:26:00.125Z",
+  "results": [
+    {
+      "endpoint": "/api/v1/health",
+      "method": "GET",
+      "originalSizeBytes": 176,
+      "compressedSizeBytes": 176,
+      "bytesSavedRatio": "0.0%",
+      "p50LatencyMs": 0.63,
+      "p95LatencyMs": 9.78,
+      "cacheStatus": "NONE"
+    },
+    {
+      "endpoint": "/api/v1/categories",
+      "method": "GET",
+      "originalSizeBytes": 6810,
+      "compressedSizeBytes": 1528,
+      "bytesSavedRatio": "77.6%",
+      "p50LatencyMs": 0.89,
+      "p95LatencyMs": 255.24,
+      "cacheStatus": "HIT"
+    },
+    {
+      "endpoint": "/api/v1/products",
+      "method": "GET",
+      "originalSizeBytes": 17225,
+      "compressedSizeBytes": 3884,
+      "bytesSavedRatio": "77.5%",
+      "p50LatencyMs": 1.08,
+      "p95LatencyMs": 1207.35,
+      "cacheStatus": "HIT"
+    },
+    {
+      "endpoint": "/api/v1/products?limit=12&page=1",
+      "method": "GET",
+      "originalSizeBytes": 17225,
+      "compressedSizeBytes": 3884,
+      "bytesSavedRatio": "77.5%",
+      "p50LatencyMs": 1.03,
+      "p95LatencyMs": 334.47,
+      "cacheStatus": "HIT"
+    },
+    {
+      "endpoint": "/api/v1/products/featured",
+      "method": "GET",
+      "originalSizeBytes": 10588,
+      "compressedSizeBytes": 2912,
+      "bytesSavedRatio": "72.5%",
+      "p50LatencyMs": 0.85,
+      "p95LatencyMs": 168.17,
+      "cacheStatus": "HIT"
+    },
+    {
+      "endpoint": "/api/v1/certificates",
+      "method": "GET",
+      "originalSizeBytes": 3752,
+      "compressedSizeBytes": 1245,
+      "bytesSavedRatio": "66.8%",
+      "p50LatencyMs": 0.82,
+      "p95LatencyMs": 183.99,
+      "cacheStatus": "HIT"
+    },
+    {
+      "endpoint": "/api/v1/testimonials",
+      "method": "GET",
+      "originalSizeBytes": 1682,
+      "compressedSizeBytes": 871,
+      "bytesSavedRatio": "48.2%",
+      "p50LatencyMs": 0.6,
+      "p95LatencyMs": 167.16,
+      "cacheStatus": "HIT"
+    },
+    {
+      "endpoint": "/api/v1/market-regions",
+      "method": "GET",
+      "originalSizeBytes": 2486,
+      "compressedSizeBytes": 1107,
+      "bytesSavedRatio": "55.5%",
+      "p50LatencyMs": 0.73,
+      "p95LatencyMs": 172.18,
+      "cacheStatus": "HIT"
+    },
+    {
+      "endpoint": "/api/v1/faqs",
+      "method": "GET",
+      "originalSizeBytes": 4171,
+      "compressedSizeBytes": 1854,
+      "bytesSavedRatio": "55.6%",
+      "p50LatencyMs": 0.66,
+      "p95LatencyMs": 192.86,
+      "cacheStatus": "HIT"
+    }
+  ]
+}

@@ -8,6 +8,8 @@ export const cacheResponse = (ttlSeconds = 300) => async (req, res, next) => {
   const cacheKey = `http:${req.originalUrl || req.url}`;
   const cachedData = await cacheService.get(cacheKey);
 
+  res.setHeader('Cache-Control', `public, max-age=${ttlSeconds}, stale-while-revalidate=${ttlSeconds * 2}`);
+
   if (cachedData) {
     res.setHeader('X-Cache', 'HIT');
     return res.status(200).json(cachedData);

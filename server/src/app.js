@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import './models/index.js';
 import env from './config/env.js';
 import logger from './utils/logger.js';
@@ -56,6 +57,9 @@ export const createApp = () => {
       allowedHeaders: ['Content-Type', 'Authorization', 'Idempotency-Key'],
     })
   );
+
+  // Response compression (gzip/deflate for payloads >= 1KB)
+  app.use(compression({ threshold: 1024 }));
 
   // Body and cookie parsing
   app.use(express.json({ limit: '1mb' }));
