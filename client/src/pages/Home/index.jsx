@@ -252,16 +252,16 @@ export const HomePage = () => {
               </div>
 
               {/* Masked Line-by-Line Headline */}
-              <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl xl:text-[3.25rem] font-bold tracking-tight text-white leading-[1.15] sm:leading-[1.12]">
+              <h1 className="font-serif text-2xl sm:text-4xl lg:text-[2.65rem] xl:text-[3.15rem] font-bold tracking-tight text-white leading-[1.15] sm:leading-[1.12]">
                 <span className="overflow-hidden block">
-                  <span className="hero-line block">One Accountable Supplier for</span>
+                  <span className="hero-line block">One Accountable Supplier</span>
                 </span>
-                <span className="overflow-hidden block mt-1">
-                  <span className="hero-line block">Diverse Category Sourcing.</span>
+                <span className="overflow-hidden block mt-1 sm:mt-1.5">
+                  <span className="hero-line block">for Diverse Category Sourcing.</span>
                 </span>
               </h1>
 
-              <p className="hero-subtext text-xs sm:text-base xl:text-lg text-neutral-300 leading-relaxed font-sans font-normal">
+              <p className="hero-subtext text-xs sm:text-base xl:text-[1.05rem] text-neutral-200/90 leading-[1.7] font-sans font-normal">
                 Every step of our supply chain is managed with precision and care. Whether it’s spices, agro commodities, botanical extracts, animal feed, or cosmetic raw materials — we consolidate your Indian sourcing in a single shipment with unified documentation and one point of contact.
               </p>
 
@@ -270,7 +270,7 @@ export const HomePage = () => {
                   variant="cta"
                   size="lg"
                   onClick={() => setIsDrawerOpen(true)}
-                  className="shadow-hover flex items-center justify-center gap-2 py-3.5 px-6 sm:px-8 text-xs sm:text-sm font-bold whitespace-nowrap min-h-[48px]"
+                  className="shadow-hover flex items-center justify-center gap-2 py-3.5 px-6 sm:px-8 text-xs sm:text-sm font-bold whitespace-nowrap min-h-[48px] rounded-xl"
                 >
                   <span>Request a Quote (RFQ)</span>
                   <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
@@ -280,28 +280,28 @@ export const HomePage = () => {
                   variant="outline-light"
                   size="lg"
                   onClick={() => navigate('/products')}
-                  className="border border-neutral-300/40 hover:border-accent-400 bg-white/5 hover:bg-accent-500/10 text-white hover:text-accent-300 py-3.5 px-6 sm:px-8 text-xs sm:text-sm font-semibold whitespace-nowrap shadow-xs min-h-[48px] flex items-center justify-center"
+                  className="border border-white/20 hover:border-accent-400/80 bg-white/[0.06] hover:bg-white/[0.12] text-white hover:text-accent-300 py-3.5 px-6 sm:px-8 text-xs sm:text-sm font-semibold whitespace-nowrap shadow-xs min-h-[48px] flex items-center justify-center transition-all duration-200 backdrop-blur-xs rounded-xl"
                 >
                   Explore Products
                 </Button>
               </div>
 
               {/* Micro Trust Points Grid */}
-              <div className="pt-6 border-t border-primary-800/70 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-xs text-neutral-300">
-                <div className="hero-trust-item flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-accent-400 shrink-0" />
+              <div className="pt-6 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-xs text-neutral-200">
+                <div className="hero-trust-item flex items-start sm:items-center gap-2">
+                  <Clock className="w-4 h-4 text-accent-400 shrink-0 mt-0.5 sm:mt-0" />
                   <span className="font-medium">48h Quote Promise</span>
                 </div>
-                <div className="hero-trust-item flex items-center gap-2">
-                  <Award className="w-4 h-4 text-accent-400 shrink-0" />
+                <div className="hero-trust-item flex items-start sm:items-center gap-2">
+                  <Award className="w-4 h-4 text-accent-400 shrink-0 mt-0.5 sm:mt-0" />
                   <span className="font-medium">Lab COA per Lot</span>
                 </div>
-                <div className="hero-trust-item flex items-center gap-2">
-                  <Anchor className="w-4 h-4 text-accent-400 shrink-0" />
+                <div className="hero-trust-item flex items-start sm:items-center gap-2">
+                  <Anchor className="w-4 h-4 text-accent-400 shrink-0 mt-0.5 sm:mt-0" />
                   <span className="font-medium">Hazira & Mundra Ports</span>
                 </div>
-                <div className="hero-trust-item flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-accent-400 shrink-0" />
+                <div className="hero-trust-item flex items-start sm:items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-accent-400 shrink-0 mt-0.5 sm:mt-0" />
                   <span className="font-medium">3 Divisions / 20 Lines</span>
                 </div>
               </div>
