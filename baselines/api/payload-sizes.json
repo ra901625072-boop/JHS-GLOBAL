@@ -1,0 +1,83 @@
+{
+  "timestamp": "2026-10-13T15:36:16.778Z",
+  "endpoints": [
+    {
+      "endpoint": "GET /api/v1/health",
+      "statusCode": 200,
+      "payloadSizeBytes": 176,
+      "payloadSizeKb": 0.17
+    },
+    {
+      "endpoint": "GET /api/v1/categories",
+      "statusCode": 200,
+      "payloadSizeBytes": 6810,
+      "payloadSizeKb": 6.65
+    },
+    {
+      "endpoint": "GET /api/v1/categories/personal-care-raw-materials",
+      "statusCode": 200,
+      "payloadSizeBytes": 3557,
+      "payloadSizeKb": 3.47
+    },
+    {
+      "endpoint": "GET /api/v1/products",
+      "statusCode": 200,
+      "payloadSizeBytes": 17225,
+      "payloadSizeKb": 16.82
+    },
+    {
+      "endpoint": "GET /api/v1/products?limit=12&page=1",
+      "statusCode": 200,
+      "payloadSizeBytes": 17225,
+      "payloadSizeKb": 16.82
+    },
+    {
+      "endpoint": "GET /api/v1/products/featured",
+      "statusCode": 200,
+      "payloadSizeBytes": 10588,
+      "payloadSizeKb": 10.34
+    },
+    {
+      "endpoint": "GET /api/v1/products/castor-oil",
+      "statusCode": 200,
+      "payloadSizeBytes": 4876,
+      "payloadSizeKb": 4.76
+    },
+    {
+      "endpoint": "GET /api/v1/certificates",
+      "statusCode": 200,
+      "payloadSizeBytes": 3752,
+      "payloadSizeKb": 3.66
+    },
+    {
+      "endpoint": "GET /api/v1/testimonials",
+      "statusCode": 200,
+      "payloadSizeBytes": 1682,
+      "payloadSizeKb": 1.64
+    },
+    {
+      "endpoint": "GET /api/v1/market-regions",
+      "statusCode": 200,
+      "payloadSizeBytes": 2486,
+      "payloadSizeKb": 2.43
+    },
+    {
+      "endpoint": "GET /api/v1/faqs",
+      "statusCode": 200,
+      "payloadSizeBytes": 4171,
+      "payloadSizeKb": 4.07
+    },
+    {
+      "endpoint": "GET /api/v1/blog",
+      "statusCode": 200,
+      "payloadSizeBytes": 5813,
+      "payloadSizeKb": 5.68
+    },
+    {
+      "endpoint": "POST /api/v1/auth/login",
+      "statusCode": 429,
+      "payloadSizeBytes": 172,
+      "payloadSizeKb": 0.17
+    }
+  ]
+}

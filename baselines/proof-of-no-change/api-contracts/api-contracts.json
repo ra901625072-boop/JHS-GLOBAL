@@ -1,0 +1,3240 @@
+{
+  "timestamp": "2026-10-13T15:39:01.745Z",
+  "contracts": {
+    "health": {
+      "endpoint": "GET /api/v1/health",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": {
+          "status": "healthy",
+          "service": "export-b2b-api",
+          "version": "1.0.0",
+          "uptime": 45.4526246,
+          "timestamp": "2026-10-13T15:38:57.541Z",
+          "environment": "development"
+        }
+      }
+    },
+    "categories_list": {
+      "endpoint": "GET /api/v1/categories",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 39,
+            "name": "Personal Care Raw Materials",
+            "slug": "personal-care-raw-materials",
+            "description": "High-purity cosmetic raw materials, functional carrier lipids, surfactants, hydroxy acids, antioxidant vitamins, and micronized mineral clays formulated for personal care, skincare, and toiletry manufacturers.",
+            "parentId": null,
+            "level": 1,
+            "path": "personal-care-raw-materials",
+            "image": {
+              "alt": "",
+              "url": ""
+            },
+            "icon": "",
+            "hsChapter": "33",
+            "order": 1,
+            "isActive": true,
+            "seo": {
+              "title": "Personal Care & Cosmetic Raw Materials Exporter | JHS GLOBAL",
+              "description": "Bulk export of SLES, Castor Oil derivatives, Salicylic Acid, Glycolic Acid, Vitamin E Acetate, Kaolin Clay, and cosmetic extracts for commercial formulators."
+            },
+            "createdAt": "2026-10-12T11:12:43.896Z",
+            "updatedAt": "2026-10-12T11:12:43.896Z",
+            "parent_id": null,
+            "children": [
+              {
+                "id": 40,
+                "name": "Carrier Oils & Specialty Lipids",
+                "slug": "personal-care-raw-materials-carrier-oils-and-specialty-lipids",
+                "description": "",
+                "parentId": 39,
+                "level": 2,
+                "path": "personal-care-raw-materials/carrier-oils-and-specialty-lipids",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 1,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:44.265Z",
+                "updatedAt": "2026-10-12T11:12:44.265Z",
+                "parent_id": 39,
+                "_id": 40
+              },
+              {
+                "id": 41,
+                "name": "Cosmetic Active Extracts",
+                "slug": "personal-care-raw-materials-cosmetic-active-extracts",
+                "description": "",
+                "parentId": 39,
+                "level": 2,
+                "path": "personal-care-raw-materials/cosmetic-active-extracts",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 2,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:44.790Z",
+                "updatedAt": "2026-10-12T11:12:44.790Z",
+                "parent_id": 39,
+                "_id": 41
+              },
+              {
+                "id": 42,
+                "name": "Surfactants & Cleansing Agents",
+                "slug": "personal-care-raw-materials-surfactants-and-cleansing-agents",
+                "description": "",
+                "parentId": 39,
+                "level": 2,
+                "path": "personal-care-raw-materials/surfactants-and-cleansing-agents",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 3,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:45.228Z",
+                "updatedAt": "2026-10-12T11:12:45.228Z",
+                "parent_id": 39,
+                "_id": 42
+              },
+              {
+                "id": 43,
+                "name": "Hydroxy Acids & Exfoliating Actives",
+                "slug": "personal-care-raw-materials-hydroxy-acids-and-exfoliating-actives",
+                "description": "",
+                "parentId": 39,
+                "level": 2,
+                "path": "personal-care-raw-materials/hydroxy-acids-and-exfoliating-actives",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 4,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:46.628Z",
+                "updatedAt": "2026-10-12T11:12:46.628Z",
+                "parent_id": 39,
+                "_id": 43
+              },
+              {
+                "id": 44,
+                "name": "Vitamins & Antioxidant Actives",
+                "slug": "personal-care-raw-materials-vitamins-and-antioxidant-actives",
+                "description": "",
+                "parentId": 39,
+                "level": 2,
+                "path": "personal-care-raw-materials/vitamins-and-antioxidant-actives",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 5,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:47.146Z",
+                "updatedAt": "2026-10-12T11:12:47.146Z",
+                "parent_id": 39,
+                "_id": 44
+              },
+              {
+                "id": 45,
+                "name": "Functional Clays & Mineral Powders",
+                "slug": "personal-care-raw-materials-functional-clays-and-mineral-powders",
+                "description": "",
+                "parentId": 39,
+                "level": 2,
+                "path": "personal-care-raw-materials/functional-clays-and-mineral-powders",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 6,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:47.465Z",
+                "updatedAt": "2026-10-12T11:12:47.465Z",
+                "parent_id": 39,
+                "_id": 45
+              }
+            ],
+            "_id": 39
+          },
+          {
+            "id": 46,
+            "name": "Nutraceutical Raw Materials",
+            "slug": "nutraceutical-raw-materials",
+            "description": "Standardized botanical phyto-extracts, verified active marker isolates, plant proteins, and functional hydrocolloids for dietary supplement, nutraceutical, and functional nutrition manufacturers.",
+            "parentId": null,
+            "level": 1,
+            "path": "nutraceutical-raw-materials",
+            "image": {
+              "alt": "",
+              "url": ""
+            },
+            "icon": "",
+            "hsChapter": "13",
+            "order": 2,
+            "isActive": true,
+            "seo": {
+              "title": "Nutraceutical Raw Materials & Botanical Extracts Exporter | JHS GLOBAL",
+              "description": "HPLC-standardized Ashwagandha, Curcumin 95%, Boswellia, Bacopa, Moringa, Amla, Green Tea, Pea Protein Isolate, and Xanthan Gum in bulk container shipments."
+            },
+            "createdAt": "2026-10-12T11:12:47.859Z",
+            "updatedAt": "2026-10-12T11:12:47.859Z",
+            "parent_id": null,
+            "children": [
+              {
+                "id": 47,
+                "name": "Standardized Botanical Extracts",
+                "slug": "nutraceutical-raw-materials-standardized-botanical-extracts",
+                "description": "",
+                "parentId": 46,
+                "level": 2,
+                "path": "nutraceutical-raw-materials/standardized-botanical-extracts",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 1,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:48.273Z",
+                "updatedAt": "2026-10-12T11:12:48.273Z",
+                "parent_id": 46,
+                "_id": 47
+              },
+              {
+                "id": 48,
+                "name": "Plant Proteins & Hydrocolloids",
+                "slug": "nutraceutical-raw-materials-plant-proteins-and-hydrocolloids",
+                "description": "",
+                "parentId": 46,
+                "level": 2,
+                "path": "nutraceutical-raw-materials/plant-proteins-and-hydrocolloids",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 2,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:48.644Z",
+                "updatedAt": "2026-10-12T11:12:48.644Z",
+                "parent_id": 46,
+                "_id": 48
+              }
+            ],
+            "_id": 46
+          },
+          {
+            "id": 49,
+            "name": "Animal Feed",
+            "slug": "animal-feed",
+            "description": "High-protein de-oiled oilseed meals, solvent-extracted cakes, and customized nutritional premixes for commercial livestock, poultry, swine, and aquaculture feed mill formulations.",
+            "parentId": null,
+            "level": 1,
+            "path": "animal-feed",
+            "image": {
+              "alt": "",
+              "url": ""
+            },
+            "icon": "",
+            "hsChapter": "23",
+            "order": 3,
+            "isActive": true,
+            "seo": {
+              "title": "Animal Feed Ingredients, Protein Meals & Premixes Exporter | JHS GLOBAL",
+              "description": "Bulk export of Soybean Meal (DOC), Rapeseed/Mustard Meal, Cottonseed Meal, and feed-grade vitamins & mineral premixes in containerized shipments."
+            },
+            "createdAt": "2026-10-12T11:12:49.065Z",
+            "updatedAt": "2026-10-12T11:12:49.065Z",
+            "parent_id": null,
+            "children": [
+              {
+                "id": 50,
+                "name": "Protein Oilseed Meals",
+                "slug": "animal-feed-protein-oilseed-meals",
+                "description": "",
+                "parentId": 49,
+                "level": 2,
+                "path": "animal-feed/protein-oilseed-meals",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 1,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:50.102Z",
+                "updatedAt": "2026-10-12T11:12:50.102Z",
+                "parent_id": 49,
+                "_id": 50
+              },
+              {
+                "id": 51,
+                "name": "Nutritional Premixes & Additives",
+                "slug": "animal-feed-nutritional-premixes-and-additives",
+                "description": "",
+                "parentId": 49,
+                "level": 2,
+                "path": "animal-feed/nutritional-premixes-and-additives",
+                "image": {
+                  "alt": "",
+                  "url": ""
+                },
+                "icon": "",
+                "hsChapter": "",
+                "order": 2,
+                "isActive": true,
+                "seo": {
+                  "title": "",
+                  "description": ""
+                },
+                "createdAt": "2026-10-12T11:12:50.543Z",
+                "updatedAt": "2026-10-12T11:12:50.543Z",
+                "parent_id": 49,
+                "_id": 51
+              }
+            ],
+            "_id": 49
+          }
+        ]
+      }
+    },
+    "category_detail": {
+      "endpoint": "GET /api/v1/categories/personal-care-raw-materials",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": {
+          "id": 39,
+          "name": "Personal Care Raw Materials",
+          "slug": "personal-care-raw-materials",
+          "description": "High-purity cosmetic raw materials, functional carrier lipids, surfactants, hydroxy acids, antioxidant vitamins, and micronized mineral clays formulated for personal care, skincare, and toiletry manufacturers.",
+          "parentId": null,
+          "level": 1,
+          "path": "personal-care-raw-materials",
+          "image": {
+            "alt": "",
+            "url": ""
+          },
+          "icon": "",
+          "hsChapter": "33",
+          "order": 1,
+          "isActive": true,
+          "seo": {
+            "title": "Personal Care & Cosmetic Raw Materials Exporter | JHS GLOBAL",
+            "description": "Bulk export of SLES, Castor Oil derivatives, Salicylic Acid, Glycolic Acid, Vitamin E Acetate, Kaolin Clay, and cosmetic extracts for commercial formulators."
+          },
+          "createdAt": "2026-10-12T11:12:43.896Z",
+          "updatedAt": "2026-10-12T11:12:43.896Z",
+          "parent_id": null,
+          "parent": null,
+          "children": [
+            {
+              "id": 40,
+              "name": "Carrier Oils & Specialty Lipids",
+              "slug": "personal-care-raw-materials-carrier-oils-and-specialty-lipids",
+              "description": "",
+              "parentId": 39,
+              "level": 2,
+              "path": "personal-care-raw-materials/carrier-oils-and-specialty-lipids",
+              "image": {
+                "alt": "",
+                "url": ""
+              },
+              "icon": "",
+              "hsChapter": "",
+              "order": 1,
+              "isActive": true,
+              "seo": {
+                "title": "",
+                "description": ""
+              },
+              "createdAt": "2026-10-12T11:12:44.265Z",
+              "updatedAt": "2026-10-12T11:12:44.265Z",
+              "parent_id": 39,
+              "_id": 40
+            },
+            {
+              "id": 41,
+              "name": "Cosmetic Active Extracts",
+              "slug": "personal-care-raw-materials-cosmetic-active-extracts",
+              "description": "",
+              "parentId": 39,
+              "level": 2,
+              "path": "personal-care-raw-materials/cosmetic-active-extracts",
+              "image": {
+                "alt": "",
+                "url": ""
+              },
+              "icon": "",
+              "hsChapter": "",
+              "order": 2,
+              "isActive": true,
+              "seo": {
+                "title": "",
+                "description": ""
+              },
+              "createdAt": "2026-10-12T11:12:44.790Z",
+              "updatedAt": "2026-10-12T11:12:44.790Z",
+              "parent_id": 39,
+              "_id": 41
+            },
+            {
+              "id": 42,
+              "name": "Surfactants & Cleansing Agents",
+              "slug": "personal-care-raw-materials-surfactants-and-cleansing-agents",
+              "description": "",
+              "parentId": 39,
+              "level": 2,
+              "path": "personal-care-raw-materials/surfactants-and-cleansing-agents",
+              "image": {
+                "alt": "",
+                "url": ""
+              },
+              "icon": "",
+              "hsChapter": "",
+              "order": 3,
+              "isActive": true,
+              "seo": {
+                "title": "",
+                "description": ""
+              },
+              "createdAt": "2026-10-12T11:12:45.228Z",
+              "updatedAt": "2026-10-12T11:12:45.228Z",
+              "parent_id": 39,
+              "_id": 42
+            },
+            {
+              "id": 43,
+              "name": "Hydroxy Acids & Exfoliating Actives",
+              "slug": "personal-care-raw-materials-hydroxy-acids-and-exfoliating-actives",
+              "description": "",
+              "parentId": 39,
+              "level": 2,
+              "path": "personal-care-raw-materials/hydroxy-acids-and-exfoliating-actives",
+              "image": {
+                "alt": "",
+                "url": ""
+              },
+              "icon": "",
+              "hsChapter": "",
+              "order": 4,
+              "isActive": true,
+              "seo": {
+                "title": "",
+                "description": ""
+              },
+              "createdAt": "2026-10-12T11:12:46.628Z",
+              "updatedAt": "2026-10-12T11:12:46.628Z",
+              "parent_id": 39,
+              "_id": 43
+            },
+            {
+              "id": 44,
+              "name": "Vitamins & Antioxidant Actives",
+              "slug": "personal-care-raw-materials-vitamins-and-antioxidant-actives",
+              "description": "",
+              "parentId": 39,
+              "level": 2,
+              "path": "personal-care-raw-materials/vitamins-and-antioxidant-actives",
+              "image": {
+                "alt": "",
+                "url": ""
+              },
+              "icon": "",
+              "hsChapter": "",
+              "order": 5,
+              "isActive": true,
+              "seo": {
+                "title": "",
+                "description": ""
+              },
+              "createdAt": "2026-10-12T11:12:47.146Z",
+              "updatedAt": "2026-10-12T11:12:47.146Z",
+              "parent_id": 39,
+              "_id": 44
+            },
+            {
+              "id": 45,
+              "name": "Functional Clays & Mineral Powders",
+              "slug": "personal-care-raw-materials-functional-clays-and-mineral-powders",
+              "description": "",
+              "parentId": 39,
+              "level": 2,
+              "path": "personal-care-raw-materials/functional-clays-and-mineral-powders",
+              "image": {
+                "alt": "",
+                "url": ""
+              },
+              "icon": "",
+              "hsChapter": "",
+              "order": 6,
+              "isActive": true,
+              "seo": {
+                "title": "",
+                "description": ""
+              },
+              "createdAt": "2026-10-12T11:12:47.465Z",
+              "updatedAt": "2026-10-12T11:12:47.465Z",
+              "parent_id": 39,
+              "_id": 45
+            }
+          ],
+          "_id": 39
+        }
+      }
+    },
+    "products_list": {
+      "endpoint": "GET /api/v1/products",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data",
+        "meta"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 124,
+            "name": "Feed-grade vitamins and minerals",
+            "slug": "feed-grade-vitamins-and-minerals",
+            "hsCode": "2309.90",
+            "shortDescription": "Customized feed-grade trace mineral and vitamin premix formulations tailored for poultry broilers/layers, dairy cattle, swine, and commercial aquaculture mills.",
+            "images": [
+              {
+                "alt": "Feed-grade vitamins and minerals commercial export grade - JHS GLOBAL",
+                "url": "/images/products/feed-grade-vitamins-and-minerals.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "Concentrated Trace Mineral Premix Powder (Zn, Mn, Fe, Cu, I, Se, Co)",
+              "Vitamin Premix Formulation (Vitamin A, D3, E, K3, B-Complex)",
+              "Combined Vitamin-Mineral Premix for Poultry / Cattle / Aqua",
+              "Feed-Grade Dicalcium Phosphate (DCP) / Mineral Supplements"
+            ],
+            "grades": [
+              "Commercial Animal Feed Grade"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Multi-Wall Kraft Paper Bag with PE Barrier",
+                "notes": "Moisture-barrier export packaging"
+              },
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Double PE Liners",
+                "notes": "High-protection packaging for concentrated vitamin premixes"
+              }
+            ],
+            "moq": {
+              "unit": "Metric Tonne (MT) or LCL Pallet (500 kg) — TODO(client)",
+              "value": 1
+            },
+            "shelfLife": "12–18 months stored cool and dark — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": true,
+            "categoryId": 49,
+            "category": {
+              "id": 49,
+              "name": "Animal Feed",
+              "slug": "animal-feed",
+              "_id": 49
+            },
+            "_id": 124
+          },
+          {
+            "id": 123,
+            "name": "Cottonseed meal",
+            "slug": "cottonseed-meal",
+            "hsCode": "2306.10",
+            "shortDescription": "High-energy protein-dense feed meal for dairy cattle, beef ruminants, sheep, and commercial goat rations, optimizing milk yield and fat percentage.",
+            "images": [
+              {
+                "alt": "Cottonseed meal commercial export grade - JHS GLOBAL",
+                "url": "/images/products/cottonseed-meal.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Gujarat / Maharashtra cotton growing belts) — TODO(client)"
+            ],
+            "forms": [
+              "Decorticated Solvent-Extracted Cottonseed Meal (DOC)",
+              "Undecorticated Cottonseed Cake / Flakes",
+              "Cottonseed Feed Pellets"
+            ],
+            "grades": [
+              "Ruminant & Dairy Feed Grade"
+            ],
+            "packing": [
+              {
+                "size": "50 kg net",
+                "type": "PP Woven Bags",
+                "notes": "Export standard bags (~20 MT per 20ft FCL)"
+              },
+              {
+                "size": "1,000 kg net",
+                "type": "Jumbo FIBC Bags",
+                "notes": "Bulk handling bags"
+              }
+            ],
+            "moq": {
+              "unit": "20ft FCL (~20 MT) — TODO(client)",
+              "value": 1
+            },
+            "shelfLife": "6 months stored dry and cool — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": false,
+            "categoryId": 49,
+            "category": {
+              "id": 49,
+              "name": "Animal Feed",
+              "slug": "animal-feed",
+              "_id": 49
+            },
+            "_id": 123
+          },
+          {
+            "id": 122,
+            "name": "Rapeseed / mustard meal",
+            "slug": "rapeseed-mustard-meal",
+            "hsCode": "2306.41",
+            "shortDescription": "Economical high-protein de-oiled oilseed meal (≥ 36%–38% Pro-Fat) for commercial ruminant feeds, dairy cattle concentrates, and aquaculture nutrition.",
+            "images": [
+              {
+                "alt": "Rapeseed / mustard meal commercial export grade - JHS GLOBAL",
+                "url": "/images/products/rapeseed-mustard-meal.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Rajasthan / Gujarat mustard belts) — TODO(client)"
+            ],
+            "forms": [
+              "Solvent-Extracted De-Oiled Meal (Coarse Powder)",
+              "Rapeseed / Mustard Feed Pellets"
+            ],
+            "grades": [
+              "Animal Feed Grade (Cattle / Poultry / Aqua)"
+            ],
+            "packing": [
+              {
+                "size": "50 kg net",
+                "type": "PP Woven Bags",
+                "notes": "Export standard packaging (~20 MT per 20ft FCL)"
+              },
+              {
+                "size": "1,000 kg net",
+                "type": "Jumbo FIBC Bags",
+                "notes": "Palletized bulk discharge"
+              },
+              {
+                "size": "20–22 MT per 20ft container",
+                "type": "Bulk Container Liner",
+                "notes": "Containerized bulk transport"
+              }
+            ],
+            "moq": {
+              "unit": "20ft FCL (~20 MT) — TODO(client)",
+              "value": 1
+            },
+            "shelfLife": "6 months stored under ventilated conditions — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": false,
+            "categoryId": 49,
+            "category": {
+              "id": 49,
+              "name": "Animal Feed",
+              "slug": "animal-feed",
+              "_id": 49
+            },
+            "_id": 122
+          },
+          {
+            "id": 121,
+            "name": "Soybean meal",
+            "slug": "soybean-meal",
+            "hsCode": "2304.00",
+            "shortDescription": "High-protein de-oiled soybean meal (DOC) with balanced amino acid digestibility for commercial poultry feeds, aquaculture diets, swine rations, and cattle feed.",
+            "images": [
+              {
+                "alt": "Soybean meal commercial export grade - JHS GLOBAL",
+                "url": "/images/products/soybean-meal.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Madhya Pradesh / Maharashtra soybean belt) — TODO(client)"
+            ],
+            "forms": [
+              "De-Oiled Cake (DOC) Coarse Meal",
+              "Hi-Pro Soybean Meal (≥ 46%–48% Protein)",
+              "Standard Soybean Meal (≥ 44% Protein)",
+              "Soybean Meal Pellets"
+            ],
+            "grades": [
+              "Animal Feed Grade (Non-GMO Verified — TODO(client))"
+            ],
+            "packing": [
+              {
+                "size": "50 kg net",
+                "type": "Polypropylene (PP) Woven Bag",
+                "notes": "Standard export feed bag (~20–22 MT per 20ft FCL)"
+              },
+              {
+                "size": "1,000 kg (1 MT) net",
+                "type": "Jumbo FIBC Bulk Bag",
+                "notes": "Containerized discharge standard"
+              },
+              {
+                "size": "20–22 MT per 20ft FCL",
+                "type": "Bulk in Container with Liner Bag",
+                "notes": "Economical bulk maritime transit"
+              }
+            ],
+            "moq": {
+              "unit": "20ft FCL (~20–22 MT) or bulk container rake — TODO(client)",
+              "value": 1
+            },
+            "shelfLife": "6–9 months stored in ventilated, cool, pest-controlled silo/warehouse — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": true,
+            "categoryId": 49,
+            "category": {
+              "id": 49,
+              "name": "Animal Feed",
+              "slug": "animal-feed",
+              "_id": 49
+            },
+            "_id": 121
+          },
+          {
+            "id": 120,
+            "name": "Xanthan gum",
+            "slug": "xanthan-gum",
+            "hsCode": "3913.90",
+            "shortDescription": "High-performance polysaccharide hydrocolloid for rheology control, emulsion stabilization, and texture building in food sauces, gluten-free baking, and nutraceutical syrups.",
+            "images": [
+              {
+                "alt": "Xanthan gum commercial export grade - JHS GLOBAL",
+                "url": "/images/products/xanthan-gum.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "Xanthan Gum 80 Mesh (Standard Rapid Dispersion)",
+              "Xanthan Gum 200 Mesh (Fine Particle High-Clarity)",
+              "Transparent / Clarified Grade"
+            ],
+            "grades": [
+              "Food Grade (FCC / E415)",
+              "Pharma / Cosmetic Grade — TODO(client)"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Multi-Wall Kraft Paper Bag with PE Liner",
+                "notes": "40 bags per shrink-wrapped export pallet (1 MT)"
+              },
+              {
+                "size": "20 kg net",
+                "type": "Cardboard Carton with Inner Polybag",
+                "notes": "High-protection packaging"
+              }
+            ],
+            "moq": {
+              "unit": "Metric Tonne (MT) or 1 FCL (~18 MT) — TODO(client)",
+              "value": 1
+            },
+            "shelfLife": "24 months in tightly closed original packaging — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": false,
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 120
+          },
+          {
+            "id": 119,
+            "name": "Pea protein isolate",
+            "slug": "pea-protein-isolate",
+            "hsCode": "3504.00",
+            "shortDescription": "High-purity non-GMO plant protein isolate (≥ 80%–85% protein) with complete amino acid profile for vegan protein shakes, sports nutrition powders, and meat analogs.",
+            "images": [
+              {
+                "alt": "Pea protein isolate commercial export grade - JHS GLOBAL",
+                "url": "/images/products/pea-protein-isolate.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "Pea Protein Isolate 80% (Food / Shake Grade)",
+              "Pea Protein Isolate 85% (High-Protein Functional Grade)",
+              "Neutral-Flavor Texturized Pea Protein (TVP)"
+            ],
+            "grades": [
+              "Non-GMO Plant Protein Grade",
+              "Nutraceutical / Food Grade"
+            ],
+            "packing": [
+              {
+                "size": "20 kg / 25 kg net",
+                "type": "Multi-Wall Kraft Paper Bag with PE Inner Liner",
+                "notes": "Food-grade palletized export packaging"
+              },
+              {
+                "size": "500 kg / 1,000 kg net",
+                "type": "Jumbo FIBC Tote Bag",
+                "notes": "Bulk industrial food manufacturing supply"
+              }
+            ],
+            "moq": {
+              "unit": "Metric Tonne (MT) or 1×20ft FCL (~10–12 MT) — TODO(client)",
+              "value": 1
+            },
+            "shelfLife": "24 months in unopened packaging — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": true,
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 119
+          },
+          {
+            "id": 118,
+            "name": "Green tea and Garcinia cambogia extracts",
+            "slug": "green-tea-and-garcinia-cambogia-extracts",
+            "hsCode": "1302.19",
+            "shortDescription": "HPLC-standardized botanical extracts of Green Tea (EGCG & Polyphenols) and Garcinia Cambogia (HCA) for metabolic dietary supplements and functional nutrition products.",
+            "images": [
+              {
+                "alt": "Green tea and Garcinia cambogia extracts commercial export grade - JHS GLOBAL",
+                "url": "/images/products/green-tea-and-garcinia-cambogia-extracts.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Assam / Nilgiri & Western Ghats) — TODO(client)"
+            ],
+            "forms": [
+              "Green Tea Extract Powder (50% to 98% Polyphenols, 45% EGCG)",
+              "Garcinia Cambogia Extract Powder (50% to 60% Hydroxycitric Acid / HCA)",
+              "Pre-Formulated Co-Blend Extract Powder (Custom Ratio)"
+            ],
+            "grades": [
+              "Standardized Extract Grade",
+              "Nutraceutical Grade"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Double PE Liners",
+                "notes": "Export standard container"
+              },
+              {
+                "size": "10 kg net",
+                "type": "Vacuum Aluminum Foil Bag inside Carton",
+                "notes": "Trial packaging"
+              }
+            ],
+            "moq": {
+              "unit": "kg or 1 FCL — TODO(client)",
+              "value": 100
+            },
+            "shelfLife": "36 months stored sealed — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": true,
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 118
+          },
+          {
+            "id": 117,
+            "name": "Amla extract",
+            "slug": "amla-extract",
+            "hsCode": "1302.19",
+            "shortDescription": "Standardized Indian Gooseberry fruit extract rich in natural tannins and gallic acid for antioxidant supplements, hair wellness formulas, and dietary capsules.",
+            "images": [
+              {
+                "alt": "Amla extract commercial export grade - JHS GLOBAL",
+                "url": "/images/products/amla-extract.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Uttar Pradesh / Gujarat) — TODO(client)"
+            ],
+            "forms": [
+              "Standardized Tannins Powder (20% to 40% Tannins by Titration)",
+              "Standardized Gallic Acid Extract (≥ 5%–10% Gallic Acid by HPLC)",
+              "Water-Soluble Spray-Dried Fruit Extract"
+            ],
+            "grades": [
+              "Standardized Extract Grade",
+              "Nutraceutical / Food Grade"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Double PE Liners",
+                "notes": "Export standard container"
+              },
+              {
+                "size": "10 kg net",
+                "type": "Aluminum Vacuum Bag inside Carton",
+                "notes": "Airfreight trial packaging"
+              }
+            ],
+            "moq": {
+              "unit": "kg or 1 FCL — TODO(client)",
+              "value": 100
+            },
+            "shelfLife": "36 months in unopened container — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": false,
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 117
+          },
+          {
+            "id": 116,
+            "name": "Moringa oleifera extract",
+            "slug": "moringa-oleifera-extract",
+            "hsCode": "1302.19",
+            "shortDescription": "Concentrated water-soluble drum-dried botanical extract from dried Moringa leaves for superfood greens blends, multivitamin capsules, and wellness beverages.",
+            "images": [
+              {
+                "alt": "Moringa oleifera extract commercial export grade - JHS GLOBAL",
+                "url": "/images/products/moringa-oleifera-extract.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Tamil Nadu / Gujarat) — TODO(client)"
+            ],
+            "forms": [
+              "Standardized Leaf Extract Powder (10:1 Ratio)",
+              "Polyphenol / Saponin Standardized Extract (≥ 5% Polyphenols)",
+              "Water-Soluble Fine Green Extract Powder"
+            ],
+            "grades": [
+              "Nutraceutical Grade",
+              "Functional Food Grade"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Inner Food-Grade Liner",
+                "notes": "Tamper-sealed export drum"
+              },
+              {
+                "size": "20 kg net",
+                "type": "Multi-Wall Kraft Paper Bag with PE Barrier",
+                "notes": "Palletized export packaging"
+              }
+            ],
+            "moq": {
+              "unit": "kg or 1 FCL — TODO(client)",
+              "value": 100
+            },
+            "shelfLife": "24 months in sealed original packaging — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": false,
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 116
+          },
+          {
+            "id": 115,
+            "name": "Bacopa monnieri extract",
+            "slug": "bacopa-monnieri-extract",
+            "hsCode": "1302.19",
+            "shortDescription": "HPLC-standardized Brahmi whole-herb extract featuring verified Bacosides A & B for cognitive wellness, nootropic formulations, and dietary supplements.",
+            "images": [
+              {
+                "alt": "Bacopa monnieri extract commercial export grade - JHS GLOBAL",
+                "url": "/images/products/bacopa-monnieri-extract.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "Standardized 20% Bacosides Powder (HPLC / UV)",
+              "Standardized 50% Bacosides Powder (UV-Vis)",
+              "10:1 Ratio Aqueous Extract Powder"
+            ],
+            "grades": [
+              "Nutraceutical Extract Grade",
+              "Botanical Active Grade"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Double PE Liners",
+                "notes": "Export drum with desiccant"
+              },
+              {
+                "size": "10 kg / 20 kg net",
+                "type": "Aluminum Vacuum Pouch inside Carton",
+                "notes": "Moisture barrier packaging"
+              }
+            ],
+            "moq": {
+              "unit": "kg (LCL trial order) or 1 FCL — TODO(client)",
+              "value": 100
+            },
+            "shelfLife": "36 months in intact container — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": false,
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 115
+          },
+          {
+            "id": 114,
+            "name": "Boswellia serrata extract",
+            "slug": "boswellia-serrata-extract",
+            "hsCode": "1302.19",
+            "shortDescription": "Standardized gum resin phyto-extract with guaranteed Boswellic acids and AKBA markers for joint mobility supplements, sports nutrition, and wellness capsules.",
+            "images": [
+              {
+                "alt": "Boswellia serrata extract commercial export grade - JHS GLOBAL",
+                "url": "/images/products/boswellia-serrata-extract.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Madhya Pradesh / Gujarat forest belts) — TODO(client)"
+            ],
+            "forms": [
+              "Standardized 65% Boswellic Acids Powder (Titration)",
+              "Standardized 30% AKBA Powder (HPLC)",
+              "Water-Soluble Boswellia Granules"
+            ],
+            "grades": [
+              "Standardized Nutraceutical Grade",
+              "Phyto-Extract Grade"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Double PE Liners",
+                "notes": "Sealed export drum"
+              },
+              {
+                "size": "10 kg net",
+                "type": "Vacuum Aluminum Foil Bag inside Carton",
+                "notes": "Air shipment packaging"
+              }
+            ],
+            "moq": {
+              "unit": "kg (LCL trial order) or 1 FCL — TODO(client)",
+              "value": 100
+            },
+            "shelfLife": "36 months stored sealed in cool environment — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": false,
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 114
+          },
+          {
+            "id": 113,
+            "name": "Turmeric / curcumin extract",
+            "slug": "turmeric-curcumin-extract",
+            "hsCode": "1302.19",
+            "shortDescription": "Ultra-potent 95% total curcuminoid botanical extract powder standardized via HPLC for joint wellness dietary supplements, functional foods, and beverage premixes.",
+            "images": [
+              {
+                "alt": "Turmeric / curcumin extract commercial export grade - JHS GLOBAL",
+                "url": "/images/products/turmeric-curcumin-extract.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Salem / Alleppey belts) — TODO(client)"
+            ],
+            "forms": [
+              "Curcumin 95% Total Curcuminoids Powder (Crystalline / Granular)",
+              "Water-Dispersible / Soluble Curcumin Powder",
+              "Turmeric Oleoresin (Colorant Grade)"
+            ],
+            "grades": [
+              "Nutraceutical Extract Grade",
+              "Food Colorant Grade (E100) — TODO(client)"
+            ],
+            "packing": [
+              {
+                "size": "20 kg / 25 kg net",
+                "type": "Fiber Drum with Double PE Food-Grade Liners",
+                "notes": "Export standard with silica gel desiccant"
+              },
+              {
+                "size": "10 kg net",
+                "type": "Vacuum-Sealed Aluminum Foil Pouch inside Carton",
+                "notes": "Trial and airfreight standard"
+              }
+            ],
+            "moq": {
+              "unit": "kg (LCL trial order) or 1 FCL — TODO(client)",
+              "value": 100
+            },
+            "shelfLife": "36 months stored protected from sunlight — TODO(client)",
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "isFeatured": true,
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 113
+          }
+        ],
+        "meta": {
+          "page": 1,
+          "limit": 12,
+          "total": 20,
+          "totalPages": 2,
+          "hasNext": true,
+          "hasPrev": false
+        }
+      }
+    },
+    "products_featured": {
+      "endpoint": "GET /api/v1/products/featured",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 107,
+            "name": "Sodium lauryl ether sulfate (SLES)",
+            "slug": "sodium-lauryl-ether-sulfate-sles",
+            "hsCode": "3402.31",
+            "shortDescription": "High-performance anionic surfactant with outstanding foam density, wetting power, and viscosity response for shampoos, body washes, bubble baths, and liquid hand soaps.",
+            "images": [
+              {
+                "alt": "Sodium lauryl ether sulfate (SLES) commercial export grade - JHS GLOBAL",
+                "url": "/images/products/sodium-lauryl-ether-sulfate-sles.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "SLES 70% (Concentrated Viscous Gel / Paste)",
+              "SLES 28% (Diluted Aqueous Solution)"
+            ],
+            "packing": [
+              {
+                "size": "170 kg / 220 kg net",
+                "type": "Wide-Mouth HDPE Drum",
+                "notes": "Standard export drums (80 drums per 20ft FCL ~ 17.6 MT)"
+              },
+              {
+                "size": "1,000 kg net",
+                "type": "Intermediate Bulk Container (IBC)",
+                "notes": "Semi-bulk tote"
+              },
+              {
+                "size": "20–22 MT",
+                "type": "ISO Tank Container",
+                "notes": "Direct bulk liquid maritime transport"
+              }
+            ],
+            "moq": {
+              "unit": "20ft FCL (~17.6 MT) — TODO(client)",
+              "value": 1
+            },
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "categoryId": 39,
+            "category": {
+              "id": 39,
+              "name": "Personal Care Raw Materials",
+              "slug": "personal-care-raw-materials",
+              "_id": 39
+            },
+            "_id": 107
+          },
+          {
+            "id": 108,
+            "name": "Salicylic acid",
+            "slug": "salicylic-acid",
+            "hsCode": "2918.21",
+            "shortDescription": "High-purity beta-hydroxy acid (BHA) crystalline active for clarifying skincare, scalp treatment shampoos, exfoliating pads, and cosmetic formulations.",
+            "images": [
+              {
+                "alt": "Salicylic acid commercial export grade - JHS GLOBAL",
+                "url": "/images/products/salicylic-acid.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "White Crystalline Powder",
+              "White Fine Needle Crystals"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Multi-Wall Kraft Paper Bag with PE Liner",
+                "notes": "Moisture-barrier palletized export packaging"
+              },
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Double PE Bags",
+                "notes": "High-protection rigid container"
+              },
+              {
+                "size": "500 kg / 1 MT net",
+                "type": "Big Bag / Bulk Tote",
+                "notes": "Bulk chemical industrial supply"
+              }
+            ],
+            "moq": {
+              "unit": "Metric Tonne (MT) or 1 FCL — TODO(client)",
+              "value": 1
+            },
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "categoryId": 39,
+            "category": {
+              "id": 39,
+              "name": "Personal Care Raw Materials",
+              "slug": "personal-care-raw-materials",
+              "_id": 39
+            },
+            "_id": 108
+          },
+          {
+            "id": 110,
+            "name": "Vitamin E acetate",
+            "slug": "vitamin-e-acetate",
+            "hsCode": "2936.28",
+            "shortDescription": "Stable synthetic fat-soluble antioxidant vitamin ester for anti-aging skin creams, facial serums, barrier repair ointments, and sun protection lotions.",
+            "images": [
+              {
+                "alt": "Vitamin E acetate commercial export grade - JHS GLOBAL",
+                "url": "/images/products/vitamin-e-acetate.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "dl-alpha-Tocopheryl Acetate (Viscous Oily Liquid, ≥ 96%–98%)",
+              "Vitamin E 50% CWS / Beadlet Powder (Cold-Water Soluble)"
+            ],
+            "packing": [
+              {
+                "size": "5 kg / 25 kg net",
+                "type": "Aluminum Bottle / Canister",
+                "notes": "Sealed under nitrogen blanket"
+              },
+              {
+                "size": "50 kg / 200 kg net",
+                "type": "Epoxy-Lined Steel Drum",
+                "notes": "Commercial batch container"
+              }
+            ],
+            "moq": {
+              "unit": "kg (Trial order) or 500 kg — TODO(client)",
+              "value": 100
+            },
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "categoryId": 39,
+            "category": {
+              "id": 39,
+              "name": "Personal Care Raw Materials",
+              "slug": "personal-care-raw-materials",
+              "_id": 39
+            },
+            "_id": 110
+          },
+          {
+            "id": 113,
+            "name": "Turmeric / curcumin extract",
+            "slug": "turmeric-curcumin-extract",
+            "hsCode": "1302.19",
+            "shortDescription": "Ultra-potent 95% total curcuminoid botanical extract powder standardized via HPLC for joint wellness dietary supplements, functional foods, and beverage premixes.",
+            "images": [
+              {
+                "alt": "Turmeric / curcumin extract commercial export grade - JHS GLOBAL",
+                "url": "/images/products/turmeric-curcumin-extract.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Salem / Alleppey belts) — TODO(client)"
+            ],
+            "forms": [
+              "Curcumin 95% Total Curcuminoids Powder (Crystalline / Granular)",
+              "Water-Dispersible / Soluble Curcumin Powder",
+              "Turmeric Oleoresin (Colorant Grade)"
+            ],
+            "packing": [
+              {
+                "size": "20 kg / 25 kg net",
+                "type": "Fiber Drum with Double PE Food-Grade Liners",
+                "notes": "Export standard with silica gel desiccant"
+              },
+              {
+                "size": "10 kg net",
+                "type": "Vacuum-Sealed Aluminum Foil Pouch inside Carton",
+                "notes": "Trial and airfreight standard"
+              }
+            ],
+            "moq": {
+              "unit": "kg (LCL trial order) or 1 FCL — TODO(client)",
+              "value": 100
+            },
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 113
+          },
+          {
+            "id": 118,
+            "name": "Green tea and Garcinia cambogia extracts",
+            "slug": "green-tea-and-garcinia-cambogia-extracts",
+            "hsCode": "1302.19",
+            "shortDescription": "HPLC-standardized botanical extracts of Green Tea (EGCG & Polyphenols) and Garcinia Cambogia (HCA) for metabolic dietary supplements and functional nutrition products.",
+            "images": [
+              {
+                "alt": "Green tea and Garcinia cambogia extracts commercial export grade - JHS GLOBAL",
+                "url": "/images/products/green-tea-and-garcinia-cambogia-extracts.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Assam / Nilgiri & Western Ghats) — TODO(client)"
+            ],
+            "forms": [
+              "Green Tea Extract Powder (50% to 98% Polyphenols, 45% EGCG)",
+              "Garcinia Cambogia Extract Powder (50% to 60% Hydroxycitric Acid / HCA)",
+              "Pre-Formulated Co-Blend Extract Powder (Custom Ratio)"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Double PE Liners",
+                "notes": "Export standard container"
+              },
+              {
+                "size": "10 kg net",
+                "type": "Vacuum Aluminum Foil Bag inside Carton",
+                "notes": "Trial packaging"
+              }
+            ],
+            "moq": {
+              "unit": "kg or 1 FCL — TODO(client)",
+              "value": 100
+            },
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 118
+          },
+          {
+            "id": 119,
+            "name": "Pea protein isolate",
+            "slug": "pea-protein-isolate",
+            "hsCode": "3504.00",
+            "shortDescription": "High-purity non-GMO plant protein isolate (≥ 80%–85% protein) with complete amino acid profile for vegan protein shakes, sports nutrition powders, and meat analogs.",
+            "images": [
+              {
+                "alt": "Pea protein isolate commercial export grade - JHS GLOBAL",
+                "url": "/images/products/pea-protein-isolate.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "Pea Protein Isolate 80% (Food / Shake Grade)",
+              "Pea Protein Isolate 85% (High-Protein Functional Grade)",
+              "Neutral-Flavor Texturized Pea Protein (TVP)"
+            ],
+            "packing": [
+              {
+                "size": "20 kg / 25 kg net",
+                "type": "Multi-Wall Kraft Paper Bag with PE Inner Liner",
+                "notes": "Food-grade palletized export packaging"
+              },
+              {
+                "size": "500 kg / 1,000 kg net",
+                "type": "Jumbo FIBC Tote Bag",
+                "notes": "Bulk industrial food manufacturing supply"
+              }
+            ],
+            "moq": {
+              "unit": "Metric Tonne (MT) or 1×20ft FCL (~10–12 MT) — TODO(client)",
+              "value": 1
+            },
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "categoryId": 46,
+            "category": {
+              "id": 46,
+              "name": "Nutraceutical Raw Materials",
+              "slug": "nutraceutical-raw-materials",
+              "_id": 46
+            },
+            "_id": 119
+          },
+          {
+            "id": 121,
+            "name": "Soybean meal",
+            "slug": "soybean-meal",
+            "hsCode": "2304.00",
+            "shortDescription": "High-protein de-oiled soybean meal (DOC) with balanced amino acid digestibility for commercial poultry feeds, aquaculture diets, swine rations, and cattle feed.",
+            "images": [
+              {
+                "alt": "Soybean meal commercial export grade - JHS GLOBAL",
+                "url": "/images/products/soybean-meal.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India (Madhya Pradesh / Maharashtra soybean belt) — TODO(client)"
+            ],
+            "forms": [
+              "De-Oiled Cake (DOC) Coarse Meal",
+              "Hi-Pro Soybean Meal (≥ 46%–48% Protein)",
+              "Standard Soybean Meal (≥ 44% Protein)",
+              "Soybean Meal Pellets"
+            ],
+            "packing": [
+              {
+                "size": "50 kg net",
+                "type": "Polypropylene (PP) Woven Bag",
+                "notes": "Standard export feed bag (~20–22 MT per 20ft FCL)"
+              },
+              {
+                "size": "1,000 kg (1 MT) net",
+                "type": "Jumbo FIBC Bulk Bag",
+                "notes": "Containerized discharge standard"
+              },
+              {
+                "size": "20–22 MT per 20ft FCL",
+                "type": "Bulk in Container with Liner Bag",
+                "notes": "Economical bulk maritime transit"
+              }
+            ],
+            "moq": {
+              "unit": "20ft FCL (~20–22 MT) or bulk container rake — TODO(client)",
+              "value": 1
+            },
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "categoryId": 49,
+            "category": {
+              "id": 49,
+              "name": "Animal Feed",
+              "slug": "animal-feed",
+              "_id": 49
+            },
+            "_id": 121
+          },
+          {
+            "id": 124,
+            "name": "Feed-grade vitamins and minerals",
+            "slug": "feed-grade-vitamins-and-minerals",
+            "hsCode": "2309.90",
+            "shortDescription": "Customized feed-grade trace mineral and vitamin premix formulations tailored for poultry broilers/layers, dairy cattle, swine, and commercial aquaculture mills.",
+            "images": [
+              {
+                "alt": "Feed-grade vitamins and minerals commercial export grade - JHS GLOBAL",
+                "url": "/images/products/feed-grade-vitamins-and-minerals.webp",
+                "width": 800,
+                "height": 600,
+                "isHero": true,
+                "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+                "aiGenerated": true
+              }
+            ],
+            "origin": [
+              "India — TODO(client)"
+            ],
+            "forms": [
+              "Concentrated Trace Mineral Premix Powder (Zn, Mn, Fe, Cu, I, Se, Co)",
+              "Vitamin Premix Formulation (Vitamin A, D3, E, K3, B-Complex)",
+              "Combined Vitamin-Mineral Premix for Poultry / Cattle / Aqua",
+              "Feed-Grade Dicalcium Phosphate (DCP) / Mineral Supplements"
+            ],
+            "packing": [
+              {
+                "size": "25 kg net",
+                "type": "Multi-Wall Kraft Paper Bag with PE Barrier",
+                "notes": "Moisture-barrier export packaging"
+              },
+              {
+                "size": "25 kg net",
+                "type": "Fiber Drum with Double PE Liners",
+                "notes": "High-protection packaging for concentrated vitamin premixes"
+              }
+            ],
+            "moq": {
+              "unit": "Metric Tonne (MT) or LCL Pallet (500 kg) — TODO(client)",
+              "value": 1
+            },
+            "incoterms": [
+              "FOB",
+              "CIF",
+              "CFR"
+            ],
+            "categoryId": 49,
+            "category": {
+              "id": 49,
+              "name": "Animal Feed",
+              "slug": "animal-feed",
+              "_id": 49
+            },
+            "_id": 124
+          }
+        ]
+      }
+    },
+    "product_detail": {
+      "endpoint": "GET /api/v1/products/castor-oil",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": {
+          "id": 105,
+          "name": "Castor oil and its derivatives",
+          "slug": "castor-oil-and-derivatives",
+          "sku": "",
+          "categoryId": 39,
+          "subCategoryId": 40,
+          "shortDescription": "High-purity Indian castor oil and functional oleochemical derivatives for cosmetic formulations, surfactants, emollient lipsticks, and industrial lubricants.",
+          "description": "Origin-direct castor oil and downstream derivatives sourced from the premier Gujarat castor growing belt. Processed under controlled expelling and refining conditions to ensure low acid value and consistent hydroxyl number. High in ricinoleic acid content, serving as a primary emollient, pigment dispersing base, and moisture-barrier lipid in cosmetics and personal care formulations. Raw material supplied for industrial and cosmetic manufacturing. Technical documentation (COA/TDS/SDS) available upon client confirmation — TODO(client).",
+          "images": [
+            {
+              "alt": "Castor oil and its derivatives commercial export grade - JHS GLOBAL",
+              "url": "/images/products/castor-oil-and-derivatives.webp",
+              "width": 800,
+              "height": 600,
+              "isHero": true,
+              "disclaimer": "Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)",
+              "aiGenerated": true
+            }
+          ],
+          "hsCode": "1515.30",
+          "botanicalName": "Ricinus communis",
+          "origin": [
+            "India (Gujarat belt) — TODO(client)"
+          ],
+          "forms": [
+            "Refined Castor Oil (First Special Grade - FSG)",
+            "Pale Pressed Grade",
+            "Hydrogenated Castor Oil (Castor Wax Flakes)",
+            "12-Hydroxystearic Acid (12-HSA)",
+            "Ricinoleic Acid"
+          ],
+          "grades": [
+            "Cosmetic Grade",
+            "Pharma / Technical Grade"
+          ],
+          "specs": [
+            {
+              "key": "Ricinoleic Acid Content",
+              "unit": "GC %",
+              "notes": "Typical range; verify via lot COA — TODO(client)",
+              "value": "85.0% – 90.0%",
+              "verified": false
+            },
+            {
+              "key": "Acid Value",
+              "unit": "mg KOH/g",
+              "notes": "Standard FSG specification",
+              "value": "≤ 2.0",
+              "verified": false
+            },
+            {
+              "key": "Saponification Value",
+              "unit": "mg KOH/g",
+              "notes": "Standard test method",
+              "value": "177 – 187",
+              "verified": false
+            },
+            {
+              "key": "Iodine Value",
+              "unit": "g I₂/100g",
+              "notes": "Standard test method",
+              "value": "82 – 90",
+              "verified": false
+            },
+            {
+              "key": "Hydroxyl Value",
+              "unit": "mg KOH/g",
+              "notes": "Characteristic marker",
+              "value": "160 – 168",
+              "verified": false
+            },
+            {
+              "key": "Moisture & Volatiles",
+              "unit": "%",
+              "notes": "Karl Fischer titration",
+              "value": "≤ 0.25%",
+              "verified": false
+            }
+          ],
+          "attributes": {
+            "todo": "TODO(client) — verify specific derivative CAS and HS heading with customs broker",
+            "subGroup": "Carrier Oils & Specialty Lipids",
+            "verified": false,
+            "casNumber": "8001-79-4"
+          },
+          "packing": [
+            {
+              "size": "200 kg net",
+              "type": "Epoxy-Coated Steel Drum",
+              "notes": "Standard international export drum"
+            },
+            {
+              "size": "1,000 L / 950 kg net",
+              "type": "Intermediate Bulk Container (IBC)",
+              "notes": "Food/Cosmetic grade tote with discharge valve"
+            },
+            {
+              "size": "25 kg net",
+              "type": "Multi-Wall Paper Bag with PE Liner",
+              "notes": "For Hydrogenated Castor Wax flakes"
+            },
+            {
+              "size": "20–22 MT",
+              "type": "ISO Tank Container",
+              "notes": "Bulk ocean maritime liquid transport"
+            }
+          ],
+          "moq": {
+            "unit": "20ft FCL (80 drums / 16 MT) — TODO(client)",
+            "value": 1
+          },
+          "shelfLife": "24 months in unopened original packaging — TODO(client)",
+          "storage": "Store in tightly sealed containers in a cool, dry warehouse protected from direct sunlight.",
+          "incoterms": [
+            "FOB",
+            "CIF",
+            "CFR"
+          ],
+          "ports": [
+            "Mundra (INMUN1)",
+            "Nhava Sheva (INNSA1)",
+            "Hazira (INHZR)"
+          ],
+          "leadTime": "10–15 business days following LC/deposit confirmation — TODO(client)",
+          "certificateIds": [],
+          "tags": [
+            "castor oil and its derivatives",
+            "refined castor oil (first special grade - fsg)",
+            "pale pressed grade",
+            "hydrogenated castor oil (castor wax flakes)",
+            "12-hydroxystearic acid (12-hsa)",
+            "ricinoleic acid",
+            "personal care raw materials",
+            "carrier oils & specialty lipids"
+          ],
+          "isFeatured": true,
+          "isActive": true,
+          "isVerified": false,
+          "verifiedFields": {},
+          "isPrivateLabelAvailable": true,
+          "seo": {
+            "title": "Castor oil and its derivatives Bulk Exporter India | JHS GLOBAL",
+            "keywords": [
+              "castor oil and its derivatives",
+              "castor oil and its derivatives exporter",
+              "b2b raw materials india",
+              "hs 1515.30"
+            ],
+            "description": "High-purity Indian castor oil and functional oleochemical derivatives for cosmetic formulations, surfactants, emollient lipsticks, and industrial lubricants. exported from India with verified laboratory specifications and compliant documentation."
+          },
+          "viewCount": 2,
+          "createdAt": "2026-10-12T11:12:51.000Z",
+          "updatedAt": "2026-10-13T15:38:59.482Z",
+          "category_id": 39,
+          "sub_category_id": 40,
+          "category": {
+            "id": 39,
+            "name": "Personal Care Raw Materials",
+            "slug": "personal-care-raw-materials",
+            "description": "High-purity cosmetic raw materials, functional carrier lipids, surfactants, hydroxy acids, antioxidant vitamins, and micronized mineral clays formulated for personal care, skincare, and toiletry manufacturers.",
+            "hsChapter": "33",
+            "_id": 39
+          },
+          "subCategory": {
+            "id": 40,
+            "name": "Carrier Oils & Specialty Lipids",
+            "slug": "personal-care-raw-materials-carrier-oils-and-specialty-lipids",
+            "_id": 40
+          },
+          "certificates": [],
+          "_id": 105
+        }
+      }
+    },
+    "product_related": {
+      "endpoint": "GET /api/v1/products/castor-oil/related",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": []
+      }
+    },
+    "search_suggest": {
+      "endpoint": "GET /api/v1/search/suggest?q=oil",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 110,
+            "_id": 110,
+            "name": "Vitamin E acetate",
+            "slug": "vitamin-e-acetate",
+            "hsCode": "2936.28",
+            "categoryName": "Personal Care Raw Materials"
+          },
+          {
+            "id": 121,
+            "_id": 121,
+            "name": "Soybean meal",
+            "slug": "soybean-meal",
+            "hsCode": "2304.00",
+            "categoryName": "Animal Feed"
+          },
+          {
+            "id": 122,
+            "_id": 122,
+            "name": "Rapeseed / mustard meal",
+            "slug": "rapeseed-mustard-meal",
+            "hsCode": "2306.41",
+            "categoryName": "Animal Feed"
+          },
+          {
+            "id": 123,
+            "_id": 123,
+            "name": "Cottonseed meal",
+            "slug": "cottonseed-meal",
+            "hsCode": "2306.10",
+            "categoryName": "Animal Feed"
+          },
+          {
+            "id": 105,
+            "_id": 105,
+            "name": "Castor oil and its derivatives",
+            "slug": "castor-oil-and-derivatives",
+            "hsCode": "1515.30",
+            "categoryName": "Personal Care Raw Materials"
+          }
+        ]
+      }
+    },
+    "certificates_list": {
+      "endpoint": "GET /api/v1/certificates",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 1,
+            "name": "FSSAI Central License",
+            "fullName": "Food Safety and Standards Authority of India (Central License - Exporter & Importer)",
+            "issuedBy": "FSSAI Central Licensing Authority, Mumbai, Govt. of India",
+            "number": "10725997001058",
+            "issueDate": null,
+            "expiryDate": null,
+            "logo": {
+              "url": ""
+            },
+            "file": {
+              "url": "/docs/certificates/fssai-central-license.pdf",
+              "type": "pdf"
+            },
+            "scope": "Central License for export and import of spices, pulses, cereals, dehydrated fruits, vegetables, food ingredients, and nutraceuticals.",
+            "isPublic": true,
+            "order": 1,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:29.400Z",
+            "updatedAt": "2026-10-12T08:12:29.400Z",
+            "image": "",
+            "_id": 1
+          },
+          {
+            "id": 2,
+            "name": "APEDA Registration",
+            "fullName": "Agricultural and Processed Food Products Export Development Authority (RCMC)",
+            "issuedBy": "APEDA, Ministry of Commerce and Industry, Govt. of India",
+            "number": "RCMC/APEDA/15765/2024-2025",
+            "issueDate": null,
+            "expiryDate": null,
+            "logo": {
+              "url": ""
+            },
+            "file": {
+              "url": "/docs/certificates/jhs-apeda.pdf",
+              "type": "pdf"
+            },
+            "scope": "Merchant Exporter registration for Basmati and Non-Basmati rice, fresh fruits & vegetables, processed food products, groundnuts, pulses, and cereals.",
+            "isPublic": true,
+            "order": 2,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:29.875Z",
+            "updatedAt": "2026-10-12T08:12:29.875Z",
+            "image": "",
+            "_id": 2
+          },
+          {
+            "id": 3,
+            "name": "Spices Board CRES",
+            "fullName": "Certificate of Registration as Exporter of Spices (CRES)",
+            "issuedBy": "Spices Board, Head Office, Cochin, Ministry of Commerce & Industry, Govt. of India",
+            "number": "CRES/SBCB/26585/2025-2026",
+            "issueDate": null,
+            "expiryDate": null,
+            "logo": {
+              "url": ""
+            },
+            "file": {
+              "url": "/docs/certificates/spice-board-jhs-global.pdf",
+              "type": "pdf"
+            },
+            "scope": "Statutory registration as Merchant Exporter for all 52 scheduled Indian spices and spice derivatives.",
+            "isPublic": true,
+            "order": 3,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:30.256Z",
+            "updatedAt": "2026-10-12T08:12:30.256Z",
+            "image": "",
+            "_id": 3
+          },
+          {
+            "id": 4,
+            "name": "DGFT IEC",
+            "fullName": "Directorate General of Foreign Trade Importer-Exporter Code (IEC)",
+            "issuedBy": "Joint DGFT, Surat, Ministry of Commerce & Industry, Govt. of India",
+            "number": "EZHPP3437* (Verified DGFT IEC)",
+            "issueDate": null,
+            "expiryDate": null,
+            "logo": {
+              "url": ""
+            },
+            "file": {
+              "url": "/docs/certificates/jhs-iec.pdf",
+              "type": "pdf"
+            },
+            "scope": "Permanent statutory trade license issued by Government of India authorizing international export shipments.",
+            "isPublic": true,
+            "order": 4,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:30.647Z",
+            "updatedAt": "2026-10-12T08:12:30.647Z",
+            "image": "",
+            "_id": 4
+          },
+          {
+            "id": 5,
+            "name": "GST Registration",
+            "fullName": "Goods and Services Tax Registration Certificate (Form GST REG-06)",
+            "issuedBy": "Government of India, Centre Jurisdiction Range-V, Surat, Gujarat",
+            "number": "24EZHPP3437**** (Verified GSTIN)",
+            "issueDate": null,
+            "expiryDate": null,
+            "logo": {
+              "url": ""
+            },
+            "file": {
+              "url": "/docs/certificates/gst-certificate.pdf",
+              "type": "pdf"
+            },
+            "scope": "Commercial tax registration establishing statutory business identity and zero-rated cross-border export documentation.",
+            "isPublic": true,
+            "order": 5,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:31.038Z",
+            "updatedAt": "2026-10-12T08:12:31.038Z",
+            "image": "",
+            "_id": 5
+          },
+          {
+            "id": 6,
+            "name": "MSME Udyam Registration",
+            "fullName": "Ministry of Micro, Small and Medium Enterprises Udyam Registration Certificate",
+            "issuedBy": "Ministry of MSME, Govt. of India",
+            "number": "UDYAM-GJ-22-0460260",
+            "issueDate": null,
+            "expiryDate": null,
+            "logo": {
+              "url": ""
+            },
+            "file": {
+              "url": "/docs/certificates/jhs-global-udyam.pdf",
+              "type": "pdf"
+            },
+            "scope": "Government registered micro enterprise under NIC Code 46209 (Wholesale of agricultural raw materials).",
+            "isPublic": true,
+            "order": 6,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:31.469Z",
+            "updatedAt": "2026-10-12T08:12:31.469Z",
+            "image": "",
+            "_id": 6
+          }
+        ]
+      }
+    },
+    "testimonials_list": {
+      "endpoint": "GET /api/v1/testimonials",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 1,
+            "name": "Dr. Klaus Reinhardt",
+            "designation": "Head of Raw Material Procurement",
+            "company": "AuraCare Cosmetics GmbH",
+            "country": "Germany",
+            "flag": "🇩🇪",
+            "text": "We procure regular 20ft FCL shipments of Refined Castor Oil derivatives and cosmetic active ingredients. The batch-to-batch consistency, low acid value, and thorough technical documentation make them a dependable Indian raw material partner.",
+            "rating": 5,
+            "avatar": {
+              "url": ""
+            },
+            "isActive": true,
+            "order": 1,
+            "createdAt": "2026-10-12T08:12:31.949Z",
+            "updatedAt": "2026-10-12T11:12:59.314Z",
+            "_id": 1
+          },
+          {
+            "id": 2,
+            "name": "Tariq Al-Mansoor",
+            "designation": "Director of Feed Milling Operations",
+            "company": "Emirates Livestock & Feed Mill LLC",
+            "country": "United Arab Emirates",
+            "flag": "🇦🇪",
+            "text": "Their high-protein Non-GMO Soybean Meal (DOC) and Rapeseed Meal consistently meet our protein solubility benchmarks. Vessel arrivals at Jebel Ali are on schedule with complete fumigation and phytosanitary documentation.",
+            "rating": 5,
+            "avatar": {
+              "url": ""
+            },
+            "isActive": true,
+            "order": 2,
+            "createdAt": "2026-10-12T08:12:32.428Z",
+            "updatedAt": "2026-10-12T11:12:59.789Z",
+            "_id": 2
+          },
+          {
+            "id": 3,
+            "name": "David Sterling",
+            "designation": "VP of Botanical Supply Chain",
+            "company": "PureBotanica Labs Inc.",
+            "country": "United States",
+            "flag": "🇺🇸",
+            "text": "Their HPLC-standardized Ashwagandha and 95% Curcumin extract pass all third-party laboratory microbiological and heavy metal screening without issue. Direct technical communication on COA specifications is transparent and professional.",
+            "rating": 5,
+            "avatar": {
+              "url": ""
+            },
+            "isActive": true,
+            "order": 3,
+            "createdAt": "2026-10-12T08:12:33.067Z",
+            "updatedAt": "2026-10-12T11:13:00.423Z",
+            "_id": 3
+          }
+        ]
+      }
+    },
+    "market_regions_list": {
+      "endpoint": "GET /api/v1/market-regions",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 1,
+            "region": "Middle East & GCC",
+            "description": "Major transit hub with direct weekly vessel sailings from Mundra and Nhava Sheva (JNPT).",
+            "transitDays": "4–7 Days",
+            "countries": [
+              {
+                "code": "AE",
+                "name": "United Arab Emirates",
+                "ports": [
+                  "Jebel Ali (AEJEA)",
+                  "Abu Dhabi (AEAUH)"
+                ]
+              },
+              {
+                "code": "SA",
+                "name": "Saudi Arabia",
+                "ports": [
+                  "Jeddah Islamic Port (SAJED)",
+                  "Dammam (SADMM)"
+                ]
+              },
+              {
+                "code": "QA",
+                "name": "Qatar",
+                "ports": [
+                  "Hamad Port (QAHMD)"
+                ]
+              },
+              {
+                "code": "OM",
+                "name": "Oman",
+                "ports": [
+                  "Sohar (OMSOH)",
+                  "Salalah (OMSLL)"
+                ]
+              },
+              {
+                "code": "KW",
+                "name": "Kuwait",
+                "ports": [
+                  "Shuwaikh Port (KWSWK)"
+                ]
+              }
+            ],
+            "order": 1,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:33.553Z",
+            "updatedAt": "2026-10-12T08:12:33.553Z",
+            "_id": 1
+          },
+          {
+            "id": 2,
+            "region": "Europe & United Kingdom",
+            "description": "Strict adherence to EU MRL thresholds, aflatoxin testing, and ethylene oxide (ETO) absence declarations.",
+            "transitDays": "20–26 Days",
+            "countries": [
+              {
+                "code": "DE",
+                "name": "Germany",
+                "ports": [
+                  "Hamburg (DEHAM)",
+                  "Bremerhaven (DEBRV)"
+                ]
+              },
+              {
+                "code": "NL",
+                "name": "Netherlands",
+                "ports": [
+                  "Rotterdam (NLRTM)"
+                ]
+              },
+              {
+                "code": "GB",
+                "name": "United Kingdom",
+                "ports": [
+                  "Felixstowe (GBFXT)",
+                  "London Gateway (GBLGP)"
+                ]
+              },
+              {
+                "code": "BE",
+                "name": "Belgium",
+                "ports": [
+                  "Antwerp (BEANR)"
+                ]
+              },
+              {
+                "code": "IT",
+                "name": "Italy",
+                "ports": [
+                  "Genoa (ITGOA)",
+                  "Trieste (ITTRS)"
+                ]
+              }
+            ],
+            "order": 2,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:34.039Z",
+            "updatedAt": "2026-10-12T08:12:34.039Z",
+            "_id": 2
+          },
+          {
+            "id": 3,
+            "region": "North America",
+            "description": "FDA FSMA compliant documentation, automated US Customs filing, and fumigation certificates.",
+            "transitDays": "28–35 Days",
+            "countries": [
+              {
+                "code": "US",
+                "name": "United States",
+                "ports": [
+                  "New York / New Jersey (USNYC)",
+                  "Houston (USHOU)",
+                  "Long Beach (USLGB)"
+                ]
+              },
+              {
+                "code": "CA",
+                "name": "Canada",
+                "ports": [
+                  "Montreal (CAMTR)",
+                  "Vancouver (CAVAN)"
+                ]
+              }
+            ],
+            "order": 3,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:34.510Z",
+            "updatedAt": "2026-10-12T08:12:34.510Z",
+            "_id": 3
+          },
+          {
+            "id": 4,
+            "region": "Southeast Asia & Far East",
+            "description": "Rapid feeder connections across ASEAN ports for agro commodities and raw materials.",
+            "transitDays": "10–16 Days",
+            "countries": [
+              {
+                "code": "SG",
+                "name": "Singapore",
+                "ports": [
+                  "Singapore (SGSIN)"
+                ]
+              },
+              {
+                "code": "MY",
+                "name": "Malaysia",
+                "ports": [
+                  "Port Klang (MYPKG)",
+                  "Penang (MYPEN)"
+                ]
+              },
+              {
+                "code": "VN",
+                "name": "Vietnam",
+                "ports": [
+                  "Ho Chi Minh City (VNSGN)",
+                  "Haiphong (VNHPH)"
+                ]
+              },
+              {
+                "code": "TH",
+                "name": "Thailand",
+                "ports": [
+                  "Laem Chabang (THLCH)"
+                ]
+              }
+            ],
+            "order": 4,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:35.149Z",
+            "updatedAt": "2026-10-12T08:12:35.149Z",
+            "_id": 4
+          }
+        ]
+      }
+    },
+    "faqs_list": {
+      "endpoint": "GET /api/v1/faqs",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 1,
+            "question": "What is your standard Minimum Order Quantity (MOQ)?",
+            "answer": "Our standard export minimum order quantity is one 20ft Full Container Load (FCL), which corresponds to approximately 18–24 Metric Tonnes (MT) depending on commodity density. For high-potency standardized botanical extracts and pharmaceutical-grade ingredients, we accommodate trial LCL shipments starting at 100 kg to 500 kg.",
+            "group": "MOQ & Ordering",
+            "order": 1,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:35.630Z",
+            "updatedAt": "2026-10-12T08:12:35.630Z",
+            "_id": 1
+          },
+          {
+            "id": 2,
+            "question": "Can we combine multiple commodities in a single container (Mixed FCL)?",
+            "answer": "Yes. For food distributors and specialty retail importers, we routinely arrange multi-commodity consolidated 20ft and 40ft containers (e.g. 10 MT Basmati Rice + 5 MT Whole Spices + 3 MT Lentils), provided the cargo items share compatible temperature and humidity storage standards.",
+            "group": "MOQ & Ordering",
+            "order": 2,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:35.970Z",
+            "updatedAt": "2026-10-12T08:12:35.970Z",
+            "_id": 2
+          },
+          {
+            "id": 3,
+            "question": "What international payment terms do you accept?",
+            "answer": "We operate under international commercial banking standards. Standard terms are: (1) 30% advance deposit via Telegraphic Transfer (TT), balance 70% payable against scanned copies of the Bill of Lading, Phytosanitary Certificate, and commercial invoice. (2) Irrevocable Letter of Credit (LC) at sight issued by a prime international commercial bank.",
+            "group": "Payment & Banking",
+            "order": 3,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:36.450Z",
+            "updatedAt": "2026-10-12T08:12:36.450Z",
+            "_id": 3
+          },
+          {
+            "id": 4,
+            "question": "Which Incoterms 2020 do you quote under?",
+            "answer": "We provide binding quotations under ICC Incoterms 2020. Our primary quoting terms are: FOB (Free on Board at Mundra or Nhava Sheva/JNPT ports), CIF (Cost, Insurance, and Freight delivered to your discharge port), and CFR (Cost and Freight). On special request, we can also provide EXW (Ex-Works from our Gujarat or Maharashtra processing plants).",
+            "group": "Shipping & Incoterms",
+            "order": 4,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:36.826Z",
+            "updatedAt": "2026-10-12T08:12:36.826Z",
+            "_id": 4
+          },
+          {
+            "id": 5,
+            "question": "What mandatory shipping and customs documents are provided with each consignment?",
+            "answer": "Every container export bill includes: (1) Clean on Board Ocean Bill of Lading (3 originals + 3 non-negotiable copies), (2) Commercial Invoice and Detailed Packing List, (3) Certificate of Origin (issued by Chamber of Commerce or Export Inspection Agency), (4) Official Phytosanitary Certificate issued by Plant Quarantine authority, (5) Certificate of Fumigation, and (6) Lot-specific Certificate of Analysis (COA) from an accredited NABL testing lab.",
+            "group": "Shipping & Incoterms",
+            "order": 5,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:37.236Z",
+            "updatedAt": "2026-10-12T08:12:37.236Z",
+            "_id": 5
+          },
+          {
+            "id": 6,
+            "question": "Do you provide lab Certificate of Analysis (COA) prior to dispatch?",
+            "answer": "Yes. Every production lot undergoes mandatory chemical and physical testing before container stuffing. We provide pre-shipment COAs certifying moisture levels, purity percentages, active marker concentrations (e.g. Curcumin % via HPLC), and testing for aflatoxins, pesticide residues, and heavy metals. On buyer request, independent inspection by SGS, Bureau Veritas, or Intertek can be conducted at the port of loading.",
+            "group": "Quality & Testing",
+            "order": 6,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:38.591Z",
+            "updatedAt": "2026-10-12T08:12:38.591Z",
+            "_id": 6
+          },
+          {
+            "id": 7,
+            "question": "Do you support custom Private Label (OEM) packaging?",
+            "answer": "Yes. Our processing infrastructure offers comprehensive contract manufacturing and custom private labeling. We support retail packaging ranging from 100g to 5kg standing zip pouches, heat-sealed clear bags, HDPE jars, and branded outer master cartons, formatted to satisfy FDA (US), EFSA (EU), or GSO (GCC) regulatory labeling requirements.",
+            "group": "Private Label OEM",
+            "order": 7,
+            "isActive": true,
+            "createdAt": "2026-10-12T08:12:39.139Z",
+            "updatedAt": "2026-10-12T08:12:39.139Z",
+            "_id": 7
+          }
+        ]
+      }
+    },
+    "blog_list": {
+      "endpoint": "GET /api/v1/blog",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data",
+        "meta"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 4,
+            "title": "Incoterms 2020 Demystified for Containerized Cargo: FOB vs CIF vs CFR",
+            "slug": "incoterms-2020-demystified-for-containerized-agro-cargo-fob-cif-cfr",
+            "excerpt": "A practical procurement guide on ICC Incoterms 2020 for raw material container shipping from Mundra and Nhava Sheva (JNPT) ports. Cost allocation, marine insurance, and transfer of risk explained.",
+            "coverImage": {
+              "alt": "Container Maritime Shipping Incoterms Logistics",
+              "url": "/images/placeholders/blog-logistics.jpg"
+            },
+            "author": {
+              "name": "P. V. Chacko",
+              "avatar": "/images/placeholders/avatar-default.jpg",
+              "designation": "Head of Maritime Shipping & Trade Finance"
+            },
+            "category": "Export Logistics & Banking",
+            "tags": [
+              "Incoterms",
+              "Maritime Logistics",
+              "Shipping",
+              "Risk Transfer",
+              "CIF vs FOB"
+            ],
+            "publishedAt": "2026-10-11T11:13:03.579Z",
+            "readMinutes": 2,
+            "_id": 4
+          },
+          {
+            "id": 7,
+            "title": "Animal Feed Protein Benchmarks: Soya Meal vs Rapeseed Meal in Commercial Rations",
+            "slug": "animal-feed-protein-benchmarks-soya-vs-rapeseed-meal",
+            "excerpt": "Nutritional comparison of Indian Non-GMO Soybean Meal (DOC) and Rapeseed/Mustard Meal: crude protein, amino acid profiles, fiber parameters, and bulk container shipping.",
+            "coverImage": {
+              "alt": "Soybean Meal vs Rapeseed Meal Animal Feed Export",
+              "url": "/images/products/soybean-meal.webp"
+            },
+            "author": {
+              "name": "Gurpreet Singh",
+              "avatar": "/images/placeholders/avatar-default.jpg",
+              "designation": "Head of Animal Feed Desk"
+            },
+            "category": "Animal Feed",
+            "tags": [
+              "Animal Feed",
+              "Soybean Meal",
+              "Rapeseed Meal",
+              "Poultry Feed",
+              "Non-GMO"
+            ],
+            "publishedAt": "2026-10-09T11:13:03.579Z",
+            "readMinutes": 2,
+            "_id": 7
+          },
+          {
+            "id": 3,
+            "title": "Basmati Rice Export Grades: 1121 Steam vs Traditional Basmati Specifications",
+            "slug": "basmati-rice-export-grades-1121-steam-vs-traditional-specifications",
+            "excerpt": "A technical comparison of grain elongation ratios, moisture tolerances, chalkiness, and cooking elongation between 1121 Steam Basmati, Sella (Parboiled), and Traditional Basmati for commercial importers.",
+            "coverImage": {
+              "alt": "1121 Steam Basmati Rice Export Quality",
+              "url": "/images/placeholders/blog-rice.jpg"
+            },
+            "author": {
+              "name": "Gurpreet Singh",
+              "avatar": "/images/placeholders/avatar-default.jpg",
+              "designation": "Grain Milling & Commodity Desk Lead"
+            },
+            "category": "Agricultural Commodities",
+            "tags": [
+              "Basmati Rice",
+              "Grain Length",
+              "Milling",
+              "Agricultural Commodities",
+              "APEDA"
+            ],
+            "publishedAt": "2026-10-09T08:12:41.236Z",
+            "readMinutes": 2,
+            "_id": 3
+          },
+          {
+            "id": 6,
+            "title": "Castor Oil & Ricinoleic Acid Oleochemical Derivatives: Industrial Formulation Guide",
+            "slug": "castor-oil-ricinoleic-acid-derivatives-procurement-guide",
+            "excerpt": "A commercial overview of Indian Castor Oil grades (FSG, Pale Pressed), Hydrogenated Castor Oil (HCO wax), and 12-HSA for cosmetic formulators and chemical processors.",
+            "coverImage": {
+              "alt": "Castor Oil and Derivatives Commercial Procurement",
+              "url": "/images/products/castor-oil-and-derivatives.webp"
+            },
+            "author": {
+              "name": "K. S. Sharma",
+              "avatar": "/images/placeholders/avatar-default.jpg",
+              "designation": "Director of Oleochemicals & Export Trade"
+            },
+            "category": "Personal Care Raw Materials",
+            "tags": [
+              "Castor Oil",
+              "Personal Care",
+              "Oleochemicals",
+              "FSG Castor",
+              "Cosmetic Ingredients"
+            ],
+            "publishedAt": "2026-10-05T11:13:03.579Z",
+            "readMinutes": 2,
+            "_id": 6
+          },
+          {
+            "id": 2,
+            "title": "EU Maximum Residue Limits (MRL) and Pesticide Compliance for Indian Spices (EC 396/2005)",
+            "slug": "eu-mrl-compliance-and-pesticide-residue-standards-indian-spices",
+            "excerpt": "A comprehensive guide to European Commission Regulation EC 396/2005 for bulk spice importers. Details on Chlorpyrifos, Ethylene Oxide (ETO), Tricyclazole, and preventative pre-export screening protocols.",
+            "coverImage": {
+              "alt": "EU Food Safety MRL Compliance Spices",
+              "url": "/images/placeholders/blog-compliance.jpg"
+            },
+            "author": {
+              "name": "K. S. Sharma",
+              "avatar": "/images/placeholders/avatar-default.jpg",
+              "designation": "Director of International Regulatory Affairs"
+            },
+            "category": "Regulatory Compliance",
+            "tags": [
+              "EU Regulations",
+              "MRL",
+              "Food Safety",
+              "Ethylene Oxide",
+              "Testing"
+            ],
+            "publishedAt": "2026-10-05T08:12:41.236Z",
+            "readMinutes": 2,
+            "_id": 2
+          },
+          {
+            "id": 5,
+            "title": "Curcumin Biomarker Chemistry: HPLC Standardization & Purity Criteria for Importers",
+            "slug": "curcumin-biomarker-chemistry-hplc-standardization-guide",
+            "excerpt": "A technical procurement guide for nutraceutical formulators: understanding HPLC assay methods for Curcuminoids (Curcumin, DMC, BDMC), residual solvent thresholds (USP 467), and zero-adulteration testing.",
+            "coverImage": {
+              "alt": "Curcumin 95% HPLC Testing and Extraction Guide",
+              "url": "/images/products/turmeric-curcumin-extract.webp"
+            },
+            "author": {
+              "name": "Dr. R. Natarajan",
+              "avatar": "/images/placeholders/avatar-default.jpg",
+              "designation": "Head of Quality Assurance & Phytochemistry"
+            },
+            "category": "Nutraceutical Raw Materials",
+            "tags": [
+              "Curcumin",
+              "Nutraceuticals",
+              "HPLC",
+              "Botanical Extracts",
+              "Quality Standards"
+            ],
+            "publishedAt": "2026-09-28T11:13:03.579Z",
+            "readMinutes": 2,
+            "_id": 5
+          },
+          {
+            "id": 1,
+            "title": "Understanding Curcumin Content in Salem vs Alleppey Turmeric: A Procurement Guide for Importers",
+            "slug": "understanding-curcumin-content-in-salem-vs-alleppey-turmeric",
+            "excerpt": "A comprehensive comparative analysis of curcumin biomarker concentrations, essential oil percentages, and extraction yields between Salem and Alleppey turmeric varieties for food processors and nutraceutical formulators.",
+            "coverImage": {
+              "alt": "Salem vs Alleppey Turmeric Fingers Export Quality",
+              "url": "/images/placeholders/blog-turmeric.jpg"
+            },
+            "author": {
+              "name": "Dr. R. Natarajan",
+              "avatar": "/images/placeholders/avatar-default.jpg",
+              "designation": "Head of Quality Assurance & Agro Chemistry"
+            },
+            "category": "Spices & Botanical Quality",
+            "tags": [
+              "Turmeric",
+              "Curcumin",
+              "Quality Standards",
+              "Spices Board"
+            ],
+            "publishedAt": "2026-09-28T08:12:41.236Z",
+            "readMinutes": 3,
+            "_id": 1
+          }
+        ],
+        "meta": {
+          "total": 7,
+          "page": 1,
+          "limit": 10,
+          "pages": 1
+        }
+      }
+    },
+    "company_facts": {
+      "endpoint": "GET /api/v1/company-facts",
+      "statusCode": 200,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "data"
+      ],
+      "sampleResponse": {
+        "success": true,
+        "data": [
+          {
+            "id": 11,
+            "category": "certifications",
+            "factKey": "apeda_rcmc",
+            "label": "APEDA Registration-cum-Membership Certificate (RCMC)",
+            "factValue": "RCMC/APEDA/15765/2024-2025 (Registered Merchant Exporter for Fruits, Vegetables, Cereals, Pulses, Ministry of Commerce & Industry)",
+            "source": "client_document",
+            "sourceDocument": "JHS APEDA.pdf",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Statutory APEDA registration for agricultural exports.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:27.332Z",
+            "updatedAt": "2026-10-13T06:28:27.332Z",
+            "_id": 11
+          },
+          {
+            "id": 7,
+            "category": "certifications",
+            "factKey": "dgft_iec",
+            "label": "DGFT Importer-Exporter Code (IEC)",
+            "factValue": "EZHPP3437C (Issued 03/03/2025 by Office of the Joint DGFT, Surat, Ministry of Commerce & Industry, Govt. of India)",
+            "source": "client_document",
+            "sourceDocument": "JHS IEC.pdf",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Permanent statutory license authorizing cross-border merchant exports.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:24.864Z",
+            "updatedAt": "2026-10-13T06:28:24.864Z",
+            "_id": 7
+          },
+          {
+            "id": 10,
+            "category": "certifications",
+            "factKey": "fssai_central_license",
+            "label": "FSSAI Central Food Safety License",
+            "factValue": "10725997001058 (FSSAI Central Licensing Authority, Kind of Business: Trader/Merchant - Exporter, Valid for 2026-27)",
+            "source": "client_document",
+            "sourceDocument": "RENEWAL LICENSE 2026-27.pdf",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Statutory Central License authorizing export of food ingredients and nutraceutical raw materials.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:26.221Z",
+            "updatedAt": "2026-10-13T06:28:26.221Z",
+            "_id": 10
+          },
+          {
+            "id": 6,
+            "category": "certifications",
+            "factKey": "gstin",
+            "label": "Goods & Services Tax Identification Number (GSTIN)",
+            "factValue": "24EZHPP3437C1ZH (Jurisdiction: Centre Range-V, Surat, Gujarat; Approved 14/02/2025)",
+            "source": "client_document",
+            "sourceDocument": "GST Certificate.pdf",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Active GST registration for zero-rated international exports.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:24.516Z",
+            "updatedAt": "2026-10-13T06:28:24.516Z",
+            "_id": 6
+          },
+          {
+            "id": 9,
+            "category": "certifications",
+            "factKey": "msme_udyam",
+            "label": "Ministry of MSME Udyam Registration",
+            "factValue": "UDYAM-GJ-22-0460260 (Classification: Micro Enterprise, Classification Date: 07/02/2025)",
+            "source": "client_document",
+            "sourceDocument": "JHS GLOBAL Udyam Registration Certificate.pdf",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Official MSME enterprise registration.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:25.851Z",
+            "updatedAt": "2026-10-13T06:28:25.851Z",
+            "_id": 9
+          },
+          {
+            "id": 8,
+            "category": "certifications",
+            "factKey": "pan_number",
+            "label": "Permanent Account Number (PAN)",
+            "factValue": "EZHPP3437C",
+            "source": "client_document",
+            "sourceDocument": "JHS IEC.pdf",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Statutory tax identification of proprietor.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:25.468Z",
+            "updatedAt": "2026-10-13T06:28:25.468Z",
+            "_id": 8
+          },
+          {
+            "id": 12,
+            "category": "certifications",
+            "factKey": "spices_board_cres",
+            "label": "Spices Board of India Exporter Registration (CRES)",
+            "factValue": "CRES/SBCB/26585/2025-2026 (Registered Merchant Exporter for Spices & Spice Products, Valid from 27/10/2025 to 26/10/2028)",
+            "source": "client_document",
+            "sourceDocument": "SPICE BOARD-JHS GLOBAL.PDF",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Statutory registration with Spices Board, Head Office Cochin.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:27.854Z",
+            "updatedAt": "2026-10-13T06:28:27.854Z",
+            "_id": 12
+          },
+          {
+            "id": 18,
+            "category": "contact",
+            "factKey": "contact_official_email",
+            "label": "Official Export Inquiries Email",
+            "factValue": "UNKNOWN — Email address to be confirmed by client. Please use the RFQ form on the website.",
+            "source": "admin_portal",
+            "sourceDocument": "TODO(client)",
+            "isVerified": false,
+            "isPublic": true,
+            "notes": "TODO(client) — supply official public inquiry email (masked on FoSCoS portal).",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:30.189Z",
+            "updatedAt": "2026-10-13T06:28:30.189Z",
+            "_id": 18
+          },
+          {
+            "id": 19,
+            "category": "contact",
+            "factKey": "contact_official_phone",
+            "label": "Official Trade Desk Telephone",
+            "factValue": "UNKNOWN — Official trade desk landline to be confirmed by client. Trade WhatsApp line available via website widget.",
+            "source": "admin_portal",
+            "sourceDocument": "TODO(client)",
+            "isVerified": false,
+            "isPublic": true,
+            "notes": "TODO(client) — supply official company phone number.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:30.554Z",
+            "updatedAt": "2026-10-13T06:28:30.554Z",
+            "_id": 19
+          },
+          {
+            "id": 3,
+            "category": "identity",
+            "factKey": "brand_name",
+            "label": "Commercial Brand Identity",
+            "factValue": "JSH Global (Officially registered trade name on Government export certificates: JHS GLOBAL)",
+            "source": "client_document",
+            "sourceDocument": "client massage.txt & Primary Registrations",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Branded internationally as JSH Global; formal export billings issued under JHS GLOBAL.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:23.010Z",
+            "updatedAt": "2026-10-13T06:28:23.010Z",
+            "_id": 3
+          },
+          {
+            "id": 5,
+            "category": "identity",
+            "factKey": "business_constitution",
+            "label": "Constitution of Business",
+            "factValue": "Proprietorship (Government Registered Micro Enterprise - Trading, NIC Code 46209)",
+            "source": "client_document",
+            "sourceDocument": "MSME Udyam Registration Certificate.pdf",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Registered micro enterprise for wholesale and trading of agricultural raw materials.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:24.158Z",
+            "updatedAt": "2026-10-13T06:28:24.158Z",
+            "_id": 5
+          },
+          {
+            "id": 1,
+            "category": "identity",
+            "factKey": "legal_entity_name",
+            "label": "Legal Entity Name",
+            "factValue": "Jay Sureshbhai Prajapati (Proprietorship)",
+            "source": "client_document",
+            "sourceDocument": "GST Certificate.pdf / DGFT IEC",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Sole Proprietorship registered under Indian law.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:21.930Z",
+            "updatedAt": "2026-10-13T06:28:21.930Z",
+            "_id": 1
+          },
+          {
+            "id": 4,
+            "category": "identity",
+            "factKey": "registered_address",
+            "label": "Registered Corporate & Operating Address",
+            "factValue": "Flat No. 401, Shyam-A, Build-H, Vatsalya Villa Residency, Chhaprabhatha Road, Amroli, Surat, Gujarat 394107, India",
+            "source": "client_document",
+            "sourceDocument": "GST Certificate.pdf & FSSAI License",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Official registered address in Surat, Gujarat.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:23.739Z",
+            "updatedAt": "2026-10-13T06:28:23.739Z",
+            "_id": 4
+          },
+          {
+            "id": 2,
+            "category": "identity",
+            "factKey": "trade_name",
+            "label": "Registered Trade Name",
+            "factValue": "JHS GLOBAL",
+            "source": "client_document",
+            "sourceDocument": "GST Certificate.pdf (Form GST REG-06)",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Official trade name as registered with GST, DGFT, APEDA, and Spices Board of India.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:22.456Z",
+            "updatedAt": "2026-10-13T06:28:22.456Z",
+            "_id": 2
+          },
+          {
+            "id": 21,
+            "category": "operations",
+            "factKey": "annual_processing_capacity",
+            "label": "Annual Processing / Export Capacity",
+            "factValue": "UNKNOWN — Aggregate capacity is crop and contract dependent and is not published as a fixed guarantee.",
+            "source": "admin_portal",
+            "sourceDocument": "TODO(client)",
+            "isVerified": false,
+            "isPublic": true,
+            "notes": "TODO(client) — confirm verifiable annual export tonnage.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:31.961Z",
+            "updatedAt": "2026-10-13T06:28:31.961Z",
+            "_id": 21
+          },
+          {
+            "id": 15,
+            "category": "operations",
+            "factKey": "catalogue_divisions",
+            "label": "Commercial Catalogue Divisions",
+            "factValue": "3 Core Export Divisions: (1) Personal Care Raw Materials, (2) Nutraceutical Raw Materials, and (3) Animal Feed.",
+            "source": "client_document",
+            "sourceDocument": "client massage.txt & Products_website.xlsx",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Master catalogue divisions approved by client.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:29.045Z",
+            "updatedAt": "2026-10-13T06:28:29.045Z",
+            "_id": 15
+          },
+          {
+            "id": 17,
+            "category": "operations",
+            "factKey": "export_loading_ports",
+            "label": "Primary Export Departure Sea Ports",
+            "factValue": "Hazira Port (Surat, Gujarat - INHZR1) and Mundra Port (Kutch, Gujarat - INMUN1); Nhava Sheva / JNPT (Mumbai, Maharashtra - INNSA1).",
+            "source": "client_document",
+            "sourceDocument": "Home Page-website.docx",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Primary maritime container loading terminals.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:29.810Z",
+            "updatedAt": "2026-10-13T06:28:29.810Z",
+            "_id": 17
+          },
+          {
+            "id": 20,
+            "category": "operations",
+            "factKey": "operating_hours",
+            "label": "Commercial Desk Business Hours",
+            "factValue": "UNKNOWN — Business operating hours to be confirmed by management.",
+            "source": "admin_portal",
+            "sourceDocument": "TODO(client)",
+            "isVerified": false,
+            "isPublic": true,
+            "notes": "TODO(client) — specify operating hours and timezone (e.g., Mon-Sat 09:00-18:00 IST).",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:31.552Z",
+            "updatedAt": "2026-10-13T06:28:31.552Z",
+            "_id": 20
+          },
+          {
+            "id": 14,
+            "category": "operations",
+            "factKey": "quote_turnaround_promise",
+            "label": "Quote & Proforma Response Time",
+            "factValue": "48 business hours turnaround guarantee for qualified commercial buyers with containerized, LCL, or custom packing requirements.",
+            "source": "client_document",
+            "sourceDocument": "Home Page-website.docx",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Commercial trade desk commitment.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:28.684Z",
+            "updatedAt": "2026-10-13T06:28:28.684Z",
+            "_id": 14
+          },
+          {
+            "id": 13,
+            "category": "operations",
+            "factKey": "unlisted_sourcing_promise",
+            "label": "48-Hour Unlisted Sourcing Commitment",
+            "factValue": "Can't find the raw material or ingredient you are looking for? Share your target specifications with our export desk and we will source and qualify it within 48 hours.",
+            "source": "client_document",
+            "sourceDocument": "client massage.txt",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Client explicit instruction: unlisted product sourcing turnaround is 48 hours.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:28.336Z",
+            "updatedAt": "2026-10-13T06:28:28.336Z",
+            "_id": 13
+          },
+          {
+            "id": 23,
+            "category": "policy",
+            "factKey": "payment_terms_policy",
+            "label": "Accepted Commercial Payment Terms",
+            "factValue": "UNKNOWN — Typical industry terms include 30% advance TT with balance against B/L copy, or Irrevocable LC at Sight. Exact binding terms are negotiated per proforma order.",
+            "source": "admin_portal",
+            "sourceDocument": "TODO(client)",
+            "isVerified": false,
+            "isPublic": true,
+            "notes": "TODO(client) — confirm accepted banking and payment terms policy.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:32.721Z",
+            "updatedAt": "2026-10-13T06:28:32.721Z",
+            "_id": 23
+          },
+          {
+            "id": 24,
+            "category": "policy",
+            "factKey": "private_label_moq",
+            "label": "Private Label (OEM) Minimum Order Quantity",
+            "factValue": "UNKNOWN — Custom private labeling and branded retail packaging available; minimum production run varies by formulation and packing format.",
+            "source": "admin_portal",
+            "sourceDocument": "TODO(client)",
+            "isVerified": false,
+            "isPublic": true,
+            "notes": "TODO(client) — specify minimum order quantity for private label packaging.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:33.073Z",
+            "updatedAt": "2026-10-13T06:28:33.073Z",
+            "_id": 24
+          },
+          {
+            "id": 22,
+            "category": "policy",
+            "factKey": "sample_policy",
+            "label": "Product Sample Evaluation Policy",
+            "factValue": "UNKNOWN — Lab evaluation samples are arranged on request. Courier charges (DHL/FedEx) and sample terms to be confirmed per commodity grade.",
+            "source": "admin_portal",
+            "sourceDocument": "TODO(client)",
+            "isVerified": false,
+            "isPublic": true,
+            "notes": "TODO(client) — clarify free sample threshold and international courier billing policy.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:32.364Z",
+            "updatedAt": "2026-10-13T06:28:32.364Z",
+            "_id": 22
+          },
+          {
+            "id": 16,
+            "category": "quality",
+            "factKey": "quality_testing_assurance",
+            "label": "Quality Process & Testing Assurance",
+            "factValue": "Batch-specific laboratory Certificate of Analysis (COA) confirming physical parameters, active marker assay (HPLC), moisture levels, and microbiological screening. Pre-shipment independent inspection by SGS, Bureau Veritas, or Intertek available upon buyer request.",
+            "source": "client_document",
+            "sourceDocument": "Home Page-website.docx & Export Catalogue",
+            "isVerified": true,
+            "isPublic": true,
+            "notes": "Standard quality workflow for commercial shipments.",
+            "updatedBy": null,
+            "createdAt": "2026-10-13T06:28:29.427Z",
+            "updatedAt": "2026-10-13T06:28:29.427Z",
+            "_id": 16
+          }
+        ]
+      }
+    },
+    "inquiry_validation_error": {
+      "endpoint": "POST /api/v1/inquiries",
+      "statusCode": 422,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "error"
+      ],
+      "sampleResponse": {
+        "success": false,
+        "error": {
+          "code": "VALIDATION_ERROR",
+          "message": "Validation failed",
+          "details": [
+            {
+              "field": "name",
+              "message": "Required"
+            },
+            {
+              "field": "email",
+              "message": "Required"
+            },
+            {
+              "field": "company",
+              "message": "Required"
+            },
+            {
+              "field": "country",
+              "message": "Required"
+            }
+          ]
+        }
+      }
+    },
+    "sample_validation_error": {
+      "endpoint": "POST /api/v1/samples",
+      "statusCode": 422,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "error"
+      ],
+      "sampleResponse": {
+        "success": false,
+        "error": {
+          "code": "VALIDATION_ERROR",
+          "message": "Validation failed",
+          "details": [
+            {
+              "field": "name",
+              "message": "Required"
+            },
+            {
+              "field": "email",
+              "message": "Required"
+            },
+            {
+              "field": "company",
+              "message": "Required"
+            },
+            {
+              "field": "country",
+              "message": "Required"
+            },
+            {
+              "field": "products",
+              "message": "Required"
+            },
+            {
+              "field": "shippingAddress",
+              "message": "Required"
+            }
+          ]
+        }
+      }
+    },
+    "auth_unauthorized_dashboard": {
+      "endpoint": "GET /api/v1/admin/dashboard",
+      "statusCode": 401,
+      "contentType": "application/json; charset=utf-8",
+      "responseShape": [
+        "success",
+        "error"
+      ],
+      "sampleResponse": {
+        "success": false,
+        "error": {
+          "code": "INTERNAL_ERROR",
+          "message": "Authentication required. Bearer token missing."
+        }
+      }
+    }
+  }
+}

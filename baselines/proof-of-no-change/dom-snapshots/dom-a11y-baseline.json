@@ -1,0 +1,732 @@
+{
+  "timestamp": "2026-10-13T15:44:18.945Z",
+  "domSnapshots": {
+    "home": {
+      "title": "JHS GLOBAL — One Accountable Supplier for Diverse Category Sourcing",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "One Accountable Supplier for\nDiverse Category Sourcing.",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Rooted in India’s Premier Maritime Export Corridor",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Why Partner with JHS GLOBAL?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Responsive & Experienced Team",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Certified & Compliant",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Premium Quality",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Global Export Experience",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Competitive Pricing",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Timely Delivery",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Customized Packaging",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Transparent Communication",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "48-Hour Quote Turnaround",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Honesty and Integrity",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Products Designed for Diverse Industrial Needs",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Personal Care & Cosmetic Formulators",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Nutraceuticals & Dietary Supplements",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Feed Mills & Commercial Animal Nutrition",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "4-Step Purity & Container Due Diligence",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Direct Origin Sourcing",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "In-Process Assay Screening",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "NABL Accredited Lab Testing",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Container Stuffing Inspection",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "5-Step Export Workflow Process",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Formal RFQ & 48h Binding Quote",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Sample Dispatch & Lab COA",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Contract & Banking (LC / TT)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Processing, Sorting & Container Packing",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Port Loading & Customs Discharge",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Our certifications & export documents",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "GST",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "IEC",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "APEDA RCMC",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "FSSAI",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Planning Your Next Sourcing from India?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Ready to procure in commercial FCL / MT volumes?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "",
+          "ariaHidden": null
+        }
+      ],
+      "landmarks": [
+        {
+          "tag": "header",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "nav",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "main",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": "Inspect GST certificate"
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": "Inspect IEC certificate"
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": "Inspect APEDA RCMC certificate"
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": "Inspect FSSAI certificate"
+        },
+        {
+          "tag": "footer",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "tooltip",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "dialog",
+          "ariaLabel": "Your Quote Basket"
+        }
+      ]
+    },
+    "products": {
+      "title": "Export Raw Materials, Active Ingredients & Animal Feed — B2B Catalogue",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Export Raw Materials, Active Ingredients & Animal Feed",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "No Export Products Match Your Criteria",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Can’t find the product or grade you are looking for?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Ready to procure in commercial FCL / MT volumes?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Filter & Sort Catalogue",
+          "ariaHidden": null
+        }
+      ],
+      "landmarks": [
+        {
+          "tag": "header",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "nav",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "main",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "footer",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "tooltip",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "dialog",
+          "ariaLabel": "Your Quote Basket"
+        },
+        {
+          "tag": "div",
+          "role": "dialog",
+          "ariaLabel": "Filter and Sort Catalogue"
+        }
+      ]
+    },
+    "quality": {
+      "title": "Quality Assurance & Verified Export Certifications — JHS GLOBAL",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Quality Governance & Verified Export Licenses",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Government of India Export Accreditations",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "GST Registration Certificate",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "DGFT Importer-Exporter Code",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "APEDA Registration (RCMC)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "FSSAI Central Food Safety License",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Spices Board of India (CRES)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "MSME Udyam Registration",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Our 5-Point Buyer Due Diligence Standard",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Can’t find the product or grade you are looking for?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Ready to procure in commercial FCL / MT volumes?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "",
+          "ariaHidden": null
+        }
+      ],
+      "landmarks": [
+        {
+          "tag": "header",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "nav",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "main",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "footer",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "tooltip",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "dialog",
+          "ariaLabel": "Your Quote Basket"
+        }
+      ]
+    },
+    "export-process": {
+      "title": "8-Step Export Process & Incoterms 2020 Guide — JHS GLOBAL",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "8-Step International Export Journey & Trade Terms",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "How Your Consignment Moves from Sourcing to Discharge",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Quotation Issued & 48h Turnaround",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Official Documents Shared",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Free Sample Dispatch with COA",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Buyer Confirms & Pays Advance",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Production, Sortex Cleaning & Branding",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Pre-Shipment Inspection & Approval",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Port Clearance & Vessel Sailing",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Delivery & Quality Guarantee",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Accepted Incoterms 2020 Matrix",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Shipping Documentation Dossier",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Ocean Bill of Lading (B/L)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Commercial Invoice & Packing List",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Certificate of Origin (COO)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Phytosanitary Certificate",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Fumigation Certificate",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Certificate of Analysis (COA)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Non-GMO / Health Certificate",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Marine Cargo Insurance Policy",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Can’t find the product or grade you are looking for?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Ready to procure in commercial FCL / MT volumes?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "",
+          "ariaHidden": null
+        }
+      ],
+      "landmarks": [
+        {
+          "tag": "header",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "nav",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "main",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "footer",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "tooltip",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "dialog",
+          "ariaLabel": "Your Quote Basket"
+        }
+      ]
+    },
+    "contact": {
+      "title": "Request a Formal Quote (RFQ) & Contact Trade Desk — JHS GLOBAL",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Request a Binding Commercial Quotation",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "International Trade Desk",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "1. Buyer & Company Identification",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "2. Selected Commodities for Quotation",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "3. Maritime Logistics & Banking Conditions",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "4. Detailed Product Specifications & Tolerances",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Frequently Asked Sourcing Questions",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Can’t find the product or grade you are looking for?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Ready to procure in commercial FCL / MT volumes?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "",
+          "ariaHidden": null
+        }
+      ],
+      "landmarks": [
+        {
+          "tag": "header",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "nav",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "main",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "footer",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "tooltip",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "dialog",
+          "ariaLabel": "Your Quote Basket"
+        }
+      ]
+    }
+  },
+  "a11ySnapshots": {
+    "home": {
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodesCount": 4
+        }
+      ]
+    },
+    "products": {
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodesCount": 5
+        }
+      ]
+    },
+    "quality": {
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodesCount": 11
+        }
+      ]
+    },
+    "export-process": {
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodesCount": 13
+        }
+      ]
+    },
+    "contact": {
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodesCount": 6
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,334 @@
+{
+  "timestamp": "2026-10-13T15:36:55.461Z",
+  "queryPlans": {
+    "categories_active_order": [
+      {
+        "Plan": {
+          "Node Type": "Sort",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Startup Cost": 2.01,
+          "Total Cost": 2.01,
+          "Plan Rows": 1,
+          "Plan Width": 1377,
+          "Actual Startup Time": 0.039,
+          "Actual Total Time": 0.04,
+          "Actual Rows": 13,
+          "Actual Loops": 1,
+          "Sort Key": [
+            "\"order\""
+          ],
+          "Sort Method": "quicksort",
+          "Sort Space Used": 29,
+          "Sort Space Type": "Memory",
+          "Shared Hit Blocks": 2,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0,
+          "Plans": [
+            {
+              "Node Type": "Seq Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Relation Name": "categories",
+              "Alias": "categories",
+              "Startup Cost": 0,
+              "Total Cost": 2,
+              "Plan Rows": 1,
+              "Plan Width": 1377,
+              "Actual Startup Time": 0.024,
+              "Actual Total Time": 0.028,
+              "Actual Rows": 13,
+              "Actual Loops": 1,
+              "Filter": "is_active",
+              "Rows Removed by Filter": 0,
+              "Shared Hit Blocks": 2,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            }
+          ]
+        },
+        "Planning": {
+          "Shared Hit Blocks": 34,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        "Planning Time": 0.147,
+        "Triggers": [],
+        "Execution Time": 0.066
+      }
+    ],
+    "products_catalogue_list": {
+      "error": "column \"title\" does not exist"
+    },
+    "product_detail_by_slug": [
+      {
+        "Plan": {
+          "Node Type": "Limit",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Startup Cost": 0.14,
+          "Total Cost": 2.36,
+          "Plan Rows": 1,
+          "Plan Width": 1567,
+          "Actual Startup Time": 0.011,
+          "Actual Total Time": 0.011,
+          "Actual Rows": 0,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 1,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0,
+          "Plans": [
+            {
+              "Node Type": "Index Scan",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Scan Direction": "Forward",
+              "Index Name": "products_slug_key",
+              "Relation Name": "products",
+              "Alias": "products",
+              "Startup Cost": 0.14,
+              "Total Cost": 2.36,
+              "Plan Rows": 1,
+              "Plan Width": 1567,
+              "Actual Startup Time": 0.01,
+              "Actual Total Time": 0.01,
+              "Actual Rows": 0,
+              "Actual Loops": 1,
+              "Index Cond": "((slug)::text = 'castor-oil'::text)",
+              "Rows Removed by Index Recheck": 0,
+              "Shared Hit Blocks": 1,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0
+            }
+          ]
+        },
+        "Planning": {
+          "Shared Hit Blocks": 156,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        "Planning Time": 0.504,
+        "Triggers": [],
+        "Execution Time": 0.045
+      }
+    ],
+    "inquiries_recent_list": [
+      {
+        "Plan": {
+          "Node Type": "Limit",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Startup Cost": 6.58,
+          "Total Cost": 6.61,
+          "Plan Rows": 10,
+          "Plan Width": 39,
+          "Actual Startup Time": 3.219,
+          "Actual Total Time": 3.221,
+          "Actual Rows": 10,
+          "Actual Loops": 1,
+          "Shared Hit Blocks": 5,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 1,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0,
+          "Plans": [
+            {
+              "Node Type": "Sort",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Startup Cost": 6.58,
+              "Total Cost": 6.71,
+              "Plan Rows": 50,
+              "Plan Width": 39,
+              "Actual Startup Time": 3.218,
+              "Actual Total Time": 3.219,
+              "Actual Rows": 10,
+              "Actual Loops": 1,
+              "Sort Key": [
+                "created_at DESC"
+              ],
+              "Sort Method": "top-N heapsort",
+              "Sort Space Used": 26,
+              "Sort Space Type": "Memory",
+              "Shared Hit Blocks": 5,
+              "Shared Read Blocks": 0,
+              "Shared Dirtied Blocks": 1,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 0,
+              "Temp Written Blocks": 0,
+              "Plans": [
+                {
+                  "Node Type": "Seq Scan",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Relation Name": "inquiries",
+                  "Alias": "inquiries",
+                  "Startup Cost": 0,
+                  "Total Cost": 5.5,
+                  "Plan Rows": 50,
+                  "Plan Width": 39,
+                  "Actual Startup Time": 1.223,
+                  "Actual Total Time": 3.195,
+                  "Actual Rows": 44,
+                  "Actual Loops": 1,
+                  "Shared Hit Blocks": 5,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 1,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            }
+          ]
+        },
+        "Planning": {
+          "Shared Hit Blocks": 16,
+          "Shared Read Blocks": 0,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        "Planning Time": 3.25,
+        "Triggers": [],
+        "Execution Time": 3.249
+      }
+    ]
+  },
+  "statStatements": [
+    {
+      "query": "select $1 from pg_catalog.pg_available_extensions where name = $2",
+      "calls": "384",
+      "total_exec_time": 10283.995497,
+      "mean_exec_time": 26.7812382734375,
+      "rows": "384"
+    },
+    {
+      "query": "select $1 from pg_catalog.pg_available_extensions where name = $2",
+      "calls": "146",
+      "total_exec_time": 4831.223538,
+      "mean_exec_time": 33.0905721780822,
+      "rows": "146"
+    },
+    {
+      "query": "SELECT\n  e.name,\n  n.nspname AS schema,\n  e.default_version,\n  x.extversion AS installed_version,\n  e.comment,\n  ev.schema AS default_version_schema\nFROM\n  pg_available_extensions e\n  LEFT JOIN pg_extension x ON e.name = x.extname\n  LEFT JOIN pg_namespace n ON x.extnamespace = n.oid\n  LEFT JOIN pg_available_extension_versions ev\n    ON ev.name = e.name AND ev.version = e.default_version",
+      "calls": "9",
+      "total_exec_time": 4583.994322,
+      "mean_exec_time": 509.332702444445,
+      "rows": "702"
+    },
+    {
+      "query": "SELECT name FROM pg_timezone_names",
+      "calls": "40",
+      "total_exec_time": 2952.674967,
+      "mean_exec_time": 73.816874175,
+      "rows": "23920"
+    },
+    {
+      "query": "SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = $1 and t.relname = $2 GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname",
+      "calls": "4957",
+      "total_exec_time": 2771.31021199999,
+      "mean_exec_time": 0.559070044785154,
+      "rows": "11301"
+    },
+    {
+      "query": "WITH\n-- Recursively get the base types of domains\nbase_types AS (\n  WITH RECURSIVE\n  recurse AS (\n    SELECT\n      oid,\n      typbasetype,\n      typnamespace AS base_namespace,\n      COALESCE(NULLIF(typbasetype, $3), oid) AS base_type\n    FROM pg_type\n    UNION\n    SELECT\n      t.oid,\n      b.typbasetype,\n      b.typnamespace AS base_namespace,\n      COALESCE(NULLIF(b.typbasetype, $4), b.oid) AS base_type\n    FROM recurse t\n    JOIN pg_type b ON t.typbasetype = b.oid\n  )\n  SELECT\n    oid,\n    base_namespace,\n    base_type\n  FROM recurse\n  WHERE typbasetype = $5\n),\narguments AS (\n  SELECT\n    oid,\n    array_agg((\n      COALESCE(name, $6), -- name\n      type::regtype::text, -- type\n      CASE type\n        WHEN $7::regtype THEN $8\n        WHEN $9::regtype THEN $10\n        WHEN $11::regtype THEN $12\n        WHEN $13::regtype THEN $14\n        ELSE type::regtype::text\n      END, -- convert types that ignore the length and accept any value till maximum size\n      idx <= (pronargs - pronargdefaults), -- is_required\n      COALESCE(mode = $15, $16) -- is_variadic\n    ) ORDER BY idx) AS args,\n    CASE COUNT(*) - COUNT(name) -- number of unnamed arguments\n      WHEN $17 THEN $18\n      WHEN $19 THEN (array_agg(type))[$20] IN ($21::regtype, $22::regtype, $23::regtype, $24::regtype, $25::regtype)\n      ELSE $26\n    END AS callable\n  FROM pg_proc,\n       unnest(proargnames, proargtypes, proargmodes)\n         WITH ORDINALITY AS _ (name, type, mode, idx)\n  WHERE type IS NOT NULL -- only input arguments\n  GROUP BY oid\n)\nSELECT\n  pn.nspname AS proc_schema,\n  p.proname AS proc_name,\n  d.description AS proc_description,\n  COALESCE(a.args, $27) AS args,\n  tn.nspname AS schema,\n  COALESCE(comp.relname, t.typname) AS name,\n  p.proretset AS rettype_is_setof,\n  (t.typtype = $28\n   -- if any TABLE, INOUT or OUT arguments present, treat as composite\n   or COALESCE(proargmodes::text[] && $29, $30)\n  ) AS rettype_is_composite,\n  bt.oid <> bt.base_type as rettype_is_composite_alias,\n  p.provolatile,\n  p.provariadic > $31 as hasvariadic,\n  (regexp_split_to_array((regexp_split_to_array(iso_config, $32))[$33], $34))[$35] AS transaction_isolation_level,\n  coalesce(func_settings.kvs, $36) as kvs\nFROM pg_proc p\nLEFT JOIN arguments a ON a.oid = p.oid\nJOIN pg_namespace pn ON pn.oid = p.pronamespace\nJOIN base_types bt ON bt.oid = p.prorettype\nJOIN pg_type t ON t.oid = bt.base_type\nJOIN pg_namespace tn ON tn.oid = t.typnamespace\nLEFT JOIN pg_class comp ON comp.oid = t.typrelid\nLEFT JOIN pg_description as d ON d.objoid = p.oid AND d.classoid = $37::regclass\nLEFT JOIN LATERAL unnest(proconfig) iso_config ON iso_config LIKE $38\nLEFT JOIN LATERAL (\n  SELECT\n    array_agg(row(\n      substr(setting, $39, strpos(setting, $40) - $41),\n      substr(setting, strpos(setting, $42) + $43)\n    )) as kvs\n  FROM unnest(proconfig) setting\n  WHERE setting ~ ANY($2)\n) func_settings ON $44\nWHERE t.oid <> $45::regtype AND COALESCE(a.callable, $46)\nAND prokind = $47\nAND p.pronamespace = ANY($1::regnamespace[])",
+      "calls": "40",
+      "total_exec_time": 1238.466587,
+      "mean_exec_time": 30.961664675,
+      "rows": "108"
+    },
+    {
+      "query": "SELECT * FROM pgbouncer.get_auth($1)",
+      "calls": "2382",
+      "total_exec_time": 1125.936363,
+      "mean_exec_time": 0.472685290931989,
+      "rows": "2382"
+    },
+    {
+      "query": "CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"",
+      "calls": "265",
+      "total_exec_time": 887.538923,
+      "mean_exec_time": 3.34920348301887,
+      "rows": "0"
+    },
+    {
+      "query": "DISCARD ALL",
+      "calls": "899",
+      "total_exec_time": 786.195781,
+      "mean_exec_time": 0.874522559510566,
+      "rows": "0"
+    },
+    {
+      "query": "SET TIME ZONE INTERVAL '+00:00' HOUR TO MINUTE",
+      "calls": "900",
+      "total_exec_time": 749.408960000001,
+      "mean_exec_time": 0.832676622222223,
+      "rows": "0"
+    }
+  ]
+}

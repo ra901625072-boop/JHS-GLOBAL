@@ -1,0 +1,213 @@
+{
+  "timestamp": "2026-10-13T15:36:16.777Z",
+  "endpoints": [
+    {
+      "endpoint": "GET /api/v1/health",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 3.48,
+        "max": 1570.53,
+        "mean": 117.75,
+        "p50": 11.48,
+        "p95": 1570.53,
+        "p99": 1570.53
+      },
+      "payloadSizeBytes": 176,
+      "payloadSizeKb": 0.17
+    },
+    {
+      "endpoint": "GET /api/v1/categories",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 2.75,
+        "max": 1623.89,
+        "mean": 132.1,
+        "p50": 3.62,
+        "p95": 1623.89,
+        "p99": 1623.89
+      },
+      "payloadSizeBytes": 6810,
+      "payloadSizeKb": 6.65
+    },
+    {
+      "endpoint": "GET /api/v1/categories/personal-care-raw-materials",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 2.22,
+        "max": 1599.05,
+        "mean": 201.77,
+        "p50": 100.2,
+        "p95": 1599.05,
+        "p99": 1599.05
+      },
+      "payloadSizeBytes": 3557,
+      "payloadSizeKb": 3.47
+    },
+    {
+      "endpoint": "GET /api/v1/products",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 1.53,
+        "max": 2929.99,
+        "mean": 197.73,
+        "p50": 2.53,
+        "p95": 2929.99,
+        "p99": 2929.99
+      },
+      "payloadSizeBytes": 17225,
+      "payloadSizeKb": 16.82
+    },
+    {
+      "endpoint": "GET /api/v1/products?limit=12&page=1",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 1.9,
+        "max": 1827.71,
+        "mean": 124.66,
+        "p50": 3.35,
+        "p95": 1827.71,
+        "p99": 1827.71
+      },
+      "payloadSizeBytes": 17225,
+      "payloadSizeKb": 16.82
+    },
+    {
+      "endpoint": "GET /api/v1/products/featured",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 1.78,
+        "max": 200.55,
+        "mean": 15.51,
+        "p50": 2.13,
+        "p95": 200.55,
+        "p99": 200.55
+      },
+      "payloadSizeBytes": 10588,
+      "payloadSizeKb": 10.34
+    },
+    {
+      "endpoint": "GET /api/v1/products/castor-oil",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 5.06,
+        "max": 455.16,
+        "mean": 45.83,
+        "p50": 17.16,
+        "p95": 455.16,
+        "p99": 455.16
+      },
+      "payloadSizeBytes": 4876,
+      "payloadSizeKb": 4.76
+    },
+    {
+      "endpoint": "GET /api/v1/certificates",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 4.95,
+        "max": 231.34,
+        "mean": 37.83,
+        "p50": 18.09,
+        "p95": 231.34,
+        "p99": 231.34
+      },
+      "payloadSizeBytes": 3752,
+      "payloadSizeKb": 3.66
+    },
+    {
+      "endpoint": "GET /api/v1/testimonials",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 1.51,
+        "max": 203.59,
+        "mean": 17.85,
+        "p50": 2.34,
+        "p95": 203.59,
+        "p99": 203.59
+      },
+      "payloadSizeBytes": 1682,
+      "payloadSizeKb": 1.64
+    },
+    {
+      "endpoint": "GET /api/v1/market-regions",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 1.82,
+        "max": 198.38,
+        "mean": 16.21,
+        "p50": 2.84,
+        "p95": 198.38,
+        "p99": 198.38
+      },
+      "payloadSizeBytes": 2486,
+      "payloadSizeKb": 2.43
+    },
+    {
+      "endpoint": "GET /api/v1/faqs",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 1.49,
+        "max": 182.86,
+        "mean": 13.91,
+        "p50": 1.82,
+        "p95": 182.86,
+        "p99": 182.86
+      },
+      "payloadSizeBytes": 4171,
+      "payloadSizeKb": 4.07
+    },
+    {
+      "endpoint": "GET /api/v1/blog",
+      "statusCode": 200,
+      "samples": 15,
+      "errorRate": "0.0%",
+      "latencyMs": {
+        "min": 190.72,
+        "max": 310.91,
+        "mean": 232.97,
+        "p50": 219.76,
+        "p95": 310.91,
+        "p99": 310.91
+      },
+      "payloadSizeBytes": 5813,
+      "payloadSizeKb": 5.68
+    },
+    {
+      "endpoint": "POST /api/v1/auth/login",
+      "statusCode": 429,
+      "samples": 15,
+      "errorRate": "66.7%",
+      "latencyMs": {
+        "min": 2.07,
+        "max": 1537.41,
+        "mean": 464.53,
+        "p50": 2.56,
+        "p95": 1537.41,
+        "p99": 1537.41
+      },
+      "payloadSizeBytes": 172,
+      "payloadSizeKb": 0.17
+    }
+  ]
+}

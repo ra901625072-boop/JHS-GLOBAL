@@ -1,0 +1,1764 @@
+{
+  "timestamp": "2026-10-13T15:36:55.460Z",
+  "tableSizes": [
+    {
+      "table_name": "ai_chat_audit_logs",
+      "total_size": "592 kB",
+      "table_size": "376 kB",
+      "index_size": "216 kB",
+      "total_bytes": "606208"
+    },
+    {
+      "table_name": "inquiries",
+      "total_size": "256 kB",
+      "table_size": "40 kB",
+      "index_size": "216 kB",
+      "total_bytes": "262144"
+    },
+    {
+      "table_name": "ai_usage_logs",
+      "total_size": "248 kB",
+      "table_size": "176 kB",
+      "index_size": "72 kB",
+      "total_bytes": "253952"
+    },
+    {
+      "table_name": "embeddings",
+      "total_size": "200 kB",
+      "table_size": "88 kB",
+      "index_size": "112 kB",
+      "total_bytes": "204800"
+    },
+    {
+      "table_name": "products",
+      "total_size": "192 kB",
+      "table_size": "48 kB",
+      "index_size": "144 kB",
+      "total_bytes": "196608"
+    },
+    {
+      "table_name": "blog_posts",
+      "total_size": "128 kB",
+      "table_size": "16 kB",
+      "index_size": "112 kB",
+      "total_bytes": "131072"
+    },
+    {
+      "table_name": "users",
+      "total_size": "128 kB",
+      "table_size": "0 bytes",
+      "index_size": "128 kB",
+      "total_bytes": "131072"
+    },
+    {
+      "table_name": "scim_users",
+      "total_size": "88 kB",
+      "table_size": "0 bytes",
+      "index_size": "88 kB",
+      "total_bytes": "90112"
+    },
+    {
+      "table_name": "one_time_tokens",
+      "total_size": "88 kB",
+      "table_size": "0 bytes",
+      "index_size": "88 kB",
+      "total_bytes": "90112"
+    },
+    {
+      "table_name": "categories",
+      "total_size": "80 kB",
+      "table_size": "16 kB",
+      "index_size": "64 kB",
+      "total_bytes": "81920"
+    },
+    {
+      "table_name": "company_facts",
+      "total_size": "80 kB",
+      "table_size": "16 kB",
+      "index_size": "64 kB",
+      "total_bytes": "81920"
+    },
+    {
+      "table_name": "objects",
+      "total_size": "72 kB",
+      "table_size": "0 bytes",
+      "index_size": "72 kB",
+      "total_bytes": "73728"
+    },
+    {
+      "table_name": "refresh_tokens",
+      "total_size": "64 kB",
+      "table_size": "0 bytes",
+      "index_size": "64 kB",
+      "total_bytes": "65536"
+    },
+    {
+      "table_name": "mfa_factors",
+      "total_size": "56 kB",
+      "table_size": "0 bytes",
+      "index_size": "56 kB",
+      "total_bytes": "57344"
+    },
+    {
+      "table_name": "custom_oauth_providers",
+      "total_size": "56 kB",
+      "table_size": "0 bytes",
+      "index_size": "56 kB",
+      "total_bytes": "57344"
+    },
+    {
+      "table_name": "orders",
+      "total_size": "48 kB",
+      "table_size": "8192 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "49152"
+    },
+    {
+      "table_name": "oauth_consents",
+      "total_size": "48 kB",
+      "table_size": "0 bytes",
+      "index_size": "48 kB",
+      "total_bytes": "49152"
+    },
+    {
+      "table_name": "customers",
+      "total_size": "48 kB",
+      "table_size": "8192 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "49152"
+    },
+    {
+      "table_name": "users",
+      "total_size": "48 kB",
+      "table_size": "8192 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "49152"
+    },
+    {
+      "table_name": "sample_requests",
+      "total_size": "48 kB",
+      "table_size": "8192 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "49152"
+    },
+    {
+      "table_name": "sessions",
+      "total_size": "48 kB",
+      "table_size": "0 bytes",
+      "index_size": "48 kB",
+      "total_bytes": "49152"
+    },
+    {
+      "table_name": "scim_tokens",
+      "total_size": "48 kB",
+      "table_size": "0 bytes",
+      "index_size": "48 kB",
+      "total_bytes": "49152"
+    },
+    {
+      "table_name": "quotations",
+      "total_size": "48 kB",
+      "table_size": "8192 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "49152"
+    },
+    {
+      "table_name": "saml_relay_states",
+      "total_size": "40 kB",
+      "table_size": "0 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "40960"
+    },
+    {
+      "table_name": "flow_state",
+      "total_size": "40 kB",
+      "table_size": "0 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "40960"
+    },
+    {
+      "table_name": "identities",
+      "total_size": "40 kB",
+      "table_size": "0 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "40960"
+    },
+    {
+      "table_name": "oauth_authorizations",
+      "total_size": "40 kB",
+      "table_size": "0 bytes",
+      "index_size": "40 kB",
+      "total_bytes": "40960"
+    },
+    {
+      "table_name": "migrations",
+      "total_size": "40 kB",
+      "table_size": "8192 bytes",
+      "index_size": "32 kB",
+      "total_bytes": "40960"
+    },
+    {
+      "table_name": "market_regions",
+      "total_size": "32 kB",
+      "table_size": "8192 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "sso_providers",
+      "total_size": "32 kB",
+      "table_size": "0 bytes",
+      "index_size": "32 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "faqs",
+      "total_size": "32 kB",
+      "table_size": "8192 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "tasks",
+      "total_size": "32 kB",
+      "table_size": "8192 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "webauthn_challenges",
+      "total_size": "32 kB",
+      "table_size": "0 bytes",
+      "index_size": "32 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "webauthn_credentials",
+      "total_size": "32 kB",
+      "table_size": "0 bytes",
+      "index_size": "32 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "certificates",
+      "total_size": "32 kB",
+      "table_size": "8192 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "sso_domains",
+      "total_size": "32 kB",
+      "table_size": "0 bytes",
+      "index_size": "32 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "saml_providers",
+      "total_size": "32 kB",
+      "table_size": "0 bytes",
+      "index_size": "32 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "testimonials",
+      "total_size": "32 kB",
+      "table_size": "8192 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "subscription",
+      "total_size": "32 kB",
+      "table_size": "0 bytes",
+      "index_size": "32 kB",
+      "total_bytes": "32768"
+    },
+    {
+      "table_name": "mfa_recovery_codes",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "buckets",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "vector_indexes",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "buckets_analytics",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "s3_multipart_uploads",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "mfa_recovery_code_sets",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "schema_migrations",
+      "total_size": "24 kB",
+      "table_size": "8192 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "oauth_clients",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "oauth_client_states",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "mfa_challenges",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "mfa_amr_claims",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "audit_log_entries",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "secrets",
+      "total_size": "24 kB",
+      "table_size": "0 bytes",
+      "index_size": "24 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "schema_migrations",
+      "total_size": "24 kB",
+      "table_size": "8192 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "24576"
+    },
+    {
+      "table_name": "market_region_countries",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "inquiry_notes",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "customer_notes",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "order_documents",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "instances",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "buckets_vectors",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "quotation_items",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "product_images",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "s3_multipart_uploads_parts",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "order_items",
+      "total_size": "16 kB",
+      "table_size": "0 bytes",
+      "index_size": "16 kB",
+      "total_bytes": "16384"
+    },
+    {
+      "table_name": "sample_products",
+      "total_size": "8192 bytes",
+      "table_size": "0 bytes",
+      "index_size": "8192 bytes",
+      "total_bytes": "8192"
+    },
+    {
+      "table_name": "inquiry_items",
+      "total_size": "8192 bytes",
+      "table_size": "0 bytes",
+      "index_size": "8192 bytes",
+      "total_bytes": "8192"
+    },
+    {
+      "table_name": "product_certificates",
+      "total_size": "8192 bytes",
+      "table_size": "0 bytes",
+      "index_size": "8192 bytes",
+      "total_bytes": "8192"
+    },
+    {
+      "table_name": "product_specs",
+      "total_size": "8192 bytes",
+      "table_size": "0 bytes",
+      "index_size": "8192 bytes",
+      "total_bytes": "8192"
+    },
+    {
+      "table_name": "product_packing_options",
+      "total_size": "8192 bytes",
+      "table_size": "0 bytes",
+      "index_size": "8192 bytes",
+      "total_bytes": "8192"
+    }
+  ],
+  "indexStats": [
+    {
+      "table_name": "ai_chat_audit_logs",
+      "index_name": "ai_chat_audit_logs_is_resolved",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "ai_chat_audit_logs",
+      "index_name": "ai_chat_audit_logs_intent",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "audit_log_entries",
+      "index_name": "audit_logs_instance_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "audit_log_entries",
+      "index_name": "audit_log_entries_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "buckets",
+      "index_name": "bname",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "buckets_analytics",
+      "index_name": "buckets_analytics_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "buckets_analytics",
+      "index_name": "buckets_analytics_unique_name_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "buckets_vectors",
+      "index_name": "buckets_vectors_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "certificates",
+      "index_name": "certificates_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "custom_oauth_providers",
+      "index_name": "custom_oauth_providers_identifier_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "custom_oauth_providers",
+      "index_name": "custom_oauth_providers_enabled_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "custom_oauth_providers",
+      "index_name": "custom_oauth_providers_provider_type_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "custom_oauth_providers",
+      "index_name": "custom_oauth_providers_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "custom_oauth_providers",
+      "index_name": "custom_oauth_providers_created_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "custom_oauth_providers",
+      "index_name": "custom_oauth_providers_identifier_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "flow_state",
+      "index_name": "flow_state_created_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "flow_state",
+      "index_name": "idx_auth_code",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "flow_state",
+      "index_name": "flow_state_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "flow_state",
+      "index_name": "idx_user_id_auth_method",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "identities",
+      "index_name": "identities_provider_id_provider_unique",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "identities",
+      "index_name": "identities_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "identities",
+      "index_name": "identities_user_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "identities",
+      "index_name": "identities_email_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "inquiry_items",
+      "index_name": "inquiry_items_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "instances",
+      "index_name": "instances_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_amr_claims",
+      "index_name": "mfa_amr_claims_session_id_authentication_method_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_amr_claims",
+      "index_name": "amr_id_pk",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_challenges",
+      "index_name": "mfa_challenges_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_challenges",
+      "index_name": "mfa_challenge_created_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_factors",
+      "index_name": "mfa_factors_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_factors",
+      "index_name": "mfa_factors_user_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_factors",
+      "index_name": "unique_phone_factor_per_user",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_factors",
+      "index_name": "mfa_factors_last_challenged_at_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_factors",
+      "index_name": "factor_id_created_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_factors",
+      "index_name": "mfa_factors_user_friendly_name_unique",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_recovery_code_sets",
+      "index_name": "mfa_recovery_code_sets_mfa_factor_id_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_recovery_code_sets",
+      "index_name": "mfa_recovery_code_sets_user_id_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_recovery_code_sets",
+      "index_name": "mfa_recovery_code_sets_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_recovery_codes",
+      "index_name": "mfa_recovery_codes_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "mfa_recovery_codes",
+      "index_name": "mfa_recovery_codes_set_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "migrations",
+      "index_name": "migrations_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "migrations",
+      "index_name": "migrations_name_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_authorizations",
+      "index_name": "oauth_authorizations_authorization_code_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_authorizations",
+      "index_name": "oauth_authorizations_authorization_id_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_authorizations",
+      "index_name": "oauth_authorizations_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_authorizations",
+      "index_name": "oauth_auth_pending_exp_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_client_states",
+      "index_name": "idx_oauth_client_states_created_at",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_client_states",
+      "index_name": "oauth_client_states_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_clients",
+      "index_name": "oauth_clients_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_clients",
+      "index_name": "oauth_clients_deleted_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_consents",
+      "index_name": "oauth_consents_user_order_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_consents",
+      "index_name": "oauth_consents_active_client_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_consents",
+      "index_name": "oauth_consents_active_user_client_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_consents",
+      "index_name": "oauth_consents_user_client_unique",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "oauth_consents",
+      "index_name": "oauth_consents_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "objects",
+      "index_name": "idx_objects_null_version",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "objects",
+      "index_name": "objects_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "objects",
+      "index_name": "name_prefix_search",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "objects",
+      "index_name": "idx_objects_bucket_id_name",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "objects",
+      "index_name": "idx_objects_bucket_id_name_lower",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "objects",
+      "index_name": "objects_bucket_id_name_version_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "objects",
+      "index_name": "idx_objects_current_version",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "objects",
+      "index_name": "idx_objects_delete_markers",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "one_time_tokens",
+      "index_name": "one_time_tokens_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "one_time_tokens",
+      "index_name": "one_time_tokens_token_hash_hash_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "one_time_tokens",
+      "index_name": "one_time_tokens_relates_to_hash_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "one_time_tokens",
+      "index_name": "one_time_tokens_user_id_token_type_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "order_documents",
+      "index_name": "order_documents_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "orders",
+      "index_name": "orders_order_number_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "product_images",
+      "index_name": "product_images_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "quotations",
+      "index_name": "quotations_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "quotations",
+      "index_name": "quotations_quotation_number_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "refresh_tokens",
+      "index_name": "refresh_tokens_instance_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "refresh_tokens",
+      "index_name": "refresh_tokens_instance_id_user_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "refresh_tokens",
+      "index_name": "refresh_tokens_token_unique",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "refresh_tokens",
+      "index_name": "refresh_tokens_parent_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "refresh_tokens",
+      "index_name": "refresh_tokens_session_id_revoked_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "refresh_tokens",
+      "index_name": "refresh_tokens_updated_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "refresh_tokens",
+      "index_name": "refresh_tokens_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "s3_multipart_uploads",
+      "index_name": "s3_multipart_uploads_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "s3_multipart_uploads",
+      "index_name": "idx_multipart_uploads_list",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "s3_multipart_uploads_parts",
+      "index_name": "s3_multipart_uploads_parts_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "saml_providers",
+      "index_name": "saml_providers_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "saml_providers",
+      "index_name": "saml_providers_sso_provider_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "saml_providers",
+      "index_name": "saml_providers_entity_id_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "saml_relay_states",
+      "index_name": "saml_relay_states_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "saml_relay_states",
+      "index_name": "saml_relay_states_sso_provider_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "saml_relay_states",
+      "index_name": "saml_relay_states_for_email_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "saml_relay_states",
+      "index_name": "saml_relay_states_created_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sample_requests",
+      "index_name": "sample_requests_reference_no_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "schema_migrations",
+      "index_name": "schema_migrations_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_tokens",
+      "index_name": "scim_tokens_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_tokens",
+      "index_name": "scim_tokens_token_hash_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_tokens",
+      "index_name": "scim_tokens_sso_provider_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_tokens",
+      "index_name": "scim_tokens_expires_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_tokens",
+      "index_name": "scim_tokens_revoked_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_updated_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_sso_provider_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_deleted_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_user_name_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_user_name_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_external_id_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_user_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "scim_users",
+      "index_name": "scim_users_created_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "secrets",
+      "index_name": "secrets_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "secrets",
+      "index_name": "secrets_name_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sessions",
+      "index_name": "sessions_not_after_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sessions",
+      "index_name": "sessions_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sessions",
+      "index_name": "user_id_created_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sessions",
+      "index_name": "sessions_user_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sessions",
+      "index_name": "sessions_oauth_client_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sso_domains",
+      "index_name": "sso_domains_sso_provider_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sso_domains",
+      "index_name": "sso_domains_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sso_domains",
+      "index_name": "sso_domains_domain_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sso_providers",
+      "index_name": "sso_providers_resource_id_pattern_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sso_providers",
+      "index_name": "sso_providers_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sso_providers",
+      "index_name": "sso_providers_resource_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "subscription",
+      "index_name": "pk_subscription",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "subscription",
+      "index_name": "ix_realtime_subscription_entity",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "email_change_token_current_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "idx_users_name",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "idx_users_last_sign_in_at_desc",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "idx_users_created_at_desc",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "idx_users_email",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "users_is_anonymous_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "users_phone_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "users_email_partial_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "reauthentication_token_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "email_change_token_new_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "recovery_token_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "confirmation_token_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "users_instance_id_email_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "users_instance_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "vector_indexes",
+      "index_name": "vector_indexes_name_bucket_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "vector_indexes",
+      "index_name": "vector_indexes_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "webauthn_challenges",
+      "index_name": "webauthn_challenges_user_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "webauthn_challenges",
+      "index_name": "webauthn_challenges_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "webauthn_challenges",
+      "index_name": "webauthn_challenges_expires_at_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "webauthn_credentials",
+      "index_name": "webauthn_credentials_user_id_idx",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "webauthn_credentials",
+      "index_name": "webauthn_credentials_credential_id_key",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "webauthn_credentials",
+      "index_name": "webauthn_credentials_pkey",
+      "number_of_scans": "0",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "blog_posts",
+      "index_name": "blog_posts_pkey",
+      "number_of_scans": "1",
+      "tuples_read": "1",
+      "tuples_fetched": "1"
+    },
+    {
+      "table_name": "customer_notes",
+      "index_name": "customer_notes_pkey",
+      "number_of_scans": "1",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "faqs",
+      "index_name": "faqs_pkey",
+      "number_of_scans": "1",
+      "tuples_read": "7",
+      "tuples_fetched": "7"
+    },
+    {
+      "table_name": "inquiry_notes",
+      "index_name": "inquiry_notes_pkey",
+      "number_of_scans": "1",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "product_packing_options",
+      "index_name": "product_packing_options_pkey",
+      "number_of_scans": "1",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "product_specs",
+      "index_name": "product_specs_pkey",
+      "number_of_scans": "1",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sample_products",
+      "index_name": "sample_products_pkey",
+      "number_of_scans": "1",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "users",
+      "index_name": "users_pkey",
+      "number_of_scans": "1",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "ai_usage_logs",
+      "index_name": "ai_usage_logs_pkey",
+      "number_of_scans": "2",
+      "tuples_read": "100",
+      "tuples_fetched": "100"
+    },
+    {
+      "table_name": "order_items",
+      "index_name": "order_items_pkey",
+      "number_of_scans": "2",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "orders",
+      "index_name": "orders_pkey",
+      "number_of_scans": "2",
+      "tuples_read": "2",
+      "tuples_fetched": "2"
+    },
+    {
+      "table_name": "quotation_items",
+      "index_name": "quotation_items_pkey",
+      "number_of_scans": "2",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "sample_requests",
+      "index_name": "sample_requests_pkey",
+      "number_of_scans": "2",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "market_region_countries",
+      "index_name": "market_region_countries_pkey",
+      "number_of_scans": "3",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "testimonials",
+      "index_name": "testimonials_pkey",
+      "number_of_scans": "3",
+      "tuples_read": "3",
+      "tuples_fetched": "3"
+    },
+    {
+      "table_name": "inquiries",
+      "index_name": "inquiries_reference_no_key",
+      "number_of_scans": "4",
+      "tuples_read": "4",
+      "tuples_fetched": "4"
+    },
+    {
+      "table_name": "market_regions",
+      "index_name": "market_regions_pkey",
+      "number_of_scans": "6",
+      "tuples_read": "24",
+      "tuples_fetched": "24"
+    },
+    {
+      "table_name": "tasks",
+      "index_name": "tasks_pkey",
+      "number_of_scans": "8",
+      "tuples_read": "8",
+      "tuples_fetched": "8"
+    },
+    {
+      "table_name": "buckets",
+      "index_name": "buckets_pkey",
+      "number_of_scans": "9",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "blog_posts",
+      "index_name": "blog_posts_slug_key",
+      "number_of_scans": "12",
+      "tuples_read": "3",
+      "tuples_fetched": "3"
+    },
+    {
+      "table_name": "ai_chat_audit_logs",
+      "index_name": "ai_chat_audit_logs_feedback_rating",
+      "number_of_scans": "14",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "ai_chat_audit_logs",
+      "index_name": "ai_chat_audit_logs_needs_human",
+      "number_of_scans": "14",
+      "tuples_read": "1248",
+      "tuples_fetched": "1068"
+    },
+    {
+      "table_name": "ai_chat_audit_logs",
+      "index_name": "ai_chat_audit_logs_confidence",
+      "number_of_scans": "14",
+      "tuples_read": "431",
+      "tuples_fetched": "344"
+    },
+    {
+      "table_name": "customers",
+      "index_name": "customers_email_key",
+      "number_of_scans": "16",
+      "tuples_read": "11",
+      "tuples_fetched": "3"
+    },
+    {
+      "table_name": "customers",
+      "index_name": "customers_pkey",
+      "number_of_scans": "17",
+      "tuples_read": "17",
+      "tuples_fetched": "17"
+    },
+    {
+      "table_name": "ai_chat_audit_logs",
+      "index_name": "ai_chat_audit_logs_created_at",
+      "number_of_scans": "19",
+      "tuples_read": "1734",
+      "tuples_fetched": "1663"
+    },
+    {
+      "table_name": "company_facts",
+      "index_name": "company_facts_pkey",
+      "number_of_scans": "20",
+      "tuples_read": "21",
+      "tuples_fetched": "20"
+    },
+    {
+      "table_name": "embeddings",
+      "index_name": "embeddings_pkey",
+      "number_of_scans": "25",
+      "tuples_read": "25",
+      "tuples_fetched": "25"
+    },
+    {
+      "table_name": "users",
+      "index_name": "users_email_key",
+      "number_of_scans": "55",
+      "tuples_read": "52",
+      "tuples_fetched": "52"
+    },
+    {
+      "table_name": "company_facts",
+      "index_name": "company_facts_fact_key_key",
+      "number_of_scans": "75",
+      "tuples_read": "147",
+      "tuples_fetched": "17"
+    },
+    {
+      "table_name": "schema_migrations",
+      "index_name": "schema_migrations_pkey",
+      "number_of_scans": "75",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "categories",
+      "index_name": "categories_slug_key",
+      "number_of_scans": "77",
+      "tuples_read": "38",
+      "tuples_fetched": "38"
+    },
+    {
+      "table_name": "product_certificates",
+      "index_name": "product_certificates_product_id_certificate_id_key",
+      "number_of_scans": "104",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    },
+    {
+      "table_name": "ai_chat_audit_logs",
+      "index_name": "ai_chat_audit_logs_pkey",
+      "number_of_scans": "163",
+      "tuples_read": "221",
+      "tuples_fetched": "188"
+    },
+    {
+      "table_name": "inquiries",
+      "index_name": "inquiries_pkey",
+      "number_of_scans": "213",
+      "tuples_read": "219",
+      "tuples_fetched": "213"
+    },
+    {
+      "table_name": "products",
+      "index_name": "products_pkey",
+      "number_of_scans": "215",
+      "tuples_read": "542",
+      "tuples_fetched": "396"
+    },
+    {
+      "table_name": "users",
+      "index_name": "users_pkey",
+      "number_of_scans": "222",
+      "tuples_read": "222",
+      "tuples_fetched": "222"
+    },
+    {
+      "table_name": "categories",
+      "index_name": "categories_pkey",
+      "number_of_scans": "334",
+      "tuples_read": "334",
+      "tuples_fetched": "334"
+    },
+    {
+      "table_name": "products",
+      "index_name": "products_slug_key",
+      "number_of_scans": "415",
+      "tuples_read": "311",
+      "tuples_fetched": "277"
+    },
+    {
+      "table_name": "subscription",
+      "index_name": "subscription_subscription_id_entity_filters_action_filter_selec",
+      "number_of_scans": "1189",
+      "tuples_read": "0",
+      "tuples_fetched": "0"
+    }
+  ]
+}
