@@ -22,14 +22,15 @@ const sequelize = new Sequelize(env.DATABASE_URL, {
     timestamps: true,
     freezeTableName: true,
   },
-  ...(isCloudDB && {
-    dialectOptions: {
+  dialectOptions: {
+    statement_timeout: 15000,
+    ...(isCloudDB && {
       ssl: {
         require: true,
         rejectUnauthorized: false,
       },
-    },
-  }),
+    }),
+  },
 });
 
 export const connectDB = async () => {
