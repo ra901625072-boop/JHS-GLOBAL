@@ -252,7 +252,7 @@ export const HomePage = () => {
               </div>
 
               {/* Masked Line-by-Line Headline */}
-              <h1 className="font-serif text-2xl sm:text-4xl lg:text-[2.65rem] xl:text-[3.15rem] font-bold tracking-tight text-white leading-[1.15] sm:leading-[1.12]">
+              <h1 className="font-serif text-2xl sm:text-4xl lg:text-[2.05rem] xl:text-[2.5rem] 2xl:text-[2.95rem] font-bold tracking-tight text-white leading-[1.15] sm:leading-[1.12]">
                 <span className="overflow-hidden block">
                   <span className="hero-line block">One Accountable Supplier</span>
                 </span>
