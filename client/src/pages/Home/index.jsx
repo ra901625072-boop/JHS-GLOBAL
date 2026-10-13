@@ -230,7 +230,7 @@ export const HomePage = () => {
       {/* Hero Section (Signature Moment) */}
       <section
         ref={heroRef}
-        className="relative bg-gradient-to-br from-[#06180E] via-[#0A2619] to-[#04120A] text-white border-b border-primary-800/80 overflow-hidden min-h-[580px] lg:min-h-[640px] xl:min-h-[700px] flex items-center"
+        className="relative bg-gradient-to-br from-[#06180E] via-[#0A2619] to-[#04120A] text-white border-b border-primary-800/80 overflow-hidden min-h-[calc(100dvh-65px)] sm:min-h-[calc(100dvh-95px)] lg:min-h-[calc(100dvh-110px)] lg:h-[calc(100dvh-110px)] flex items-center"
       >
         {/* Subtle Brand Pattern & Calm Ambient Glow */}
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
@@ -242,12 +242,12 @@ export const HomePage = () => {
           <WorldTradeMap />
         </div>
 
-        <div className="w-full relative z-20 py-16 lg:py-20 px-4 sm:px-6 lg:px-10 xl:px-12 2xl:px-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-10 items-center">
+        <div className="w-full h-full relative z-20 py-6 sm:py-8 lg:py-8 xl:py-10 px-4 sm:px-6 lg:px-10 xl:px-12 2xl:px-16 flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-10 items-center w-full h-full">
             {/* Left Column: All Text, Eyebrow, CTAs & Trust Badges */}
-            <div className="lg:col-span-6 xl:col-span-6 text-left max-w-xl xl:max-w-2xl">
+            <div className="lg:col-span-6 xl:col-span-6 text-left max-w-xl lg:max-w-[540px] xl:max-w-xl 2xl:max-w-2xl h-full flex flex-col justify-between py-2 sm:py-3 lg:py-4">
               {/* Eyebrow Badge */}
-              <div className="hero-eyebrow inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-primary-950/85 border border-accent-500/40 text-accent-400 text-[10px] sm:text-[11px] xl:text-xs font-semibold shadow-xs backdrop-blur-xs mb-3.5 sm:mb-4">
+              <div className="hero-eyebrow self-start inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-primary-950/85 border border-accent-500/40 text-accent-400 text-[10px] sm:text-[11px] xl:text-xs font-semibold shadow-xs backdrop-blur-xs">
                 <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
                 <span className="tracking-wide sm:tracking-wider whitespace-nowrap">GLOBAL B2B EXPORT HOUSE • PERSONAL CARE, NUTRACEUTICAL & FEED</span>
               </div>
@@ -263,12 +263,12 @@ export const HomePage = () => {
               </h1>
 
               {/* Supporting Value Proposition */}
-              <p className="hero-subtext mt-4 sm:mt-5 text-xs sm:text-base xl:text-[1.05rem] text-neutral-200/90 leading-[1.7] font-sans font-normal">
+              <p className="hero-subtext text-xs sm:text-base xl:text-[1.05rem] text-neutral-200/90 leading-[1.7] font-sans font-normal">
                 Every step of our supply chain is managed with precision and care. Whether it’s spices, agro commodities, botanical extracts, animal feed, or cosmetic raw materials — we consolidate your Indian sourcing in a single shipment with unified documentation and one point of contact.
               </p>
 
               {/* Action Buttons Aligned and Proportioned */}
-              <div className="hero-cta mt-6 sm:mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+              <div className="hero-cta flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <Button
                   variant="cta"
                   size="lg"
@@ -289,24 +289,24 @@ export const HomePage = () => {
                 </Button>
               </div>
 
-              {/* Micro Trust Points - Balanced Evenly Divided Strip */}
-              <div className="mt-8 sm:mt-9 pt-6 sm:pt-7 border-t border-white/10">
-                <div className="grid grid-cols-2 2xl:grid-cols-4 gap-y-3.5 gap-x-6 sm:gap-y-4 sm:gap-x-8 2xl:gap-0 2xl:divide-x 2xl:divide-white/15">
-                  <div className="hero-trust-item flex items-center gap-2.5 2xl:px-3 first:2xl:pl-0">
-                    <Clock className="w-4 h-4 text-accent-400 shrink-0" />
-                    <span className="text-xs font-medium text-neutral-200 whitespace-nowrap">48h Quote Promise</span>
+              {/* Micro Trust Points - Balanced Single-Line Inline Strip */}
+              <div className="pt-3.5 border-t border-white/10 w-full">
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-y-3 gap-x-2 sm:gap-x-0 w-full sm:divide-x sm:divide-white/15">
+                  <div className="hero-trust-item flex items-center gap-1.5 sm:gap-2 sm:pr-2.5 lg:pr-2 xl:pr-3 shrink-0">
+                    <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
+                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">48h Quote Promise</span>
                   </div>
-                  <div className="hero-trust-item flex items-center gap-2.5 2xl:px-3">
-                    <Award className="w-4 h-4 text-accent-400 shrink-0" />
-                    <span className="text-xs font-medium text-neutral-200 whitespace-nowrap">Lab COA per Lot</span>
+                  <div className="hero-trust-item flex items-center gap-1.5 sm:gap-2 sm:px-2.5 lg:px-2 xl:px-3 shrink-0">
+                    <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
+                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">Lab COA per Lot</span>
                   </div>
-                  <div className="hero-trust-item flex items-center gap-2.5 2xl:px-3">
-                    <Anchor className="w-4 h-4 text-accent-400 shrink-0" />
-                    <span className="text-xs font-medium text-neutral-200 whitespace-nowrap">Hazira & Mundra Ports</span>
+                  <div className="hero-trust-item flex items-center gap-1.5 sm:gap-2 sm:px-2.5 lg:px-2 xl:px-3 shrink-0">
+                    <Anchor className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
+                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">Hazira & Mundra Ports</span>
                   </div>
-                  <div className="hero-trust-item flex items-center gap-2.5 2xl:px-3 last:2xl:pr-0">
-                    <CheckCircle2 className="w-4 h-4 text-accent-400 shrink-0" />
-                    <span className="text-xs font-medium text-neutral-200 whitespace-nowrap">3 Divisions / 20 Lines</span>
+                  <div className="hero-trust-item flex items-center gap-1.5 sm:gap-2 sm:pl-2.5 lg:pl-2 xl:pl-3 shrink-0">
+                    <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
+                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">3 Divisions / 20 Lines</span>
                   </div>
                 </div>
               </div>
