@@ -1,0 +1,84 @@
+import * as adminService from './admin.service.js';
+import { updateInquiryStatusSchema, sendInquiryReplySchema, adminProductSchema } from './admin.validation.js';
+import { successResponse } from '../../utils/apiResponse.js';
+
+export const getDashboard = async (req, res, next) => {
+  try {
+    const metrics = await adminService.getDashboardMetrics();
+    return successResponse(res, metrics, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getInquiries = async (req, res, next) => {
+  try {
+    const result = await adminService.getAdminInquiries(req.query);
+    return successResponse(
+      res,
+      result.inquiries,
+      200,
+      result.pagination
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getInquiryById = async (req, res, next) => {
+  try {
+    const inquiry = await adminService.getAdminInquiryById(req.params.id);
+    return successResponse(res, inquiry, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateInquiryStatus = async (req, res, next) => {
+  try {
+    const validatedData = updateInquiryStatusSchema.parse(req.body);
+    const updated = await adminService.updateInquiryStatus(req.params.id, validatedData, req.user);
+    return successResponse(res, updated, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const sendInquiryReply = async (req, res, next) => {
+  try {
+    const validatedData = sendInquiryReplySchema.parse(req.body);
+    const updated = await adminService.sendInquiryReply(req.params.id, validatedData, req.user);
+    return successResponse(res, updated, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createProduct = async (req, res, next) => {
+  try {
+    const validatedData = adminProductSchema.parse(req.body);
+    const product = await adminService.createAdminProduct(validatedData);
+    return successResponse(res, product, 201);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProduct = async (req, res, next) => {
+  try {
+    const validatedData = adminProductSchema.partial().parse(req.body);
+    const product = await adminService.updateAdminProduct(req.params.id, validatedData);
+    return successResponse(res, product, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteProduct = async (req, res, next) => {
+  try {
+    const product = await adminService.softDeleteAdminProduct(req.params.id);
+    return successResponse(res, { id: product._id, isActive: product.isActive }, 200);
+  } catch (error) {
+    next(error);
+  }
+};

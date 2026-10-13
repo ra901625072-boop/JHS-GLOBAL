@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Motion Tokens */
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+  --duration-hero: 900ms;
+
+  /* Skeleton Tokens (Derived strictly from approved brand surface & primary tokens) */
+  --skeleton-base: #E8E8E3;
+  --skeleton-highlight: #F5F5F1;
+  --skeleton-border: #E5E7EB;
+  --skeleton-dark-base: #102B1D;
+  --skeleton-dark-highlight: #1B452E;
+  --skeleton-dark-border: rgba(197, 160, 89, 0.15);
+  --skeleton-duration: 1.6s;
+  --skeleton-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #1F2937;
+    background-color: #FBFBF9;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Lenis smooth scrolling rules */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: inherit;
+  }
+
+  ::selection {
+    background-color: #E1EDE6;
+    color: #0D2818;
+  }
+
+  /* Accessibility: Strict prefers-reduced-motion overrides */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .animate-float,
+    .animate-float-gentle,
+    .animate-pulse,
+    .animate-spin,
+    .animate-marquee,
+    .animate-ambient-drift,
+    .animate-route-enter,
+    .skeleton-shimmer,
+    .skeleton-shimmer-dark {
+      animation: none !important;
+    }
+
+    .skeleton-shimmer {
+      background-image: none !important;
+      background-color: var(--skeleton-base) !important;
+    }
+
+    .skeleton-shimmer-dark {
+      background-image: none !important;
+      background-color: var(--skeleton-dark-base) !important;
+    }
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .tap-target {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Standard Motion Utilities */
+  .transition-motion-standard {
+    transition-timing-function: var(--ease-standard);
+    transition-duration: var(--duration-base);
+  }
+
+  .transition-motion-fast {
+    transition-timing-function: var(--ease-standard);
+    transition-duration: var(--duration-fast);
+  }
+
+  .transition-motion-slow {
+    transition-timing-function: var(--ease-enter);
+    transition-duration: var(--duration-slow);
+  }
+
+  /* Editorial Link Underline with directional expand/collapse */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--duration-base) var(--ease-standard);
+  }
+
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translate3d(0, 0px, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes ambient-drift {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(10px, -6px, 0) scale(1.02);
+  }
+}
+
+@keyframes routeEnter {
+  0% {
+    opacity: 0.88;
+    transform: translate3d(0, 6px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes image-crossfade {
+  0% {
+    opacity: 0.45;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes popover-enter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+  animation: float-gentle 5s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-ambient-drift {
+  animation: ambient-drift 24s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-route-enter {
+  animation: routeEnter 240ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-image-fade {
+  animation: image-crossfade 320ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-popover-enter {
+  animation: popover-enter 220ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-base) 0%,
+    var(--skeleton-highlight) 50%,
+    var(--skeleton-base) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer var(--skeleton-duration) var(--skeleton-ease) infinite;
+  will-change: background-position;
+}
+
+.skeleton-shimmer-dark {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-dark-base) 0%,
+    var(--skeleton-dark-highlight) 50%,
+    var(--skeleton-dark-base) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer var(--skeleton-duration) var(--skeleton-ease) infinite;
+  will-change: background-position;
+}
+
+@keyframes checkmark-draw {
+  from {
+    stroke-dashoffset: 40;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Admin Sleek Custom Scrollbar */
+.admin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 9999px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+/* Glass & Surface Hierarchy */
+.surface-glass-card {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(229, 231, 235, 0.85);
+}
+
+.surface-dark-glass {
+  background: rgba(13, 40, 24, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(197, 160, 89, 0.25);
+}
+
+/* ==========================================================================
+   Mobile-Only Utilities & Enhancements (<1024px)
+   Strictly scoped to never affect desktop viewports (>=1024px)
+   ========================================================================== */
+
+/* Safe Area Insets for iOS Home Indicator and Notch */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.bottom-safe {
+  bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Smooth Horizontal Snap Scroll Without Native Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* iOS Safari: Prevent automatic viewport zoom on input focus (<1024px only) */
+@media (max-width: 1023px) {
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'],
+  input[type='number'],
+  input[type='password'],
+  input[type='search'],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+

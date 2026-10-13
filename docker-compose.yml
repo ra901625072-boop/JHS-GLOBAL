@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: export_b2b_postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=export_b2b
+
+  redis:
+    image: redis:7-alpine
+    container_name: export_b2b_redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: export_b2b_api
+    restart: unless-stopped
+    ports:
+      - '5000:5000'
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/export_b2b
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+
+volumes:
+  postgres_data:
+  redis_data:

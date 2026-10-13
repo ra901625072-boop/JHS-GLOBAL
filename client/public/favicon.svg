@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100%" height="100%" role="img" aria-label="JSH Global Icon Mark">
+  <!-- Squircle Canvas for High Micro-Contrast -->
+  <rect width="64" height="64" rx="14" fill="#14402F"/>
+  
+  <!-- Centered Meridian Symbol -->
+  <g transform="translate(7, 7)">
+    <!-- Primary Meridian Arc (Off-White for Contrast) -->
+    <path d="M9,41 C9,23 20,9 35,6 C42,4 45,7 45,11 C45,15 40,18 34,20 C25,23 18,30 16,38 C14,43 11,44 9,41 Z" fill="#F7F5EF"/>
+    
+    <!-- Secondary Golden Meridian Arc -->
+    <path d="M41,9 C41,27 30,41 15,44 C8,46 5,43 5,39 C5,35 10,32 16,30 C25,27 32,20 34,12 C36,7 39,6 41,9 Z" fill="#B8963E"/>
+    
+    <!-- Central Seed Kernel in Pure Gold -->
+    <path d="M25,15 C29,20 30,26 25,35 C20,26 21,20 25,15 Z" fill="#B8963E"/>
+
+    <!-- Apex Precision Star Node -->
+    <circle cx="25" cy="8.5" r="2" fill="#F7F5EF"/>
+  </g>
+</svg>

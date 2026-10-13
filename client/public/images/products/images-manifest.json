@@ -1,0 +1,195 @@
+{
+  "version": "1.0.0",
+  "studioVisualStandard": {
+    "backdrop": "Seamless warm off-white neutral tabletop (#F7F7F4) with soft vignette",
+    "lighting": "Soft 45-degree diffuse lateral window daylight with natural soft contact shadows",
+    "aspectRatio": "4:3 (800x600 card master, responsive to 1600x1200)",
+    "colorAccents": "Dark forest green linen textile, brushed brass laboratory spatula, clear borosilicate glassware",
+    "stylingRule": "Real raw material forms (oils, viscous gels, crystalline powders, plant extracts, coarse meal) with zero labels, zero logos, zero artificial marks, zero hands, zero people",
+    "honestyTag": "Illustrative image (replace with real batch photography) \u2014 TODO(client)"
+  },
+  "generatedDate": "2026-10-12",
+  "imageModel": "gemini-3.1-flash-image",
+  "products": [
+    {
+      "productName": "Castor oil and its derivatives",
+      "slug": "castor-oil-and-derivatives",
+      "file": "castor-oil-and-derivatives.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of refined golden castor oil in a clear unbranded glass reagent bottle with a ground glass stopper, placed on a smooth warm off-white tabletop. Next to the bottle is a small matte ceramic dish holding several whole raw castor seeds with distinctive mottled brown patterns. Soft natural side window lighting, subtle gentle contact shadow, minimal clean studio setting with a dark forest green linen cloth accent in the soft-focus background. High-end international trade catalogue aesthetic, 4:3 aspect ratio, crisp focus on oil bottle and seeds. Strictly no labels, no text, no logos, no hands, no clutter."
+    },
+    {
+      "productName": "Herbal / botanical extracts",
+      "slug": "herbal-botanical-extracts",
+      "file": "herbal-botanical-extracts.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of botanical plant extract liquid in an unbranded amber glass dropper bottle and a small clear beaker with concentrated golden-brown herbal liquid, set on a warm off-white stone surface. A shallow ceramic dish nearby holds dried green botanical leaves and cut herbs. Soft diffuse morning side lighting, clean neutral studio setting with a muted dark green linen textile in the background. High-end cosmetic raw material trade catalogue aesthetic, 4:3 aspect ratio, sharp focus on glassware. Strictly no labels, no text, no logos, no hands."
+    },
+    {
+      "productName": "Sodium lauryl ether sulfate (SLES)",
+      "slug": "sodium-lauryl-ether-sulfate-sles",
+      "file": "sodium-lauryl-ether-sulfate-sles.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of pure clear viscous Sodium Lauryl Ether Sulfate (SLES) gel surfactant inside a clean laboratory glass beaker on a warm neutral off-white surface. The thick transparent viscous fluid catches the light, showing dense transparent consistency and clarity. A small glass stirring rod rests in the beaker. Soft side window lighting, delicate contact shadow, clean minimalist chemistry laboratory studio setting with a dark green fabric prop in soft blur. 4:3 aspect ratio, razor-sharp focus on the clear fluid and glass beaker. Strictly no labels, no text, no measurement markings, no logos, no hands."
+    },
+    {
+      "productName": "Salicylic acid",
+      "slug": "salicylic-acid",
+      "file": "salicylic-acid.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of pure white crystalline Salicylic Acid powder in a clear glass Petri dish on a warm off-white stone table. Next to the dish is a small brushed brass laboratory spatula holding a small amount of the sparkling fine white crystals. Soft diffused lateral daylight, gentle contact shadow, minimal clean cosmetic chemistry aesthetic with subtle deep green linen fabric in the soft background. 4:3 aspect ratio, macro sharp focus on the crystalline powder texture. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Glycolic acid",
+      "slug": "glycolic-acid",
+      "file": "glycolic-acid.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of clear 70% Glycolic Acid solution in a clean unbranded conical laboratory glass flask on an off-white marble tabletop. Next to the flask is a glass watch dish with a small pool of the clear liquid showing high optical transparency. Soft side studio lighting with subtle reflections, minimal laboratory aesthetic, dark green linen prop in background. 4:3 aspect ratio, sharp focus. Strictly no labels, no text, no graduations, no hands."
+    },
+    {
+      "productName": "Vitamin E acetate",
+      "slug": "vitamin-e-acetate",
+      "file": "vitamin-e-acetate.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of rich viscous golden Vitamin E Acetate oil in a low laboratory crystallizing dish and an unbranded amber glass reagent vial on a warm off-white surface. The viscous golden liquid has smooth honey-like refractive highlights. Soft natural side lighting, minimal aesthetic with muted gold spatula prop. 4:3 aspect ratio, sharp focus on the golden oil. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Kaolin clay powder",
+      "slug": "kaolin-clay-powder",
+      "file": "kaolin-clay-powder.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of ultra-fine white Kaolin Clay powder forming a soft smooth curved mound inside a handcrafted matte ceramic bowl on a warm neutral textured stone surface. A small wooden cosmetic spoon rests nearby with a dusting of the chalky white mineral powder. Soft daylight illumination, elegant cosmetic raw material presentation, subtle dark green linen prop in background. 4:3 aspect ratio, macro focus on fine powder texture. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Ashwagandha extract",
+      "slug": "ashwagandha-extract",
+      "file": "ashwagandha-extract.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of fine light brown Ashwagandha root extract powder in a shallow ceramic dish beside whole dried Ashwagandha (Withania somnifera) roots on a warm neutral limestone tabletop. Soft natural side lighting, clean high-end botanical laboratory setting with deep green linen in background. 4:3 aspect ratio, sharp focus on extract powder. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Turmeric / curcumin extract",
+      "slug": "turmeric-curcumin-extract",
+      "file": "turmeric-curcumin-extract.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of brilliant intense orange-yellow Curcumin 95% extract powder in a shallow matte white ceramic bowl beside several raw polished turmeric rhizomes on a warm off-white studio surface. The vivid orange-yellow pigment is vibrant and pure. Soft side lighting, muted dark green linen prop, high-end export trade aesthetic. 4:3 aspect ratio, sharp focus. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Boswellia serrata extract",
+      "slug": "boswellia-serrata-extract",
+      "file": "boswellia-serrata-extract.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of fine off-white Boswellia serrata extract powder in a shallow glass dish beside small translucent golden frankincense resin tears on a warm off-white stone tabletop. Soft natural lighting, subtle shadows, high-end botanical raw material aesthetic. 4:3 aspect ratio, crisp focus on resin and extract powder. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Bacopa monnieri extract",
+      "slug": "bacopa-monnieri-extract",
+      "file": "bacopa-monnieri-extract.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of fine olive-brown Bacopa monnieri (Brahmi) standardized extract powder in a shallow ceramic dish next to a small bunch of fresh green Brahmi leaves on a textured off-white tabletop. Soft natural side light, dark forest green textile accent in soft blur. 4:3 aspect ratio, macro sharp focus. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Moringa oleifera extract",
+      "slug": "moringa-oleifera-extract",
+      "file": "moringa-oleifera-extract.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of vibrant deep green Moringa oleifera leaf extract powder in a matte stone bowl beside dried whole moringa leaves on a warm neutral surface. Soft diffused side daylight, clean superfood export catalogue aesthetic, 4:3 aspect ratio, sharp focus on powder texture. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Amla extract",
+      "slug": "amla-extract",
+      "file": "amla-extract.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of fine tan-brown Amla (Phyllanthus emblica) fruit extract powder in a shallow glass bowl beside two fresh green Indian gooseberries on an off-white stone surface. Soft lateral daylight, elegant nutraceutical studio setting. 4:3 aspect ratio, sharp focus on extract. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Green tea and Garcinia cambogia extracts",
+      "slug": "green-tea-and-garcinia-cambogia-extracts",
+      "file": "green-tea-and-garcinia-cambogia-extracts.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of light beige Green Tea extract powder and pale tan Garcinia cambogia extract powder in two small twin ceramic dishes on a warm off-white surface, with dried green tea leaves and a slice of dried garcinia rind beside them. Soft studio lighting, 4:3 aspect ratio, crisp focus. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Pea protein isolate",
+      "slug": "pea-protein-isolate",
+      "file": "pea-protein-isolate.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of fine creamy beige Pea Protein Isolate powder in a clean ceramic bowl next to a handful of dried yellow split peas on an off-white textured tabletop. A wooden scoop with protein powder rests beside the bowl. Soft natural lighting, modern plant-based nutrition aesthetic, dark green linen in background. 4:3 aspect ratio, sharp focus. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Xanthan gum",
+      "slug": "xanthan-gum",
+      "file": "xanthan-gum.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of fine off-white Xanthan Gum powder forming a soft mound in a clear glass Petri dish on an off-white surface, with a small laboratory glass beaker containing clear viscous prepared solution nearby. Soft lateral lighting, clean food-grade hydrocolloid aesthetic. 4:3 aspect ratio, sharp focus. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Soybean meal",
+      "slug": "soybean-meal",
+      "file": "soybean-meal.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of golden-yellow coarse de-oiled Soybean Meal (DOC) flakes in a small natural jute burlap sack bowl next to a shallow wooden dish of clean whole yellow soybeans on a warm neutral limestone surface. Soft warm side lighting, high-protein feed ingredient export presentation. 4:3 aspect ratio, sharp focus. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Rapeseed / mustard meal",
+      "slug": "rapeseed-mustard-meal",
+      "file": "rapeseed-mustard-meal.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of coarse dark golden-brown de-oiled Rapeseed / Mustard Meal in a natural ceramic dish with a handful of tiny whole black and yellow mustard seeds beside it on an off-white surface. Soft diffused side lighting, commercial animal feed meal aesthetic. 4:3 aspect ratio, sharp focus. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Cottonseed meal",
+      "slug": "cottonseed-meal",
+      "file": "cottonseed-meal.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of rich brown decorticated Cottonseed Meal flakes in a rustic ceramic bowl beside raw cotton bolls and fuzzy cotton seeds on a warm neutral tabletop. Soft directional window lighting, authentic dairy feed ingredient aesthetic. 4:3 aspect ratio, sharp focus. Strictly no text, no labels, no logos, no hands."
+    },
+    {
+      "productName": "Feed-grade vitamins and minerals",
+      "slug": "feed-grade-vitamins-and-minerals",
+      "file": "feed-grade-vitamins-and-minerals.webp",
+      "aspectRatio": "4:3",
+      "status": "approved",
+      "ai_generated": true,
+      "prompt": "Commercial studio product photography of homogenous fine feed-grade vitamin and trace mineral premix powder in an unbranded stainless steel laboratory scoop on an off-white studio tabletop, with a small glass Petri dish showing uniform free-flowing micro-granules. Soft side lighting, technical livestock nutrition aesthetic. 4:3 aspect ratio, sharp focus. Strictly no text, no labels, no logos, no hands."
+    }
+  ]
+}
