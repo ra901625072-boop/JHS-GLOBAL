@@ -15,9 +15,14 @@
     "build:client": "npm run build --workspace=client",
     "lint": "npm run lint --workspace=server && npm run lint --workspace=client",
     "test": "npm run test --workspace=server",
+    "test:client": "npm run test --workspace=client",
+    "test:e2e": "npx playwright test",
+    "test:security": "npm test --workspace=server -- tests/security-resilience.test.js",
+    "test:load": "k6 run tests/load/k6-load-test.js",
     "test:eval": "npm run test:eval --workspace=server",
     "test:audit": "npm run test:audit --workspace=server",
-    "check:circular": "madge --circular server/src && madge --circular client/src"
+    "check:circular": "madge --circular server/src && madge --circular client/src",
+    "verify:no-change": "node scripts/run_visual_dom_regression.mjs && node scripts/record_motion_tokens.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
