@@ -69,9 +69,9 @@ describe('Order & Export Shipment Lifecycle Suite', () => {
     expect(res.body.success).toBe(true);
     expect(res.body.data.orderNumber).toMatch(/^ORD-\d{4}-\d{6}$/);
     expect(res.body.data.orderStatus).toBe('confirmed');
-    expect(res.body.data.totalAmount).toBe(40000);
+    expect(Number(res.body.data.totalAmount)).toBe(40000);
 
-    createdOrderId = res.body.data._id;
+    createdOrderId = res.body.data.id || res.body.data._id;
   });
 
   it('GET /api/v1/orders should list export orders', async () => {
@@ -92,7 +92,7 @@ describe('Order & Export Shipment Lifecycle Suite', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.data._id).toBe(createdOrderId);
+    expect(res.body.data.id || res.body.data._id).toBe(createdOrderId);
     expect(res.body.data.buyer.company).toBe('EuroFoods Import GmbH');
   });
 

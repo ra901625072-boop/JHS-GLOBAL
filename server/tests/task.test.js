@@ -52,7 +52,7 @@ describe('Sales Follow-up & Task Queue Suite', () => {
     expect(res.body.data.title).toContain('WhatsApp follow-up');
     expect(res.body.data.status).toBe('pending');
 
-    createdTaskId = res.body.data._id;
+    createdTaskId = res.body.data.id || res.body.data._id;
   });
 
   it('GET /api/v1/tasks/today should return active follow-ups scheduled for today', async () => {
@@ -63,7 +63,7 @@ describe('Sales Follow-up & Task Queue Suite', () => {
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
     expect(Array.isArray(res.body.data)).toBe(true);
-    expect(res.body.data.some((t) => t._id === createdTaskId)).toBe(true);
+    expect(res.body.data.some((t) => (t.id || t._id) === createdTaskId)).toBe(true);
   });
 
   it('PATCH /api/v1/tasks/:id/status should mark task as completed', async () => {

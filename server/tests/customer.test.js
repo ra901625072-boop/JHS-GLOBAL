@@ -3,6 +3,7 @@ import request from 'supertest';
 import app from '../src/app.js';
 import connectDB, { disconnectDB } from '../src/config/db.js';
 import Customer from '../src/modules/customer/customer.model.js';
+import { getCustomerById } from '../src/modules/customer/customer.service.js';
 import { Op } from 'sequelize';
 
 describe('Customer CRM & Account Management Suite', () => {
@@ -134,15 +135,19 @@ describe('Customer CRM & Account Management Suite', () => {
 
     expect(rfqRes.status).toBe(201);
 
-    // Give async setImmediate a moment to persist
-    await new Promise((r) => setTimeout(r, 100));
-
-    const customer = await Customer.findOne({ where: { email: 'e.rostova@baltic-ingredients.pl' } });
+    // Poll up to 2000ms for background async CRM persistence
+    let customer = null;
+    for (let i = 0; i < 20; i++) {
+      customer = await Customer.findOne({ where: { email: 'e.rostova@baltic-ingredients.pl' } });
+      if (customer) break;
+      await new Promise((r) => setTimeout(r, 100));
+    }
     expect(customer).toBeDefined();
     expect(customer.companyName).toBe('Baltic Ingredients Sp. z o.o.');
     expect(customer.country).toBe('Poland');
     expect(customer.interestedProducts).toContain('Dehydrated White Onion Flakes');
-    expect(customer.previousInquiries.length).toBe(1);
+    const customerWithHistory = await getCustomerById(customer.id);
+    expect(customerWithHistory.previousInquiries.length).toBe(1);
   });
 
   it('Editor should be forbidden (403) from accessing customer financial/CRM data', async () => {

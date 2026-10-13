@@ -72,10 +72,10 @@ describe('Quotation & Export Pricing Suite', () => {
     expect(res.status).toBe(201);
     expect(res.body.success).toBe(true);
     expect(res.body.data.quotationNumber).toMatch(/^QT-\d{4}-\d{6}$/);
-    expect(res.body.data.totalAmount).toBe(40000);
+    expect(Number(res.body.data.totalAmount)).toBe(40000);
     expect(res.body.data.incoterm).toBe('CIF');
 
-    createdQuotationId = res.body.data._id;
+    createdQuotationId = res.body.data.id || res.body.data._id;
   });
 
   it('GET /api/v1/quotations should list quotations for sales desk', async () => {
@@ -96,7 +96,7 @@ describe('Quotation & Export Pricing Suite', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.data._id).toBe(createdQuotationId);
+    expect(res.body.data.id || res.body.data._id).toBe(createdQuotationId);
     expect(res.body.data.buyer.company).toBe('EuroFoods Import GmbH');
   });
 
