@@ -100,7 +100,7 @@ export const useScrollReveal = (options = {}) => {
                     ? { each: stagger, amount: Math.min(stagger * targets.length, 0.48) }
                     : 0,
                 onComplete: () => {
-                  gsap.set(targets, { willChange: 'auto' });
+                  gsap.set(targets, { willChange: 'auto', clearProps: 'transform' });
                 },
               });
 

@@ -72,99 +72,101 @@ export const ContactPage = () => {
 
       <div className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
         <Reveal direction="up" cascade stagger={0.08} className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-          {/* Left Column: Direct Export Desk & Due Diligence Checklist */}
-          <div className="order-2 lg:order-1 lg:col-span-4 space-y-6">
-            {/* Direct Desk Card */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-surface-border bg-white space-y-5 shadow-card hover:shadow-hover transition-shadow duration-200">
-              <div className="flex items-center justify-between pb-3 border-b border-surface-border">
-                <h3 className="font-serif text-lg font-bold text-neutral-900">
-                  International Trade Desk
-                </h3>
-                <span className="text-[10px] font-mono font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                  Online
-                </span>
-              </div>
-
-              <div className="space-y-4 text-xs sm:text-sm text-neutral-600">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-accent-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="block font-semibold text-neutral-900">Export Registered Office:</span>
-                    <span className="leading-relaxed text-neutral-700">
-                      401, Shyam-A, Vatsalya Villa Residency, Amroli, Surat, Gujarat - 394107, India
-                    </span>
-                    <span className="block text-[11px] text-neutral-500 mt-1 font-mono">
-                      Loading Ports: Hazira (Surat, 25km) & Mundra, Gujarat
-                    </span>
-                  </div>
+          {/* Left Column: Direct Export Desk & Due Diligence Checklist (Sticky Sidebar) */}
+          <div className="order-2 lg:order-1 lg:col-span-4">
+            <div className="lg:sticky lg:top-28 xl:top-32 space-y-6 lg:max-h-[calc(100vh-8.5rem)] lg:overflow-y-auto lg:no-scrollbar">
+              {/* Direct Desk Card */}
+              <div className="p-6 sm:p-8 rounded-2xl border border-surface-border bg-white space-y-5 shadow-card hover:shadow-hover transition-shadow duration-200">
+                <div className="flex items-center justify-between pb-3 border-b border-surface-border">
+                  <h3 className="font-serif text-lg font-bold text-neutral-900">
+                    International Trade Desk
+                  </h3>
+                  <span className="text-[10px] font-mono font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    Online
+                  </span>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-accent-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="block font-semibold text-neutral-900">Export Desk Email:</span>
-                    <a href="mailto:info.jhsglobal@gmail.com" className="text-primary-900 font-semibold hover:underline">
-                      info.jhsglobal@gmail.com
-                    </a>
+                <div className="space-y-4 text-xs sm:text-sm text-neutral-600">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-accent-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="block font-semibold text-neutral-900">Export Registered Office:</span>
+                      <span className="leading-relaxed text-neutral-700">
+                        401, Shyam-A, Vatsalya Villa Residency, Amroli, Surat, Gujarat - 394107, India
+                      </span>
+                      <span className="block text-[11px] text-neutral-500 mt-1 font-mono">
+                        Loading Ports: Hazira (Surat, 25km) & Mundra, Gujarat
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex items-start gap-3">
-                  <Phone className="w-5 h-5 text-accent-600 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="block font-semibold text-neutral-900">Direct Telephone / Trade Desk:</span>
-                    <div className="flex flex-col gap-1 mt-0.5 font-medium">
-                      <a href="tel:+917202907720" className="text-primary-900 hover:underline">
-                        +91 72029 07720 (General Trade & RFQ)
-                      </a>
-                      <a href="tel:+919724640101" className="text-primary-900 hover:underline">
-                        +91 97246 40101 (Logistics & Accounts)
+                  <div className="flex items-start gap-3">
+                    <Mail className="w-5 h-5 text-accent-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="block font-semibold text-neutral-900">Export Desk Email:</span>
+                      <a href="mailto:info.jhsglobal@gmail.com" className="text-primary-900 font-semibold hover:underline">
+                        info.jhsglobal@gmail.com
                       </a>
                     </div>
                   </div>
+
+                  <div className="flex items-start gap-3">
+                    <Phone className="w-5 h-5 text-accent-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="block font-semibold text-neutral-900">Direct Telephone / Trade Desk:</span>
+                      <div className="flex flex-col gap-1 mt-0.5 font-medium">
+                        <a href="tel:+917202907720" className="text-primary-900 hover:underline">
+                          +91 72029 07720 (General Trade & RFQ)
+                        </a>
+                        <a href="tel:+919724640101" className="text-primary-900 hover:underline">
+                          +91 97246 40101 (Logistics & Accounts)
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-surface-border">
+                  <a
+                    href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello JHS GLOBAL team, I would like to inquire about container export pricing for commodities.')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] active:scale-[0.98] text-white text-xs font-semibold flex items-center justify-center gap-2.5 transition-all min-h-[44px] shadow-sm"
+                  >
+                    <WhatsAppIcon className="w-4 h-4 text-white" />
+                    <span>Instant WhatsApp Trade Desk</span>
+                  </a>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-surface-border">
-                <a
-                  href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello JHS GLOBAL team, I would like to inquire about container export pricing for commodities.')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] active:scale-[0.98] text-white text-xs font-semibold flex items-center justify-center gap-2.5 transition-all min-h-[44px] shadow-sm"
-                >
-                  <WhatsAppIcon className="w-4 h-4 text-white" />
-                  <span>Instant WhatsApp Trade Desk</span>
-                </a>
+              {/* "Verify Before You Commit" Checklist */}
+              <div className="p-6 sm:p-8 rounded-2xl bg-primary-950 text-white space-y-4 shadow-card border border-primary-800">
+                <div className="flex items-center gap-2 text-accent-400 text-xs font-semibold uppercase tracking-wider">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Statutory Credentials</span>
+                </div>
+                <h4 className="font-serif text-base font-bold text-white">
+                  Government Verified Registration
+                </h4>
+                <ul className="space-y-2.5 text-xs text-neutral-300 font-sans">
+                  <li className="flex items-start justify-between gap-2 pb-1.5 border-b border-primary-800/80">
+                    <span className="text-neutral-400">DGFT IEC:</span>
+                    <span className="font-mono font-bold text-white">EZHPP3437C</span>
+                  </li>
+                  <li className="flex items-start justify-between gap-2 pb-1.5 border-b border-primary-800/80">
+                    <span className="text-neutral-400">GSTIN:</span>
+                    <span className="font-mono font-bold text-white">24EZHPP3437C1ZH</span>
+                  </li>
+                  <li className="flex items-start justify-between gap-2 pb-1.5 border-b border-primary-800/80">
+                    <span className="text-neutral-400">FSSAI Central:</span>
+                    <span className="font-mono font-bold text-white">10725997001058</span>
+                  </li>
+                  <li className="flex items-start justify-between gap-2">
+                    <span className="text-neutral-400">MSME Udyam:</span>
+                    <span className="font-mono font-bold text-white">UDYAM-GJ-22-0460260</span>
+                  </li>
+                </ul>
               </div>
-            </div>
-
-            {/* "Verify Before You Commit" Checklist */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-primary-950 text-white space-y-4 shadow-card border border-primary-800">
-              <div className="flex items-center gap-2 text-accent-400 text-xs font-semibold uppercase tracking-wider">
-                <ShieldCheck className="w-4 h-4" />
-                <span>Statutory Credentials</span>
-              </div>
-              <h4 className="font-serif text-base font-bold text-white">
-                Government Verified Registration
-              </h4>
-              <ul className="space-y-2.5 text-xs text-neutral-300 font-sans">
-                <li className="flex items-start justify-between gap-2 pb-1.5 border-b border-primary-800/80">
-                  <span className="text-neutral-400">DGFT IEC:</span>
-                  <span className="font-mono font-bold text-white">EZHPP3437C</span>
-                </li>
-                <li className="flex items-start justify-between gap-2 pb-1.5 border-b border-primary-800/80">
-                  <span className="text-neutral-400">GSTIN:</span>
-                  <span className="font-mono font-bold text-white">24EZHPP3437C1ZH</span>
-                </li>
-                <li className="flex items-start justify-between gap-2 pb-1.5 border-b border-primary-800/80">
-                  <span className="text-neutral-400">FSSAI Central:</span>
-                  <span className="font-mono font-bold text-white">10725997001058</span>
-                </li>
-                <li className="flex items-start justify-between gap-2">
-                  <span className="text-neutral-400">MSME Udyam:</span>
-                  <span className="font-mono font-bold text-white">UDYAM-GJ-22-0460260</span>
-                </li>
-              </ul>
             </div>
           </div>
 

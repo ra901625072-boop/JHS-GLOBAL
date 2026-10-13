@@ -135,19 +135,21 @@ export const ProductDetailPage = () => {
 
       {/* Product Main Showcase */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <Reveal direction="up" className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left Column: Visual Gallery */}
+        <Reveal direction="up" className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          {/* Left Column: Visual Gallery (Sticky Showcase) */}
           <div className="lg:col-span-6">
-            <ProductGallery images={product.images} productName={product.name} />
+            <div className="lg:sticky lg:top-28 xl:top-32 space-y-8 lg:max-h-[calc(100vh-8.5rem)] lg:overflow-y-auto lg:no-scrollbar">
+              <ProductGallery images={product.images} productName={product.name} />
 
-            {/* Quality Seals */}
-            <div className="mt-8 p-4 rounded-xl border border-surface-border bg-surface-subtle flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-600">
-              <span className="flex items-center gap-1.5 font-medium text-neutral-900">
-                <ShieldCheck className="w-4 h-4 text-primary-800" /> Export Quality Assurance:
-              </span>
-              <span>NABL Lab Tested COA</span>
-              <span>Phytosanitary Certified</span>
-              <span>Fumigation Included</span>
+              {/* Quality Seals */}
+              <div className="p-4 rounded-xl border border-surface-border bg-surface-subtle flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-600">
+                <span className="flex items-center gap-1.5 font-medium text-neutral-900">
+                  <ShieldCheck className="w-4 h-4 text-primary-800" /> Export Quality Assurance:
+                </span>
+                <span>NABL Lab Tested COA</span>
+                <span>Phytosanitary Certified</span>
+                <span>Fumigation Included</span>
+              </div>
             </div>
           </div>
 
