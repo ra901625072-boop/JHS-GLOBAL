@@ -112,6 +112,15 @@
     justify-content: center;
   }
 
+  /* Scrollbar suppression utility with responsive variant generation */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   /* Standard Motion Utilities */
   .transition-motion-standard {
     transition-timing-function: var(--ease-standard);
