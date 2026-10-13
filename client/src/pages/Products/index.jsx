@@ -106,19 +106,21 @@ export const ProductsPage = () => {
       {/* Main Content Area */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Filter Sidebar (Desktop Preserved) */}
+          {/* Filter Sidebar (Desktop Sticky until footer) */}
           <div className="hidden lg:block lg:col-span-1">
-            <ProductFilters
-              categories={categories}
-              selectedCategory={selectedCategory}
-              onSelectCategory={handleCategorySelect}
-              searchQuery={searchQuery}
-              onSearchChange={handleSearchChange}
-              selectedSort={selectedSort}
-              onSortChange={handleSortChange}
-              onResetFilters={handleResetFilters}
-              totalResults={meta.total}
-            />
+            <div className="sticky top-28 xl:top-32 max-h-[calc(100vh-8.5rem)] overflow-y-auto no-scrollbar">
+              <ProductFilters
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onSelectCategory={handleCategorySelect}
+                searchQuery={searchQuery}
+                onSearchChange={handleSearchChange}
+                selectedSort={selectedSort}
+                onSortChange={handleSortChange}
+                onResetFilters={handleResetFilters}
+                totalResults={meta.total}
+              />
+            </div>
           </div>
 
           {/* Product Grid Area */}
