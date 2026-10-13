@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import './models/index.js';
 import env from './config/env.js';
 import logger from './utils/logger.js';
 import { successResponse } from './utils/apiResponse.js';
