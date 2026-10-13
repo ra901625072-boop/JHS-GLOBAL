@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'export_b2b_quote_basket';
 
-const QuoteBasketContext = createContext(null);
+export const QuoteBasketContext = createContext(null);
 
 export const QuoteBasketProvider = ({ children }) => {
   const [items, setItems] = useState(() => {
