@@ -1,0 +1,152 @@
+{
+  "timestamp": "2026-10-13T16:42:27.675Z",
+  "baselineMemory": {
+    "rss": 116875264,
+    "heapUsed": 35467560
+  },
+  "tiers": {
+    "tier1_read_surge": [
+      {
+        "connections": 50,
+        "requestsPerSec": 7310.3,
+        "totalRequests": 73094,
+        "throughputMbPerSec": 8.74,
+        "p50LatencyMs": 5,
+        "p99LatencyMs": 12,
+        "errors": 0,
+        "timeouts": 0,
+        "status2xx": 300,
+        "status5xx": 0
+      },
+      {
+        "connections": 100,
+        "requestsPerSec": 6851.6,
+        "totalRequests": 68496,
+        "throughputMbPerSec": 8.15,
+        "p50LatencyMs": 13,
+        "p99LatencyMs": 29,
+        "errors": 0,
+        "timeouts": 0,
+        "status2xx": 0,
+        "status5xx": 0
+      },
+      {
+        "connections": 200,
+        "requestsPerSec": 6606,
+        "totalRequests": 66048,
+        "throughputMbPerSec": 7.86,
+        "p50LatencyMs": 29,
+        "p99LatencyMs": 43,
+        "errors": 0,
+        "timeouts": 0,
+        "status2xx": 0,
+        "status5xx": 0
+      }
+    ],
+    "tier2_search_hammering": [
+      {
+        "connections": 30,
+        "requestsPerSec": 6519.6,
+        "totalRequests": 65190,
+        "p50LatencyMs": 4,
+        "p99LatencyMs": 9,
+        "errors": 0,
+        "timeouts": 0,
+        "status2xx": 0,
+        "status5xx": 0
+      },
+      {
+        "connections": 60,
+        "requestsPerSec": 6350,
+        "totalRequests": 63480,
+        "p50LatencyMs": 8,
+        "p99LatencyMs": 17,
+        "errors": 0,
+        "timeouts": 0,
+        "status2xx": 0,
+        "status5xx": 0
+      },
+      {
+        "connections": 100,
+        "requestsPerSec": 6251.6,
+        "totalRequests": 62496,
+        "p50LatencyMs": 14,
+        "p99LatencyMs": 27,
+        "errors": 0,
+        "timeouts": 0,
+        "status2xx": 0,
+        "status5xx": 0
+      }
+    ],
+    "tier3_rfq_write_storm": {
+      "connections": 50,
+      "requestsPerSec": 5341.3,
+      "totalRequests": 53400,
+      "status2xxCreated": 0,
+      "status4xxRateLimited": 53400,
+      "status5xxErrors": 0,
+      "p50LatencyMs": 8,
+      "p99LatencyMs": 19
+    },
+    "tier4_sustained_soak": {
+      "durationSeconds": 45,
+      "connections": 40,
+      "totalRequestsCompleted": 239600,
+      "avgRps": 5326.45,
+      "p50LatencyMs": 6,
+      "p99LatencyMs": 15,
+      "errors": 0,
+      "timeouts": 0,
+      "memoryDeltaRssMb": -0.3,
+      "memoryDeltaHeapMb": -7.41
+    },
+    "tier5_breaking_point": [
+      {
+        "connections": 100,
+        "rps": 5051.38,
+        "totalRequests": 40396,
+        "p50Ms": 18,
+        "p99Ms": 45,
+        "errors": 0,
+        "timeouts": 0,
+        "saturated": "NO"
+      },
+      {
+        "connections": 200,
+        "rps": 5212.5,
+        "totalRequests": 41692,
+        "p50Ms": 37,
+        "p99Ms": 74,
+        "errors": 0,
+        "timeouts": 0,
+        "saturated": "NO"
+      },
+      {
+        "connections": 400,
+        "rps": 5255.88,
+        "totalRequests": 42044,
+        "p50Ms": 85,
+        "p99Ms": 316,
+        "errors": 240,
+        "timeouts": 0,
+        "saturated": "YES"
+      },
+      {
+        "connections": 600,
+        "rps": 4791.75,
+        "totalRequests": 38330,
+        "p50Ms": 224,
+        "p99Ms": 980,
+        "errors": 861,
+        "timeouts": 0,
+        "saturated": "YES"
+      }
+    ]
+  },
+  "finalMemory": {
+    "rss": 442257408,
+    "heapUsed": 206697480,
+    "netGrowthRssMb": 310.31,
+    "netGrowthHeapMb": 163.3
+  }
+}
