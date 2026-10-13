@@ -212,3 +212,21 @@ client/
 - **Separate `admin/`** on the frontend keeps buyer bundle small (admin code lazy-loaded).
 - **`ai/` isolated**: provider can be swapped (Claude ↔ OpenAI) without touching other code; keys never reach the client.
 - **`docs/` in repo**: client and agents always read the same source of truth.
+
+---
+
+## 7. Architectural Guards & Dependency Direction Rules
+
+### 7.1 Allowed Dependency Directions
+- **Frontend:** `pages` → `features` → `components` → `ui` → `styles/tokens`
+- **Backend:** `routes` → `controller` → `service` → `model` → `db`
+- **Strict Prohibition:** Lower-level components or models must never import from higher-level controllers or pages.
+
+### 7.2 Path Aliases
+- Frontend: `@/*` maps to `client/src/*` (configured in `vite.config.js` and `client/jsconfig.json`).
+- Backend: `@/*` maps to `server/src/*` (configured in `server/jsconfig.json`).
+
+### 7.3 Circular Dependency Prevention
+- Enforced automatically via `npm run check:circular` (`madge --circular`).
+- Continuous integration gates fail if any cycle is introduced.
+
