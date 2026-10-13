@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-13T15:39:01.745Z",
+  "timestamp": "2026-10-13T16:30:25.019Z",
   "contracts": {
     "health": {
       "endpoint": "GET /api/v1/health",
@@ -15,8 +15,8 @@
           "status": "healthy",
           "service": "export-b2b-api",
           "version": "1.0.0",
-          "uptime": 45.4526246,
-          "timestamp": "2026-10-13T15:38:57.541Z",
+          "uptime": 18.1184514,
+          "timestamp": "2026-10-13T16:30:21.245Z",
           "environment": "development"
         }
       }
@@ -1947,9 +1947,9 @@
             ],
             "description": "High-purity Indian castor oil and functional oleochemical derivatives for cosmetic formulations, surfactants, emollient lipsticks, and industrial lubricants. exported from India with verified laboratory specifications and compliant documentation."
           },
-          "viewCount": 2,
+          "viewCount": 7,
           "createdAt": "2026-10-12T11:12:51.000Z",
-          "updatedAt": "2026-10-13T15:38:59.482Z",
+          "updatedAt": "2026-10-13T16:30:22.948Z",
           "category_id": 39,
           "sub_category_id": 40,
           "category": {

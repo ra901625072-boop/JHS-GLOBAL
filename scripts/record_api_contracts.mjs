@@ -11,7 +11,8 @@ async function run() {
   await connectDB();
 
   const server = http.createServer(app);
-  await new Promise((resolve) => server.listen(PORT, resolve));
+  await new Promise((resolve) => server.listen(0, resolve));
+  const port = server.address().port;
 
   const endpoints = [
     { name: 'health', method: 'GET', path: '/api/v1/health' },
@@ -53,7 +54,7 @@ async function run() {
 
   for (const ep of endpoints) {
     try {
-      const res = await fetch(`http://127.0.0.1:${PORT}${ep.path}`, {
+      const res = await fetch(`http://127.0.0.1:${port}${ep.path}`, {
         method: ep.method,
         headers: ep.headers || {},
         body: ep.body || undefined,

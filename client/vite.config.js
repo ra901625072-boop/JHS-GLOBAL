@@ -22,6 +22,33 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    chunkSizeWarningLimit: 800,
+    chunkSizeWarningLimit: 500,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (
+              id.includes('react') ||
+              id.includes('react-dom') ||
+              id.includes('react-router') ||
+              id.includes('react-helmet-async') ||
+              id.includes('clsx') ||
+              id.includes('tailwind-merge')
+            ) {
+              return 'vendor-react';
+            }
+            if (id.includes('gsap') || id.includes('lenis')) {
+              return 'vendor-motion';
+            }
+            if (id.includes('@tanstack') || id.includes('axios')) {
+              return 'vendor-query';
+            }
+            if (id.includes('lucide-react')) {
+              return 'vendor-icons';
+            }
+          }
+        },
+      },
+    },
   },
 });
