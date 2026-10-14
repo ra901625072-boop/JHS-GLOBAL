@@ -2,7 +2,6 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
 import { QuoteBasketProvider } from '../features/quoteBasket/context';
-import { AuthProvider } from '../admin/context/AuthContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,11 +17,9 @@ export const AppProviders = ({ children }) => {
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <QuoteBasketProvider>
-            {children}
-          </QuoteBasketProvider>
-        </AuthProvider>
+        <QuoteBasketProvider>
+          {children}
+        </QuoteBasketProvider>
       </QueryClientProvider>
     </HelmetProvider>
   );

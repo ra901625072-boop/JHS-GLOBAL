@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import WhatsAppButton from '../components/layout/WhatsAppButton';
-import QuoteDrawer from '../components/rfq/QuoteDrawer';
-import ChatWidget from '../components/ai/ChatWidget';
 import RouteTransition from '../components/layout/RouteTransition';
 import StickyMobileQuoteBar from '../components/layout/StickyMobileQuoteBar';
 import { useSmoothScroll } from '../hooks/useSmoothScroll';
+
+const ChatWidget = lazy(() => import('../components/ai/ChatWidget'));
+const QuoteDrawer = lazy(() => import('../components/rfq/QuoteDrawer'));
 
 export const App = () => {
   // Mount calm inertial smooth scroll (automatically bypassed under prefers-reduced-motion)
@@ -23,8 +24,12 @@ export const App = () => {
       </main>
       <Footer />
       <WhatsAppButton />
-      <ChatWidget />
-      <QuoteDrawer />
+      <Suspense fallback={null}>
+        <ChatWidget />
+      </Suspense>
+      <Suspense fallback={null}>
+        <QuoteDrawer />
+      </Suspense>
       <StickyMobileQuoteBar />
     </div>
   );

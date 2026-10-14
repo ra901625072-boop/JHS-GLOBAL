@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
 import { motionTokens, isReducedMotion } from '../styles/motion';
+
+let gsapLoader = null;
+const loadGsap = () => {
+  if (!gsapLoader) {
+    gsapLoader = import('gsap').then((m) => m.gsap);
+  }
+  return gsapLoader;
+};
 
 /**
  * useScrollReveal Hook
@@ -61,77 +68,88 @@ export const useScrollReveal = (options = {}) => {
 
     // Handle reduced motion accessibility: reveal immediately without spatial motion
     if (isReducedMotion()) {
-      gsap.set(targets, { opacity: 1, x: 0, y: 0, clearProps: 'transform' });
+      targets.forEach((el) => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
       return;
     }
 
-    const ctx = gsap.context(() => {
-      // Compute initial spatial offsets
-      let initialX = 0;
-      let initialY = 0;
+    let ctx = null;
+    let observer = null;
+    let isCancelled = false;
 
-      if (direction === 'up') initialY = distance;
-      else if (direction === 'down') initialY = -distance;
-      else if (direction === 'left') initialX = distance;
-      else if (direction === 'right') initialX = -distance;
+    loadGsap().then((gsap) => {
+      if (isCancelled || !containerRef.current) return;
 
-      // Initialize hidden starting state
-      gsap.set(targets, {
-        opacity: 0,
-        x: initialX,
-        y: initialY,
-        willChange: 'transform, opacity',
-      });
+      ctx = gsap.context(() => {
+        // Compute initial spatial offsets
+        let initialX = 0;
+        let initialY = 0;
 
-      // Robust IntersectionObserver guarantees animation triggers strictly when visible in viewport
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              gsap.to(targets, {
-                opacity: 1,
-                x: 0,
-                y: 0,
-                duration,
-                delay,
-                ease,
-                stagger:
-                  stagger > 0
-                    ? { each: stagger, amount: Math.min(stagger * targets.length, 0.48) }
-                    : 0,
-                onComplete: () => {
-                  gsap.set(targets, { willChange: 'auto', clearProps: 'transform' });
-                },
-              });
+        if (direction === 'up') initialY = distance;
+        else if (direction === 'down') initialY = -distance;
+        else if (direction === 'left') initialX = distance;
+        else if (direction === 'right') initialX = -distance;
 
-              if (once) {
-                observer.unobserve(entry.target);
+        // Initialize hidden starting state
+        gsap.set(targets, {
+          opacity: 0,
+          x: initialX,
+          y: initialY,
+          willChange: 'transform, opacity',
+        });
+
+        // Robust IntersectionObserver guarantees animation triggers strictly when visible in viewport
+        observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                gsap.to(targets, {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  duration,
+                  delay,
+                  ease,
+                  stagger:
+                    stagger > 0
+                      ? { each: stagger, amount: Math.min(stagger * targets.length, 0.48) }
+                      : 0,
+                  onComplete: () => {
+                    gsap.set(targets, { willChange: 'auto', clearProps: 'transform' });
+                  },
+                });
+
+                if (once) {
+                  observer.unobserve(entry.target);
+                }
+              } else if (!once) {
+                gsap.to(targets, {
+                  opacity: 0,
+                  x: initialX,
+                  y: initialY,
+                  duration: duration * 0.5,
+                  ease: 'power2.in',
+                });
               }
-            } else if (!once) {
-              gsap.to(targets, {
-                opacity: 0,
-                x: initialX,
-                y: initialY,
-                duration: duration * 0.5,
-                ease: 'power2.in',
-              });
-            }
-          });
-        },
-        {
-          threshold: 0.05,
-          rootMargin: '0px 0px -40px 0px', // Must physically enter at least 40px into the viewport
-        }
-      );
+            });
+          },
+          {
+            threshold: 0.05,
+            rootMargin: '0px 0px -40px 0px', // Must physically enter at least 40px into the viewport
+          }
+        );
 
-      observer.observe(containerRef.current);
+        observer.observe(containerRef.current);
+      }, containerRef);
+    });
 
-      return () => {
-        observer.disconnect();
-      };
-    }, containerRef);
-
-    return () => ctx.revert();
+    return () => {
+      isCancelled = true;
+      if (observer) observer.disconnect();
+      if (ctx) ctx.revert();
+    };
   }, [direction, distance, duration, delay, ease, stagger, selector, once, disabled]);
 
   return containerRef;

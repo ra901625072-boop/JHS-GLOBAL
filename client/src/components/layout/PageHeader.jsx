@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
 import { isReducedMotion } from '../../styles/motion';
 
 /**
@@ -24,53 +23,63 @@ export const PageHeader = ({
   useEffect(() => {
     if (isReducedMotion() || !headerRef.current) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    let ctx = null;
+    let isCancelled = false;
 
-      // 1. Eyebrow badge / pill soft settle
-      if (eyebrow || badge) {
+    import('gsap').then(({ gsap }) => {
+      if (isCancelled || !headerRef.current) return;
+
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        // 1. Eyebrow badge / pill soft settle
+        if (eyebrow || badge) {
+          tl.fromTo(
+            '.page-header-eyebrow',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.45 }
+          );
+        }
+
+        // 2. Noble masked headline ascending reveal
         tl.fromTo(
-          '.page-header-eyebrow',
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.45 }
+          '.page-header-title',
+          { opacity: 0, y: 22 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+          },
+          eyebrow || badge ? '-=0.3' : 0
         );
-      }
 
-      // 2. Noble masked headline ascending reveal
-      tl.fromTo(
-        '.page-header-title',
-        { opacity: 0, y: 22 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-        },
-        eyebrow || badge ? '-=0.3' : 0
-      );
+        // 3. Subtext description paragraph
+        if (description) {
+          tl.fromTo(
+            '.page-header-desc',
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0, duration: 0.55 },
+            '-=0.45'
+          );
+        }
 
-      // 3. Subtext description paragraph
-      if (description) {
-        tl.fromTo(
-          '.page-header-desc',
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.55 },
-          '-=0.45'
-        );
-      }
+        // 4. Optional actions
+        if (actions) {
+          tl.fromTo(
+            '.page-header-actions',
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.45 },
+            '-=0.35'
+          );
+        }
+      }, headerRef);
+    });
 
-      // 4. Optional actions
-      if (actions) {
-        tl.fromTo(
-          '.page-header-actions',
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.45 },
-          '-=0.35'
-        );
-      }
-    }, headerRef);
-
-    return () => ctx.revert();
+    return () => {
+      isCancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, [eyebrow, title, description]);
 
   return (

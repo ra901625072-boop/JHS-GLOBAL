@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import WhatsAppIcon from '../common/WhatsAppIcon';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
-import { openAiAssistant } from '../ai/ChatWidget';
+import { openAiAssistant } from '../ai/chatEvents';
 
 export const MobileMenuDrawer = ({ isOpen, onClose }) => {
   const navigate = useNavigate();

@@ -17,6 +17,7 @@ const ContactPage = lazy(() => import('../pages/Contact'));
 const NotFoundPage = lazy(() => import('../pages/NotFound'));
 
 // Admin Suite Pages & Components
+const AdminRoot = lazy(() => import('../admin/components/AdminRoot'));
 const AdminLayout = lazy(() => import('../admin/components/AdminLayout'));
 const ProtectedRoute = lazy(() => import('../admin/components/ProtectedRoute'));
 const AdminLogin = lazy(() => import('../admin/pages/Login'));
@@ -164,27 +165,30 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // Admin Authentication Route
-  {
-    path: '/admin/login',
-    element: (
-      <Suspense fallback={<RouteLoader />}>
-        <AdminLogin />
-      </Suspense>
-    ),
-  },
-
-  // Admin Operations Suite (Protected)
+  // Admin Operations Suite (AuthProvider scoped strictly to Admin area)
   {
     path: '/admin',
     element: (
       <Suspense fallback={<RouteLoader />}>
-        <ProtectedRoute>
-          <AdminLayout />
-        </ProtectedRoute>
+        <AdminRoot />
       </Suspense>
     ),
     children: [
+      {
+        path: 'login',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <AdminLogin />
+          </Suspense>
+        ),
+      },
+      {
+        element: (
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        ),
+        children: [
       {
         index: true,
         element: (
@@ -272,6 +276,8 @@ export const router = createBrowserRouter([
             </ProtectedRoute>
           </Suspense>
         ),
+      },
+        ],
       },
     ],
   },

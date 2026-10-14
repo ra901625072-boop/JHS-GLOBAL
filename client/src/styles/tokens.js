@@ -87,9 +87,9 @@ export const colors = {
 
 export const typography = {
   fontFamily: {
-    serif: ['Playfair Display', 'Georgia', 'serif'],
-    sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-    mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', 'monospace'],
+    serif: ['"Playfair Display"', '"Playfair Display Fallback"', 'Georgia', 'serif'],
+    sans: ['"Plus Jakarta Sans"', '"Plus Jakarta Sans Fallback"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+    mono: ['"JetBrains Mono"', 'Menlo', 'Monaco', 'Courier New', 'monospace'],
   },
 };
 

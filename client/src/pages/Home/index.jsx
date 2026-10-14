@@ -21,18 +21,18 @@ import {
   Store,
   Layers,
 } from 'lucide-react';
-import { gsap } from 'gsap';
 import Button from '../../components/ui/Button';
 import Reveal from '../../components/ui/Reveal';
 import JsonLd, { createOrganizationSchema } from '../../components/seo/JsonLd';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
 import WorldTradeMap from '../../components/home/WorldTradeMap';
 import CertificationMarquee from '../../components/home/CertificationMarquee';
-import GovCertificationsSection from '../../components/home/GovCertificationsSection';
-import HomeFaqSection from '../../components/home/HomeFaqSection';
 import ProductShowcaseMarquee from '../../components/home/ProductShowcaseMarquee';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 import { isReducedMotion } from '../../styles/motion';
+
+const GovCertificationsSection = React.lazy(() => import('../../components/home/GovCertificationsSection'));
+const HomeFaqSection = React.lazy(() => import('../../components/home/HomeFaqSection'));
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -44,60 +44,70 @@ export const HomePage = () => {
   useEffect(() => {
     if (isReducedMotion() || !heroRef.current) return;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    let ctx = null;
+    let isCancelled = false;
 
-      // 1. World Trade Map ascends with soft dimensional scale & fade
-      tl.fromTo(
-        '.hero-map',
-        { opacity: 0, scale: 0.95, y: 15 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.85, ease: 'power3.out' },
-        0.05
-      )
-      // 2. Accreditation Pill settles in promptly
-      .fromTo(
-        '.hero-eyebrow',
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' },
-        0.08
-      )
-      // 3. Line-masked headline ascending reveal (crisp, noble 0.75s, 20px travel)
-      .fromTo(
-        '.hero-line',
-        { opacity: 0, y: 22 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.75,
-          ease: 'power3.out',
-          stagger: 0.08,
-        },
-        0.18
-      )
-      // 4. Subtext description paragraph
-      .fromTo(
-        '.hero-subtext',
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
-        0.42
-      )
-      // 5. Conversion CTAs glide into place
-      .fromTo(
-        '.hero-cta',
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' },
-        0.52
-      )
-      // 6. Micro trust points sequential entry
-      .fromTo(
-        '.hero-trust-item',
-        { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.04 },
-        0.62
-      );
-    }, heroRef);
+    import('gsap').then(({ gsap }) => {
+      if (isCancelled || !heroRef.current) return;
 
-    return () => ctx.revert();
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        // 1. World Trade Map ascends with soft dimensional scale & fade
+        tl.fromTo(
+          '.hero-map',
+          { opacity: 0, scale: 0.95, y: 15 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.85, ease: 'power3.out' },
+          0.05
+        )
+        // 2. Accreditation Pill settles in promptly
+        .fromTo(
+          '.hero-eyebrow',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' },
+          0.08
+        )
+        // 3. Line-masked headline ascending reveal (crisp, noble 0.75s, 20px travel)
+        .fromTo(
+          '.hero-line',
+          { opacity: 0, y: 22 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.75,
+            ease: 'power3.out',
+            stagger: 0.08,
+          },
+          0.18
+        )
+        // 4. Subtext description paragraph
+        .fromTo(
+          '.hero-subtext',
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
+          0.42
+        )
+        // 5. Conversion CTAs glide into place
+        .fromTo(
+          '.hero-cta',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' },
+          0.52
+        )
+        // 6. Micro trust points sequential entry
+        .fromTo(
+          '.hero-trust-item',
+          { opacity: 0, y: 8 },
+          { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', stagger: 0.04 },
+          0.62
+        );
+      }, heroRef);
+    });
+
+    return () => {
+      isCancelled = true;
+      if (ctx) ctx.revert();
+    };
   }, []);
 
   const workflowSteps = [
@@ -667,10 +677,14 @@ export const HomePage = () => {
       </section>
 
       {/* Government Approved Certifications & Export Documents Showcase */}
-      <GovCertificationsSection />
+      <React.Suspense fallback={null}>
+        <GovCertificationsSection />
+      </React.Suspense>
 
       {/* Frequently Asked Questions (Conversion Support Section) */}
-      <HomeFaqSection />
+      <React.Suspense fallback={null}>
+        <HomeFaqSection />
+      </React.Suspense>
 
       {/* Conversion Banner: Start a Conversation */}
       <section className="bg-surface-canvas py-20 px-4 sm:px-6 lg:px-8">

@@ -20,6 +20,8 @@ export default defineConfig({
     },
   },
   build: {
+    target: 'es2022',
+    cssTarget: 'es2022',
     outDir: 'dist',
     sourcemap: false,
     chunkSizeWarningLimit: 500,
@@ -37,14 +39,14 @@ export default defineConfig({
             ) {
               return 'vendor-react';
             }
-            if (id.includes('gsap') || id.includes('lenis')) {
-              return 'vendor-motion';
+            if (id.includes('lenis')) {
+              return 'vendor-lenis';
+            }
+            if (id.includes('gsap')) {
+              return 'vendor-gsap';
             }
             if (id.includes('@tanstack') || id.includes('axios')) {
               return 'vendor-query';
-            }
-            if (id.includes('lucide-react')) {
-              return 'vendor-icons';
             }
           }
         },

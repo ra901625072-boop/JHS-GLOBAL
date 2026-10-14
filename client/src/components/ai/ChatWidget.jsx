@@ -26,11 +26,7 @@ import { sendAiChatMessage, submitAiChatFeedback } from '../../features/ai/api';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
 import WhatsAppIcon from '../common/WhatsAppIcon';
 
-export const openAiAssistant = (query = null) => {
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent('open-ai-chat', { detail: { query } }));
-  }
-};
+export { openAiAssistant } from './chatEvents';
 
 const STORAGE_KEY = 'jhs_global_buyer_chat_v3';
 
