@@ -208,7 +208,7 @@ export const chatWithBuyerAssistant = async ({
 
   return {
     reply: cleanAnswer,
-    answer: cleanAnswer,
+    answer: finalOutput.answer || cleanAnswer,
     intent: finalOutput.intent,
     hasBuyingIntent,
     auditLogId: auditLog?.id || null,

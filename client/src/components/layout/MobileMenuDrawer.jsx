@@ -6,23 +6,33 @@ import {
   ArrowRight,
   ShieldCheck,
   ShoppingBag,
-  FileText,
-  Clock,
   Home,
   Award,
   Send,
-  MessageSquare,
+  Sparkles,
+  ChevronRight,
+  FlaskConical,
+  HelpCircle,
+  Building,
+  Ship,
+  Package,
+  Leaf,
+  FlaskRound,
+  Wheat,
 } from 'lucide-react';
 import WhatsAppIcon from '../common/WhatsAppIcon';
-import Button from '../ui/Button';
+import { useQuoteBasket } from '../../features/quoteBasket/context';
+import { openAiAssistant } from '../ai/ChatWidget';
 
 export const MobileMenuDrawer = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const { totalItemCount, setIsDrawerOpen } = useQuoteBasket();
 
   const brandName = import.meta.env.VITE_BRAND_NAME || 'JHS GLOBAL';
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '+917202907720';
-  const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-    'Hello Export Desk, I would like to inquire about container export availability.'
+  const cleanWhatsappNumber = whatsappNumber.replace(/[^0-9]/g, '');
+  const whatsappUrl = `https://wa.me/${cleanWhatsappNumber}?text=${encodeURIComponent(
+    'Hello JHS GLOBAL Export Desk, I would like to inquire about container export availability.'
   )}`;
 
   // Lock body scroll and pause smooth scroll when mobile menu is open
@@ -51,13 +61,68 @@ export const MobileMenuDrawer = ({ isOpen, onClose }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  const handleLaunchAiAssistant = (query = null) => {
+    onClose();
+    setTimeout(() => {
+      openAiAssistant(query);
+    }, 150);
+  };
+
   const navItems = [
-    { name: 'Home', path: '/', end: true, icon: Home },
-    { name: 'About', path: '/about', icon: FileText },
-    { name: 'Product', path: '/products', icon: ShoppingBag },
-    { name: 'Quality&certificate', path: '/quality', icon: Award },
-    { name: 'Export process', path: '/export-process', icon: Clock },
-    { name: 'Contact', path: '/contact', icon: Send },
+    {
+      name: 'Home',
+      path: '/',
+      end: true,
+      icon: Home,
+    },
+    {
+      name: 'Products Catalogue',
+      path: '/products',
+      icon: Package,
+    },
+    {
+      name: 'Quality & Certifications',
+      path: '/quality',
+      icon: Award,
+    },
+    {
+      name: 'Export Process',
+      path: '/export-process',
+      icon: Ship,
+    },
+    {
+      name: 'About Us',
+      path: '/about-us',
+      icon: Building,
+    },
+    {
+      name: 'Procurement FAQ',
+      path: '/faq',
+      icon: HelpCircle,
+    },
+    {
+      name: 'Contact & Sales Desk',
+      path: '/contact',
+      icon: Send,
+    },
+  ];
+
+  const categories = [
+    {
+      name: 'Personal Care Raw Materials',
+      slug: 'personal-care-raw-materials',
+      icon: FlaskRound,
+    },
+    {
+      name: 'Nutraceutical Raw Materials',
+      slug: 'nutraceutical-raw-materials',
+      icon: Leaf,
+    },
+    {
+      name: 'Animal Feed & Meals',
+      slug: 'animal-feed',
+      icon: Wheat,
+    },
   ];
 
   if (!isOpen || typeof document === 'undefined') return null;
@@ -70,164 +135,216 @@ export const MobileMenuDrawer = ({ isOpen, onClose }) => {
       data-lenis-prevent
       className="fixed inset-0 z-50 lg:hidden overflow-hidden flex flex-col"
     >
-      {/* Backdrop with smooth blur */}
+      {/* Blurred Backdrop */}
       <div
-        className="fixed inset-0 bg-neutral-950/70 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 bg-neutral-950/75 backdrop-blur-xs transition-opacity duration-300"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Slide-In Full Sheet Container */}
-      <div
-        className="relative w-full max-w-sm h-full bg-white shadow-2xl flex flex-col z-10 mr-auto overflow-hidden animate-in slide-in-from-left duration-300"
+      {/* Slide-In Minimal Dark Luxury Drawer */}
+      <aside
+        className="relative w-72 sm:w-80 max-w-[85vw] h-[100dvh] h-screen bg-gradient-to-b from-[#05140B] via-[#0A2619] to-[#04120A] text-neutral-200 border-r border-primary-800/80 flex flex-col justify-between z-10 mr-auto overflow-hidden animate-in slide-in-from-left duration-200 shadow-2xl"
         style={{ transitionTimingFunction: 'var(--ease-standard)' }}
       >
-        {/* Top Header Bar */}
-        <div className="p-4 bg-primary-950 text-white flex items-center justify-between border-b border-primary-900 shrink-0">
-          <Link
-            to="/"
-            onClick={onClose}
-            className="flex items-center gap-3 focus:outline-none"
-          >
-            <div className="w-10 h-10 rounded-full bg-[#0e3b2e] border-2 border-[#c59b27]/80 flex items-center justify-center font-serif font-black text-[#c59b27] text-xs shrink-0 relative overflow-hidden">
-              <div className="absolute inset-0.5 rounded-full border border-[#c59b27]/40 pointer-events-none" />
-              <span>JHS</span>
-            </div>
-            <div className="flex flex-col min-w-0">
-              <span className="font-serif font-bold text-base text-white tracking-tight leading-none truncate">
-                {brandName}
-              </span>
-              <span className="text-[9px] text-[#c59b27] uppercase tracking-[0.2em] font-semibold mt-1">
-                INDIA • TO THE WORLD
-              </span>
-            </div>
-          </Link>
+        <div className="flex flex-col flex-1 overflow-y-auto admin-scrollbar">
+          {/* Top Header: Official JHS Global Logo, Serif Wordmark & Gold Subtitle */}
+          <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between shrink-0 bg-primary-950/30">
+            <Link
+              to="/"
+              onClick={onClose}
+              className="flex items-center gap-3 min-w-0 group focus:outline-none"
+            >
+              {/* Authentic Circular JHS Emblem */}
+              <div className="w-10 h-10 rounded-full bg-[#0e3b2e] border-2 border-[#c59b27] shadow-sm flex items-center justify-center font-serif font-black text-[#c59b27] text-xs tracking-widest shrink-0 relative overflow-hidden group-hover:scale-105 transition-transform duration-200">
+                <div className="absolute inset-0.5 rounded-full border border-[#c59b27]/40 pointer-events-none" />
+                <span>JHS</span>
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="font-serif font-bold text-base text-white tracking-tight leading-none truncate">
+                  {brandName}
+                </span>
+                <span className="text-[9px] font-sans font-semibold text-[#c59b27] tracking-[0.22em] uppercase mt-1 leading-none">
+                  INDIA • TO THE WORLD
+                </span>
+              </div>
+            </Link>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-2.5 text-neutral-300 hover:text-white rounded-xl hover:bg-white/10 active:scale-95 transition-all min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#c59b27]"
-            aria-label="Close navigation menu"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Scrollable Navigation Body */}
-        <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6 admin-scrollbar">
-          {/* Quick Direct Actions */}
-          <div className="grid grid-cols-2 gap-2.5">
+            {/* Minimal Circular Close Button */}
             <button
               type="button"
-              onClick={() => {
-                onClose();
-                navigate('/products');
-              }}
-              className="p-3.5 rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-neutral-100 active:scale-[0.98] transition-all text-left flex flex-col justify-between min-h-[64px]"
+              onClick={onClose}
+              className="w-9 h-9 rounded-full bg-white/5 border border-white/10 text-neutral-300 hover:text-white hover:bg-white/10 active:scale-95 flex items-center justify-center transition-all focus:outline-none focus:ring-1 focus:ring-[#c59b27]"
+              aria-label="Close navigation menu"
             >
-              <ShoppingBag className="w-4 h-4 text-primary-900 mb-1" />
-              <span className="text-xs font-bold text-neutral-900">Explore Products</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                navigate('/contact');
-              }}
-              className="p-3.5 rounded-xl border border-[#c59b27]/40 bg-[#c59b27]/10 hover:bg-[#c59b27]/20 active:scale-[0.98] transition-all text-left flex flex-col justify-between min-h-[64px]"
-            >
-              <Clock className="w-4 h-4 text-[#9c781d] mb-1" />
-              <span className="text-xs font-bold text-neutral-900">48h Quote (RFQ)</span>
+              <X className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Core Navigation Links */}
-          <div className="space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block pb-1">
-              Main Menu
-            </span>
+          {/* Minimal AI Assistant Card */}
+          <div className="mx-3.5 mt-3 mb-1 p-3 rounded-xl bg-white/[0.04] border border-[#c59b27]/30 text-white shrink-0">
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-lg bg-[#c59b27]/20 border border-[#c59b27]/40 flex items-center justify-center text-[#e8c15a] shrink-0">
+                  <Sparkles className="w-3.5 h-3.5" />
+                </div>
+                <span className="font-serif font-bold text-xs text-white tracking-tight">
+                  JHS Export AI Desk
+                </span>
+              </div>
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[9px] font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Live
+              </span>
+            </div>
+            <p className="text-[10px] text-neutral-300 mb-2 leading-relaxed">
+              Instant verified specs, assays, MOQs & container freight
+            </p>
+            <button
+              type="button"
+              onClick={() => handleLaunchAiAssistant()}
+              className="w-full py-1.5 px-3 rounded-lg bg-[#c59b27] hover:bg-[#b0871d] active:scale-[0.98] text-primary-950 font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs"
+            >
+              <span>Ask AI Assistant Now</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-auto text-primary-950" />
+            </button>
+          </div>
+
+          {/* Navigation Links */}
+          <nav className="p-3 space-y-1">
+            <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#c59b27]/80">
+              Commercial Sourcing
+            </div>
             {navItems.map((item) => {
               const Icon = item.icon;
               return (
                 <NavLink
-                  key={item.name}
+                  key={item.path}
                   to={item.path}
                   end={item.end}
                   onClick={onClose}
                   className={({ isActive }) =>
-                    `flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-colors min-h-[46px] ${
+                    `group relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-150 transform-gpu active:scale-[0.98] ${
                       isActive
-                        ? 'bg-[#0e3b2e] text-white font-semibold shadow-xs'
-                        : 'text-neutral-700 hover:bg-neutral-100'
+                        ? 'bg-white/10 text-white border border-white/20 font-semibold shadow-xs'
+                        : 'text-neutral-300 hover:bg-primary-800/50 hover:text-white'
                     }`
                   }
                 >
                   {({ isActive }) => (
                     <>
-                      <div className="flex items-center gap-3">
-                        <Icon className={`w-4 h-4 ${isActive ? 'text-[#c59b27]' : 'text-neutral-500'}`} />
-                        <span>{item.name}</span>
-                      </div>
                       {isActive && (
-                        <span className="w-2 h-2 rounded-full bg-[#c59b27]" />
+                        <span className="absolute left-1 w-1 h-4 bg-[#c59b27] rounded-full transition-all duration-200" />
                       )}
+                      <Icon
+                        className={`w-4 h-4 shrink-0 transition-colors ${
+                          isActive ? 'text-white' : 'text-neutral-400 group-hover:text-white'
+                        }`}
+                      />
+                      <span className="font-serif tracking-normal text-[13px] truncate">{item.name}</span>
                     </>
                   )}
                 </NavLink>
               );
             })}
-          </div>
 
-          {/* Secondary Quick Links */}
-          <div className="space-y-1 pt-4 border-t border-neutral-100">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block pb-1">
-              Resources
-            </span>
+            {/* SOURCING DIVISIONS SECTION */}
+            <div className="pt-3.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#c59b27]/80 flex items-center justify-between">
+              <span>Sourcing Divisions</span>
+              <span className="text-[9px] text-[#c59b27] font-semibold">3 Lines</span>
+            </div>
+
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              return (
+                <Link
+                  key={cat.slug}
+                  to={`/products?category=${cat.slug}`}
+                  onClick={onClose}
+                  className="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs text-neutral-300 hover:bg-primary-800/50 hover:text-white transition-colors group"
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Icon className="w-3.5 h-3.5 shrink-0 text-[#c59b27] group-hover:text-white transition-colors" />
+                    <span className="truncate">{cat.name}</span>
+                  </div>
+                  <ChevronRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" />
+                </Link>
+              );
+            })}
+
+            {/* BUYER RESOURCES SECTION */}
+            <div className="pt-3.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#c59b27]/80">
+              Buyer Resources
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                setIsDrawerOpen(true);
+              }}
+              className="w-full flex items-center justify-between px-3.5 py-2 rounded-xl text-xs text-neutral-300 hover:bg-primary-800/50 hover:text-white transition-colors group"
+            >
+              <div className="flex items-center gap-3">
+                <ShoppingBag className="w-3.5 h-3.5 shrink-0 text-neutral-400 group-hover:text-white" />
+                <span>Quote Basket</span>
+              </div>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-neutral-300 border border-white/10">
+                {totalItemCount === 0 ? 'Empty' : `${totalItemCount} Items`}
+              </span>
+            </button>
+
             <Link
               to="/sample-request"
               onClick={onClose}
-              className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-neutral-600 hover:bg-neutral-50"
+              className="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs text-neutral-300 hover:bg-primary-800/50 hover:text-white transition-colors group"
             >
-              <span>Commercial Sample Request</span>
-              <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
+              <div className="flex items-center gap-3">
+                <FlaskConical className="w-3.5 h-3.5 shrink-0 text-neutral-400 group-hover:text-white" />
+                <span>Commercial Sample Request</span>
+              </div>
+              <ChevronRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" />
             </Link>
+
             <Link
               to="/faq"
               onClick={onClose}
-              className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium text-neutral-600 hover:bg-neutral-50"
+              className="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs text-neutral-300 hover:bg-primary-800/50 hover:text-white transition-colors group"
             >
-              <span>Procurement FAQ</span>
-              <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
+              <div className="flex items-center gap-3">
+                <HelpCircle className="w-3.5 h-3.5 shrink-0 text-neutral-400 group-hover:text-white" />
+                <span>Procurement FAQ (Incoterms)</span>
+              </div>
+              <ChevronRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 transition-all shrink-0" />
             </Link>
-          </div>
+          </nav>
         </div>
 
-        {/* Drawer Bottom Action Bar */}
-        <div className="p-4 bg-surface-canvas border-t border-surface-border space-y-2.5 pb-safe shrink-0">
-          <Button
-            variant="cta"
-            size="lg"
+        {/* Minimal Bottom Action Dock */}
+        <div className="p-3.5 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] border-t border-white/10 bg-[#04120A]/90 backdrop-blur-md shrink-0 space-y-2">
+          <button
+            type="button"
             onClick={() => {
               onClose();
               navigate('/contact');
             }}
-            className="w-full flex items-center justify-center gap-2 shadow-card min-h-[48px] text-xs font-bold bg-[#0e3b2e] hover:bg-[#092b21] text-white"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-bold text-white bg-[#0e3b2e] hover:bg-[#092b21] border border-[#c59b27]/40 rounded-xl transition-all shadow-xs active:scale-[0.98]"
           >
             <span>Request Commercial Quote (RFQ)</span>
-            <ArrowRight className="w-4 h-4" />
-          </Button>
+            <ArrowRight className="w-3.5 h-3.5 text-[#c59b27]" />
+          </button>
 
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] active:scale-[0.98] text-white text-xs font-semibold flex items-center justify-center gap-2 min-h-[44px] shadow-xs transition-all"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold text-white bg-[#25D366] hover:bg-[#20BD5A] active:scale-[0.98] rounded-xl transition-all shadow-xs"
           >
-            <WhatsAppIcon className="w-4 h-4" />
+            <WhatsAppIcon className="w-4 h-4 text-white" />
             <span>Chat with Export Desk (WhatsApp)</span>
           </a>
         </div>
-      </div>
+      </aside>
     </div>,
     document.body
   );

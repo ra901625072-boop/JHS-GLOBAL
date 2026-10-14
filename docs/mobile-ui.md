@@ -41,7 +41,7 @@ A rigorous audit of the existing client application revealed significant usabili
 | **`/faq` (FAQ)** | • Search bar and 5 topic tabs take up ~300px above accordion list.<br>• Accordion headers have small tap targets on close arrows. | Hard to scan quickly while holding phone one-handed. |
 | **`/contact` (RFQ Page)** | • Left column (Corporate Office card + Due Diligence checklist) stacks *before* the RFQ form, forcing ~450px of reading before reaching the form.<br>• RFQ form inputs lack `inputMode` and `autoComplete` attributes, slowing down mobile keyboard data entry.<br>• Submit button is buried at the bottom of 800 lines of form controls. | High mobile drop-off rate on primary B2B lead generation channel. |
 | **`/sample-request`** | • Same form stacking and keyboard issues as RFQ form.<br>• Address fields lack postal autofill optimization. | Friction for international quality directors ordering courier samples. |
-| **`/about` (About)** | • 4 operational pillars stack in large cards with small indicator numbers. | Long, static read with no interactive mobile rhythm. |
+| **`/about-us` (About Us)** | • 4 operational pillars stack in large cards with small indicator numbers. | Long, static read with no interactive mobile rhythm. |
 | **`/admin/*` (Trade Desk)** | • High-density data tables in `AdminTableShell` cause horizontal overflow.<br>• Top navigation timezones clip on mobile screens. | Sales officers on phones struggle to review RFQs while traveling. |
 
 ---

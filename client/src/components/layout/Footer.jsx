@@ -226,8 +226,8 @@ export const Footer = () => {
           </h4>
           <ul className="space-y-2 text-xs">
             <li>
-              <Link to="/about" className="hover:text-white transition-colors">
-                About JHS GLOBAL
+              <Link to="/about-us" className="hover:text-white transition-colors">
+                About Us
               </Link>
             </li>
             <li>

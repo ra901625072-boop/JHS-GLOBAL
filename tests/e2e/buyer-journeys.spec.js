@@ -93,4 +93,112 @@ test.describe('Buyer Journeys & Platform Integrity Suite', () => {
     );
     expect(criticalViolations.length).toBe(0);
   });
+
+  test('Journey 8: About Us route accessibility and redirect from legacy /about', async ({ page }) => {
+    // Navigating to legacy /about should seamlessly transition to /about-us
+    await page.goto('/about', { waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveURL(/.*about-us/);
+
+    // Verify H1 and page identity
+    const heading = page.locator('h1').first();
+    await expect(heading).toBeVisible();
+    await expect(heading).toContainText(/About Us/i);
+
+    // Verify desktop/mobile navigation label displays 'About Us'
+    const viewport = page.viewportSize();
+    const isMobile = viewport && viewport.width < 1024;
+    if (isMobile) {
+      const footerAboutLink = page.locator('footer a[href*="about-us"]').first();
+      await footerAboutLink.scrollIntoViewIfNeeded();
+      await expect(footerAboutLink).toBeVisible();
+      await expect(footerAboutLink).toContainText(/About Us/i);
+    } else {
+      const aboutLink = page.locator('nav a[href*="about-us"], header a[href*="about-us"]').first();
+      await expect(aboutLink).toBeVisible();
+      await expect(aboutLink).toContainText(/About Us/i);
+    }
+  });
+
+  test('Journey 9: FAQ Page Discovery, Accordion, Search & Deep Linking', async ({ page }) => {
+    await page.goto('/faq', { waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveTitle(/Frequently Asked Questions/i);
+
+    // Verify Page Header
+    const heading = page.locator('h1').first();
+    await expect(heading).toBeVisible();
+    await expect(heading).toContainText(/Frequently Asked Questions/i);
+
+    // Test Search Input
+    const searchInput = page.locator('#faq-search-input');
+    await expect(searchInput).toBeVisible();
+    await searchInput.fill('MOQ');
+    await page.waitForTimeout(100);
+
+    // Test Accordion Trigger on visible question
+    const triggerBtn = page.locator('button[id^="faq-btn-"]').first();
+    await expect(triggerBtn).toBeVisible();
+    await triggerBtn.click();
+    await expect(triggerBtn).toHaveAttribute('aria-expanded', 'true');
+
+    // Clear search
+    await searchInput.fill('');
+    await page.waitForTimeout(100);
+
+    // Test Deep Link
+    await page.goto('/faq#standard-minimum-order-quantity-moq', { waitUntil: 'domcontentloaded' });
+    const targetCard = page.locator('#faq-item-standard-minimum-order-quantity-moq');
+    await expect(targetCard).toBeVisible();
+
+    // WCAG Accessibility Scan on /faq
+    const a11yResults = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa'])
+      .disableRules(['color-contrast'])
+      .analyze();
+    const criticalViolations = a11yResults.violations.filter((v) => v.impact === 'critical');
+    expect(criticalViolations.length).toBe(0);
+  });
+
+  test('Journey 10: Home Page FAQ Section & Navigation to Full FAQ', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    // Scroll to Home FAQ section
+    const faqSection = page.locator('#home-faq');
+    await expect(faqSection).toBeVisible();
+
+    // Verify Section Heading
+    await expect(faqSection.locator('h2')).toContainText(/Clear Answers Before You Order/i);
+
+    // Verify first question is open by default
+    const firstAccordion = faqSection.locator('button[id^="home-faq-btn-"]').first();
+    await expect(firstAccordion).toHaveAttribute('aria-expanded', 'true');
+
+    // Click View All FAQs link
+    const viewAllBtn = faqSection.locator('a[href="/faq"]').first();
+    await expect(viewAllBtn).toBeVisible();
+    await viewAllBtn.click();
+    await expect(page).toHaveURL(/.*\/faq/);
+  });
+
+  test('Journey 11: About Us Page Executive Image & Core Supply Categories', async ({ page }) => {
+    await page.goto('/about-us', { waitUntil: 'domcontentloaded' });
+
+    // Verify Executive Portrait Image
+    const execImage = page.locator('img[alt*="Executive leadership"]').first();
+    await expect(execImage).toBeVisible();
+    await expect(execImage).toHaveAttribute('width', '768');
+    await expect(execImage).toHaveAttribute('height', '1024');
+
+    // Verify 3 Core Export Categories
+    await expect(page.locator('text=Personal Care Raw Materials & Oleochemicals').first()).toBeVisible();
+    await expect(page.locator('text=Standardized Nutraceutical Extracts').first()).toBeVisible();
+    await expect(page.locator('text=Animal Feed Ingredients & Protein Meals').first()).toBeVisible();
+
+    // WCAG Accessibility Scan on /about-us
+    const a11yResults = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa'])
+      .disableRules(['color-contrast'])
+      .analyze();
+    const criticalViolations = a11yResults.violations.filter((v) => v.impact === 'critical');
+    expect(criticalViolations.length).toBe(0);
+  });
 });

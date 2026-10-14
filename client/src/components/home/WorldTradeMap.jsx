@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 /**
  * WorldTradeMap Component
@@ -184,9 +185,162 @@ export const WorldTradeMap = () => {
     },
   ];
 
+  const [isPaused, setIsPaused] = useState(false);
+
+  const trackRef = useRef(null);
+  const isInteractingRef = useRef(false);
+  const resumeTimeoutRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const lastTimestampRef = useRef(null);
+  const isMouseDownRef = useRef(false);
+  const startXRef = useRef(0);
+  const startScrollLeftRef = useRef(0);
+  const hasDraggedRef = useRef(false);
+
+  // Pause auto-scroll immediately on user interaction
+  const startInteraction = useCallback(() => {
+    isInteractingRef.current = true;
+    setIsPaused(true);
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current);
+      resumeTimeoutRef.current = null;
+    }
+  }, []);
+
+  // Schedule auto-scroll resume after idle window (~1.8s) so user can comfortably read
+  const scheduleResume = useCallback(() => {
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current);
+    }
+    resumeTimeoutRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+      setIsPaused(false);
+      lastTimestampRef.current = null;
+    }, 1800);
+  }, []);
+
+  // Bidirectional seamless infinite loop boundary wrap
+  const handleScroll = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const setWidth = el.scrollWidth / 3;
+    if (setWidth <= 0) return;
+
+    // Wrap seamlessly forward or backward
+    if (el.scrollLeft >= setWidth * 2) {
+      el.scrollLeft -= setWidth;
+    } else if (el.scrollLeft <= 10) {
+      el.scrollLeft += setWidth;
+    }
+
+    // If user is actively scrolling with touch momentum, refresh the resume timer
+    if (isInteractingRef.current) {
+      scheduleResume();
+    }
+  }, [scheduleResume]);
+
+  const handleTouchStart = useCallback(() => {
+    startInteraction();
+  }, [startInteraction]);
+
+  const handleTouchEnd = useCallback(() => {
+    scheduleResume();
+  }, [scheduleResume]);
+
+  const handleMouseDown = useCallback((e) => {
+    if (!trackRef.current) return;
+    isMouseDownRef.current = true;
+    hasDraggedRef.current = false;
+    startXRef.current = e.pageX - trackRef.current.offsetLeft;
+    startScrollLeftRef.current = trackRef.current.scrollLeft;
+    startInteraction();
+  }, [startInteraction]);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!isMouseDownRef.current || !trackRef.current) return;
+    const x = e.pageX - trackRef.current.offsetLeft;
+    const walk = x - startXRef.current;
+    if (Math.abs(walk) > 4) {
+      hasDraggedRef.current = true;
+    }
+    trackRef.current.scrollLeft = startScrollLeftRef.current - walk;
+  }, []);
+
+  const handleMouseUpOrLeave = useCallback(() => {
+    if (isMouseDownRef.current) {
+      isMouseDownRef.current = false;
+      scheduleResume();
+    }
+  }, [scheduleResume]);
+
+  // Step scroll left or right with navigation buttons
+  const nudge = useCallback((direction) => {
+    const el = trackRef.current;
+    if (!el) return;
+    startInteraction();
+    const step = 272; // One card width (260px) + gap (12px)
+    el.scrollBy({ left: direction * step, behavior: 'smooth' });
+    scheduleResume();
+  }, [startInteraction, scheduleResume]);
+
+  // Ultra-calm auto-scroll animation loop (slow speed ~22px/second)
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    // Respect user motion preferences
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) return;
+
+    // Center scroll position on middle set on initial render
+    const initTimer = setTimeout(() => {
+      if (el && el.scrollWidth > 0 && el.scrollLeft === 0) {
+        el.scrollLeft = el.scrollWidth / 3;
+      }
+    }, 150);
+
+    const SPEED_PX_PER_SEC = 22; // Slow, calm reading velocity
+
+    const animate = (timestamp) => {
+      if (!lastTimestampRef.current) {
+        lastTimestampRef.current = timestamp;
+      }
+      const delta = (timestamp - lastTimestampRef.current) / 1000;
+      lastTimestampRef.current = timestamp;
+
+      // Only run auto-scroll if visible and user is not interacting
+      if (!isInteractingRef.current && el && el.offsetWidth > 0) {
+        const setWidth = el.scrollWidth / 3;
+        if (setWidth > 0) {
+          el.scrollLeft += delta * SPEED_PX_PER_SEC;
+
+          if (el.scrollLeft >= setWidth * 2) {
+            el.scrollLeft -= setWidth;
+          } else if (el.scrollLeft <= 10) {
+            el.scrollLeft += setWidth;
+          }
+        }
+      }
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      clearTimeout(initTimer);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <>
-      {/* Mobile: Swipeable Destination Ports Carousel (<1024px) */}
+      {/* Mobile: Interactive Bidirectional Auto-Scrolling Shipping Corridors (<1024px) */}
       <div className="lg:hidden w-full select-none py-2 space-y-3">
         <div className="flex items-center justify-between px-1">
           <div className="flex items-center gap-2">
@@ -195,45 +349,112 @@ export const WorldTradeMap = () => {
               Global Shipping Corridors
             </span>
           </div>
-          <span className="text-[10px] text-neutral-400 font-mono bg-primary-950/80 px-2 py-0.5 rounded border border-primary-800">
-            Mundra & JNPT Hub
-          </span>
-        </div>
 
-        {/* Swipeable Horizontal Cards Track */}
-        <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-2 px-1">
-          {destinationPorts.map((port) => (
-            <div
-              key={port.id}
-              className="w-[260px] shrink-0 snap-center p-3.5 rounded-xl bg-primary-950/90 border border-primary-700/60 shadow-lg text-left space-y-2.5 backdrop-blur-sm"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-lg leading-none">{port.flag}</span>
-                    <h4 className="text-xs font-bold text-white leading-tight">{port.name}</h4>
-                  </div>
-                  <p className="text-[10px] text-neutral-400 mt-1 font-mono">{port.code} • {port.country}</p>
-                </div>
-                <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-700/50 px-2 py-0.5 rounded-full shrink-0">
-                  {port.transit}
-                </span>
-              </div>
+          <div className="flex items-center gap-2">
+            {/* Live Auto-Scroll / Paused Status Indicator */}
+            <span className="inline-flex items-center gap-1.5 text-[9px] font-mono text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-800/60 transition-colors">
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${
+                  isPaused ? 'bg-amber-400' : 'bg-emerald-400 animate-ping'
+                }`}
+              />
+              {isPaused ? 'Paused' : 'Auto-Scroll'}
+            </span>
 
-              <div className="pt-2 border-t border-primary-800/80 space-y-1 text-[11px]">
-                <div className="text-accent-300 font-semibold text-[10px] flex items-center gap-1">
-                  <span>🚢</span>
-                  <span>{port.type}</span>
-                </div>
-                <p className="text-[10px] text-neutral-300 truncate">
-                  📦 {port.volume}
-                </p>
-              </div>
+            {/* Manual Nudge Buttons */}
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => nudge(-1)}
+                aria-label="Scroll corridor backward"
+                className="w-6 h-6 flex items-center justify-center rounded bg-primary-900/90 border border-primary-700/70 text-neutral-300 hover:text-white hover:border-accent-400 active:scale-95 transition-all"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => nudge(1)}
+                aria-label="Scroll corridor forward"
+                className="w-6 h-6 flex items-center justify-center rounded bg-primary-900/90 border border-primary-700/70 text-neutral-300 hover:text-white hover:border-accent-400 active:scale-95 transition-all"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
             </div>
-          ))}
+          </div>
         </div>
-        <p className="text-center text-[10px] text-neutral-400 flex items-center justify-center gap-1">
-          <span>← Swipe 12 global discharge destinations →</span>
+
+        {/* Continuous Smooth Horizontal Track: Native Touch Swipe + Fluid Mouse Drag */}
+        <div
+          ref={trackRef}
+          data-lenis-prevent="true"
+          onScroll={handleScroll}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onTouchCancel={handleTouchEnd}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={handleMouseUpOrLeave}
+          className="relative w-full overflow-x-auto no-scrollbar py-1 cursor-grab active:cursor-grabbing select-none"
+          style={{
+            maskImage:
+              'linear-gradient(to right, transparent 0%, black 16px, black calc(100% - 16px), transparent 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to right, transparent 0%, black 16px, black calc(100% - 16px), transparent 100%)',
+            WebkitOverflowScrolling: 'touch',
+            touchAction: 'pan-x pan-y pinch-zoom',
+          }}
+        >
+          <div className="flex gap-3 w-max">
+            {/* Seamless 3-Loop Set of all 12 Global Discharge Ports for Infinite Bidirectional Traversal */}
+            {[...destinationPorts, ...destinationPorts, ...destinationPorts].map((port, idx) => {
+              const isSelected = activePort?.id === port.id;
+              return (
+                <div
+                  key={`${port.id}-${idx}`}
+                  onClick={(e) => {
+                    if (hasDraggedRef.current) {
+                      e.preventDefault();
+                      return;
+                    }
+                    setActivePort(isSelected ? null : port);
+                  }}
+                  className={`w-[260px] shrink-0 p-3.5 rounded-xl bg-primary-950/95 border text-left space-y-2.5 backdrop-blur-xs transition-all duration-200 cursor-pointer ${
+                    isSelected
+                      ? 'border-[#c59b27] shadow-[0_0_15px_rgba(197,155,39,0.25)] ring-1 ring-[#c59b27]'
+                      : 'border-primary-700/60 hover:border-[#c59b27]/60 shadow-lg'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-lg leading-none shrink-0">{port.flag}</span>
+                        <h4 className="text-xs font-bold text-white leading-tight truncate">{port.name}</h4>
+                      </div>
+                      <p className="text-[10px] text-neutral-400 mt-1 font-mono truncate">{port.code} • {port.country}</p>
+                    </div>
+                    <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-700/50 px-2 py-0.5 rounded-full shrink-0">
+                      {port.transit}
+                    </span>
+                  </div>
+
+                  <div className="pt-2 border-t border-primary-800/80 space-y-1 text-[11px]">
+                    <div className="text-accent-300 font-semibold text-[10px] flex items-center gap-1 truncate">
+                      <span>🚢</span>
+                      <span>{port.type}</span>
+                    </div>
+                    <p className="text-[10px] text-neutral-300 truncate">
+                      📦 {port.volume}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <p className="text-center text-[10px] text-neutral-400/90 flex items-center justify-center gap-1.5 font-sans">
+          <span>← Swipe freely left or right • Auto-scroll resumes after release →</span>
         </p>
       </div>
 

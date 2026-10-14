@@ -18,12 +18,10 @@ export const getSitemap = async (req, res, next) => {
       { loc: `${clientUrl}/products`, priority: '0.9', changefreq: 'daily' },
       { loc: `${clientUrl}/quality`, priority: '0.8', changefreq: 'monthly' },
       { loc: `${clientUrl}/export-process`, priority: '0.8', changefreq: 'monthly' },
-      { loc: `${clientUrl}/global-reach`, priority: '0.8', changefreq: 'monthly' },
-      { loc: `${clientUrl}/private-label`, priority: '0.8', changefreq: 'monthly' },
-      { loc: `${clientUrl}/about`, priority: '0.7', changefreq: 'monthly' },
+      { loc: `${clientUrl}/about-us`, priority: '0.8', changefreq: 'monthly' },
       { loc: `${clientUrl}/sample-request`, priority: '0.8', changefreq: 'monthly' },
-      { loc: `${clientUrl}/faq`, priority: '0.7', changefreq: 'monthly' },
-      { loc: `${clientUrl}/contact`, priority: '0.7', changefreq: 'monthly' },
+      { loc: `${clientUrl}/faq`, priority: '0.8', changefreq: 'monthly' },
+      { loc: `${clientUrl}/contact`, priority: '0.8', changefreq: 'monthly' },
       { loc: `${clientUrl}/blog`, priority: '0.8', changefreq: 'weekly' },
     ];
 

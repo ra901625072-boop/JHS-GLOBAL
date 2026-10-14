@@ -212,12 +212,22 @@ export const classifyIntent = (message = '', pageContext = null) => {
     return 'how_to_order';
   }
 
-  // 11. Company Profile & Identity
+  // 11. Company Profile, Leadership & Identity
   if (
     q.includes('who are you') ||
+    q.includes('about jhs') ||
     q.includes('about jsh') ||
     q.includes('about us') ||
     q.includes('jhs global') ||
+    q.includes('founder') ||
+    q.includes('leadership') ||
+    q.includes('who owns') ||
+    q.includes('who runs') ||
+    q.includes('who started') ||
+    q.includes('jay') ||
+    q.includes('henil') ||
+    q.includes('suraj') ||
+    q.includes('prajapati') ||
     q.includes('company') ||
     q.includes('address') ||
     q.includes('location') ||
@@ -402,7 +412,7 @@ export const assembleContext = async ({ message, history = [], pageContext = nul
       });
     });
   } else {
-    // CASE 3: Company, General, or Unspecified Query (Home / About / FAQ pages)
+    // CASE 3: Company, General, or Unspecified Query (Home / About Us / FAQ pages)
     // 1. Fetch Company Facts matching query or intent
     const compWhere = { isPublic: true };
     if (intent === 'certifications') {
@@ -435,9 +445,9 @@ export const assembleContext = async ({ message, history = [], pageContext = nul
     if (companyFacts.length > 0 && !sources.some((s) => s.type === 'company_profile')) {
       sources.push({
         id: 'comp-profile',
-        name: 'JSH Global Export Dossier & Background',
+        name: 'JHS Global Export Dossier & Background',
         type: 'company_profile',
-        url: '/about',
+        url: '/about-us',
       });
     }
 

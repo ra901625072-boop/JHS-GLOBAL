@@ -18,6 +18,7 @@ function createSpaServer() {
     '.jpg': 'image/jpeg',
     '.svg': 'image/svg+xml',
     '.webp': 'image/webp',
+    '.avif': 'image/avif',
     '.pdf': 'application/pdf',
     '.ico': 'image/x-icon',
   };
@@ -63,6 +64,8 @@ const ROUTES = [
   { name: 'quality', path: '/quality' },
   { name: 'export-process', path: '/export-process' },
   { name: 'contact', path: '/contact' },
+  { name: 'about-us', path: '/about-us' },
+  { name: 'faq', path: '/faq' },
 ];
 
 async function run() {

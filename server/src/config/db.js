@@ -48,6 +48,15 @@ export const connectDB = async () => {
 
     // Sync all models (create tables if they don't exist)
     if (env.NODE_ENV !== 'production') {
+      try {
+        await sequelize.query(`
+          ALTER TABLE faqs ADD COLUMN IF NOT EXISTS slug VARCHAR(150);
+          ALTER TABLE faqs ADD COLUMN IF NOT EXISTS show_on_home BOOLEAN DEFAULT false;
+          ALTER TABLE faqs ADD COLUMN IF NOT EXISTS home_order INTEGER DEFAULT 0;
+        `);
+      } catch (migErr) {
+        logger.debug(`Faq table migration note: ${migErr.message}`);
+      }
       await sequelize.sync();
       logger.info('Database tables synced');
     }

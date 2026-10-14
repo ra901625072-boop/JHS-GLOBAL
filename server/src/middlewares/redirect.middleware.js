@@ -6,6 +6,11 @@
  */
 
 export const REDIRECT_MAP = {
+  // --- Core Page Redirects ---
+  '/about': '/about-us',
+  '/private-label': '/about-us',
+  '/global-reach': '/about-us',
+
   // --- Category Redirects ---
   '/categories/spices-and-seasoning': '/categories/nutraceutical-raw-materials',
   '/categories/herbal-powder': '/categories/nutraceutical-raw-materials',

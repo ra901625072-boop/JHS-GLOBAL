@@ -65,7 +65,7 @@ The business sells to buyers who purchase by the **container / metric tonne / dr
 | Page | Purpose |
 |---|---|
 | Home | Hero, 3 division cards (with interactive ingredient pill matrix and technical export standards bar), featured products, why choose JHS GLOBAL, certifications strip, export markets, process, testimonials, RFQ CTA |
-| About / Company Profile | Story, Surat headquarters, infrastructure, team, export capacity, mission |
+| About Us / Company Profile | Story, Surat headquarters, infrastructure, team, export capacity, mission |
 | Products (listing) | All categories, filters (category, origin, form, certification), search, 48-Hour Unlisted Sourcing Banner |
 | Category page | Products of one category + sub-category tabs + 48-Hour Sourcing Banner |
 | Product detail | Photos, specs table, packing, MOQ, shelf life, HS code, origin, certificates, "Add to Quote" |

@@ -4,6 +4,7 @@ import {
   fetchTestimonials,
   fetchMarketRegions,
   fetchFaqs,
+  fetchFeaturedFaqs,
 } from './api';
 
 export const useCertificates = () => {
@@ -34,6 +35,14 @@ export const useFaqs = (group) => {
   return useQuery({
     queryKey: ['faqs', group],
     queryFn: () => fetchFaqs(group),
+    staleTime: 60 * 60 * 1000,
+  });
+};
+
+export const useFeaturedFaqs = () => {
+  return useQuery({
+    queryKey: ['faqs', 'featured'],
+    queryFn: fetchFeaturedFaqs,
     staleTime: 60 * 60 * 1000,
   });
 };

@@ -47,10 +47,11 @@ export const Header = () => {
 
   const navLinks = [
     { name: 'Home', path: '/', end: true },
-    { name: 'About', path: '/about' },
-    { name: 'Product', path: '/products' },
-    { name: 'Quality&certificate', path: '/quality' },
-    { name: 'Export process', path: '/export-process' },
+    { name: 'About Us', path: '/about-us' },
+    { name: 'Products', path: '/products' },
+    { name: 'Quality & Certifications', path: '/quality' },
+    { name: 'Export Process', path: '/export-process' },
+    { name: 'FAQ', path: '/faq' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -111,8 +112,8 @@ export const Header = () => {
             </div>
           </Link>
 
-          {/* Desktop Nav Links (Home, About, Product, Quality&certificate, Export process, Contact) */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-9">
+          {/* Desktop Nav Links (Home, About Us, Products, Quality, Process, FAQ, Contact) */}
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}

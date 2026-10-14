@@ -11,7 +11,7 @@ import {
 describe('Buyer Assistant V3 Prompt, Schema & Validation Suite', () => {
   beforeAll(async () => {
     await connectDB();
-  });
+  }, 60000);
 
   afterAll(async () => {
     await disconnectDB();
@@ -195,7 +195,7 @@ describe('Buyer Assistant V3 Prompt, Schema & Validation Suite', () => {
       });
 
       expect(fallback.needs_human).toBe(true);
-      expect(fallback.answer).toContain('JSH Global operates under verified Indian statutory authorities');
+      expect(fallback.answer).toContain('JHS Global operates under verified Indian statutory authorities');
       expect(fallback.answer).toContain('We do NOT hold ISO, Halal, Kosher');
       expect(fallback.used_fact_ids).toContain('NEG-CERT-UNHELD');
     });

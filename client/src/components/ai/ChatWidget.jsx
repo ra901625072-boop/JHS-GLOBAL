@@ -26,12 +26,18 @@ import { sendAiChatMessage, submitAiChatFeedback } from '../../features/ai/api';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
 import WhatsAppIcon from '../common/WhatsAppIcon';
 
-const STORAGE_KEY = 'jsh_global_buyer_chat_v3';
+export const openAiAssistant = (query = null) => {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('open-ai-chat', { detail: { query } }));
+  }
+};
+
+const STORAGE_KEY = 'jhs_global_buyer_chat_v3';
 
 const INITIAL_WELCOME_MESSAGE = {
   role: 'assistant',
   content:
-    'Welcome to the JSH Global B2B Export Desk Assistant. I am grounded in our verified export catalogue and company records. Ask me about technical specifications, active assays, packaging formats, certifications, and quotation workflows.',
+    'Welcome to the JHS Global B2B Export Desk Assistant. I am grounded in our verified export catalogue and company records. Ask me about technical specifications, active assays, packaging formats, certifications, and quotation workflows.',
   sources: [],
   source_chips: [
     { label: 'Export Catalogue', type: 'product' },
@@ -131,7 +137,7 @@ const getPagePrompts = (pathname) => {
       'Is a lot Certificate of Analysis (COA) provided?',
     ];
   }
-  if (pathname === '/about') {
+  if (pathname === '/about-us' || pathname === '/about') {
     return [
       'What export products do you specialize in?',
       'Which government certifications do you hold?',
@@ -148,7 +154,7 @@ const getPagePrompts = (pathname) => {
     ];
   }
   return [
-    'What products does JSH Global export?',
+    'What products does JHS Global export?',
     'Which export licenses and registrations do you hold?',
     'How do I request a formal proforma quote?',
     '¿Cuáles son las especificaciones de exportación?',
@@ -388,6 +394,21 @@ export const ChatWidget = () => {
     }
   };
 
+  // Listen for global open-ai-chat events triggered from MobileMenuDrawer, Header, or other buttons
+  useEffect(() => {
+    const handleOpenAiChat = (e) => {
+      setIsOpen(true);
+      const query = e?.detail?.query;
+      if (query && typeof query === 'string') {
+        setTimeout(() => {
+          handleSend(query);
+        }, 350);
+      }
+    };
+    window.addEventListener('open-ai-chat', handleOpenAiChat);
+    return () => window.removeEventListener('open-ai-chat', handleOpenAiChat);
+  }, []);
+
   const widgetContent = (
     <>
       {/* Mobile Backdrop Overlay */}
@@ -399,10 +420,10 @@ export const ChatWidget = () => {
         />
       )}
 
-      {/* Floating Trigger Button */}
+      {/* Floating Trigger Button: Reliably placed above WhatsApp on mobile with clear AI badge */}
       <aside
         aria-label="Interactive AI Export Assistant"
-        className="fixed bottom-34 sm:bottom-36 lg:bottom-22 right-4 sm:right-6 z-40 flex items-center group"
+        className="fixed bottom-[140px] sm:bottom-36 lg:bottom-24 right-4 sm:right-6 z-40 flex items-center group select-none"
       >
         <span className="hidden sm:inline-block mr-3 px-3 py-1.5 rounded-md bg-neutral-900/90 text-white text-xs font-medium shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
           Ask Export Desk AI
@@ -412,16 +433,20 @@ export const ChatWidget = () => {
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
           aria-label={isOpen ? 'Close Trade Assistant' : 'Open Trade Assistant'}
-          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary-900 hover:bg-primary-950 text-accent-400 border border-accent-500/30 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500"
+          className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-primary-950 hover:bg-primary-900 active:scale-95 text-accent-400 border border-accent-500/40 flex items-center justify-center shadow-[0_10px_25px_-5px_rgba(14,59,46,0.5),0_4px_10px_-2px_rgba(0,0,0,0.2)] hover:shadow-xl hover:scale-105 transition-all duration-200 min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500"
         >
           {isOpen ? (
             <X className="w-6 h-6 text-neutral-100" />
           ) : (
-            <div className="relative">
+            <div className="relative flex items-center justify-center">
               <Bot className="w-6 h-6 sm:w-7 sm:h-7 text-accent-400" />
               <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent-500" />
+              </span>
+              {/* Distinct Mobile "AI" Indicator Badge */}
+              <span className="absolute -bottom-2 -right-1 px-1.5 py-0.2 rounded-full bg-[#c59b27] text-neutral-950 font-black text-[8px] tracking-wider uppercase shadow-xs border border-primary-950">
+                AI
               </span>
             </div>
           )}
@@ -457,7 +482,7 @@ export const ChatWidget = () => {
               </div>
               <div>
                 <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                  JSH Global Assistant
+                  JHS Global Assistant
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" title="Online & Grounded in DB" />
                 </h2>
                 <p className="text-[10px] text-neutral-400">
@@ -695,7 +720,7 @@ export const ChatWidget = () => {
                         )}
 
                         <a
-                          href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello JSH Global Export Desk, I would like to request a commercial quotation.')}`}
+                          href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello JHS Global Export Desk, I would like to request a commercial quotation.')}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-2.5 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] flex items-center gap-1.5 transition-colors min-h-[32px]"
@@ -722,7 +747,7 @@ export const ChatWidget = () => {
                         <ChevronRight className="w-2.5 h-2.5" />
                       </button>
                       <a
-                        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello JSH Global Export Desk, I need assistance with a quotation.')}`}
+                        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello JHS Global Export Desk, I need assistance with a quotation.')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="px-2.5 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold flex items-center gap-1.5 min-h-[32px]"
@@ -832,7 +857,7 @@ export const ChatWidget = () => {
           </div>
 
           {/* Input Box */}
-          <div className="p-2.5 bg-white border-t border-neutral-200 flex items-center gap-2 shrink-0">
+          <div className="p-2.5 bg-white border-t border-neutral-200 flex items-center gap-2 shrink-0 pb-[max(10px,env(safe-area-inset-bottom))]">
             <input
               ref={inputRef}
               type="text"

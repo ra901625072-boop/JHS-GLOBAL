@@ -1,17 +1,22 @@
 {
-  "timestamp": "2026-10-13T16:54:03.899Z",
+  "timestamp": "2026-10-14T11:59:44.690Z",
   "domSnapshots": {
     "home": {
       "title": "JHS GLOBAL — One Accountable Supplier for Diverse Category Sourcing",
       "headings": [
         {
           "tag": "h1",
-          "text": "One Accountable Supplier for\nDiverse Category Sourcing.",
+          "text": "One Accountable Supplier\nfor Diverse Category Sourcing",
           "ariaHidden": null
         },
         {
           "tag": "h2",
           "text": "Rooted in India’s Premier Maritime Export Corridor",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Direct Sourcing Across 3 Core Export Divisions",
           "ariaHidden": null
         },
         {
@@ -167,6 +172,11 @@
         {
           "tag": "h3",
           "text": "FSSAI",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Clear Answers Before You Order",
           "ariaHidden": null
         },
         {
@@ -670,6 +680,355 @@
           "ariaLabel": "Your Quote Basket"
         }
       ]
+    },
+    "about-us": {
+      "title": "About Us — JHS Global | Manufacturer-Grade Indian Raw Materials & Active Ingredients",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "About Us — Manufacturer-Grade Indian Raw Materials & Active Ingredients, Exported Worldwide.",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Rooted in India’s Premier Maritime Export Corridor",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "The Founders Behind JHS GLOBAL",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Jay Prajapati",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Henil Prajapati",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Suraj Prajapati",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Three Specialized Raw Material Categories",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Personal Care Raw Materials & Oleochemicals",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Standardized Nutraceutical Extracts",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Animal Feed Ingredients & Protein Meals",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Direct-Origin Harvest Networks Across India",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Gujarat & Saurashtra Agro Belt",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Export Gateways & Global Markets Served",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Middle East & GCC",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "European Union & UK",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Americas & Canada",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Southeast Asia & East Asia",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Our Legal & Regulatory Credentials",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "JHS GLOBAL",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "EZHPP3437C",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "24EZHPP3437C1ZH",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "10725997001058",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Registered Exporter (Agro & Food Products)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "CRES Certified Exporter of Indian Spices",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "UDYAM-GJ-22-0460260",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Hazira Port (Surat), Mundra Port (Kutch), JNPT (Navi Mumbai)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Why Global Buyers Partner with JHS GLOBAL",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Responsive & Experienced Trade Desk",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Certified & Compliant Governance",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Premium Sortex Quality",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Global Export Footprint",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Competitive Direct-Origin Pricing",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "On-Time Delivery & Vessel Slotting",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Customized & OEM Packaging",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Transparent Communication",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "48-Hour Quote Turnaround",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Honesty, Integrity & Single Accountability",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Can’t find the product or grade you are looking for?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Ready to procure in commercial FCL / MT volumes?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "",
+          "ariaHidden": null
+        }
+      ],
+      "landmarks": [
+        {
+          "tag": "header",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "nav",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "main",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "footer",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "tooltip",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "dialog",
+          "ariaLabel": "Your Quote Basket"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently Asked Questions (B2B Procurement FAQ) — JHS Global",
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Frequently Asked Questions (B2B FAQ)",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Unable to load FAQ knowledge base",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Have a specific procurement requirement?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Ready to procure in commercial FCL / MT volumes?",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "",
+          "ariaHidden": null
+        }
+      ],
+      "landmarks": [
+        {
+          "tag": "header",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "nav",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "main",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "tablist",
+          "ariaLabel": "FAQ Category Filters"
+        },
+        {
+          "tag": "button",
+          "role": "tab",
+          "ariaLabel": null
+        },
+        {
+          "tag": "button",
+          "role": "tab",
+          "ariaLabel": null
+        },
+        {
+          "tag": "button",
+          "role": "tab",
+          "ariaLabel": null
+        },
+        {
+          "tag": "button",
+          "role": "tab",
+          "ariaLabel": null
+        },
+        {
+          "tag": "button",
+          "role": "tab",
+          "ariaLabel": null
+        },
+        {
+          "tag": "button",
+          "role": "tab",
+          "ariaLabel": null
+        },
+        {
+          "tag": "button",
+          "role": "tab",
+          "ariaLabel": null
+        },
+        {
+          "tag": "footer",
+          "role": null,
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "button",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "tooltip",
+          "ariaLabel": null
+        },
+        {
+          "tag": "div",
+          "role": "dialog",
+          "ariaLabel": "Your Quote Basket"
+        }
+      ]
     }
   },
   "a11ySnapshots": {
@@ -724,7 +1083,35 @@
           "id": "color-contrast",
           "impact": "serious",
           "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-          "nodesCount": 6
+          "nodesCount": 7
+        }
+      ]
+    },
+    "about-us": {
+      "violationsCount": 1,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodesCount": 4
+        }
+      ]
+    },
+    "faq": {
+      "violationsCount": 2,
+      "violations": [
+        {
+          "id": "aria-valid-attr-value",
+          "impact": "critical",
+          "description": "Ensure all ARIA attributes have valid values",
+          "nodesCount": 1
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "nodesCount": 5
         }
       ]
     }

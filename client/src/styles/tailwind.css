@@ -83,6 +83,8 @@
     .animate-pulse,
     .animate-spin,
     .animate-marquee,
+    .animate-product-marquee,
+    .animate-corridor-scroll,
     .animate-ambient-drift,
     .animate-route-enter,
     .skeleton-shimmer,
@@ -241,6 +243,31 @@
 
 .animate-marquee {
   animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-product-marquee {
+  animation: marquee 45s linear infinite;
+  will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .animate-product-marquee {
+    animation-duration: 32s;
+  }
+}
+
+@keyframes corridor-scroll {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-corridor-scroll {
+  animation: corridor-scroll 38s linear infinite;
   will-change: transform;
 }
 

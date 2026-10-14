@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { FOUNDERS } from '../../data/founders';
 
 export const JsonLd = ({ data }) => {
   if (!data) return null;
@@ -33,6 +34,13 @@ export const createOrganizationSchema = () => {
       contactType: 'sales',
       availableLanguage: ['English', 'Hindi', 'Gujarati'],
     },
+    founder: FOUNDERS.map((founder) => ({
+      '@type': 'Person',
+      name: founder.name,
+      jobTitle: founder.role,
+      image: `${siteUrl}${founder.images.jpg}`,
+      description: founder.bio,
+    })),
   };
 };
 

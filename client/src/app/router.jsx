@@ -54,12 +54,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'about',
+        path: 'about-us',
         element: (
           <Suspense fallback={<RouteLoader />}>
             <AboutPage />
           </Suspense>
         ),
+      },
+      {
+        path: 'about',
+        element: <Navigate to="/about-us" replace />,
       },
       {
         path: 'products',
@@ -103,11 +107,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'private-label',
-        element: <Navigate to="/about" replace />,
+        element: <Navigate to="/about-us" replace />,
       },
       {
         path: 'global-reach',
-        element: <Navigate to="/about" replace />,
+        element: <Navigate to="/about-us" replace />,
       },
       {
         path: 'sample-request',

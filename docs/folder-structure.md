@@ -178,7 +178,7 @@ client/
 | **0. Setup** | Init repo, ESLint/Prettier, env files, PostgreSQL connection, error handler, logger | Vite + Tailwind, design tokens, layout (Header/Footer), router |
 | **1. Catalogue core** | `category` + `product` modules, seeds, list/detail/search endpoints | Home, Products, Category, ProductDetail pages |
 | **2. Conversion** | `inquiry` + `sample` modules, email service, rate limit, validation | Quote basket + RFQ form + success page |
-| **3. Trust pages** | `certificate`, `testimonial` modules | Quality, About, Process, Global Reach, FAQ |
+| **3. Trust pages** | `certificate`, `testimonial` modules | Quality, About Us, Process, Global Reach, FAQ |
 | **4. Admin** | `auth`, role guard, CRUD for all, upload | Admin login + CRUD screens, inquiry inbox |
 | **5. Content** | `blog` module | Blog list/detail, SEO meta, sitemap |
 | **6. AI** | `ai` module: summary, lead score, reply draft, RAG chat | Chat widget, admin "AI summary" panel |

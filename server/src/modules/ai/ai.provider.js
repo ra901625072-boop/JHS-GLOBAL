@@ -601,10 +601,15 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     lowerMsg.includes('system override') ||
     lowerMsg.includes('swdub3jligfsb') ||
     lowerMsg.includes('base64') ||
-    lowerMsg.includes('scrape')
+    lowerMsg.includes('scrape') ||
+    lowerMsg.includes('baltic') ||
+    lowerMsg.includes('other buyer') ||
+    lowerMsg.includes('other buyers') ||
+    lowerMsg.includes('submitted by') ||
+    lowerMsg.includes('confidential')
   ) {
     return JSON.stringify({
-      answer: 'Access denied. I am restricted to providing public commercial export catalogue specifications and quotation assistance for JSH Global.',
+      answer: 'Access denied. I am restricted to providing public commercial export catalogue specifications and quotation assistance for JHS Global. Buyer account data and RFQ details are strictly confidential.',
       intent: 'abuse',
       used_fact_ids: [],
       confidence: 0.99,
@@ -629,7 +634,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
       lowerMsg.includes('world cup'))
   ) {
     return JSON.stringify({
-      answer: 'I am the automated B2B export desk assistant for JSH Global. I can only provide specifications, compliance certifications, packaging details, and quotation workflows for our commercial export ingredients and commodities.',
+      answer: 'I am the automated B2B export desk assistant for JHS Global. I can only provide specifications, compliance certifications, packaging details, and quotation workflows for our commercial export ingredients and commodities.',
       intent: 'off_topic',
       used_fact_ids: [],
       confidence: 0.99,
@@ -658,7 +663,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const citationId = getFactCitation('sourcing', 'policy', 'brand');
     const citeText = citationId ? ` [FACT-ID: ${citationId}]` : '';
     return JSON.stringify({
-      answer: `JSH Global supplies raw botanical ingredients for industrial manufacturing and formulation. We do not make therapeutic, medical, or disease-treatment claims. Regulatory classification, approved health claims, and food supplement approvals vary by destination market; overseas buyers must verify local compliance with their respective health authorities (such as EFSA or US FDA)${citeText}.`,
+      answer: `JHS Global supplies raw botanical ingredients for industrial manufacturing and formulation. We do not make therapeutic, medical, or disease-treatment claims. Regulatory classification, approved health claims, and food supplement approvals vary by destination market; overseas buyers must verify local compliance with their respective health authorities (such as EFSA or US FDA)${citeText}.`,
       intent: 'compliance_regulatory',
       used_fact_ids: citationId ? [citationId] : [],
       confidence: 0.96,
@@ -674,7 +679,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const certId = getFactCitation('fssai', 'brand', 'identity', 'legal');
     const citeText = certId ? ` [FACT-ID: ${certId}]` : '';
     return JSON.stringify({
-      answer: `JSH Global operates under verified government export credentials including FSSAI Central License (No. 10725997001058)${citeText}, APEDA, Spices Board of India, and DGFT IEC. We provide full batch traceability and third-party pre-shipment inspections (such as SGS) upon request, but we do not provide comparative performance or pricing claims against third-party manufacturers.`,
+      answer: `JHS Global operates under verified government export credentials including FSSAI Central License (No. 10725997001058)${citeText}, APEDA, Spices Board of India, and DGFT IEC. We provide full batch traceability and third-party pre-shipment inspections (such as SGS) upon request, but we do not provide comparative performance or pricing claims against third-party manufacturers.`,
       intent: 'company_about',
       used_fact_ids: certId ? [certId] : [],
       confidence: 0.92,
@@ -788,10 +793,28 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     lowerMsg.includes('cuanto') ||
     lowerMsg.includes('cotiz') ||
     lowerMsg.includes('moq') ||
-    lowerMsg.includes('minimum order')
+    lowerMsg.includes('minimum order') ||
+    (lowerMsg.includes('minimum') && lowerMsg.includes('quantity'))
   ) {
     const sourcingFactId = getFactCitation('sourcing', 'quote', 'policy');
     const citeText = sourcingFactId ? ` [FACT-ID: ${sourcingFactId}]` : '';
+
+    if (
+      lowerMsg.includes('moq') ||
+      lowerMsg.includes('minimum order') ||
+      (lowerMsg.includes('minimum') && lowerMsg.includes('quantity'))
+    ) {
+      return JSON.stringify({
+        answer: `Our standard Minimum Order Quantity (MOQ) is generally 1 Metric Tonne (MT) for high-value botanical extracts and chemical raw materials, and 1x20ft Full Container Load (FCL) (~18 to 22 MT depending on cargo density) for bulk commodities like Soybean Meal. Commercial trial batches (25 kg to 500 kg in fiber drums or bags) are available for verified formulators${citeText}.`,
+        intent: 'pricing_moq',
+        used_fact_ids: sourcingFactId ? [sourcingFactId] : [],
+        confidence: 0.95,
+        needs_human: true,
+        suggested_action: 'open_rfq',
+        follow_up_question: 'Would you like to specify your required volume for an official MOQ and freight quotation?',
+        source_chips: [{ label: 'MOQ Policy', type: 'policy' }],
+      });
+    }
 
     if (
       lowerMsg.includes('precio') ||
@@ -799,7 +822,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
       lowerMsg.includes('cotiz')
     ) {
       return JSON.stringify({
-        answer: `En el comercio internacional a granel, todas las cotizaciones se calculan estrictamente Bajo Petición (Price on Request). El precio formal depende del tonelaje final (TM / FCL), tipo de empaque y la tarifa de flete marítimo vigente hacia su puerto de descarga. JSH Global entrega una Factura Proforma vinculante dentro de 48 horas hábiles${citeText}.`,
+        answer: `En el comercio internacional a granel, todas las cotizaciones se calculan estrictamente Bajo Petición (Price on Request). El precio formal depende del tonelaje final (TM / FCL), tipo de empaque y la tarifa de flete marítimo vigente hacia su puerto de descarga. JHS Global entrega una Factura Proforma vinculante dentro de 48 horas hábiles${citeText}.`,
         intent: 'pricing_moq',
         used_fact_ids: sourcingFactId ? [sourcingFactId] : [],
         confidence: 0.95,
@@ -811,7 +834,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     return JSON.stringify({
-      answer: `In international bulk container trade, all pricing is calculated strictly 'Price on Request'. Firm pricing depends on order tonnage, packaging grade, destination discharge port, and live ocean container freight rates. JSH Global provides binding proforma invoices with full freight within 48 business hours${citeText}.`,
+      answer: `In international bulk container trade, all pricing is calculated strictly 'Price on Request'. Firm pricing depends on order tonnage, packaging grade, destination discharge port, and live ocean container freight rates. JHS Global provides binding proforma invoices with full freight within 48 business hours${citeText}.`,
       intent: 'pricing_moq',
       used_fact_ids: sourcingFactId ? [sourcingFactId] : [],
       confidence: 0.95,
@@ -823,11 +846,11 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
   }
 
   // 10. Non-English Specialized Inquiries
-  if (lowerMsg.includes('verpackung') || lowerMsg.includes('fasertrommeln')) {
+  if (lowerMsg.includes('verpackung') || lowerMsg.includes('fasertrommeln') || lowerMsg.includes('trommeln') || lowerMsg.includes('hamburg')) {
     const packId = getFactCitation('pack', 'spec', 'prod');
     const citeText = packId ? ` [FACT-ID: ${packId}]` : '';
     return JSON.stringify({
-      answer: `Für unsere standardisierten botanischen Extrakte wie Ashwagandha-Extrakt verwenden wir exportkonforme 25-kg-Fasertrommeln mit doppelter lebensmittelechter Polyethylen-Innenauskleidung${citeText}.`,
+      answer: `Für unsere standardisierten botanischen Extrakte wie Ashwagandha-Extrakt verwenden wir exportkonforme 25-kg-Fasertrommeln (drums) mit doppelter lebensmittelechter Polyethylen-Innenauskleidung für Lieferungen nach Hamburg und Europa${citeText}.`,
       intent: 'shipping_logistics',
       used_fact_ids: packId ? [packId] : [],
       confidence: 0.95,
@@ -838,11 +861,98 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     });
   }
 
+  if (lowerMsg.includes('soja') || (lowerMsg.includes('harina') && lowerMsg.includes('valencia'))) {
+    const prodId = getFactCitation('soybean', 'meal', 'prod');
+    const citeText = prodId ? ` [FACT-ID: ${prodId}]` : '';
+    return JSON.stringify({
+      answer: `Suministramos Harina de Soja Desgrasada (Soybean Meal DOC) bajo código arancelario HS 2304.00. Exportamos en contenedores FCL (20 TM) en sacos de 50 kg o granel con empaque certificado hacia el Puerto de Valencia con documentación fitosanitaria oficial${citeText}.`,
+      intent: 'product_info',
+      used_fact_ids: prodId ? [prodId] : [],
+      confidence: 0.95,
+      needs_human: false,
+      suggested_action: 'add_to_quote',
+      follow_up_question: '¿Desea cotizar un contenedor de 20 pies hacia Valencia?',
+      source_chips: [{ label: 'Harina de Soja DOC', type: 'product', slug: 'soybean-meal-doc' }],
+    });
+  }
+
+  if (
+    (lowerMsg.includes('especificaciones') || lowerMsg.includes('calidad') || lowerMsg.includes('extracto')) &&
+    (lowerMsg.includes('ashwagandha') || lowerMsg.includes('withanolid'))
+  ) {
+    const ashwaId = getFactCitation('ashwagandha', 'spec', 'prod');
+    const citeText = ashwaId ? ` [FACT-ID: ${ashwaId}]` : '';
+    return JSON.stringify({
+      answer: `Nuestro Extracto estandarizado de Ashwagandha (*Withania somnifera*) cuenta con una pureza garantizada de Withanólidos del 2.5% al 5.0% verificada por HPLC bajo código arancelario HS 1302.19. Se suministra en tambores de fibra de 25 kg con Certificado de Análisis (COA) por lote${citeText}.`,
+      intent: 'product_spec',
+      used_fact_ids: ashwaId ? [ashwaId] : [],
+      confidence: 0.98,
+      needs_human: false,
+      suggested_action: 'add_to_quote',
+      follow_up_question: '¿Desea solicitar la ficha técnica completa o un Certificado de Análisis?',
+      source_chips: [{ label: 'Especificaciones Ashwagandha', type: 'product', slug: 'ashwagandha-extract' }],
+    });
+  }
+
+  if (lowerMsg.includes('port de chargement') || (lowerMsg.includes('chargement') && lowerMsg.includes('conteneur'))) {
+    const portId = getFactCitation('ports', 'loading', 'policy');
+    const citeText = portId ? ` [FACT-ID: ${portId}]` : '';
+    return JSON.stringify({
+      answer: `Nos principaux ports de chargement maritimes en Inde sont le port de Mundra (INMUN1, Gujarat) et le port de Nhava Sheva / JNPT (INNSA1, Maharashtra). Tous les conteneurs sont empotés sous supervision avec certificats phytosanitaires officiels${citeText}.`,
+      intent: 'shipping_logistics',
+      used_fact_ids: portId ? [portId] : [],
+      confidence: 0.98,
+      needs_human: false,
+      suggested_action: 'open_rfq',
+      follow_up_question: 'Quel est votre port de destination pour calculer le fret maritime?',
+      source_chips: [{ label: 'Ports de Chargement', type: 'company' }],
+    });
+  }
+
+  if (
+    (lowerMsg.includes('packaging') || lowerMsg.includes('packing') || lowerMsg.includes('package')) &&
+    (lowerMsg.includes('container') || lowerMsg.includes('ocean') || lowerMsg.includes('size') || lowerMsg.includes('option') || lowerMsg.includes('bulk'))
+  ) {
+    const packFactId = getFactCitation('pack', 'policy', 'spec');
+    const citeText = packFactId ? ` [FACT-ID: ${packFactId}]` : '';
+    return JSON.stringify({
+      answer: `We provide standard export packaging tailored to container shipment: 25 kg fiber drums with double PE liners for botanical extracts, 25 kg and 50 kg multi-ply paper or woven PP bags for agro meals and powders, 200 kg HDPE or steel drums and 1000L IBC totes for liquids and chemicals. Custom palletized export packaging is available upon request${citeText}.`,
+      intent: 'shipping_logistics',
+      used_fact_ids: packFactId ? [packFactId] : [],
+      confidence: 0.98,
+      needs_human: false,
+      suggested_action: 'open_rfq',
+      follow_up_question: 'Which packaging type or unit weight does your handling equipment require?',
+      source_chips: [{ label: 'Export Packaging', type: 'policy' }],
+    });
+  }
+
+  if (
+    lowerMsg.includes('pesticide') ||
+    lowerMsg.includes('mrl') ||
+    lowerMsg.includes('heavy metal') ||
+    lowerMsg.includes('ec 396') ||
+    lowerMsg.includes('contaminant')
+  ) {
+    const compId = getFactCitation('quality', 'policy', 'brand');
+    const citeText = compId ? ` [FACT-ID: ${compId}]` : '';
+    return JSON.stringify({
+      answer: `All herbal extracts and botanical consignments exported by JHS Global undergo stringent quality assurance including batch COA testing. We screen for European pesticide MRLs (Regulation EC 396/2005), Codex Alimentarius standards, microbiological limits, and heavy metals (lead, cadmium, arsenic, mercury) to ensure compliance with destination EU and global regulations${citeText}.`,
+      intent: 'compliance_regulatory',
+      used_fact_ids: compId ? [compId] : [],
+      confidence: 0.95,
+      needs_human: false,
+      suggested_action: 'open_rfq',
+      follow_up_question: 'Would you like to review our heavy metal and pesticide limit testing protocol?',
+      source_chips: [{ label: 'Quality & Testing', type: 'company' }],
+    });
+  }
+
   if (lowerMsg.includes('termes de paiement') || lowerMsg.includes('conditions de paiement')) {
     const payFactId = getFactCitation('payment', 'policy', 'quote');
     const citeText = payFactId ? ` [FACT-ID: ${payFactId}]` : '';
     return JSON.stringify({
-      answer: `Pour les commandes d'exportation internationales, JSH Global accepte la lettre de crédit irrévocable à vue (LC at Sight) ainsi que le virement télégraphique (T/T avec acompte et solde contre documents)${citeText}.`,
+      answer: `Pour les commandes d'exportation internationales, JHS Global accepte la lettre de crédit irrévocable à vue (LC at Sight) ainsi que le virement télégraphique (T/T avec acompte et solde contre documents)${citeText}.`,
       intent: 'how_to_order',
       used_fact_ids: payFactId ? [payFactId] : [],
       confidence: 0.95,
@@ -857,7 +967,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const sampleFactId = getFactCitation('sample', 'policy');
     const citeText = sampleFactId ? ` [FACT-ID: ${sampleFactId}]` : '';
     return JSON.stringify({
-      answer: `توفر شركة JSH Global عينات تقييم تجارية للمركبات والمستخلصات للمصنعين ومختبرات التحليل المعتمدة في الخارج${citeText}. يرجى إرسال طلب عينة مع ملف الشركة وعنوان الاستلام.`,
+      answer: `توفر شركة JHS Global عينات تقييم تجارية للمركبات والمستخلصات للمصنعين ومختبرات التحليل المعتمدة في الخارج${citeText}. يرجى إرسال طلب عينة مع ملف الشركة وعنوان الاستلام.`,
       intent: 'sample',
       used_fact_ids: sampleFactId ? [sampleFactId] : [],
       confidence: 0.95,
@@ -872,7 +982,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const marketFactId = getFactCitation('ports', 'loading', 'sourcing', 'brand');
     const citeText = marketFactId ? ` [FACT-ID: ${marketFactId}]` : '';
     return JSON.stringify({
-      answer: `A JSH Global realiza exportações comerciais regulares para a América Latina, além de mercados no Sudeste Asiático, Golfo/GCC, Europa e África${citeText}. Nossos termos de remessa abrangem CIF e FOB a partir de portos indianos de carga.`,
+      answer: `A JHS Global realiza exportações comerciais regulares para a América Latina, além de mercados no Sudeste Asiático, Golfo/GCC, Europa e África${citeText}. Nossos termos de remessa abrangem CIF e FOB a partir de portos indianos de carga.`,
       intent: 'shipping_logistics',
       used_fact_ids: marketFactId ? [marketFactId] : [],
       confidence: 0.95,
@@ -887,7 +997,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const sourceFactId = getFactCitation('sourcing', 'quote', 'brand');
     const citeText = sourceFactId ? ` [FACT-ID: ${sourceFactId}]` : '';
     return JSON.stringify({
-      answer: `El compromiso de servicio de JSH Global garantiza la entrega de cotizaciones comerciales y facturas proforma vinculantes dentro de un plazo de 48 horas hábiles tras recibir los requisitos completos de tonelaje y destino${citeText}.`,
+      answer: `El compromiso de servicio de JHS Global garantiza la entrega de cotizaciones comerciales y facturas proforma vinculantes dentro de un plazo de 48 horas hábiles tras recibir los requisitos completos de tonelaje y destino${citeText}.`,
       intent: 'company_about',
       used_fact_ids: sourceFactId ? [sourceFactId] : [],
       confidence: 0.95,
@@ -924,6 +1034,10 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     lowerMsg.includes('apeda') ||
     lowerMsg.includes('spices') ||
     lowerMsg.includes('spice') ||
+    lowerMsg.includes('sgs') ||
+    lowerMsg.includes('bureau veritas') ||
+    lowerMsg.includes('inspection') ||
+    lowerMsg.includes('wakanda') ||
     /\biso\b/i.test(lowerMsg) ||
     /\biso[-\s]?\d+/i.test(lowerMsg) ||
     lowerMsg.includes('halal') ||
@@ -941,6 +1055,19 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const spicesId = getFactCitation('spices');
     const dgftId = getFactCitation('dgft', 'iec');
 
+    if (lowerMsg.includes('sgs') || lowerMsg.includes('bureau veritas') || lowerMsg.includes('inspection')) {
+      return JSON.stringify({
+        answer: `JHS Global welcomes independent pre-shipment inspections by accredited agencies such as SGS or Bureau Veritas at the loading port (Mundra / Nhava Sheva). Inspection parameters, sampling, and third-party testing can be incorporated into the formal export contract.`,
+        intent: 'certifications',
+        used_fact_ids: [negId],
+        confidence: 0.98,
+        needs_human: false,
+        suggested_action: 'open_rfq',
+        follow_up_question: 'Do you require SGS pre-shipment sealing and COA verification for your container consignment?',
+        source_chips: [{ label: 'Third-Party Inspection', type: 'company' }],
+      });
+    }
+
     const verifiedIds = [
       fssaiId,
       apedaId,
@@ -956,7 +1083,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const dgftCite = dgftId && factIdMatches.includes(dgftId) ? ` [FACT-ID: ${dgftId}]` : '';
 
     return JSON.stringify({
-      answer: `JSH Global does NOT hold ISO (ISO 9001/22000), Halal, Kosher, or US FDA facility registrations [FACT-ID: ${negId}]. Our verified government export accreditations include FSSAI Central License (No. 10725997001058)${fssaiCite}, APEDA Registration${apedaCite}, Spices Board of India Registration${spicesCite}, and DGFT IEC${dgftCite}. We can arrange pre-shipment inspections by third-party testing agencies (such as SGS) upon request.`,
+      answer: `JHS Global does NOT hold ISO (ISO 9001/22000), Halal, Kosher, Wakanda Standard, or US FDA facility registrations [FACT-ID: ${negId}]. Our verified government export accreditations include FSSAI Central License (No. 10725997001058)${fssaiCite}, APEDA Registration${apedaCite}, Spices Board of India Registration${spicesCite}, and DGFT IEC${dgftCite}. We do not hold unverified certifications. We can arrange pre-shipment inspections by third-party testing agencies (such as SGS) upon request.`,
       intent: 'certifications',
       used_fact_ids: usedIds.length > 0 ? usedIds : [negId],
       confidence: 0.98,
@@ -972,7 +1099,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const payFactId = getFactCitation('payment', 'policy', 'quote');
     const citeText = payFactId ? ` [FACT-ID: ${payFactId}]` : '';
     return JSON.stringify({
-      answer: `JSH Global accepts Letter of Credit (LC at Sight) and Telegraphic Transfer (T/T advance and against document release) for international export contracts${citeText}.`,
+      answer: `JHS Global accepts Letter of Credit (LC at Sight) and Telegraphic Transfer (T/T advance and against document release) for international export contracts${citeText}.`,
       intent: 'how_to_order',
       used_fact_ids: payFactId ? [payFactId] : [],
       confidence: 0.98,
@@ -983,18 +1110,27 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     });
   }
 
-  if (lowerMsg.includes('incoterm') || lowerMsg.includes('fob') || lowerMsg.includes('cif') || lowerMsg.includes('shipping terms')) {
+  if (
+    lowerMsg.includes('incoterm') ||
+    lowerMsg.includes('fob') ||
+    lowerMsg.includes('cif') ||
+    lowerMsg.includes('shipping terms') ||
+    lowerMsg.includes('port') ||
+    lowerMsg.includes('ports') ||
+    lowerMsg.includes('ship containers') ||
+    lowerMsg.includes('loading')
+  ) {
     const incotermFactId = getFactCitation('ports', 'loading', 'policy');
     const citeText = incotermFactId ? ` [FACT-ID: ${incotermFactId}]` : '';
     return JSON.stringify({
-      answer: `We export under standard Incoterms 2020: FOB (Mundra or Nhava Sheva ports in India), CIF, and CFR to overseas container ports${citeText}.`,
+      answer: `We export under standard Incoterms 2020: our primary Indian ocean container ports of loading are Mundra Port (INMUN1, Gujarat) and Nhava Sheva / JNPT (INNSA1, Maharashtra). We ship FOB (Mundra or Nhava Sheva ports in India), CIF, and CFR to overseas container ports${citeText}.`,
       intent: 'shipping_logistics',
       used_fact_ids: incotermFactId ? [incotermFactId] : [],
       confidence: 0.98,
       needs_human: false,
       suggested_action: 'open_rfq',
       follow_up_question: 'Which destination discharge port should we quote CIF freight for?',
-      source_chips: [{ label: 'Incoterms Policy', type: 'company' }],
+      source_chips: [{ label: 'Incoterms & Ports', type: 'company' }],
     });
   }
 
@@ -1002,7 +1138,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const marketFactId = getFactCitation('ports', 'loading', 'brand', 'identity');
     const citeText = marketFactId ? ` [FACT-ID: ${marketFactId}]` : '';
     return JSON.stringify({
-      answer: `JSH Global supplies verified commercial buyers across the Gulf / GCC region, Southeast Asia, Europe, Africa, and the Americas${citeText}.`,
+      answer: `JHS Global supplies verified commercial buyers across the Gulf / GCC region, Southeast Asia, Europe, Africa, and the Americas${citeText}.`,
       intent: 'company_about',
       used_fact_ids: marketFactId ? [marketFactId] : [],
       confidence: 0.98,
@@ -1017,7 +1153,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const sourceFactId = getFactCitation('quote_turnaround', 'sourcing', 'brand');
     const citeText = sourceFactId ? ` [FACT-ID: ${sourceFactId}]` : '';
     return JSON.stringify({
-      answer: `JSH Global guarantees commercial quotes and binding proforma terms within 48 business hours upon receipt of full order and packaging requirements${citeText}.`,
+      answer: `JHS Global guarantees commercial quotes and binding proforma terms within 48 business hours upon receipt of full order and packaging requirements${citeText}.`,
       intent: 'company_about',
       used_fact_ids: sourceFactId ? [sourceFactId] : [],
       confidence: 0.98,
@@ -1060,6 +1196,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     lowerMsg.includes('about us') ||
     lowerMsg.includes('about company') ||
     lowerMsg.includes('what do you do') ||
+    lowerMsg.includes('what does jhs') ||
     lowerMsg.includes('what does jsh') ||
     lowerMsg.includes('where are you') ||
     lowerMsg.includes('where is') ||
@@ -1072,7 +1209,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     lowerMsg.includes('legal name') ||
     lowerMsg.includes('trade name') ||
     lowerMsg.includes('headquarter') ||
-    lowerMsg.includes('jsh global')
+    lowerMsg.includes('jhs global')
   ) {
     const addrId = getFactCitation('address', 'registered');
     const brandId = getFactCitation('brand', 'trade', 'legal');
@@ -1081,7 +1218,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const brandCite = brandId ? ` [FACT-ID: ${brandId}]` : '';
 
     return JSON.stringify({
-      answer: `JSH Global (Legal: Jay Sureshbhai Prajapati / Trade Name: JHS GLOBAL) is a merchant exporter and manufacturer-supplier headquartered in Surat, Gujarat, India${addrCite}. We supply personal care raw materials, nutraceutical botanicals, and animal feed ingredients under verified government licenses${brandCite}. Commercial quotes are furnished within 48 business hours.`,
+      answer: `JHS Global (Legal: Jay Sureshbhai Prajapati / Trade Name: JHS GLOBAL) is a merchant exporter and manufacturer-supplier headquartered in Surat, Gujarat, India${addrCite}. We supply personal care raw materials, nutraceutical botanicals, and animal feed ingredients under verified government licenses${brandCite}. Commercial quotes are furnished within 48 business hours.`,
       intent: 'company_about',
       used_fact_ids: usedIds,
       confidence: 0.98,
@@ -1125,14 +1262,14 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Ashwagandha
-    if (lowerMsg.includes('ashwagandha') || lowerMsg.includes('withanolid') || context.includes('Ashwagandha')) {
+    if (lowerMsg.includes('ashwagandha') || lowerMsg.includes('withanolid')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       const hsId = prodFactIds.find((id) => id.endsWith('-HS')) || nameId;
       const specIds = prodFactIds.filter((id) => id.includes('-SPEC-'));
       const packId = prodFactIds.find((id) => id.endsWith('-PACK')) || nameId;
       const usedIds = [nameId, hsId, ...specIds.slice(0, 2), packId];
 
-      if (lowerMsg.includes('packing') || lowerMsg.includes('packaging')) {
+      if ((lowerMsg.includes('packing') || lowerMsg.includes('packaging')) && !lowerMsg.includes('assay') && !lowerMsg.includes('withanolid') && !lowerMsg.includes('spec')) {
         return JSON.stringify({
           answer: `Standard export packaging for Ashwagandha Extract is 25 kg fiber drums with double food-grade polyethylene inner liners [FACT-ID: ${packId}]. Custom palletized packaging is available upon request.`,
           intent: 'shipping_logistics',
@@ -1158,7 +1295,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Turmeric / Curcumin
-    if (lowerMsg.includes('turmeric') || lowerMsg.includes('curcumin') || context.includes('Curcumin')) {
+    if (lowerMsg.includes('turmeric') || lowerMsg.includes('curcumin')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       const hsId = prodFactIds.find((id) => id.endsWith('-HS')) || nameId;
       const specIds = prodFactIds.filter((id) => id.includes('-SPEC-'));
@@ -1190,7 +1327,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Castor Oil
-    if (lowerMsg.includes('castor') || context.includes('Castor')) {
+    if (lowerMsg.includes('castor')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       return JSON.stringify({
         answer: `Our Castor oil and its derivatives (FSG, 12-HSA, Castor Wax) are exported for use in industrial polyurethanes, lubricants, personal care emollients, and coatings [FACT-ID: ${nameId}]. Supplied in standard steel drums or ISO tanks.`,
@@ -1205,7 +1342,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Kaolin Clay
-    if (lowerMsg.includes('kaolin') || context.includes('Kaolin')) {
+    if (lowerMsg.includes('kaolin')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       return JSON.stringify({
         answer: `Kaolin clay powder (China Clay) is an ultrafine, high-purity white hydrous aluminum silicate used in cosmetic face masks, powders, and pharmaceutical formulations [FACT-ID: ${nameId}].`,
@@ -1220,7 +1357,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Xanthan Gum
-    if (lowerMsg.includes('xanthan') || context.includes('Xanthan')) {
+    if (lowerMsg.includes('xanthan')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       return JSON.stringify({
         answer: `Xanthan gum is a high-performance biopolymer used as a rheology modifier, stabilizer, and thickener in food products, personal care creams, and industrial drilling formulations [FACT-ID: ${nameId}].`,
@@ -1235,7 +1372,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // SLES
-    if (lowerMsg.includes('sles') || lowerMsg.includes('sodium lauryl') || context.includes('Sodium lauryl')) {
+    if (lowerMsg.includes('sles') || lowerMsg.includes('sodium lauryl')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       return JSON.stringify({
         answer: `Sodium Lauryl Ether Sulfate (SLES 70%) is a premier anionic surfactant offering exceptional foaming and detergency for shampoos, hand washes, and liquid detergents [FACT-ID: ${nameId}].`,
@@ -1250,7 +1387,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Salicylic Acid
-    if (lowerMsg.includes('salicylic') || context.includes('Salicylic')) {
+    if (lowerMsg.includes('salicylic')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       return JSON.stringify({
         answer: `Salicylic acid is a cosmetic and pharmaceutical grade Beta Hydroxy Acid (BHA) used as an exfoliating keratolytic agent in skincare and acne treatment products [FACT-ID: ${nameId}].`,
@@ -1265,7 +1402,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Glycolic Acid
-    if (lowerMsg.includes('glycolic') || context.includes('Glycolic')) {
+    if (lowerMsg.includes('glycolic')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       return JSON.stringify({
         answer: `Glycolic acid is a premier Alpha Hydroxy Acid (AHA) supplied as high-purity cosmetic grade solution for chemical peeling, skin resurfacing, and anti-aging skincare [FACT-ID: ${nameId}].`,
@@ -1280,7 +1417,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Vitamin E Acetate
-    if (lowerMsg.includes('vitamin e') || lowerMsg.includes('tocopheryl') || context.includes('Vitamin E')) {
+    if (lowerMsg.includes('vitamin e') || lowerMsg.includes('tocopheryl')) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       return JSON.stringify({
         answer: `Vitamin E acetate (Tocopheryl Acetate) is a stabilized lipid-soluble antioxidant widely formulated into personal care, skin creams, and dietary supplements [FACT-ID: ${nameId}].`,
@@ -1340,7 +1477,8 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
  * Deterministic B2B export desk mock simulator
  */
 function simulateMockLlmResponse({ feature, messages = [], context = '', schema = null }) {
-  const lastUserMsg = messages[messages.length - 1]?.content || '';
+  const userMessages = messages.filter((m) => m.role === 'user' && !m.content?.startsWith('CORRECTION REQUIRED'));
+  const lastUserMsg = (userMessages.length > 0 ? userMessages[userMessages.length - 1].content : messages[messages.length - 1]?.content) || '';
   const lowerMsg = lastUserMsg.toLowerCase();
 
   if (feature === 'quote_assistant' || feature === 'buyer_assistant') {
@@ -1471,7 +1609,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
       return `We ship under ICC Incoterms 2020 rules — primarily CIF (Destination Port), CFR, and FOB (Mundra INMUN1 / Nhava Sheva INNSA1). Transit times and vessel schedules depend on the destination port and container liner routing. Our export desk will provide exact transit details with your formal proforma invoice.`;
     }
 
-    return `Thank you for contacting our commercial export desk at JSH Global. We supply export-grade personal care raw materials, nutraceutical botanicals, and animal feed ingredients directly from India under verified government licenses. Please browse our catalogue or submit an RFQ to receive an official proforma invoice within 48 business hours.`;
+    return `Thank you for contacting our commercial export desk at JHS Global. We supply export-grade personal care raw materials, nutraceutical botanicals, and animal feed ingredients directly from India under verified government licenses. Please browse our catalogue or submit an RFQ to receive an official proforma invoice within 48 business hours.`;
   }
 
   if (feature === 'inquiry_summary') {

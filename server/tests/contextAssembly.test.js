@@ -46,7 +46,7 @@ describe('Retrieval & Context Assembly Suite', () => {
     });
 
     it('should classify company background inquiries', () => {
-      expect(classifyIntent('Where is JSH Global located in India?')).toBe('company_about');
+      expect(classifyIntent('Where is JHS Global located in India?')).toBe('company_about');
       expect(classifyIntent('What is your Surat office address?')).toBe('company_about');
     });
 

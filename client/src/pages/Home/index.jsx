@@ -29,6 +29,8 @@ import { useQuoteBasket } from '../../features/quoteBasket/context';
 import WorldTradeMap from '../../components/home/WorldTradeMap';
 import CertificationMarquee from '../../components/home/CertificationMarquee';
 import GovCertificationsSection from '../../components/home/GovCertificationsSection';
+import HomeFaqSection from '../../components/home/HomeFaqSection';
+import ProductShowcaseMarquee from '../../components/home/ProductShowcaseMarquee';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 import { isReducedMotion } from '../../styles/motion';
 
@@ -237,6 +239,35 @@ export const HomePage = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl pointer-events-none animate-ambient-drift" />
         <div className="absolute bottom-0 left-10 w-96 h-96 bg-primary-600/10 rounded-full blur-3xl pointer-events-none animate-ambient-drift" />
 
+        {/* Mobile: Dynamic World Map Background with Crisp Clarity (<1024px) */}
+        <div
+          className="lg:hidden absolute inset-0 overflow-hidden pointer-events-none z-0 select-none"
+          aria-hidden="true"
+        >
+          {/* Base Vector World Map Image - Crisp & High Clarity */}
+          <img
+            src="/images/map/world-blue.svg"
+            alt=""
+            className="absolute -right-8 sm:right-0 top-[40%] -translate-y-1/2 w-[165%] sm:w-[130%] max-w-none h-auto object-cover opacity-65 contrast-115 saturate-125 transform-gpu"
+          />
+
+          {/* Precision Gradient Contrast Masks - Sharp & Non-Blurred */}
+          {/* Layer 1: Left-to-Right Asymmetric Text Grounding Tint (WCAG AAA readability without blurring the map) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#05160E]/95 via-[#06180E]/75 to-transparent" />
+
+          {/* Layer 2: Top Ambient Atmosphere Blend */}
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#05140B]/85 to-transparent" />
+
+          {/* Layer 3: Bottom Grounding Fade for Trust Badges */}
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#04120A] via-[#04120A]/75 to-transparent" />
+
+          {/* India Maritime Trade Gateway Radar Beacon */}
+          <div className="absolute right-[24%] top-[41%] w-10 h-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c59b27] opacity-50" />
+            <span className="relative inline-flex rounded-full w-2.5 h-2.5 top-3.5 left-3.5 bg-[#f59e0b] ring-2 ring-[#e8c15a] shadow-[0_0_12px_#c59b27]" />
+          </div>
+        </div>
+
         {/* Desktop: World Trade Map with Expanded Spatial Presence */}
         <div className="hero-map hidden lg:flex absolute right-0 top-0 bottom-0 w-1/2 h-full items-center justify-center p-1 sm:p-2 lg:p-2 xl:p-2.5 z-10 pointer-events-auto overflow-visible">
           <WorldTradeMap />
@@ -442,6 +473,9 @@ export const HomePage = () => {
       </div>
     </section>
 
+      {/* Product Highlights Marquee (Circular Images, Names & Right-to-Left Continuous Animation) */}
+      <ProductShowcaseMarquee />
+
       {/* Why Choose JHS Global? (10 Key Pillars) */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white border-b border-surface-border">
         <div className="max-w-7xl mx-auto">
@@ -634,6 +668,9 @@ export const HomePage = () => {
 
       {/* Government Approved Certifications & Export Documents Showcase */}
       <GovCertificationsSection />
+
+      {/* Frequently Asked Questions (Conversion Support Section) */}
+      <HomeFaqSection />
 
       {/* Conversion Banner: Start a Conversation */}
       <section className="bg-surface-canvas py-20 px-4 sm:px-6 lg:px-8">

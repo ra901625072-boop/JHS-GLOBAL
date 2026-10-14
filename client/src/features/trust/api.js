@@ -21,3 +21,10 @@ export const fetchFaqs = async (group) => {
   });
   return response.data;
 };
+
+export const fetchFeaturedFaqs = async () => {
+  const response = await apiClient.get('/faqs', {
+    params: { featured: 'true' },
+  });
+  return response.data;
+};
