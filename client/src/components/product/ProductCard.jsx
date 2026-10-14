@@ -23,22 +23,42 @@ export const ProductCard = ({ product }) => {
         {/* Card Header & Media Container */}
         <div className="relative aspect-[4/3] bg-neutral-100 border-b border-surface-border overflow-hidden flex items-center justify-center">
           {primaryImage ? (
-            <img
-              src={primaryImage}
-              alt={product.name}
-              loading="lazy"
-              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 transform-gpu"
-              style={{ transitionTimingFunction: 'var(--ease-standard)' }}
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
+            <picture className="w-full h-full">
+              {primaryImage.endsWith('.webp') && !primaryImage.includes('-') && (
+                <>
+                  <source
+                    type="image/avif"
+                    srcSet={`${primaryImage.replace('.webp', '-380w.avif')} 380w, ${primaryImage.replace('.webp', '-640w.avif')} 640w`}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                  />
+                  <source
+                    type="image/webp"
+                    srcSet={`${primaryImage.replace('.webp', '-380w.webp')} 380w, ${primaryImage.replace('.webp', '-640w.webp')} 640w`}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                  />
+                </>
+              )}
+              <img
+                src={primaryImage}
+                alt={product.name}
+                width="380"
+                height="285"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 transform-gpu"
+                style={{ transitionTimingFunction: 'var(--ease-standard)' }}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  const ph = e.target.closest('.relative')?.querySelector('.fallback-placeholder');
+                  if (ph) ph.style.display = 'flex';
+                }}
+              />
+            </picture>
           ) : null}
 
           {/* Clean Placeholder when image is missing */}
           <div
-            className={`w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-br from-neutral-50 to-neutral-200 ${
+            className={`fallback-placeholder w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-br from-neutral-50 to-neutral-200 ${
               primaryImage ? 'hidden' : 'flex'
             }`}
           >

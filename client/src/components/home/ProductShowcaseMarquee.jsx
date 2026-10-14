@@ -91,15 +91,25 @@ const ProductMarqueeItem = ({ product, isDuplicate = false }) => {
       {/* Circular Product Photography Frame ("cercal") */}
       <div className="relative w-18 h-18 sm:w-22 sm:h-22 rounded-full p-1 bg-white border-2 border-surface-border shadow-xs group-hover:border-accent-500 group-hover:shadow-card group-hover:scale-105 transition-all duration-300">
         <div className="w-full h-full rounded-full overflow-hidden bg-neutral-100 aspect-square">
-          <img
-            src={product.image}
-            alt={isDuplicate ? '' : product.name}
-            width="88"
-            height="88"
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover rounded-full transform-gpu group-hover:scale-110 transition-transform duration-500 ease-out"
-          />
+          <picture className="w-full h-full">
+            <source
+              type="image/avif"
+              srcSet={product.image.replace('.webp', '-176w.avif')}
+            />
+            <source
+              type="image/webp"
+              srcSet={product.image.replace('.webp', '-176w.webp')}
+            />
+            <img
+              src={product.image}
+              alt={isDuplicate ? '' : product.name}
+              width="88"
+              height="88"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover rounded-full transform-gpu group-hover:scale-110 transition-transform duration-500 ease-out"
+            />
+          </picture>
         </div>
 
         {/* Division Badge */}

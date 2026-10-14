@@ -112,6 +112,15 @@ export const ProductDetailPage = () => {
           name="description"
           content={product.seo?.description || product.shortDescription}
         />
+        {product?.images?.[0]?.url && (
+          <link
+            rel="preload"
+            as="image"
+            href={product.images[0].url.replace('.webp', '-800w.webp')}
+            type="image/webp"
+            fetchpriority="high"
+          />
+        )}
       </Helmet>
 
       {/* Breadcrumb Navigation */}

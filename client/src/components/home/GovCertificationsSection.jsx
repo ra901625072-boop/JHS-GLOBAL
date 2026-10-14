@@ -26,6 +26,8 @@ export const GOV_DOCUMENTS = [
     regNumber: '24EZHPP3437C1ZH',
     form: 'Form GST REG-06 [Rule 10(1)]',
     image: '/images/certifications/gst-certificate.png',
+    avifSrcSet: '/images/certifications/gst-certificate-480w.avif 480w, /images/certifications/gst-certificate-768w.avif 768w, /images/certifications/gst-certificate-1024w.avif 1024w',
+    webpSrcSet: '/images/certifications/gst-certificate-480w.webp 480w, /images/certifications/gst-certificate-768w.webp 768w, /images/certifications/gst-certificate-1024w.webp 1024w',
     pdf: '/documents/gst-certificate.pdf',
     scope: 'Federal tax compliance, legal commercial export establishment in Surat, Gujarat.',
     isPrimary: true,
@@ -38,6 +40,8 @@ export const GOV_DOCUMENTS = [
     regNumber: 'EZHPP3437C',
     form: 'DGFT Importer-Exporter Code',
     image: '/images/certifications/iec-certificate.png',
+    avifSrcSet: '/images/certifications/iec-certificate-480w.avif 480w, /images/certifications/iec-certificate-768w.avif 768w, /images/certifications/iec-certificate-1024w.avif 1024w',
+    webpSrcSet: '/images/certifications/iec-certificate-480w.webp 480w, /images/certifications/iec-certificate-768w.webp 768w, /images/certifications/iec-certificate-1024w.webp 1024w',
     pdf: '/documents/iec-certificate.pdf',
     scope: 'Statutory federal export authorization for customs clearance at all Indian ports.',
     isPrimary: true,
@@ -50,6 +54,8 @@ export const GOV_DOCUMENTS = [
     regNumber: 'IEC: EZHPP3437C',
     form: 'RCMC under Foreign Trade Policy',
     image: '/images/certifications/apeda-rcmc.png',
+    avifSrcSet: '/images/certifications/apeda-rcmc-480w.avif 480w, /images/certifications/apeda-rcmc-768w.avif 768w, /images/certifications/apeda-rcmc-1024w.avif 1024w',
+    webpSrcSet: '/images/certifications/apeda-rcmc-480w.webp 480w, /images/certifications/apeda-rcmc-768w.webp 768w, /images/certifications/apeda-rcmc-1024w.webp 1024w',
     pdf: '/documents/apeda-rcmc.pdf',
     scope: 'Official statutory registration for exporting Indian agricultural commodities, seeds, and foods.',
     isPrimary: true,
@@ -62,6 +68,8 @@ export const GOV_DOCUMENTS = [
     regNumber: '10725997001058',
     form: 'Form C License under FSS Act, 2006',
     image: '/images/certifications/fssai-license.png',
+    avifSrcSet: '/images/certifications/fssai-license-480w.avif 480w, /images/certifications/fssai-license-768w.avif 768w, /images/certifications/fssai-license-1024w.avif 1024w',
+    webpSrcSet: '/images/certifications/fssai-license-480w.webp 480w, /images/certifications/fssai-license-768w.webp 768w, /images/certifications/fssai-license-1024w.webp 1024w',
     pdf: '/documents/fssai-license.pdf',
     scope: 'Central food licensing compliance for international food storage, handling, and export.',
     isPrimary: true,
@@ -74,6 +82,8 @@ export const GOV_DOCUMENTS = [
     regNumber: 'IEC: EZHPP3437C',
     form: 'CRES under Spices Board Act 1986',
     image: '/images/certifications/spices-board-cres.png',
+    avifSrcSet: '/images/certifications/spices-board-cres-480w.avif 480w, /images/certifications/spices-board-cres-768w.avif 768w, /images/certifications/spices-board-cres-1024w.avif 1024w',
+    webpSrcSet: '/images/certifications/spices-board-cres-480w.webp 480w, /images/certifications/spices-board-cres-768w.webp 768w, /images/certifications/spices-board-cres-1024w.webp 1024w',
     pdf: '/documents/spices-board-cres.pdf',
     scope: 'Statutory registration for bulk and retail export of Indian whole spices and spice powders.',
     isPrimary: false,
@@ -86,6 +96,8 @@ export const GOV_DOCUMENTS = [
     regNumber: 'UDYAM-GJ-22-0460260',
     form: 'Udyam Registration Certificate',
     image: '/images/certifications/msme-udyam.png',
+    avifSrcSet: '/images/certifications/msme-udyam-480w.avif 480w, /images/certifications/msme-udyam-768w.avif 768w, /images/certifications/msme-udyam-1024w.avif 1024w',
+    webpSrcSet: '/images/certifications/msme-udyam-480w.webp 480w, /images/certifications/msme-udyam-768w.webp 768w, /images/certifications/msme-udyam-1024w.webp 1024w',
     pdf: '/documents/msme-udyam.pdf',
     scope: 'Government enterprise accreditation for trading and export operations.',
     isPrimary: false,
@@ -215,12 +227,19 @@ export const GovCertificationsSection = () => {
               >
                 {/* Document Thumbnail Paper Mount */}
                 <div className="relative aspect-[1/1.25] sm:aspect-[1/1.22] w-full bg-neutral-50 rounded-xl overflow-hidden border border-neutral-200/70 p-2 sm:p-2.5 flex items-center justify-center shadow-inner group-hover:border-primary-700/30 transition-colors">
-                  <img
-                    src={doc.image}
-                    alt={`${doc.code} Government Document`}
-                    loading="lazy"
-                    className="w-full h-full object-contain rounded filter contrast-[1.02] shadow-2xs group-hover:scale-[1.03] transition-transform duration-300"
-                  />
+                  <picture className="w-full h-full flex items-center justify-center">
+                    <source type="image/avif" srcSet={doc.avifSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
+                    <source type="image/webp" srcSet={doc.webpSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
+                    <img
+                      src={doc.image}
+                      alt={`${doc.code} Government Document`}
+                      width="300"
+                      height="375"
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-contain rounded filter contrast-[1.02] shadow-2xs group-hover:scale-[1.03] transition-transform duration-300"
+                    />
+                  </picture>
 
                   {/* Interactive Hover Overlay with Inspect Pill */}
                   <div className="absolute inset-0 bg-neutral-950/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-xl p-3">
@@ -330,11 +349,18 @@ export const GovCertificationsSection = () => {
               <div className="flex-1 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 sm:p-6 bg-neutral-50/70">
                 {/* Document Preview Pane */}
                 <div className="lg:col-span-7 bg-white rounded-xl border border-neutral-200 p-3 sm:p-4 shadow-inner flex items-center justify-center overflow-hidden min-h-[300px]">
-                  <img
-                    src={activeModalDoc.image}
-                    alt={activeModalDoc.title}
-                    className="max-h-[62vh] w-auto object-contain rounded shadow-md"
-                  />
+                  <picture className="flex items-center justify-center max-h-[62vh]">
+                    <source type="image/avif" srcSet={activeModalDoc.avifSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
+                    <source type="image/webp" srcSet={activeModalDoc.webpSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
+                    <img
+                      src={activeModalDoc.image}
+                      alt={activeModalDoc.title}
+                      width="768"
+                      height="960"
+                      decoding="async"
+                      className="max-h-[62vh] w-auto object-contain rounded shadow-md"
+                    />
+                  </picture>
                 </div>
 
                 {/* Legal & Regulatory Breakdown Pane */}

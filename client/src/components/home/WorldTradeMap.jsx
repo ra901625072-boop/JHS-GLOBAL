@@ -466,12 +466,19 @@ export const WorldTradeMap = () => {
         {/* Subtle Ambient Ocean Radar Grid */}
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#C5A059_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
-        {/* Base Vector World Map Image provided by the user in map folder */}
-        <img
-          src="/images/map/world-blue.svg"
-          alt="World Trade Route Map - Jhs Global"
-          className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none opacity-90 drop-shadow-[0_12px_36px_rgba(0,0,0,0.6)]"
-        />
+        {/* Base Vector World Map Image - Loaded strictly on desktop via media query to prevent mobile transfer */}
+        <picture>
+          <source media="(min-width: 1024px)" srcSet="/images/map/world-blue.svg" type="image/svg+xml" />
+          <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1010 666'%3E%3C/svg%3E"
+            alt="World Trade Route Map - Jhs Global"
+            width="1010"
+            height="666"
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none opacity-90 drop-shadow-[0_12px_36px_rgba(0,0,0,0.6)]"
+          />
+        </picture>
 
         {/* Interactive SVG Overlay (Strictly aligned to viewBox 0 0 1010 666) */}
         <svg

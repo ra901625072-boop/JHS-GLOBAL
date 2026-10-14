@@ -75,6 +75,8 @@ export const QualityPage = () => {
       scope: 'Tax-compliant registered commercial export entity operating out of Surat, Gujarat.',
       file: { url: '/documents/gst-certificate.pdf' },
       image: '/images/certifications/gst-certificate.png',
+      avifSrcSet: '/images/certifications/gst-certificate-480w.avif 480w, /images/certifications/gst-certificate-768w.avif 768w, /images/certifications/gst-certificate-1024w.avif 1024w',
+      webpSrcSet: '/images/certifications/gst-certificate-480w.webp 480w, /images/certifications/gst-certificate-768w.webp 768w, /images/certifications/gst-certificate-1024w.webp 1024w',
       code: 'GST',
     },
     iec: {
@@ -87,6 +89,8 @@ export const QualityPage = () => {
       scope: 'Statutory federal export authorization for maritime and air shipments from all Indian ports.',
       file: { url: '/documents/iec-certificate.pdf' },
       image: '/images/certifications/iec-certificate.png',
+      avifSrcSet: '/images/certifications/iec-certificate-480w.avif 480w, /images/certifications/iec-certificate-768w.avif 768w, /images/certifications/iec-certificate-1024w.avif 1024w',
+      webpSrcSet: '/images/certifications/iec-certificate-480w.webp 480w, /images/certifications/iec-certificate-768w.webp 768w, /images/certifications/iec-certificate-1024w.webp 1024w',
       code: 'IEC',
     },
     apeda: {
@@ -99,6 +103,8 @@ export const QualityPage = () => {
       scope: 'Official statutory registration for exporting Indian agricultural commodities, seeds, cereals, and pulses.',
       file: { url: '/documents/apeda-rcmc.pdf' },
       image: '/images/certifications/apeda-rcmc.png',
+      avifSrcSet: '/images/certifications/apeda-rcmc-480w.avif 480w, /images/certifications/apeda-rcmc-768w.avif 768w, /images/certifications/apeda-rcmc-1024w.avif 1024w',
+      webpSrcSet: '/images/certifications/apeda-rcmc-480w.webp 480w, /images/certifications/apeda-rcmc-768w.webp 768w, /images/certifications/apeda-rcmc-1024w.webp 1024w',
       code: 'APEDA RCMC',
     },
     fssai: {
@@ -111,6 +117,8 @@ export const QualityPage = () => {
       scope: 'Central food licensing authority compliance for international export storage, processing, and handling.',
       file: { url: '/documents/fssai-license.pdf' },
       image: '/images/certifications/fssai-license.png',
+      avifSrcSet: '/images/certifications/fssai-license-480w.avif 480w, /images/certifications/fssai-license-768w.avif 768w, /images/certifications/fssai-license-1024w.avif 1024w',
+      webpSrcSet: '/images/certifications/fssai-license-480w.webp 480w, /images/certifications/fssai-license-768w.webp 768w, /images/certifications/fssai-license-1024w.webp 1024w',
       code: 'FSSAI Central',
     },
     spices: {
@@ -123,6 +131,8 @@ export const QualityPage = () => {
       scope: 'Official statutory exporter registration for whole spices, powdered spices, and seed spices.',
       file: { url: '/documents/spices-board-cres.pdf' },
       image: '/images/certifications/spices-board-cres.png',
+      avifSrcSet: '/images/certifications/spices-board-cres-480w.avif 480w, /images/certifications/spices-board-cres-768w.avif 768w, /images/certifications/spices-board-cres-1024w.avif 1024w',
+      webpSrcSet: '/images/certifications/spices-board-cres-480w.webp 480w, /images/certifications/spices-board-cres-768w.webp 768w, /images/certifications/spices-board-cres-1024w.webp 1024w',
       code: 'Spices Board CRES',
     },
     msme: {
@@ -135,6 +145,8 @@ export const QualityPage = () => {
       scope: 'Government enterprise accreditation in international trade and export processing.',
       file: { url: '/documents/msme-udyam.pdf' },
       image: '/images/certifications/msme-udyam.png',
+      avifSrcSet: '/images/certifications/msme-udyam-480w.avif 480w, /images/certifications/msme-udyam-768w.avif 768w, /images/certifications/msme-udyam-1024w.avif 1024w',
+      webpSrcSet: '/images/certifications/msme-udyam-480w.webp 480w, /images/certifications/msme-udyam-768w.webp 768w, /images/certifications/msme-udyam-1024w.webp 1024w',
       code: 'MSME Udyam',
     },
   };
@@ -236,12 +248,19 @@ export const QualityPage = () => {
                     onClick={() => setActiveLightboxDoc(cert)}
                     className="relative aspect-[1/1.22] w-full bg-neutral-50 rounded-xl overflow-hidden border border-neutral-200/80 p-2 sm:p-3 flex items-center justify-center cursor-pointer group-hover:border-primary-700/30 transition-colors shadow-inner"
                   >
-                    <img
-                      src={cert.image}
-                      alt={cert.name}
-                      loading="eager"
-                      className="w-full h-full object-contain rounded filter contrast-[1.02] shadow-2xs group-hover:scale-[1.03] transition-transform duration-300"
-                    />
+                    <picture className="w-full h-full flex items-center justify-center">
+                      <source type="image/avif" srcSet={cert.avifSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
+                      <source type="image/webp" srcSet={cert.webpSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
+                      <img
+                        src={cert.image}
+                        alt={cert.name}
+                        width="300"
+                        height="375"
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-contain rounded filter contrast-[1.02] shadow-2xs group-hover:scale-[1.03] transition-transform duration-300"
+                      />
+                    </picture>
 
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-neutral-950/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-xl p-3">
@@ -378,12 +397,19 @@ export const QualityPage = () => {
 
               {/* Modal Body */}
               <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-neutral-100 flex flex-col items-center justify-center">
-                <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg border border-neutral-300 p-2 sm:p-4">
-                  <img
-                    src={activeLightboxDoc.image}
-                    alt={activeLightboxDoc.name}
-                    className="w-full h-auto max-h-[58vh] object-contain rounded"
-                  />
+                <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg border border-neutral-300 p-2 sm:p-4 flex items-center justify-center">
+                  <picture className="flex items-center justify-center max-h-[58vh]">
+                    <source type="image/avif" srcSet={activeLightboxDoc.avifSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
+                    <source type="image/webp" srcSet={activeLightboxDoc.webpSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
+                    <img
+                      src={activeLightboxDoc.image}
+                      alt={activeLightboxDoc.name}
+                      width="768"
+                      height="960"
+                      decoding="async"
+                      className="w-full h-auto max-h-[58vh] object-contain rounded"
+                    />
+                  </picture>
                 </div>
 
                 <div className="mt-4 text-center max-w-xl text-xs text-neutral-600">

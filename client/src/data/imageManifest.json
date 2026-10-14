@@ -1,0 +1,370 @@
+{
+  "products": {
+    "amla-extract": {
+      "baseSrc": "/images/products/amla-extract.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/amla-extract-176w.webp 176w, /images/products/amla-extract-380w.webp 380w, /images/products/amla-extract-640w.webp 640w, /images/products/amla-extract-800w.webp 800w, /images/products/amla-extract-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/amla-extract-176w.avif 176w, /images/products/amla-extract-380w.avif 380w, /images/products/amla-extract-640w.avif 640w, /images/products/amla-extract-800w.avif 800w, /images/products/amla-extract-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/amla-extract-176w.webp",
+      "thumb176Avif": "/images/products/amla-extract-176w.avif"
+    },
+    "ashwagandha-extract": {
+      "baseSrc": "/images/products/ashwagandha-extract.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/ashwagandha-extract-176w.webp 176w, /images/products/ashwagandha-extract-380w.webp 380w, /images/products/ashwagandha-extract-640w.webp 640w, /images/products/ashwagandha-extract-800w.webp 800w",
+      "srcSetAvif": "/images/products/ashwagandha-extract-176w.avif 176w, /images/products/ashwagandha-extract-380w.avif 380w, /images/products/ashwagandha-extract-640w.avif 640w, /images/products/ashwagandha-extract-800w.avif 800w",
+      "thumb176Webp": "/images/products/ashwagandha-extract-176w.webp",
+      "thumb176Avif": "/images/products/ashwagandha-extract-176w.avif"
+    },
+    "bacopa-monnieri-extract": {
+      "baseSrc": "/images/products/bacopa-monnieri-extract.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/bacopa-monnieri-extract-176w.webp 176w, /images/products/bacopa-monnieri-extract-380w.webp 380w, /images/products/bacopa-monnieri-extract-640w.webp 640w, /images/products/bacopa-monnieri-extract-800w.webp 800w, /images/products/bacopa-monnieri-extract-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/bacopa-monnieri-extract-176w.avif 176w, /images/products/bacopa-monnieri-extract-380w.avif 380w, /images/products/bacopa-monnieri-extract-640w.avif 640w, /images/products/bacopa-monnieri-extract-800w.avif 800w, /images/products/bacopa-monnieri-extract-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/bacopa-monnieri-extract-176w.webp",
+      "thumb176Avif": "/images/products/bacopa-monnieri-extract-176w.avif"
+    },
+    "boswellia-serrata-extract": {
+      "baseSrc": "/images/products/boswellia-serrata-extract.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/boswellia-serrata-extract-176w.webp 176w, /images/products/boswellia-serrata-extract-380w.webp 380w, /images/products/boswellia-serrata-extract-640w.webp 640w, /images/products/boswellia-serrata-extract-800w.webp 800w, /images/products/boswellia-serrata-extract-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/boswellia-serrata-extract-176w.avif 176w, /images/products/boswellia-serrata-extract-380w.avif 380w, /images/products/boswellia-serrata-extract-640w.avif 640w, /images/products/boswellia-serrata-extract-800w.avif 800w, /images/products/boswellia-serrata-extract-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/boswellia-serrata-extract-176w.webp",
+      "thumb176Avif": "/images/products/boswellia-serrata-extract-176w.avif"
+    },
+    "castor-oil-and-derivatives": {
+      "baseSrc": "/images/products/castor-oil-and-derivatives.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/castor-oil-and-derivatives-176w.webp 176w, /images/products/castor-oil-and-derivatives-380w.webp 380w, /images/products/castor-oil-and-derivatives-640w.webp 640w, /images/products/castor-oil-and-derivatives-800w.webp 800w",
+      "srcSetAvif": "/images/products/castor-oil-and-derivatives-176w.avif 176w, /images/products/castor-oil-and-derivatives-380w.avif 380w, /images/products/castor-oil-and-derivatives-640w.avif 640w, /images/products/castor-oil-and-derivatives-800w.avif 800w",
+      "thumb176Webp": "/images/products/castor-oil-and-derivatives-176w.webp",
+      "thumb176Avif": "/images/products/castor-oil-and-derivatives-176w.avif"
+    },
+    "cottonseed-meal": {
+      "baseSrc": "/images/products/cottonseed-meal.webp",
+      "width": 1600,
+      "height": 1200,
+      "aspectRatio": "1600/1200",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/cottonseed-meal-176w.webp 176w, /images/products/cottonseed-meal-380w.webp 380w, /images/products/cottonseed-meal-640w.webp 640w, /images/products/cottonseed-meal-800w.webp 800w, /images/products/cottonseed-meal-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/cottonseed-meal-176w.avif 176w, /images/products/cottonseed-meal-380w.avif 380w, /images/products/cottonseed-meal-640w.avif 640w, /images/products/cottonseed-meal-800w.avif 800w, /images/products/cottonseed-meal-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/cottonseed-meal-176w.webp",
+      "thumb176Avif": "/images/products/cottonseed-meal-176w.avif"
+    },
+    "feed-grade-vitamins-and-minerals": {
+      "baseSrc": "/images/products/feed-grade-vitamins-and-minerals.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/feed-grade-vitamins-and-minerals-176w.webp 176w, /images/products/feed-grade-vitamins-and-minerals-380w.webp 380w, /images/products/feed-grade-vitamins-and-minerals-640w.webp 640w, /images/products/feed-grade-vitamins-and-minerals-800w.webp 800w, /images/products/feed-grade-vitamins-and-minerals-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/feed-grade-vitamins-and-minerals-176w.avif 176w, /images/products/feed-grade-vitamins-and-minerals-380w.avif 380w, /images/products/feed-grade-vitamins-and-minerals-640w.avif 640w, /images/products/feed-grade-vitamins-and-minerals-800w.avif 800w, /images/products/feed-grade-vitamins-and-minerals-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/feed-grade-vitamins-and-minerals-176w.webp",
+      "thumb176Avif": "/images/products/feed-grade-vitamins-and-minerals-176w.avif"
+    },
+    "glycolic-acid": {
+      "baseSrc": "/images/products/glycolic-acid.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/glycolic-acid-176w.webp 176w, /images/products/glycolic-acid-380w.webp 380w, /images/products/glycolic-acid-640w.webp 640w, /images/products/glycolic-acid-800w.webp 800w, /images/products/glycolic-acid-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/glycolic-acid-176w.avif 176w, /images/products/glycolic-acid-380w.avif 380w, /images/products/glycolic-acid-640w.avif 640w, /images/products/glycolic-acid-800w.avif 800w, /images/products/glycolic-acid-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/glycolic-acid-176w.webp",
+      "thumb176Avif": "/images/products/glycolic-acid-176w.avif"
+    },
+    "green-tea-and-garcinia-cambogia-extracts": {
+      "baseSrc": "/images/products/green-tea-and-garcinia-cambogia-extracts.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/green-tea-and-garcinia-cambogia-extracts-176w.webp 176w, /images/products/green-tea-and-garcinia-cambogia-extracts-380w.webp 380w, /images/products/green-tea-and-garcinia-cambogia-extracts-640w.webp 640w, /images/products/green-tea-and-garcinia-cambogia-extracts-800w.webp 800w, /images/products/green-tea-and-garcinia-cambogia-extracts-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/green-tea-and-garcinia-cambogia-extracts-176w.avif 176w, /images/products/green-tea-and-garcinia-cambogia-extracts-380w.avif 380w, /images/products/green-tea-and-garcinia-cambogia-extracts-640w.avif 640w, /images/products/green-tea-and-garcinia-cambogia-extracts-800w.avif 800w, /images/products/green-tea-and-garcinia-cambogia-extracts-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/green-tea-and-garcinia-cambogia-extracts-176w.webp",
+      "thumb176Avif": "/images/products/green-tea-and-garcinia-cambogia-extracts-176w.avif"
+    },
+    "herbal-botanical-extracts": {
+      "baseSrc": "/images/products/herbal-botanical-extracts.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/herbal-botanical-extracts-176w.webp 176w, /images/products/herbal-botanical-extracts-380w.webp 380w, /images/products/herbal-botanical-extracts-640w.webp 640w, /images/products/herbal-botanical-extracts-800w.webp 800w",
+      "srcSetAvif": "/images/products/herbal-botanical-extracts-176w.avif 176w, /images/products/herbal-botanical-extracts-380w.avif 380w, /images/products/herbal-botanical-extracts-640w.avif 640w, /images/products/herbal-botanical-extracts-800w.avif 800w",
+      "thumb176Webp": "/images/products/herbal-botanical-extracts-176w.webp",
+      "thumb176Avif": "/images/products/herbal-botanical-extracts-176w.avif"
+    },
+    "kaolin-clay-powder": {
+      "baseSrc": "/images/products/kaolin-clay-powder.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/kaolin-clay-powder-176w.webp 176w, /images/products/kaolin-clay-powder-380w.webp 380w, /images/products/kaolin-clay-powder-640w.webp 640w, /images/products/kaolin-clay-powder-800w.webp 800w, /images/products/kaolin-clay-powder-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/kaolin-clay-powder-176w.avif 176w, /images/products/kaolin-clay-powder-380w.avif 380w, /images/products/kaolin-clay-powder-640w.avif 640w, /images/products/kaolin-clay-powder-800w.avif 800w, /images/products/kaolin-clay-powder-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/kaolin-clay-powder-176w.webp",
+      "thumb176Avif": "/images/products/kaolin-clay-powder-176w.avif"
+    },
+    "moringa-oleifera-extract": {
+      "baseSrc": "/images/products/moringa-oleifera-extract.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/moringa-oleifera-extract-176w.webp 176w, /images/products/moringa-oleifera-extract-380w.webp 380w, /images/products/moringa-oleifera-extract-640w.webp 640w, /images/products/moringa-oleifera-extract-800w.webp 800w, /images/products/moringa-oleifera-extract-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/moringa-oleifera-extract-176w.avif 176w, /images/products/moringa-oleifera-extract-380w.avif 380w, /images/products/moringa-oleifera-extract-640w.avif 640w, /images/products/moringa-oleifera-extract-800w.avif 800w, /images/products/moringa-oleifera-extract-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/moringa-oleifera-extract-176w.webp",
+      "thumb176Avif": "/images/products/moringa-oleifera-extract-176w.avif"
+    },
+    "pea-protein-isolate": {
+      "baseSrc": "/images/products/pea-protein-isolate.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/pea-protein-isolate-176w.webp 176w, /images/products/pea-protein-isolate-380w.webp 380w, /images/products/pea-protein-isolate-640w.webp 640w, /images/products/pea-protein-isolate-800w.webp 800w, /images/products/pea-protein-isolate-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/pea-protein-isolate-176w.avif 176w, /images/products/pea-protein-isolate-380w.avif 380w, /images/products/pea-protein-isolate-640w.avif 640w, /images/products/pea-protein-isolate-800w.avif 800w, /images/products/pea-protein-isolate-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/pea-protein-isolate-176w.webp",
+      "thumb176Avif": "/images/products/pea-protein-isolate-176w.avif"
+    },
+    "rapeseed-mustard-meal": {
+      "baseSrc": "/images/products/rapeseed-mustard-meal.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/rapeseed-mustard-meal-176w.webp 176w, /images/products/rapeseed-mustard-meal-380w.webp 380w, /images/products/rapeseed-mustard-meal-640w.webp 640w, /images/products/rapeseed-mustard-meal-800w.webp 800w, /images/products/rapeseed-mustard-meal-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/rapeseed-mustard-meal-176w.avif 176w, /images/products/rapeseed-mustard-meal-380w.avif 380w, /images/products/rapeseed-mustard-meal-640w.avif 640w, /images/products/rapeseed-mustard-meal-800w.avif 800w, /images/products/rapeseed-mustard-meal-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/rapeseed-mustard-meal-176w.webp",
+      "thumb176Avif": "/images/products/rapeseed-mustard-meal-176w.avif"
+    },
+    "salicylic-acid": {
+      "baseSrc": "/images/products/salicylic-acid.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/salicylic-acid-176w.webp 176w, /images/products/salicylic-acid-380w.webp 380w, /images/products/salicylic-acid-640w.webp 640w, /images/products/salicylic-acid-800w.webp 800w, /images/products/salicylic-acid-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/salicylic-acid-176w.avif 176w, /images/products/salicylic-acid-380w.avif 380w, /images/products/salicylic-acid-640w.avif 640w, /images/products/salicylic-acid-800w.avif 800w, /images/products/salicylic-acid-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/salicylic-acid-176w.webp",
+      "thumb176Avif": "/images/products/salicylic-acid-176w.avif"
+    },
+    "sodium-lauryl-ether-sulfate-sles": {
+      "baseSrc": "/images/products/sodium-lauryl-ether-sulfate-sles.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/sodium-lauryl-ether-sulfate-sles-176w.webp 176w, /images/products/sodium-lauryl-ether-sulfate-sles-380w.webp 380w, /images/products/sodium-lauryl-ether-sulfate-sles-640w.webp 640w, /images/products/sodium-lauryl-ether-sulfate-sles-800w.webp 800w",
+      "srcSetAvif": "/images/products/sodium-lauryl-ether-sulfate-sles-176w.avif 176w, /images/products/sodium-lauryl-ether-sulfate-sles-380w.avif 380w, /images/products/sodium-lauryl-ether-sulfate-sles-640w.avif 640w, /images/products/sodium-lauryl-ether-sulfate-sles-800w.avif 800w",
+      "thumb176Webp": "/images/products/sodium-lauryl-ether-sulfate-sles-176w.webp",
+      "thumb176Avif": "/images/products/sodium-lauryl-ether-sulfate-sles-176w.avif"
+    },
+    "soybean-meal": {
+      "baseSrc": "/images/products/soybean-meal.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/soybean-meal-176w.webp 176w, /images/products/soybean-meal-380w.webp 380w, /images/products/soybean-meal-640w.webp 640w, /images/products/soybean-meal-800w.webp 800w",
+      "srcSetAvif": "/images/products/soybean-meal-176w.avif 176w, /images/products/soybean-meal-380w.avif 380w, /images/products/soybean-meal-640w.avif 640w, /images/products/soybean-meal-800w.avif 800w",
+      "thumb176Webp": "/images/products/soybean-meal-176w.webp",
+      "thumb176Avif": "/images/products/soybean-meal-176w.avif"
+    },
+    "turmeric-curcumin-extract": {
+      "baseSrc": "/images/products/turmeric-curcumin-extract.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/turmeric-curcumin-extract-176w.webp 176w, /images/products/turmeric-curcumin-extract-380w.webp 380w, /images/products/turmeric-curcumin-extract-640w.webp 640w, /images/products/turmeric-curcumin-extract-800w.webp 800w",
+      "srcSetAvif": "/images/products/turmeric-curcumin-extract-176w.avif 176w, /images/products/turmeric-curcumin-extract-380w.avif 380w, /images/products/turmeric-curcumin-extract-640w.avif 640w, /images/products/turmeric-curcumin-extract-800w.avif 800w",
+      "thumb176Webp": "/images/products/turmeric-curcumin-extract-176w.webp",
+      "thumb176Avif": "/images/products/turmeric-curcumin-extract-176w.avif"
+    },
+    "vitamin-e-acetate": {
+      "baseSrc": "/images/products/vitamin-e-acetate.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/vitamin-e-acetate-176w.webp 176w, /images/products/vitamin-e-acetate-380w.webp 380w, /images/products/vitamin-e-acetate-640w.webp 640w, /images/products/vitamin-e-acetate-800w.webp 800w, /images/products/vitamin-e-acetate-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/vitamin-e-acetate-176w.avif 176w, /images/products/vitamin-e-acetate-380w.avif 380w, /images/products/vitamin-e-acetate-640w.avif 640w, /images/products/vitamin-e-acetate-800w.avif 800w, /images/products/vitamin-e-acetate-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/vitamin-e-acetate-176w.webp",
+      "thumb176Avif": "/images/products/vitamin-e-acetate-176w.avif"
+    },
+    "xanthan-gum": {
+      "baseSrc": "/images/products/xanthan-gum.webp",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": "1200/896",
+      "widths": [
+        176,
+        380,
+        640,
+        800,
+        1200
+      ],
+      "srcSetWebp": "/images/products/xanthan-gum-176w.webp 176w, /images/products/xanthan-gum-380w.webp 380w, /images/products/xanthan-gum-640w.webp 640w, /images/products/xanthan-gum-800w.webp 800w, /images/products/xanthan-gum-1200w.webp 1200w",
+      "srcSetAvif": "/images/products/xanthan-gum-176w.avif 176w, /images/products/xanthan-gum-380w.avif 380w, /images/products/xanthan-gum-640w.avif 640w, /images/products/xanthan-gum-800w.avif 800w, /images/products/xanthan-gum-1200w.avif 1200w",
+      "thumb176Webp": "/images/products/xanthan-gum-176w.webp",
+      "thumb176Avif": "/images/products/xanthan-gum-176w.avif"
+    }
+  },
+  "certificates": {
+    "apeda-rcmc": {
+      "baseSrc": "/images/certifications/apeda-rcmc.png",
+      "srcSetWebp": "/images/certifications/apeda-rcmc-480w.webp 480w, /images/certifications/apeda-rcmc-768w.webp 768w, /images/certifications/apeda-rcmc-1024w.webp 1024w",
+      "srcSetAvif": "/images/certifications/apeda-rcmc-480w.avif 480w, /images/certifications/apeda-rcmc-768w.avif 768w, /images/certifications/apeda-rcmc-1024w.avif 1024w"
+    },
+    "fssai-license": {
+      "baseSrc": "/images/certifications/fssai-license.png",
+      "srcSetWebp": "/images/certifications/fssai-license-480w.webp 480w, /images/certifications/fssai-license-768w.webp 768w, /images/certifications/fssai-license-1024w.webp 1024w",
+      "srcSetAvif": "/images/certifications/fssai-license-480w.avif 480w, /images/certifications/fssai-license-768w.avif 768w, /images/certifications/fssai-license-1024w.avif 1024w"
+    },
+    "gst-certificate": {
+      "baseSrc": "/images/certifications/gst-certificate.png",
+      "srcSetWebp": "/images/certifications/gst-certificate-480w.webp 480w, /images/certifications/gst-certificate-768w.webp 768w, /images/certifications/gst-certificate-1024w.webp 1024w",
+      "srcSetAvif": "/images/certifications/gst-certificate-480w.avif 480w, /images/certifications/gst-certificate-768w.avif 768w, /images/certifications/gst-certificate-1024w.avif 1024w"
+    },
+    "iec-certificate": {
+      "baseSrc": "/images/certifications/iec-certificate.png",
+      "srcSetWebp": "/images/certifications/iec-certificate-480w.webp 480w, /images/certifications/iec-certificate-768w.webp 768w, /images/certifications/iec-certificate-1024w.webp 1024w",
+      "srcSetAvif": "/images/certifications/iec-certificate-480w.avif 480w, /images/certifications/iec-certificate-768w.avif 768w, /images/certifications/iec-certificate-1024w.avif 1024w"
+    },
+    "msme-udyam": {
+      "baseSrc": "/images/certifications/msme-udyam.png",
+      "srcSetWebp": "/images/certifications/msme-udyam-480w.webp 480w, /images/certifications/msme-udyam-768w.webp 768w, /images/certifications/msme-udyam-1024w.webp 1024w",
+      "srcSetAvif": "/images/certifications/msme-udyam-480w.avif 480w, /images/certifications/msme-udyam-768w.avif 768w, /images/certifications/msme-udyam-1024w.avif 1024w"
+    },
+    "spices-board-cres": {
+      "baseSrc": "/images/certifications/spices-board-cres.png",
+      "srcSetWebp": "/images/certifications/spices-board-cres-480w.webp 480w, /images/certifications/spices-board-cres-768w.webp 768w, /images/certifications/spices-board-cres-1024w.webp 1024w",
+      "srcSetAvif": "/images/certifications/spices-board-cres-480w.avif 480w, /images/certifications/spices-board-cres-768w.avif 768w, /images/certifications/spices-board-cres-1024w.avif 1024w"
+    }
+  }
+}

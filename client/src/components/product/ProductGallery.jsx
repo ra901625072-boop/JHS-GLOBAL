@@ -44,22 +44,44 @@ export const ProductGallery = ({ images = [], productName = 'Product' }) => {
         onTouchEnd={handleTouchEnd}
       >
         {currentImage?.url ? (
-          <img
-            key={selectedIndex}
-            src={currentImage.url}
-            alt={currentImage.alt || productName}
-            className="w-full h-full object-cover transform-gpu animate-image-fade motion-reduce:animate-none group-hover:scale-[1.03] transition-transform duration-500 pointer-events-none"
-            style={{ transitionTimingFunction: 'var(--ease-standard)' }}
-            onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'flex';
-            }}
-          />
+          <picture className="w-full h-full">
+            {currentImage.url.endsWith('.webp') && !currentImage.url.includes('-') && (
+              <>
+                <source
+                  type="image/avif"
+                  srcSet={`${currentImage.url.replace('.webp', '-480w.avif')} 480w, ${currentImage.url.replace('.webp', '-800w.avif')} 800w, ${currentImage.url.replace('.webp', '-1200w.avif')} 1200w`}
+                  sizes="(max-width: 1024px) 100vw, 800px"
+                />
+                <source
+                  type="image/webp"
+                  srcSet={`${currentImage.url.replace('.webp', '-480w.webp')} 480w, ${currentImage.url.replace('.webp', '-800w.webp')} 800w, ${currentImage.url.replace('.webp', '-1200w.webp')} 1200w`}
+                  sizes="(max-width: 1024px) 100vw, 800px"
+                />
+              </>
+            )}
+            <img
+              key={selectedIndex}
+              src={currentImage.url}
+              alt={currentImage.alt || productName}
+              width="800"
+              height="600"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+              className="w-full h-full object-cover transform-gpu animate-image-fade motion-reduce:animate-none group-hover:scale-[1.03] transition-transform duration-500 pointer-events-none"
+              style={{ transitionTimingFunction: 'var(--ease-standard)' }}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                const ph = e.target.closest('.relative')?.querySelector('.fallback-placeholder');
+                if (ph) ph.style.display = 'flex';
+              }}
+            />
+          </picture>
         ) : null}
 
         {/* Placeholder fallback */}
         <div
-          className={`w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-neutral-50 to-neutral-200 ${
+          className={`fallback-placeholder w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-neutral-50 to-neutral-200 ${
             currentImage?.url ? 'hidden' : 'flex'
           }`}
         >
