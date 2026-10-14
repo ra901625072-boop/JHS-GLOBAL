@@ -1,8 +1,14 @@
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import './models/index.js';
 import env from './config/env.js';
 import logger from './utils/logger.js';
@@ -36,8 +42,13 @@ export const createApp = () => {
   // Trust proxy for rate limiting behind reverse proxy
   app.set('trust proxy', 1);
 
-  // Security Headers
-  app.use(helmet());
+  // Security Headers (configured to allow serving SPA static assets)
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+      crossOriginEmbedderPolicy: false,
+    })
+  );
 
   // CORS Configuration
   app.use(
@@ -46,8 +57,8 @@ export const createApp = () => {
         if (!origin || env.NODE_ENV !== 'production') {
           return callback(null, true);
         }
-        const allowedOrigins = [env.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'];
-        if (allowedOrigins.includes(origin)) {
+        const allowedOrigins = [env.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'].filter(Boolean);
+        if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
           return callback(null, true);
         }
         return callback(new Error('Not allowed by CORS'));
@@ -124,7 +135,21 @@ export const createApp = () => {
   app.get('/sitemap.xml', getSitemap);
   app.get('/robots.txt', getRobots);
 
-  // 404 Fallback
+  // Serve Frontend Static Files in Production / when client/dist exists
+  const clientDist = path.resolve(__dirname, '../../client/dist');
+  if (fs.existsSync(clientDist)) {
+    app.use(express.static(clientDist));
+
+    // Client-side routing fallback for non-API routes
+    app.get('*', (req, res, next) => {
+      if (req.originalUrl.startsWith('/api/')) {
+        return next();
+      }
+      res.sendFile(path.join(clientDist, 'index.html'));
+    });
+  }
+
+  // 404 Fallback for unhandled API routes
   app.use(notFoundHandler);
 
   // Global Error Handler
