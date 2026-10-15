@@ -17,7 +17,7 @@ export const createInquirySchema = {
       items: z
         .array(
           z.object({
-            productId: z.string().optional().nullable(),
+            productId: z.union([z.string(), z.number()]).optional().nullable(),
             productName: z.string().min(1, 'Product name is required'),
             quantity: z.coerce.number().min(1, 'Quantity must be at least 1').default(1),
             unit: z.string().default('MT'),

@@ -19,7 +19,7 @@ export const generalLimiter = rateLimit({
 
 export const inquiryLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 5,
+  max: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? 1000 : 5,
   standardHeaders: true,
   legacyHeaders: false,
   handler: rateLimitHandler('Too many RFQ submissions. Please wait 1 hour or contact us directly via WhatsApp.'),

@@ -227,13 +227,16 @@ export const QuoteForm = () => {
 
     sendRfq({
       ...formData,
-      items: items.map((i) => ({
-        productId: i.productId?.startsWith('custom-') ? null : i.productId,
-        productName: i.productName,
-        quantity: i.quantity,
-        unit: i.unit,
-        packing: i.packing,
-      })),
+      items: items.map((i) => {
+        const isCustom = typeof i.productId === 'string' && i.productId.startsWith('custom-');
+        return {
+          productId: isCustom ? null : (i.productId != null ? i.productId : null),
+          productName: i.productName,
+          quantity: Number(i.quantity) || 1,
+          unit: i.unit || 'MT',
+          packing: i.packing || '',
+        };
+      }),
     });
   };
 
