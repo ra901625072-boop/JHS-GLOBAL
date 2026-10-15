@@ -25,6 +25,7 @@
     "test:eval": "npm run test:eval --workspace=server",
     "test:audit": "npm run test:audit --workspace=server",
     "check:circular": "madge --circular server/src && madge --circular client/src",
+    "check:budgets": "node scripts/assert_ci_performance_budgets.mjs",
     "verify:no-change": "node scripts/run_visual_dom_regression.mjs && node scripts/record_motion_tokens.mjs"
   },
   "devDependencies": {
