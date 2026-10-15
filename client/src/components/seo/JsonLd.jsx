@@ -37,9 +37,9 @@ export const createOrganizationSchema = () => {
     founder: FOUNDERS.map((founder) => ({
       '@type': 'Person',
       name: founder.name,
-      jobTitle: founder.role,
+      jobTitle: founder.displayTitle || founder.role,
       image: `${siteUrl}${founder.images.jpg}`,
-      description: founder.bio,
+      description: founder.bioExcerpt || founder.bioParagraphs?.[0] || founder.tagline,
     })),
   };
 };

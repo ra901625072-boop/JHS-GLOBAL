@@ -53,9 +53,8 @@ export const UnlistedSourcingBanner = ({ className = '' }) => {
         <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0 sm:w-auto w-full">
           <Link to="/contact" className="w-full sm:w-auto">
             <Button
-              variant="cta"
               size="md"
-              className="w-full flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold shadow-lg shadow-accent-500/20"
+              className="w-full flex items-center justify-center gap-2 text-xs sm:text-sm font-bold text-neutral-950 bg-cta-400 hover:bg-cta-300 shadow-md"
             >
               <span>Share Sourcing Requirements</span>
               <ArrowRight className="w-4 h-4" />

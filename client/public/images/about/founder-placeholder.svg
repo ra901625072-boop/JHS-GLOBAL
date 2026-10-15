@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 1024" width="768" height="1024" fill="none">
+  <rect width="768" height="1024" fill="#F4F4F0" />
+  <rect x="24" y="24" width="720" height="976" rx="16" stroke="#E5E7EB" stroke-width="2" stroke-dasharray="8 8" />
+  <circle cx="384" cy="420" r="140" fill="#E1EDE6" stroke="#94C0A4" stroke-width="4" />
+  <!-- Stylized Executive Profile Silhouette -->
+  <path d="M384 340a60 60 0 1 0 0 120 60 60 0 0 0 0-120zm0 150c-70 0-130 40-130 90v30h260v-30c0-50-60-90-130-90z" fill="#0D2818" opacity="0.6" />
+  <text x="384" y="680" font-family="'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="700" fill="#0D2818" text-anchor="middle" letter-spacing="2">
+    JHS GLOBAL
+  </text>
+  <text x="384" y="720" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="600" fill="#7B5E28" text-anchor="middle" letter-spacing="1">
+    EXECUTIVE LEADERSHIP PORTRAIT
+  </text>
+</svg>

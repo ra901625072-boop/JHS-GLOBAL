@@ -333,6 +333,24 @@ export const seedTrustData = async () => {
       homeOrder: 0,
       order: 22,
     },
+    {
+      question: 'Who are the founders and leadership team of JHS GLOBAL?',
+      answer: 'JHS GLOBAL is led by three Founders: Jay Prajapati (Founder & CEO), Suraj Prajapati (Co-Founder, Sourcing & Operations), and Henil Prajapati (Co-Founder, Commercial Development & Marketing). Jay Prajapati leads international business development, sales, and buyer relationships. Suraj Prajapati oversees domestic sourcing, supplier coordination, and order execution. Henil Prajapati directs commercial development, international marketing, and buyer outreach.',
+      group: 'Corporate Profile & Leadership',
+      slug: 'founders-and-leadership-team',
+      showOnHome: false,
+      homeOrder: 0,
+      order: 23,
+    },
+    {
+      question: 'What is the mission, vision, and core values of JHS GLOBAL?',
+      answer: 'Our mission is to make India\'s finest natural ingredients accessible to the world with uncompromising quality, honest pricing, and customs-grade documentation, delivering agreed specifications in promised packaging on quoted dates. Our vision is to be the first-choice export partner global brands name for Indian sourcing across food, wellness, and beauty sectors. Our values are: Integrity in every lot, Transparency in every quote, Consistency in every reorder, Partnership over transaction, and Respect for farmers and buyers.',
+      group: 'Corporate Profile & Leadership',
+      slug: 'mission-vision-and-values',
+      showOnHome: false,
+      homeOrder: 0,
+      order: 24,
+    },
   ];
 
   for (const f of faqs) {
