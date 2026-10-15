@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { SHOWCASE_PRODUCTS } from '../../data/productShowcase';
+import { useSafeQueryClient, prefetchProductDetail } from '../../utils/prefetch';
 
 /**
  * ProductShowcaseMarquee Component
@@ -80,11 +81,21 @@ export const ProductShowcaseMarquee = () => {
 };
 
 const ProductMarqueeItem = ({ product, isDuplicate = false }) => {
+  const queryClient = useSafeQueryClient();
+
+  const handlePrefetch = () => {
+    if (!isDuplicate && product.slug) {
+      prefetchProductDetail(product.slug, queryClient);
+    }
+  };
+
   return (
     <Link
       to={`/products/${product.slug}`}
       tabIndex={isDuplicate ? -1 : 0}
       aria-label={isDuplicate ? undefined : `View export specifications for ${product.name}`}
+      onPointerEnter={handlePrefetch}
+      onFocus={handlePrefetch}
       className="group flex flex-col items-center gap-2.5 text-center shrink-0 w-24 sm:w-28 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent-500 rounded-xl py-1 transition-transform duration-200"
       data-testid={isDuplicate ? undefined : `marquee-product-${product.slug}`}
     >

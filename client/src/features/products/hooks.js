@@ -14,6 +14,7 @@ export const useCategories = () => {
     queryKey: ['categories'],
     queryFn: fetchCategories,
     staleTime: 60 * 60 * 1000, // 1 hour
+    gcTime: 2 * 60 * 60 * 1000,
   });
 };
 
@@ -22,6 +23,8 @@ export const useCategory = (slug) => {
     queryKey: ['category', slug],
     queryFn: () => fetchCategoryBySlug(slug),
     enabled: Boolean(slug),
+    staleTime: 30 * 60 * 1000, // 30 minutes
+    gcTime: 60 * 60 * 1000,
   });
 };
 
@@ -29,6 +32,8 @@ export const useProducts = (params = {}) => {
   return useQuery({
     queryKey: ['products', params],
     queryFn: () => fetchProducts(params),
+    staleTime: 15 * 60 * 1000, // 15 minutes
+    gcTime: 60 * 60 * 1000,
   });
 };
 
@@ -36,7 +41,8 @@ export const useFeaturedProducts = () => {
   return useQuery({
     queryKey: ['products', 'featured'],
     queryFn: fetchFeaturedProducts,
-    staleTime: 10 * 60 * 1000,
+    staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
   });
 };
 
@@ -45,6 +51,8 @@ export const useProduct = (slug) => {
     queryKey: ['product', slug],
     queryFn: () => fetchProductBySlug(slug),
     enabled: Boolean(slug),
+    staleTime: 30 * 60 * 1000, // 30 minutes
+    gcTime: 60 * 60 * 1000,
   });
 };
 
@@ -53,6 +61,8 @@ export const useRelatedProducts = (slug) => {
     queryKey: ['products', 'related', slug],
     queryFn: () => fetchRelatedProducts(slug),
     enabled: Boolean(slug),
+    staleTime: 30 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
   });
 };
 
@@ -61,6 +71,7 @@ export const useSearchSuggestions = (q) => {
     queryKey: ['search', 'suggest', q],
     queryFn: () => fetchSearchSuggestions(q),
     enabled: Boolean(q && q.trim().length >= 2),
-    staleTime: 60 * 1000,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
   });
 };

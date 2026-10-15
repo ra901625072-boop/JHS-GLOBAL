@@ -2,10 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Plus, MapPin, Package } from 'lucide-react';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
+import { useSafeQueryClient, prefetchProductDetail } from '../../utils/prefetch';
 import Button from '../ui/Button';
 
 export const ProductCard = ({ product }) => {
+  const queryClient = useSafeQueryClient();
   const { addItem } = useQuoteBasket();
+
+  const handlePrefetch = () => {
+    prefetchProductDetail(product.slug, queryClient);
+  };
 
   const primaryImage = product.images?.[0]?.url;
   const moqText = product.moq ? `${product.moq.value} ${product.moq.unit}` : '1x 20ft FCL';
@@ -16,6 +22,8 @@ export const ProductCard = ({ product }) => {
 
   return (
     <article
+      onPointerEnter={handlePrefetch}
+      onFocus={handlePrefetch}
       className="group rounded-xl border border-surface-border bg-surface-card hover:border-accent-500/50 hover:shadow-card hover:-translate-y-1 transition-all duration-300 transform-gpu flex flex-col justify-between overflow-hidden"
       style={{ transitionTimingFunction: 'var(--ease-standard)' }}
     >

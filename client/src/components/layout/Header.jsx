@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingBag, ShieldCheck, ArrowRight, Clock } from 'lucide-react';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
+import { useSafeQueryClient, prefetchRouteData } from '../../utils/prefetch';
 import MobileMenuDrawer from './MobileMenuDrawer';
 
 export const Header = () => {
+  const queryClient = useSafeQueryClient();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [badgeBump, setBadgeBump] = useState(false);
@@ -119,6 +121,8 @@ export const Header = () => {
                 key={link.name}
                 to={link.path}
                 end={link.end}
+                onPointerEnter={() => prefetchRouteData(link.path, queryClient)}
+                onFocus={() => prefetchRouteData(link.path, queryClient)}
                 className={({ isActive }) =>
                   `relative py-2 text-sm xl:text-[15px] transition-colors duration-150 whitespace-nowrap inline-flex flex-col items-center group font-medium ${
                     isActive
