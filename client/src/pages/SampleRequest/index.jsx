@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
   CheckCircle2,
@@ -9,6 +10,11 @@ import {
   Plus,
   Trash2,
   Package,
+  Copy,
+  Check,
+  Mail,
+  Clock,
+  ArrowRight,
 } from 'lucide-react';
 import { useSubmitSample } from '../../features/inquiry/hooks';
 import { useCategories } from '../../features/products/hooks';
@@ -41,11 +47,23 @@ export const SampleRequestPage = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [submissionSuccess, setSubmissionSuccess] = useState(null);
+  const [submittedBuyer, setSubmittedBuyer] = useState({ name: '', email: '' });
+  const [copiedRef, setCopiedRef] = useState(false);
+
+  const handleCopyReference = () => {
+    if (submissionSuccess?.referenceNo) {
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(submissionSuccess.referenceNo);
+      }
+      setCopiedRef(true);
+      setTimeout(() => setCopiedRef(false), 2500);
+    }
+  };
 
   const { mutate: sendSample, isPending: isSubmitting, error: submitError } = useSubmitSample({
     onSuccess: (data) => {
       setSubmissionSuccess(data);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 120, behavior: 'smooth' });
     },
     onError: (err) => {
       if (err.details && Array.isArray(err.details)) {
@@ -102,6 +120,11 @@ export const SampleRequestPage = () => {
       return;
     }
 
+    setSubmittedBuyer({
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+    });
+
     sendSample({
       name: formData.name,
       email: formData.email,
@@ -148,26 +171,96 @@ export const SampleRequestPage = () => {
 
       <div className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {submissionSuccess ? (
-          <div className="p-8 sm:p-12 rounded-2xl border-2 border-primary-800/30 bg-white shadow-card text-center max-w-2xl mx-auto">
-            <div className="w-16 h-16 rounded-full bg-status-success/10 text-status-success mx-auto flex items-center justify-center mb-6">
-              <CheckCircle2 className="w-10 h-10" />
+          <div id="sample-success-card" className="p-8 sm:p-12 rounded-2xl border-2 border-emerald-600/30 bg-white shadow-card text-center max-w-2xl mx-auto animate-in fade-in duration-300 relative overflow-hidden">
+            <div className="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 mx-auto flex items-center justify-center mb-6 ring-8 ring-emerald-500/10 animate-in zoom-in-95 duration-300">
+              <CheckCircle2 className="w-10 h-10 text-emerald-600 stroke-[2.2]" />
             </div>
-            <span className="text-xs font-semibold uppercase tracking-widest text-accent-600 block mb-1">
-              Dispatch Ticket Created
-            </span>
-            <h2 className="font-serif text-3xl font-bold text-neutral-900">
-              Sample Request Registered
+
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-emerald-800 bg-emerald-100/70 border border-emerald-300 mb-3">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
+              <span>Sample Ticket Created</span>
+            </div>
+
+            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight">
+              Thank You{submittedBuyer.name ? `, ${submittedBuyer.name}` : ''}! We've Received Your Sample Request
             </h2>
-            <div className="my-6 inline-block bg-primary-50 border border-primary-200 px-6 py-3 rounded-lg">
-              <span className="text-xs text-neutral-500 block">Sample Reference Ticket:</span>
-              <span className="font-mono text-xl font-bold text-primary-800">
-                {submissionSuccess.referenceNo}
-              </span>
-            </div>
-            <p className="text-sm text-neutral-600 max-w-md mx-auto">
-              Our dispatch lab will prepare your sample kit with Certificate of Analysis (COA). You will receive air waybill (AWB) tracking via email upon courier handover.
+
+            <p className="mt-3 text-sm sm:text-base text-neutral-600 max-w-xl mx-auto leading-relaxed">
+              Thank you for requesting testing samples from JHS Global. Our quality control lab and dispatch team are preparing your lot sample kit with authentic Certificate of Analysis (COA).
             </p>
-            <div className="mt-8">
+
+            {/* Copyable Reference ID */}
+            <div className="my-6 inline-flex flex-col sm:flex-row items-center justify-between gap-3 bg-neutral-50 border border-neutral-200/90 rounded-xl px-5 py-3.5 max-w-md w-full mx-auto shadow-xs">
+              <div className="text-left">
+                <span className="text-[11px] font-semibold text-neutral-500 uppercase tracking-wider block">
+                  Sample Reference Ticket
+                </span>
+                <span className="font-mono text-lg sm:text-xl font-bold text-primary-900 select-all tracking-wide">
+                  {submissionSuccess.referenceNo}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleCopyReference}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium text-neutral-700 bg-white border border-neutral-300 hover:bg-neutral-100 active:scale-95 transition-all shadow-2xs cursor-pointer"
+                title="Copy Reference ID"
+              >
+                {copiedRef ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="text-emerald-700 font-semibold">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-neutral-500" />
+                    <span>Copy ID</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* 3-Point Details Card */}
+            <div className="p-5 sm:p-6 rounded-xl bg-surface-subtle border border-surface-border max-w-xl mx-auto text-left space-y-3.5 text-xs sm:text-sm text-neutral-600">
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-emerald-100/60 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-semibold text-neutral-900">Email Receipt & Dispatch Tracking</p>
+                  <p className="text-neutral-600 text-xs mt-0.5">
+                    Order confirmation dispatched to{' '}
+                    <strong className="text-neutral-800">{submittedBuyer.email || 'your email'}</strong>. You will receive express courier air waybill (AWB) tracking upon handover.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-accent-100/60 text-accent-800 flex items-center justify-center shrink-0 mt-0.5">
+                  <Clock className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-semibold text-neutral-900">Dispatch Window: 48–72 Hours</p>
+                  <p className="text-neutral-600 text-xs mt-0.5">
+                    Pre-shipment analytical lots are drawn, batch-tested, vacuum sealed in aluminum foil pouches, and released for international courier transit.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-lg bg-primary-100/60 text-primary-800 flex items-center justify-center shrink-0 mt-0.5">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="font-semibold text-neutral-900">Authentic COA Included</p>
+                  <p className="text-neutral-600 text-xs mt-0.5">
+                    Full lot Certificate of Analysis and technical specification sheets accompany each dispatch pouch.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <Button
                 variant="outline"
                 size="md"
@@ -175,6 +268,14 @@ export const SampleRequestPage = () => {
               >
                 Order Additional Commodities
               </Button>
+
+              <Link
+                to="/products"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-primary-900 hover:text-accent-700 transition-colors"
+              >
+                <span>Browse Product Catalog</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         ) : (

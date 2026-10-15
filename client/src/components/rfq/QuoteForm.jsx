@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   CheckCircle2,
   AlertCircle,
@@ -14,6 +15,10 @@ import {
   ChevronUp,
   Loader2,
   Wand2,
+  Copy,
+  Check,
+  Mail,
+  ArrowRight,
 } from 'lucide-react';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
 import { useSubmitRfq } from '../../features/inquiry/hooks';
@@ -55,12 +60,19 @@ export const QuoteForm = () => {
 
   const [formErrors, setFormErrors] = useState({});
   const [submissionSuccess, setSubmissionSuccess] = useState(null);
+  const [submittedBuyer, setSubmittedBuyer] = useState({ name: '', email: '' });
+  const [copiedRef, setCopiedRef] = useState(false);
 
   const { mutate: sendRfq, isPending: isSubmitting, error: submitError } = useSubmitRfq({
     onSuccess: (data) => {
       setSubmissionSuccess(data);
       clearBasket();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const formCard = document.getElementById('rfq-form-card') || document.querySelector('.order-1');
+      if (formCard) {
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 120, behavior: 'smooth' });
+      }
     },
     onError: (err) => {
       if (err.details && Array.isArray(err.details)) {
@@ -188,6 +200,11 @@ export const QuoteForm = () => {
       return;
     }
 
+    setSubmittedBuyer({
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+    });
+
     sendRfq({
       ...formData,
       items: items.map((i) => ({
@@ -200,78 +217,119 @@ export const QuoteForm = () => {
     });
   };
 
+  const handleCopyReference = () => {
+    if (submissionSuccess?.referenceNo) {
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(submissionSuccess.referenceNo);
+      }
+      setCopiedRef(true);
+      setTimeout(() => setCopiedRef(false), 2500);
+    }
+  };
+
   const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '+919876543210';
 
   // Success State View
   if (submissionSuccess) {
     return (
-      <div className="p-8 sm:p-12 rounded-2xl border-2 border-primary-800/30 bg-white shadow-card text-center animate-in fade-in duration-300">
-        <div className="w-20 h-20 rounded-full bg-status-success/10 text-status-success mx-auto flex items-center justify-center mb-6 ring-8 ring-status-success/5 animate-in zoom-in-95 duration-300">
-          <svg
-            className="w-10 h-10 stroke-current text-status-success"
-            viewBox="0 0 52 52"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="26"
-              cy="26"
-              r="24"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              className="opacity-20"
-            />
-            <path
-              d="M15 27L22.5 34.5L37 19"
-              stroke="currentColor"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{
-                strokeDasharray: 40,
-                strokeDashoffset: 40,
-                animation: 'checkmark-draw 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards',
-              }}
-            />
-          </svg>
+      <div id="rfq-success-card" className="p-8 sm:p-12 rounded-2xl border-2 border-emerald-600/30 bg-white shadow-card text-center animate-in fade-in duration-300 relative overflow-hidden">
+        {/* Animated checkmark icon */}
+        <div className="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 mx-auto flex items-center justify-center mb-6 ring-8 ring-emerald-500/10 animate-in zoom-in-95 duration-300">
+          <CheckCircle2 className="w-10 h-10 text-emerald-600 stroke-[2.2]" />
         </div>
 
-        <span className="text-xs font-semibold uppercase tracking-widest text-accent-600 block mb-1">
-          Submission Acknowledged
-        </span>
-        <h2 className="font-serif text-3xl font-bold text-neutral-900">
-          Commercial RFQ Successfully Registered
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-emerald-800 bg-emerald-100/70 border border-emerald-300 mb-3">
+          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
+          <span>Inquiry Successfully Received</span>
+        </div>
+
+        <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight">
+          Thank You{submittedBuyer.name ? `, ${submittedBuyer.name}` : ''}! We've Received Your Quote Request
         </h2>
 
-        <div className="my-6 inline-block bg-primary-50 border border-primary-200 px-6 py-3 rounded-lg">
-          <span className="text-xs text-neutral-500 block">Your Official Inquiry Reference:</span>
-          <span className="font-mono text-xl font-bold text-primary-800">
-            {submissionSuccess.referenceNo}
-          </span>
-        </div>
-
-        <p className="text-sm text-neutral-600 max-w-xl mx-auto leading-relaxed">
-          An automated receipt has been dispatched to your provided email. Our export trade desk and logistics directors have commenced review of your container specifications.
+        <p className="mt-3 text-sm sm:text-base text-neutral-600 max-w-xl mx-auto leading-relaxed">
+          Thank you for your interest in partnering with JHS Global. Our international trade desk has received your commodity specifications and is preparing your customized proforma quotation.
         </p>
 
-        <div className="mt-8 p-4 rounded-xl bg-surface-subtle border border-surface-border max-w-md mx-auto text-xs text-neutral-600 space-y-2">
-          <div className="flex items-center justify-center gap-2 text-primary-800 font-semibold">
-            <Clock className="w-4 h-4 text-accent-500" />
-            <span>Binding Quote Guarantee: Within 48 Business Hours</span>
+        {/* Copyable Reference ID */}
+        <div className="my-6 inline-flex flex-col sm:flex-row items-center justify-between gap-3 bg-neutral-50 border border-neutral-200/90 rounded-xl px-5 py-3.5 max-w-md w-full mx-auto shadow-xs">
+          <div className="text-left">
+            <span className="text-[11px] font-semibold text-neutral-500 uppercase tracking-wider block">
+              Official RFQ Reference ID
+            </span>
+            <span className="font-mono text-lg sm:text-xl font-bold text-primary-900 select-all tracking-wide">
+              {submissionSuccess.referenceNo}
+            </span>
           </div>
-          <p>
-            Includes proforma invoice terms, Incoterms 2020 freight calculations, and preliminary COA parameters.
-          </p>
+          <button
+            type="button"
+            onClick={handleCopyReference}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium text-neutral-700 bg-white border border-neutral-300 hover:bg-neutral-100 active:scale-95 transition-all shadow-2xs cursor-pointer"
+            title="Copy Reference ID"
+          >
+            {copiedRef ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="text-emerald-700 font-semibold">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-3.5 h-3.5 text-neutral-500" />
+                <span>Copy ID</span>
+              </>
+            )}
+          </button>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+        {/* 3-Point Buyer Next Steps Card */}
+        <div className="p-5 sm:p-6 rounded-xl bg-surface-subtle border border-surface-border max-w-xl mx-auto text-left space-y-3.5 text-xs sm:text-sm text-neutral-600">
+          <div className="flex items-start gap-3">
+            <div className="w-7 h-7 rounded-lg bg-emerald-100/60 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+              <Mail className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-semibold text-neutral-900">Email Confirmation Dispatched</p>
+              <p className="text-neutral-600 text-xs mt-0.5">
+                An automated receipt with your inquiry summary has been dispatched to{' '}
+                <strong className="text-neutral-800">{submittedBuyer.email || 'your email'}</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <div className="w-7 h-7 rounded-lg bg-accent-100/60 text-accent-800 flex items-center justify-center shrink-0 mt-0.5">
+              <Clock className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-semibold text-neutral-900">Guaranteed 48-Hour Turnaround</p>
+              <p className="text-neutral-600 text-xs mt-0.5">
+                Our trade desk calculates Incoterms 2020 CIF/FOB freight, container stuffing plans, and certificate of analysis (COA) tolerances within 48 business hours.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <div className="w-7 h-7 rounded-lg bg-primary-100/60 text-primary-800 flex items-center justify-center shrink-0 mt-0.5">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="font-semibold text-neutral-900">Direct Trade Officer Assignment</p>
+              <p className="text-neutral-600 text-xs mt-0.5">
+                A dedicated international trade officer has been assigned to coordinate your order and lab samples.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <a
             href={`https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-              `Hello Export Desk, I have just submitted RFQ reference: ${submissionSuccess.referenceNo}. Please verify.`
+              `Hello JHS GLOBAL team, I have just submitted RFQ reference: ${submissionSuccess.referenceNo}. Please verify.`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 rounded-md bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs font-semibold inline-flex items-center gap-2 shadow-sm min-h-[44px]"
+            className="px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] active:scale-[0.98] text-white text-xs sm:text-sm font-semibold inline-flex items-center gap-2 shadow-sm min-h-[44px] transition-all"
           >
             <MessageCircle className="w-4 h-4" />
             <span>Follow up via WhatsApp</span>
@@ -306,6 +364,14 @@ export const QuoteForm = () => {
           >
             Submit Another RFQ
           </Button>
+
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-primary-900 hover:text-accent-700 transition-colors"
+          >
+            <span>Explore More Products</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     );
