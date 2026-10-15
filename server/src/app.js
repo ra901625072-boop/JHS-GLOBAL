@@ -138,13 +138,31 @@ export const createApp = () => {
   // Serve Frontend Static Files in Production / when client/dist exists
   const clientDist = path.resolve(__dirname, '../../client/dist');
   if (fs.existsSync(clientDist)) {
-    app.use(express.static(clientDist));
+    app.use(
+      express.static(clientDist, {
+        maxAge: '1y',
+        immutable: true,
+        setHeaders: (res, filePath) => {
+          // HTML files and service worker must revalidate immediately
+          if (filePath.endsWith('.html') || filePath.endsWith('sw.js')) {
+            res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+          } else if (
+            filePath.includes(path.sep + 'assets' + path.sep) ||
+            filePath.includes(path.sep + 'fonts' + path.sep) ||
+            filePath.includes(path.sep + 'images' + path.sep)
+          ) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+          }
+        },
+      })
+    );
 
     // Client-side routing fallback for non-API routes
     app.get('*', (req, res, next) => {
       if (req.originalUrl.startsWith('/api/')) {
         return next();
       }
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
       res.sendFile(path.join(clientDist, 'index.html'));
     });
   }
