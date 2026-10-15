@@ -398,7 +398,7 @@ export const QuoteForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form noValidate onSubmit={handleSubmit} className="space-y-8">
       {/* Top Banner & Error Alert */}
       {submitError && (
         <div className="p-4 rounded-lg bg-red-50 border border-status-error/30 text-xs text-status-error flex items-start gap-2.5">
@@ -923,7 +923,12 @@ export const QuoteForm = () => {
 
         <div>
           <label htmlFor="rfq-message" className="block text-xs font-semibold text-neutral-700 mb-1">
-            Chemical Specs, Moisture Limits, Packaging Details, or Special Certifications:
+            <span>Chemical Specs, Moisture Limits, Packaging Details, or Special Certifications:</span>
+            {items.length === 0 && (
+              <span className="text-accent-800 font-medium ml-1.5 text-[11px]">
+                *(Required if no commodities are added in Section 2)
+              </span>
+            )}
           </label>
           <textarea
             id="rfq-message"
@@ -932,10 +937,52 @@ export const QuoteForm = () => {
             value={formData.message}
             onChange={handleInputChange}
             placeholder="e.g. Require minimum 3.5% Curcumin in Turmeric, packing in 25kg vacuum-sealed foil liner bags. Please quote CIF Hamburg with phytosanitary certificate."
-            className="w-full p-3 text-xs sm:text-sm rounded-lg border border-surface-border bg-surface-canvas focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-800"
+            className={`w-full p-3 text-xs sm:text-sm rounded-lg border bg-surface-canvas focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-800 ${
+              formErrors.items && items.length === 0
+                ? 'border-status-error ring-1 ring-status-error'
+                : 'border-surface-border'
+            }`}
           />
+          {formErrors.items && items.length === 0 && (
+            <span id="rfq-message-error" role="alert" className="text-[11px] text-status-error mt-1 block font-medium">
+              {formErrors.items}
+            </span>
+          )}
         </div>
       </div>
+
+      {/* Prominent Error Alert Above Submit Button */}
+      {(submitError || Object.keys(formErrors).length > 0) && (
+        <div
+          role="alert"
+          className="p-4 rounded-xl bg-red-50 border-2 border-status-error/40 text-xs text-status-error space-y-2 animate-in fade-in"
+        >
+          <div className="flex items-center gap-2 font-bold text-sm text-status-error">
+            <AlertCircle className="w-5 h-5 shrink-0" />
+            <span>
+              {submitError
+                ? 'Submission failed. Please check the error below:'
+                : 'Please complete the required details before submitting:'}
+            </span>
+          </div>
+
+          {submitError && (
+            <p className="text-neutral-800 font-medium">
+              {submitError.message || 'Unable to submit quotation request. Please check your internet connection and try again.'}
+            </p>
+          )}
+
+          {Object.keys(formErrors).length > 0 && (
+            <ul className="list-disc list-inside space-y-1 text-neutral-800 font-medium pl-1">
+              {formErrors.name && <li>Contact Name: {formErrors.name}</li>}
+              {formErrors.email && <li>Business Email: {formErrors.email}</li>}
+              {formErrors.company && <li>Company Name: {formErrors.company}</li>}
+              {formErrors.country && <li>Destination Country: {formErrors.country}</li>}
+              {formErrors.items && <li>Commodity / Requirements: {formErrors.items}</li>}
+            </ul>
+          )}
+        </div>
+      )}
 
       {/* Trust Commitment & Submit Button */}
       <div className="pt-4 border-t border-surface-border flex flex-col sm:flex-row items-center justify-between gap-4">
