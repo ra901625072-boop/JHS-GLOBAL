@@ -186,17 +186,37 @@ export const QuoteForm = () => {
 
     // Client-side quick check
     const errors = {};
-    if (!formData.name.trim()) errors.name = 'Contact name is required';
-    if (!formData.email.trim()) errors.email = 'Business email address is required';
-    if (!formData.company.trim()) errors.company = 'Company name is required';
-    if (!formData.country.trim()) errors.country = 'Destination country is required';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      errors.name = 'Contact name must be at least 2 characters';
+    }
+    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
+      errors.email = 'Please enter a valid business email address';
+    }
+    if (!formData.company.trim() || formData.company.trim().length < 2) {
+      errors.company = 'Company name must be at least 2 characters';
+    }
+    if (!formData.country.trim() || formData.country.trim().length < 2) {
+      errors.country = 'Destination country is required (min 2 characters)';
+    }
 
     if (items.length === 0 && !formData.message.trim()) {
-      errors.items = 'Please include at least one commodity in the quote or write your specifications in the message.';
+      errors.items = 'Please select at least one commodity from the basket or provide specifications in the message.';
     }
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
+      const firstErrorKey = Object.keys(errors)[0];
+      const targetElement =
+        document.getElementById(firstErrorKey === 'items' ? 'items-section' : `buyer-${firstErrorKey}`) ||
+        document.querySelector(`[name="${firstErrorKey}"]`);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (typeof targetElement.focus === 'function') {
+          targetElement.focus();
+        }
+      }
       return;
     }
 
@@ -227,7 +247,7 @@ export const QuoteForm = () => {
     }
   };
 
-  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '+919876543210';
+  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '+917202907720';
 
   // Success State View
   if (submissionSuccess) {
@@ -524,6 +544,8 @@ export const QuoteForm = () => {
               name="name"
               autoComplete="name"
               required
+              aria-invalid={formErrors.name ? 'true' : 'false'}
+              aria-describedby={formErrors.name ? 'buyer-name-error' : undefined}
               value={formData.name}
               onChange={handleInputChange}
               placeholder="e.g. Michael Vance"
@@ -531,7 +553,11 @@ export const QuoteForm = () => {
                 formErrors.name ? 'border-status-error ring-1 ring-status-error' : 'border-surface-border'
               }`}
             />
-            {formErrors.name && <span className="text-[11px] text-status-error mt-1 block">{formErrors.name}</span>}
+            {formErrors.name && (
+              <span id="buyer-name-error" role="alert" className="text-[11px] text-status-error mt-1 block">
+                {formErrors.name}
+              </span>
+            )}
           </div>
 
           <div>
@@ -545,6 +571,8 @@ export const QuoteForm = () => {
               inputMode="email"
               autoComplete="email"
               required
+              aria-invalid={formErrors.email ? 'true' : 'false'}
+              aria-describedby={formErrors.email ? 'buyer-email-error' : undefined}
               value={formData.email}
               onChange={handleInputChange}
               placeholder="e.g. procurement@company.com"
@@ -552,7 +580,11 @@ export const QuoteForm = () => {
                 formErrors.email ? 'border-status-error ring-1 ring-status-error' : 'border-surface-border'
               }`}
             />
-            {formErrors.email && <span className="text-[11px] text-status-error mt-1 block">{formErrors.email}</span>}
+            {formErrors.email && (
+              <span id="buyer-email-error" role="alert" className="text-[11px] text-status-error mt-1 block">
+                {formErrors.email}
+              </span>
+            )}
           </div>
 
           <div>
@@ -565,6 +597,8 @@ export const QuoteForm = () => {
               name="company"
               autoComplete="organization"
               required
+              aria-invalid={formErrors.company ? 'true' : 'false'}
+              aria-describedby={formErrors.company ? 'buyer-company-error' : undefined}
               value={formData.company}
               onChange={handleInputChange}
               placeholder="e.g. EuroFoods Import GmbH"
@@ -572,7 +606,11 @@ export const QuoteForm = () => {
                 formErrors.company ? 'border-status-error ring-1 ring-status-error' : 'border-surface-border'
               }`}
             />
-            {formErrors.company && <span className="text-[11px] text-status-error mt-1 block">{formErrors.company}</span>}
+            {formErrors.company && (
+              <span id="buyer-company-error" role="alert" className="text-[11px] text-status-error mt-1 block">
+                {formErrors.company}
+              </span>
+            )}
           </div>
 
           <div>
@@ -637,6 +675,8 @@ export const QuoteForm = () => {
               name="country"
               autoComplete="country-name"
               required
+              aria-invalid={formErrors.country ? 'true' : 'false'}
+              aria-describedby={formErrors.country ? 'buyer-country-error' : undefined}
               value={formData.country}
               onChange={handleInputChange}
               placeholder="e.g. Germany, UAE, USA, Japan"
@@ -644,7 +684,11 @@ export const QuoteForm = () => {
                 formErrors.country ? 'border-status-error ring-1 ring-status-error' : 'border-surface-border'
               }`}
             />
-            {formErrors.country && <span className="text-[11px] text-status-error mt-1 block">{formErrors.country}</span>}
+            {formErrors.country && (
+              <span id="buyer-country-error" role="alert" className="text-[11px] text-status-error mt-1 block">
+                {formErrors.country}
+              </span>
+            )}
           </div>
 
           <div>
@@ -666,7 +710,7 @@ export const QuoteForm = () => {
       </div>
 
       {/* Section 2: Commodity Specifications Matrix */}
-      <div className="space-y-4">
+      <div id="items-section" className="space-y-4">
         <div className="border-b border-surface-border pb-2 flex items-center justify-between">
           <h3 className="font-serif text-lg font-bold text-neutral-900">
             2. Selected Commodities for Quotation
@@ -675,7 +719,7 @@ export const QuoteForm = () => {
         </div>
 
         {formErrors.items && (
-          <div className="p-3 bg-red-50 text-status-error text-xs rounded-lg border border-status-error/30">
+          <div id="items-error" role="alert" className="p-3 bg-red-50 text-status-error text-xs rounded-lg border border-status-error/30">
             {formErrors.items}
           </div>
         )}

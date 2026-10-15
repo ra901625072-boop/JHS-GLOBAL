@@ -201,7 +201,7 @@ export const ContactPage = () => {
           </div>
 
           {/* Right Column: Full Functional RFQ Form (First on Mobile) */}
-          <div className="order-1 lg:order-2 lg:col-span-8 p-6 sm:p-10 rounded-2xl border border-surface-border bg-white shadow-card">
+          <div id="rfq-form-card" className="order-1 lg:order-2 lg:col-span-8 p-6 sm:p-10 rounded-2xl border border-surface-border bg-white shadow-card scroll-mt-24">
             <QuoteForm />
           </div>
         </Reveal>
