@@ -75,6 +75,16 @@ export const BlogPost = sequelize.define(
     tableName: 'blog_posts',
     timestamps: true,
     underscored: true,
+    indexes: [
+      {
+        fields: ['slug'],
+        unique: true,
+      },
+      {
+        name: 'idx_blog_posts_status_published_at',
+        fields: ['status', 'published_at'],
+      },
+    ],
     hooks: {
       beforeValidate: (blog) => {
         if (blog.title && !blog.slug) {

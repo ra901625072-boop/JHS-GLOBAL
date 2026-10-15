@@ -68,6 +68,12 @@ export const Certificate = sequelize.define(
     tableName: 'certificates',
     timestamps: true,
     underscored: true,
+    indexes: [
+      {
+        name: 'idx_certificates_is_active_order',
+        fields: ['is_active', 'order'],
+      },
+    ],
   }
 );
 

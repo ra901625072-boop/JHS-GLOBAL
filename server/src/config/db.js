@@ -59,6 +59,24 @@ export const connectDB = async () => {
       }
       await sequelize.sync();
       logger.info('Database tables synced');
+
+      // Idempotently add high-performance database indexes
+      try {
+        await sequelize.query(`
+          CREATE INDEX IF NOT EXISTS idx_products_is_active_category_id ON products (is_active, category_id);
+          CREATE INDEX IF NOT EXISTS idx_products_is_active_sub_category_id ON products (is_active, sub_category_id);
+          CREATE INDEX IF NOT EXISTS idx_products_is_active_is_featured ON products (is_active, is_featured);
+          CREATE INDEX IF NOT EXISTS idx_products_is_active_created_at ON products (is_active, created_at DESC);
+          CREATE INDEX IF NOT EXISTS idx_products_hs_code ON products (hs_code);
+          CREATE INDEX IF NOT EXISTS idx_categories_is_active_parent_id_order ON categories (is_active, parent_id, "order");
+          CREATE INDEX IF NOT EXISTS idx_inquiries_status ON inquiries (status);
+          CREATE INDEX IF NOT EXISTS idx_inquiries_created_at ON inquiries (created_at DESC);
+          CREATE INDEX IF NOT EXISTS idx_blog_posts_status_published_at ON blog_posts (status, published_at DESC);
+          CREATE INDEX IF NOT EXISTS idx_certificates_is_active_order ON certificates (is_active, "order");
+        `);
+      } catch (idxErr) {
+        logger.debug(`Index initialization note: ${idxErr.message}`);
+      }
     }
 
     return sequelize;

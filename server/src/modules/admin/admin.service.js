@@ -10,9 +10,16 @@ import Order from '../order/order.model.js';
 import Task from '../task/task.model.js';
 import Customer from '../customer/customer.model.js';
 import emailService from '../../services/email.service.js';
+import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
 
 export const getDashboardMetrics = async () => {
+  const DASHBOARD_CACHE_KEY = 'admin:dashboard_metrics';
+  const cachedMetrics = await cacheService.get(DASHBOARD_CACHE_KEY);
+  if (cachedMetrics) {
+    return cachedMetrics;
+  }
+
   const [
     totalInquiries,
     newInquiries,
@@ -99,7 +106,7 @@ export const getDashboardMetrics = async () => {
   const totalRevenue = revenueSum || 0;
   const conversionRate = totalInquiries > 0 ? Number(((totalOrders / totalInquiries) * 100).toFixed(1)) : 0;
 
-  return {
+  const metrics = {
     inquiries: {
       total: totalInquiries,
       new: newInquiries,
@@ -129,6 +136,9 @@ export const getDashboardMetrics = async () => {
       total: totalSamples,
     },
   };
+
+  cacheService.set(DASHBOARD_CACHE_KEY, metrics, 30).catch(() => {});
+  return metrics;
 };
 
 export const getAdminInquiries = async ({
@@ -335,6 +345,8 @@ export const createAdminProduct = async (productData) => {
     slug,
   });
 
+  cacheService.del('http:/api/v1/products*');
+  cacheService.del('admin:dashboard_metrics');
   logger.info(`Product created by admin: ${product.name} [${product.slug}]`);
   return product;
 };
@@ -348,6 +360,8 @@ export const updateAdminProduct = async (id, productData) => {
   }
 
   await product.update(productData);
+  cacheService.del('http:/api/v1/products*');
+  cacheService.del('admin:dashboard_metrics');
   logger.info(`Product updated by admin: ${product.name} [${product.slug}]`);
   return product;
 };
@@ -361,6 +375,8 @@ export const softDeleteAdminProduct = async (id) => {
   }
 
   await product.update({ isActive: false });
+  cacheService.del('http:/api/v1/products*');
+  cacheService.del('admin:dashboard_metrics');
   logger.info(`Product soft-deleted by admin: ${product.name}`);
   return product;
 };

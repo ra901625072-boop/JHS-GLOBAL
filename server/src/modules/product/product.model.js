@@ -172,6 +172,32 @@ export const Product = sequelize.define(
     tableName: 'products',
     timestamps: true,
     underscored: true,
+    indexes: [
+      {
+        fields: ['slug'],
+        unique: true,
+      },
+      {
+        name: 'idx_products_is_active_category_id',
+        fields: ['is_active', 'category_id'],
+      },
+      {
+        name: 'idx_products_is_active_sub_category_id',
+        fields: ['is_active', 'sub_category_id'],
+      },
+      {
+        name: 'idx_products_is_active_is_featured',
+        fields: ['is_active', 'is_featured'],
+      },
+      {
+        name: 'idx_products_is_active_created_at',
+        fields: ['is_active', 'created_at'],
+      },
+      {
+        name: 'idx_products_hs_code',
+        fields: ['hs_code'],
+      },
+    ],
     hooks: {
       beforeValidate: (prod) => {
         if (prod.name && !prod.slug) {

@@ -5,6 +5,7 @@ import {
   queryCompanyFactSchema,
 } from './companyFact.validation.js';
 import { successResponse, errorResponse } from '../../utils/apiResponse.js';
+import cacheService from '../../services/cache.service.js';
 
 export const getPublicFacts = async (req, res, next) => {
   try {
@@ -48,6 +49,7 @@ export const createFact = async (req, res, next) => {
 
     const userId = req.user?.id || null;
     const fact = await companyFactService.createFact(data, userId);
+    cacheService.del('http:/api/v1/company-facts*');
     return successResponse(res, fact, 201);
   } catch (error) {
     next(error);
@@ -72,6 +74,7 @@ export const updateFact = async (req, res, next) => {
       return errorResponse(res, 'Company fact not found', 404);
     }
 
+    cacheService.del('http:/api/v1/company-facts*');
     return successResponse(res, updated, 200);
   } catch (error) {
     next(error);
@@ -85,6 +88,7 @@ export const deleteFact = async (req, res, next) => {
     if (!deleted) {
       return errorResponse(res, 'Company fact not found', 404);
     }
+    cacheService.del('http:/api/v1/company-facts*');
     return successResponse(res, { message: 'Company fact deleted successfully' }, 200);
   } catch (error) {
     next(error);

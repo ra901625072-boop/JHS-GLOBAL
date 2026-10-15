@@ -12,8 +12,18 @@ export const inquiryService = {
    */
   async generateReferenceNo() {
     const year = new Date().getFullYear();
-    const count = await Inquiry.count();
-    const sequence = String(count + 1).padStart(6, '0');
+    const last = await Inquiry.findOne({
+      attributes: ['referenceNo'],
+      order: [['id', 'DESC']],
+    });
+    let seq = 1;
+    if (last && last.referenceNo) {
+      const parts = last.referenceNo.split('-');
+      if (parts.length === 3 && !isNaN(parseInt(parts[2], 10))) {
+        seq = parseInt(parts[2], 10) + 1;
+      }
+    }
+    const sequence = String(seq).padStart(6, '0');
     return `RFQ-${year}-${sequence}`;
   },
 
@@ -72,30 +82,32 @@ export const inquiryService = {
 
     logger.info(`Inquiry created: ${savedInquiry.referenceNo} for ${savedInquiry.buyer.company}`);
 
-    // 4. Non-blocking asynchronous notification dispatch and AI lead scoring
+    // 4. Non-blocking asynchronous notification dispatch, customer upsert, and AI lead scoring
     if (!isSpam) {
-      setImmediate(() => {
-        upsertCustomerFromInquiry(savedInquiry).catch((err) =>
-          logger.warn(`Background customer upsert failed: ${err.message}`)
-        );
-        processInquiryAiJob(savedInquiry.id).catch((err) =>
-          logger.warn(`Background AI lead scoring failed: ${err.message}`)
-        );
-      });
+      setImmediate(async () => {
+        try {
+          upsertCustomerFromInquiry(savedInquiry).catch((err) =>
+            logger.warn(`Background customer upsert failed: ${err.message}`)
+          );
+          processInquiryAiJob(savedInquiry.id).catch((err) =>
+            logger.warn(`Background AI lead scoring failed: ${err.message}`)
+          );
 
-      Promise.allSettled([
-        emailService.sendRfqBuyerAcknowledgment(savedInquiry),
-        emailService.sendRfqSalesDeskAlert(savedInquiry),
-      ])
-        .then(([buyerRes, teamRes]) => {
-          savedInquiry.update({
+          const [buyerRes, teamRes] = await Promise.allSettled([
+            emailService.sendRfqBuyerAcknowledgment(savedInquiry),
+            emailService.sendRfqSalesDeskAlert(savedInquiry),
+          ]);
+
+          await savedInquiry.update({
             emailSent: {
-              buyer: buyerRes.status === 'fulfilled' && buyerRes.value.success,
-              team: teamRes.status === 'fulfilled' && teamRes.value.success,
+              buyer: buyerRes.status === 'fulfilled' && buyerRes.value?.success,
+              team: teamRes.status === 'fulfilled' && teamRes.value?.success,
             },
           }).catch((err) => logger.warn(`Failed to update emailSent flag: ${err.message}`));
-        })
-        .catch((err) => logger.error(`Email dispatch error: ${err.message}`));
+        } catch (err) {
+          logger.error(`Background inquiry tasks error: ${err.message}`);
+        }
+      });
     }
 
     return savedInquiry;

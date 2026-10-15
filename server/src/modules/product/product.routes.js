@@ -19,7 +19,7 @@ const router = Router();
 // Public routes
 router.get('/', validate(getProductsQuerySchema), cacheResponse(300), listProducts);
 router.get('/featured', cacheResponse(600), getFeaturedProducts);
-router.get('/suggest', validate(searchSuggestSchema), searchSuggest);
+router.get('/suggest', validate(searchSuggestSchema), cacheResponse(60), searchSuggest);
 router.get('/:slug', validate(getProductBySlugSchema), cacheResponse(600), getProductBySlug);
 router.get('/:slug/related', validate(getProductBySlugSchema), cacheResponse(600), getRelatedProducts);
 

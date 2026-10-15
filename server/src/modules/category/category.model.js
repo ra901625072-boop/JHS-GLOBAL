@@ -78,6 +78,16 @@ export const Category = sequelize.define(
     tableName: 'categories',
     timestamps: true,
     underscored: true,
+    indexes: [
+      {
+        fields: ['slug'],
+        unique: true,
+      },
+      {
+        name: 'idx_categories_is_active_parent_id_order',
+        fields: ['is_active', 'parent_id', 'order'],
+      },
+    ],
     hooks: {
       beforeValidate: (cat) => {
         if (cat.name && !cat.slug) {

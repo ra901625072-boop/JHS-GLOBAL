@@ -202,8 +202,10 @@ export const productService = {
 
     if (!product) return null;
 
-    // Increment view count
-    await product.increment('viewCount', { by: 1 });
+    // Asynchronously increment view count without blocking read response
+    setImmediate(() => {
+      product.increment('viewCount', { by: 1 }).catch(() => {});
+    });
 
     const plain = product.toJSON();
 

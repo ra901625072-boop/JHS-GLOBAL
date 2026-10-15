@@ -70,6 +70,7 @@ export const getSitemap = async (req, res, next) => {
     xml += `</urlset>`;
 
     res.header('Content-Type', 'application/xml');
+    res.header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=172800');
     return res.status(200).send(xml);
   } catch (error) {
     next(error);
@@ -86,5 +87,6 @@ Disallow: /api/
 Sitemap: ${clientUrl}/sitemap.xml
 `;
   res.header('Content-Type', 'text/plain');
+  res.header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=172800');
   return res.status(200).send(content);
 };

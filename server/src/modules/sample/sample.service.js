@@ -4,8 +4,18 @@ import logger from '../../utils/logger.js';
 export const sampleService = {
   async generateReferenceNo() {
     const year = new Date().getFullYear();
-    const count = await SampleRequest.count();
-    const sequence = String(count + 1).padStart(6, '0');
+    const last = await SampleRequest.findOne({
+      attributes: ['referenceNo'],
+      order: [['id', 'DESC']],
+    });
+    let seq = 1;
+    if (last && last.referenceNo) {
+      const parts = last.referenceNo.split('-');
+      if (parts.length === 3 && !isNaN(parseInt(parts[2], 10))) {
+        seq = parseInt(parts[2], 10) + 1;
+      }
+    }
+    const sequence = String(seq).padStart(6, '0');
     return `SMP-${year}-${sequence}`;
   },
 

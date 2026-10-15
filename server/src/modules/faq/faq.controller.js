@@ -1,6 +1,7 @@
 import faqService from './faq.service.js';
 import { successResponse, errorResponse } from '../../utils/apiResponse.js';
 import asyncHandler from '../../utils/asyncHandler.js';
+import cacheService from '../../services/cache.service.js';
 
 export const listFaqs = asyncHandler(async (req, res) => {
   const faqs = await faqService.listActiveFaqs({
@@ -25,6 +26,7 @@ export const adminListFaqs = asyncHandler(async (req, res) => {
 
 export const adminCreateFaq = asyncHandler(async (req, res) => {
   const faq = await faqService.createFaq(req.body);
+  cacheService.del('http:/api/v1/faqs*');
   return successResponse(res, faq, 201);
 });
 
@@ -33,6 +35,7 @@ export const adminUpdateFaq = asyncHandler(async (req, res) => {
   if (!faq) {
     return errorResponse(res, 'FAQ item not found', 404, 'NOT_FOUND');
   }
+  cacheService.del('http:/api/v1/faqs*');
   return successResponse(res, faq);
 });
 
@@ -41,5 +44,6 @@ export const adminDeleteFaq = asyncHandler(async (req, res) => {
   if (!success) {
     return errorResponse(res, 'FAQ item not found', 404, 'NOT_FOUND');
   }
+  cacheService.del('http:/api/v1/faqs*');
   return successResponse(res, { deleted: true });
 });

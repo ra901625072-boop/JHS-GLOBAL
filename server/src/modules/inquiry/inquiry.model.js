@@ -131,12 +131,40 @@ export const Inquiry = sequelize.define(
     tableName: 'inquiries',
     timestamps: true,
     underscored: true,
+    indexes: [
+      {
+        fields: ['reference_no'],
+        unique: true,
+      },
+      {
+        name: 'idx_inquiries_status',
+        fields: ['status'],
+      },
+      {
+        name: 'idx_inquiries_priority',
+        fields: ['priority'],
+      },
+      {
+        name: 'idx_inquiries_created_at',
+        fields: ['created_at'],
+      },
+    ],
     hooks: {
       beforeValidate: async (inquiry) => {
         if (!inquiry.referenceNo) {
           const year = new Date().getFullYear();
-          const count = await Inquiry.count();
-          inquiry.referenceNo = `RFQ-${year}-${String(count + 1).padStart(6, '0')}`;
+          const last = await Inquiry.findOne({
+            attributes: ['referenceNo'],
+            order: [['id', 'DESC']],
+          });
+          let seq = 1;
+          if (last && last.referenceNo) {
+            const parts = last.referenceNo.split('-');
+            if (parts.length === 3 && !isNaN(parseInt(parts[2], 10))) {
+              seq = parseInt(parts[2], 10) + 1;
+            }
+          }
+          inquiry.referenceNo = `RFQ-${year}-${String(seq).padStart(6, '0')}`;
         }
       },
     },
