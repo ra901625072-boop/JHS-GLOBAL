@@ -17,11 +17,14 @@ import {
   Clock,
   Plus,
   ChevronRight,
-  Anchor,
-  Globe2,
-  Search,
-  Sparkles,
-  Command,
+  FlaskConical,
+  Layers,
+  Award,
+  BookOpen,
+  HelpCircle,
+  UserCheck,
+  History,
+  Settings,
 } from 'lucide-react';
 import { useAdminAuth } from '../context/AuthContext';
 import AdminCommandPalette from './AdminCommandPalette';
@@ -36,7 +39,7 @@ export const AdminLayout = () => {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [showPortDetails, setShowPortDetails] = useState(false);
 
-  const brandName = import.meta.env.VITE_BRAND_NAME || 'JHS GLOBAL';
+  const brandName = 'JHS GLOBAL';
 
   // Global keyboard shortcut for ⌘K / Ctrl+K
   useEffect(() => {
@@ -75,77 +78,163 @@ export const AdminLayout = () => {
     navigate('/admin/login');
   };
 
-  const navItems = [
+  const navGroups = [
     {
-      to: '/admin',
-      label: 'Operations Command Center',
-      shortLabel: 'Overview',
-      icon: LayoutDashboard,
-      end: true,
-      roles: ['admin', 'sales', 'editor'],
+      group: 'Commercial Sales',
+      items: [
+        {
+          to: '/admin',
+          label: 'Operations Overview',
+          shortLabel: 'Dashboard',
+          icon: LayoutDashboard,
+          end: true,
+          roles: ['admin', 'sales', 'editor'],
+        },
+        {
+          to: '/admin/sales-desk',
+          label: 'Sales Desk & Pipeline',
+          shortLabel: 'Sales Desk',
+          icon: TrendingUp,
+          roles: ['admin', 'sales'],
+        },
+        {
+          to: '/admin/inquiries',
+          label: 'Inquiries & RFQ Leads',
+          shortLabel: 'Inquiries',
+          icon: Inbox,
+          roles: ['admin', 'sales'],
+        },
+        {
+          to: '/admin/samples',
+          label: 'Sample Dispatch Desk',
+          shortLabel: 'Samples',
+          icon: FlaskConical,
+          roles: ['admin', 'sales'],
+        },
+        {
+          to: '/admin/quotations',
+          label: 'Quotations & Proformas',
+          shortLabel: 'Quotations',
+          icon: FileText,
+          roles: ['admin', 'sales'],
+        },
+        {
+          to: '/admin/customers',
+          label: 'Buyer Accounts (CRM)',
+          shortLabel: 'Buyers',
+          icon: Users,
+          roles: ['admin', 'sales'],
+        },
+        {
+          to: '/admin/orders',
+          label: 'Orders & Shipments',
+          shortLabel: 'Shipments',
+          icon: Ship,
+          roles: ['admin', 'sales'],
+        },
+      ],
     },
     {
-      to: '/admin/sales-desk',
-      label: 'Sales Desk & Pipeline',
-      shortLabel: 'Sales Desk',
-      icon: TrendingUp,
-      roles: ['admin', 'sales'],
+      group: 'Commodity Catalogue',
+      items: [
+        {
+          to: '/admin/products',
+          label: 'Products & Specifications',
+          shortLabel: 'Products',
+          icon: Package,
+          roles: ['admin', 'editor'],
+        },
+        {
+          to: '/admin/categories',
+          label: 'Categories & Divisions',
+          shortLabel: 'Categories',
+          icon: Layers,
+          roles: ['admin', 'editor'],
+        },
+      ],
     },
     {
-      to: '/admin/inquiries',
-      label: 'Inquiries & RFQ Leads',
-      shortLabel: 'Inquiries',
-      icon: Inbox,
-      roles: ['admin', 'sales'],
+      group: 'Compliance & Trust',
+      items: [
+        {
+          to: '/admin/certificates',
+          label: 'Statutory Certificates',
+          shortLabel: 'Certificates',
+          icon: Award,
+          roles: ['admin', 'editor'],
+        },
+      ],
     },
     {
-      to: '/admin/quotations',
-      label: 'Quotations & Proformas',
-      shortLabel: 'Quotations',
-      icon: FileText,
-      roles: ['admin', 'sales'],
+      group: 'Content CMS',
+      items: [
+        {
+          to: '/admin/blog',
+          label: 'Trade Intelligence & Blog',
+          shortLabel: 'Blog CMS',
+          icon: BookOpen,
+          roles: ['admin', 'editor'],
+        },
+        {
+          to: '/admin/faqs',
+          label: 'Export FAQ Manager',
+          shortLabel: 'FAQs',
+          icon: HelpCircle,
+          roles: ['admin', 'editor'],
+        },
+      ],
     },
     {
-      to: '/admin/customers',
-      label: 'Buyer Accounts (CRM)',
-      shortLabel: 'Buyers',
-      icon: Users,
-      roles: ['admin', 'sales'],
+      group: 'AI Desk',
+      items: [
+        {
+          to: '/admin/company-knowledge',
+          label: 'Company Knowledge Base',
+          shortLabel: 'Company Facts',
+          icon: Building,
+          roles: ['admin', 'editor'],
+        },
+        {
+          to: '/admin/ai-inquiries',
+          label: 'AI Chat Review & Gaps',
+          shortLabel: 'AI Review',
+          icon: Sparkles,
+          roles: ['admin', 'sales', 'editor'],
+        },
+      ],
     },
     {
-      to: '/admin/orders',
-      label: 'Orders & Shipments',
-      shortLabel: 'Shipments',
-      icon: Ship,
-      roles: ['admin', 'sales'],
-    },
-    {
-      to: '/admin/products',
-      label: 'Commodity Catalogue',
-      shortLabel: 'Products',
-      icon: Package,
-      roles: ['admin', 'editor'],
-    },
-    {
-      to: '/admin/company-knowledge',
-      label: 'Company Knowledge Base',
-      shortLabel: 'Company Facts',
-      icon: Building,
-      roles: ['admin', 'editor'],
-    },
-    {
-      to: '/admin/ai-inquiries',
-      label: 'AI Inquiries & Knowledge Gaps',
-      shortLabel: 'AI Review',
-      icon: Sparkles,
-      roles: ['admin', 'sales', 'editor'],
+      group: 'Governance & Settings',
+      items: [
+        {
+          to: '/admin/users',
+          label: 'Team Users & Roles',
+          shortLabel: 'Users',
+          icon: UserCheck,
+          roles: ['admin'],
+        },
+        {
+          to: '/admin/audit-logs',
+          label: 'Audit Activity Logs',
+          shortLabel: 'Audit Logs',
+          icon: History,
+          roles: ['admin'],
+        },
+        {
+          to: '/admin/settings',
+          label: 'Company Profile & Settings',
+          shortLabel: 'Settings',
+          icon: Settings,
+          roles: ['admin'],
+        },
+      ],
     },
   ];
 
-  const filteredNavItems = navItems.filter((item) => !item.roles || item.roles.includes(user?.role));
+  const allNavItems = navGroups.flatMap((g) => g.items);
 
   // Determine current active page label for topbar breadcrumb
-  const currentNavItem = navItems.find((item) =>
+  const currentNavItem = allNavItems.find((item) =>
     item.end ? location.pathname === item.to : location.pathname.startsWith(item.to)
   );
 
@@ -225,56 +314,71 @@ export const AdminLayout = () => {
           </div>
 
           {/* Navigation Links */}
-          <nav className="p-3.5 space-y-1">
-            <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-              Commercial Operations
-            </div>
-            {filteredNavItems.map((item) => {
-              const Icon = item.icon;
+          <nav className="p-3.5 space-y-4">
+            {navGroups.map((group) => {
+              const accessibleItems = group.items.filter(
+                (item) => !item.roles || item.roles.includes(user?.role)
+              );
+              if (accessibleItems.length === 0) return null;
+
               return (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.end}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={({ isActive }) =>
-                    `group relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-150 transform-gpu active:scale-[0.98] ${
-                      isActive
-                        ? 'bg-white/10 text-white border border-white/20 font-semibold shadow-xs'
-                        : 'text-neutral-300 hover:bg-primary-800/50 hover:text-white'
-                    }`
-                  }
-                >
-                  {({ isActive }) => (
-                    <>
-                      {isActive && (
-                        <span className="absolute left-1 w-1 h-4 bg-primary-300 rounded-full transition-all duration-200" />
-                      )}
-                      <Icon className={`w-4 h-4 shrink-0 transition-colors ${
-                        isActive ? 'text-white' : 'text-neutral-400 group-hover:text-white'
-                      }`} />
-                      <span className="truncate">{item.label}</span>
-                    </>
-                  )}
-                </NavLink>
+                <div key={group.group} className="space-y-1">
+                  <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+                    {group.group}
+                  </div>
+                  {accessibleItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <NavLink
+                        key={item.to}
+                        to={item.to}
+                        end={item.end}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={({ isActive }) =>
+                          `group relative flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium transition-all duration-150 transform-gpu active:scale-[0.98] ${
+                            isActive
+                              ? 'bg-white/10 text-white border border-white/20 font-semibold shadow-xs'
+                              : 'text-neutral-300 hover:bg-primary-800/50 hover:text-white'
+                          }`
+                        }
+                      >
+                        {({ isActive }) => (
+                          <>
+                            {isActive && (
+                              <span className="absolute left-1 w-1 h-3.5 bg-primary-300 rounded-full transition-all duration-200" />
+                            )}
+                            <Icon
+                              className={`w-4 h-4 shrink-0 transition-colors ${
+                                isActive ? 'text-white' : 'text-neutral-400 group-hover:text-white'
+                              }`}
+                            />
+                            <span className="truncate">{item.label}</span>
+                          </>
+                        )}
+                      </NavLink>
+                    );
+                  })}
+                </div>
               );
             })}
 
-            <div className="pt-5 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-              External Buyer Portal
-            </div>
-            <a
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs text-neutral-300 hover:bg-primary-800/50 hover:text-white transition-colors group"
-            >
-              <div className="flex items-center gap-3">
-                <Globe2 className="w-4 h-4 shrink-0 text-neutral-400 group-hover:text-white transition-transform" />
-                <span>Open Buyer Website</span>
+            <div className="pt-2 border-t border-primary-800/40">
+              <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+                External Buyer Portal
               </div>
-              <ExternalLink className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white" />
-            </a>
+              <a
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs text-neutral-300 hover:bg-primary-800/50 hover:text-white transition-colors group mt-1"
+              >
+                <div className="flex items-center gap-3">
+                  <Globe2 className="w-4 h-4 shrink-0 text-neutral-400 group-hover:text-white transition-transform" />
+                  <span>Open Buyer Website</span>
+                </div>
+                <ExternalLink className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white" />
+              </a>
+            </div>
           </nav>
         </div>
 

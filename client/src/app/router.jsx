@@ -30,6 +30,14 @@ const AdminCustomers = lazy(() => import('../admin/pages/Customers'));
 const AdminOrders = lazy(() => import('../admin/pages/Orders'));
 const AdminCompanyKnowledge = lazy(() => import('../admin/pages/CompanyKnowledgeBase'));
 const AdminAiInquiries = lazy(() => import('../admin/pages/AiInquiryReview'));
+const AdminSamples = lazy(() => import('../admin/pages/Samples'));
+const AdminCategories = lazy(() => import('../admin/pages/Categories'));
+const AdminCertificates = lazy(() => import('../admin/pages/Certificates'));
+const AdminBlogCms = lazy(() => import('../admin/pages/BlogCms'));
+const AdminFaqManager = lazy(() => import('../admin/pages/FaqManager'));
+const AdminUsers = lazy(() => import('../admin/pages/Users'));
+const AdminAuditLogs = lazy(() => import('../admin/pages/AuditLogs'));
+const AdminSettings = lazy(() => import('../admin/pages/Settings'));
 
 const RouteLoader = () => (
   <div className="min-h-[50vh] flex items-center justify-center p-8 animate-in fade-in duration-150">
@@ -273,6 +281,86 @@ export const router = createBrowserRouter([
           <Suspense fallback={<RouteLoader />}>
             <ProtectedRoute allowedRoles={['admin', 'sales', 'editor']}>
               <AdminAiInquiries />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'samples',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin', 'sales']}>
+              <AdminSamples />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'categories',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin', 'editor']}>
+              <AdminCategories />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'certificates',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin', 'editor']}>
+              <AdminCertificates />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'blog',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin', 'editor']}>
+              <AdminBlogCms />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'faqs',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin', 'editor']}>
+              <AdminFaqManager />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'users',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminUsers />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'audit-logs',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminAuditLogs />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'settings',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminSettings />
             </ProtectedRoute>
           </Suspense>
         ),

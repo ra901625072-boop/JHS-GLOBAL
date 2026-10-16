@@ -1,0 +1,35 @@
+
+## [2026-10-16 14:24:56] - [US-FND-001, US-FND-002, US-FND-003]
+- Summary: Completed Step 1 Foundation: Grouped admin navigation into 6 operational categories, standardized JHS GLOBAL branding, implemented AuditLog model and audit-logs endpoint with server-side RBAC, and created reusable Admin Component Kit with 100% test pass rate.
+- Files modified:
+  - client/src/admin/components/AdminLayout.jsx
+  - client/src/app/router.jsx
+  - client/src/admin/components/DataTable.jsx
+  - client/src/admin/components/FilterBar.jsx
+  - client/src/admin/components/AdminStatusBadge.jsx
+  - client/src/admin/components/AdminDrawer.jsx
+  - client/src/admin/components/AdminSkeleton.jsx
+  - client/src/admin/components/ModulePlaceholder.jsx
+  - client/src/admin/components/index.js
+  - client/src/admin/pages/Samples.jsx
+  - client/src/admin/pages/Categories.jsx
+  - client/src/admin/pages/Certificates.jsx
+  - client/src/admin/pages/BlogCms.jsx
+  - client/src/admin/pages/FaqManager.jsx
+  - client/src/admin/pages/Users.jsx
+  - client/src/admin/pages/AuditLogs.jsx
+  - client/src/admin/pages/Settings.jsx
+  - client/src/tests/components/AdminKit.test.jsx
+  - server/src/app.js
+  - server/src/config/constants.js
+  - server/src/models/index.js
+  - server/src/modules/audit/auditLog.model.js
+  - server/src/modules/audit/audit.service.js
+  - server/src/modules/audit/audit.controller.js
+  - server/src/modules/audit/audit.routes.js
+  - server/tests/audit.test.js
+- **Learnings for future iterations:**
+  - Ensure SENSITIVE_KEYS set entries are strictly lowercased for case-insensitive matching during snapshot sanitization.
+  - In PostgreSQL test environment, call await AuditLog.sync() in test beforeAll to guarantee relation existence when testing in isolation.
+  - All newly mounted admin module pages are cleanly code-split into sub-1kB chunks, preserving public site performance budgets.
+---

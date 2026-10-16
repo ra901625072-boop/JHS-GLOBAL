@@ -41,6 +41,9 @@ import AiUsageLog from '../modules/ai/aiUsageLog.model.js';
 import Embedding from '../modules/ai/embedding.model.js';
 import CompanyFact from '../modules/companyFact/companyFact.model.js';
 
+// ─── Governance & Audit ────────────────────────────────
+import AuditLog from '../modules/audit/auditLog.model.js';
+
 // ─── Product Associations (Hybrid Architecture) ─────────────────
 // Primary specifications, image galleries, and packaging options are stored
 // directly in first-class JSONB columns (specs, images, packing) on the products table
@@ -114,6 +117,10 @@ Task.belongsTo(User, { foreignKey: 'assigned_to', as: 'assignee' });
 Task.belongsTo(Inquiry, { foreignKey: 'inquiry_id', as: 'inquiry' });
 Task.belongsTo(Customer, { foreignKey: 'customer_id', as: 'customer' });
 
+// AuditLog associations
+AuditLog.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+User.hasMany(AuditLog, { foreignKey: 'user_id', as: 'auditLogs' });
+
 // Provide backward-compatible _id virtual accessors without polluting SQL columns
 const registeredModels = [
   User, Category, Product, ProductImage, ProductSpec, ProductPackingOption,
@@ -121,7 +128,7 @@ const registeredModels = [
   Customer, CustomerNote, SampleRequest, SampleProduct, Quotation,
   QuotationItem, Order, OrderItem, OrderDocument, BlogPost, Testimonial,
   MarketRegion, MarketRegionCountry, Faq, Task, AiUsageLog, Embedding,
-  CompanyFact,
+  CompanyFact, AuditLog,
 ];
 
 for (const model of registeredModels) {
@@ -169,6 +176,7 @@ export {
   AiUsageLog,
   Embedding,
   CompanyFact,
+  AuditLog,
 };
 
 export default {
@@ -204,4 +212,5 @@ export default {
   AiUsageLog,
   Embedding,
   CompanyFact,
+  AuditLog,
 };

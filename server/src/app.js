@@ -33,6 +33,7 @@ import quotationRoutes from './modules/quotation/quotation.routes.js';
 import customerRoutes from './modules/customer/customer.routes.js';
 import orderRoutes from './modules/order/order.routes.js';
 import taskRoutes from './modules/task/task.routes.js';
+import auditRoutes from './modules/audit/audit.routes.js';
 import { getSitemap, getRobots } from './modules/seo/seo.controller.js';
 import redirectLegacyUrlsMiddleware from './middlewares/redirect.middleware.js';
 
@@ -204,6 +205,7 @@ export const createApp = () => {
   app.use('/api/v1/customers', customerRoutes);
   app.use('/api/v1/orders', orderRoutes);
   app.use('/api/v1/tasks', taskRoutes);
+  app.use('/api/v1/audit-logs', auditRoutes);
   app.use('/api/v1/search/suggest', (req, res, next) => {
     // Alias to product suggest
     req.url = '/suggest' + (req.url.includes('?') ? req.url.substring(req.url.indexOf('?')) : '');
