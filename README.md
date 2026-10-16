@@ -185,3 +185,4 @@ npm --prefix client run build
 * **Backend:** Deploy `server/` to AWS ECS, Google Cloud Run, or Render with managed PostgreSQL (AWS RDS / Supabase / Neon / Render Postgres).
 * Set `VITE_API_BASE_URL=https://api.yourbrand.com/api/v1` in client environment.
 * Set `CLIENT_URL=https://yourbrand.com` in server environment to configure CORS.
+# JHS-GLOBAL
