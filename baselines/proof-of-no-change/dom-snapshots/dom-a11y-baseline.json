@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-15T05:48:42.275Z",
+  "timestamp": "2026-10-16T08:12:09.781Z",
   "domSnapshots": {
     "home": {
       "title": "JHS GLOBAL — One Accountable Supplier for Diverse Category Sourcing",
@@ -682,21 +682,81 @@
       ]
     },
     "about-us": {
-      "title": "About Us — JHS Global | Manufacturer-Grade Indian Raw Materials & Active Ingredients",
+      "title": "About Us — JHS GLOBAL | Indian Export House Built on Trust & Transparency",
       "headings": [
         {
           "tag": "h1",
-          "text": "About Us — Manufacturer-Grade Indian Raw Materials & Active Ingredients, Exported Worldwide.",
+          "text": "An export house built on trust, transparency and Indian abundance.",
           "ariaHidden": null
         },
         {
           "tag": "h2",
-          "text": "Rooted in India’s Premier Maritime Export Corridor",
+          "text": "Our Foundation",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Integrity",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Quality",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Reliability",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Merchants of the Everyday Extraordinary.",
           "ariaHidden": null
         },
         {
           "tag": "h2",
-          "text": "The Founders Behind JHS GLOBAL",
+          "text": "Our Mission, Vision and Values",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Our Mission",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Our Vision",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Our Values",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Our Guiding Commitments",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Specification is a promise",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Radical transparency",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h3",
+          "text": "Long-term relationships",
+          "ariaHidden": null
+        },
+        {
+          "tag": "h2",
+          "text": "Meet our team",
           "ariaHidden": null
         },
         {
@@ -706,167 +766,17 @@
         },
         {
           "tag": "h3",
-          "text": "Henil Prajapati",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
           "text": "Suraj Prajapati",
           "ariaHidden": null
         },
         {
-          "tag": "h2",
-          "text": "Three Specialized Raw Material Categories",
-          "ariaHidden": null
-        },
-        {
           "tag": "h3",
-          "text": "Personal Care Raw Materials & Oleochemicals",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Standardized Nutraceutical Extracts",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Animal Feed Ingredients & Protein Meals",
+          "text": "Henil Prajapati",
           "ariaHidden": null
         },
         {
           "tag": "h2",
-          "text": "Direct-Origin Harvest Networks Across India",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Gujarat & Saurashtra Agro Belt",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h2",
-          "text": "Export Gateways & Global Markets Served",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Middle East & GCC",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "European Union & UK",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Americas & Canada",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Southeast Asia & East Asia",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h2",
-          "text": "Our Legal & Regulatory Credentials",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "JHS GLOBAL",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "EZHPP3437C",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "24EZHPP3437C1ZH",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "10725997001058",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Registered Exporter (Agro & Food Products)",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "CRES Certified Exporter of Indian Spices",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "UDYAM-GJ-22-0460260",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Hazira Port (Surat), Mundra Port (Kutch), JNPT (Navi Mumbai)",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h2",
-          "text": "Why Global Buyers Partner with JHS GLOBAL",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Responsive & Experienced Trade Desk",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Certified & Compliant Governance",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Premium Sortex Quality",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Global Export Footprint",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Competitive Direct-Origin Pricing",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "On-Time Delivery & Vessel Slotting",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Customized & OEM Packaging",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Transparent Communication",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "48-Hour Quote Turnaround",
-          "ariaHidden": null
-        },
-        {
-          "tag": "h3",
-          "text": "Honesty, Integrity & Single Accountability",
+          "text": "THREE MINDS. ONE COMMITMENT.",
           "ariaHidden": null
         },
         {
@@ -1050,7 +960,7 @@
           "id": "color-contrast",
           "impact": "serious",
           "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-          "nodesCount": 5
+          "nodesCount": 4
         }
       ]
     },
@@ -1061,7 +971,7 @@
           "id": "color-contrast",
           "impact": "serious",
           "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-          "nodesCount": 11
+          "nodesCount": 10
         }
       ]
     },
@@ -1072,7 +982,7 @@
           "id": "color-contrast",
           "impact": "serious",
           "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-          "nodesCount": 13
+          "nodesCount": 12
         }
       ]
     },
@@ -1083,7 +993,7 @@
           "id": "color-contrast",
           "impact": "serious",
           "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-          "nodesCount": 7
+          "nodesCount": 6
         }
       ]
     },
@@ -1094,7 +1004,7 @@
           "id": "color-contrast",
           "impact": "serious",
           "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-          "nodesCount": 4
+          "nodesCount": 3
         }
       ]
     },

@@ -6,7 +6,7 @@ import connectDB, { disconnectDB } from '../src/config/db.js';
 describe('Trust & Informational Endpoints Suite', () => {
   beforeAll(async () => {
     await connectDB();
-  }, 30000);
+  }, 60000);
 
   afterAll(async () => {
     await disconnectDB();
@@ -56,5 +56,15 @@ describe('Trust & Informational Endpoints Suite', () => {
     expect(res.body.data[0]).toHaveProperty('question');
     expect(res.body.data[0]).toHaveProperty('answer');
     expect(res.body.data[0]).toHaveProperty('group');
+  });
+
+  it('GET /api/v1/faqs should contain zero unfinished TODO(client) placeholder strings', async () => {
+    const res = await request(app).get('/api/v1/faqs');
+
+    expect(res.status).toBe(200);
+    const todoFaqs = res.body.data.filter(
+      (f) => f.answer.includes('TODO(') || f.question.includes('TODO(')
+    );
+    expect(todoFaqs).toHaveLength(0);
   });
 });

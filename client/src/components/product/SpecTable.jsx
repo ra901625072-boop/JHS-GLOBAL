@@ -26,7 +26,11 @@ export const SpecTable = ({ specs = [], title = 'Technical Quality Specification
             <div className="flex items-start justify-between gap-2">
               <span className="text-xs font-semibold text-neutral-900 leading-tight flex items-center gap-1.5">
                 {spec.key}
-                {spec.verified === false && (
+                {(spec.verified === true || spec.isVerified === true) ? (
+                  <span className="text-[9px] font-sans font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 px-1.5 py-0.2 rounded">
+                    Guaranteed
+                  </span>
+                ) : (
                   <span className="text-[9px] font-sans font-medium text-amber-800 bg-amber-50 border border-amber-200 px-1.5 py-0.2 rounded">
                     Typical
                   </span>
@@ -64,13 +68,13 @@ export const SpecTable = ({ specs = [], title = 'Technical Quality Specification
                 <td className="py-3.5 px-5 font-mono text-primary-800 font-semibold">{spec.value}</td>
                 <td className="py-3.5 px-5 text-neutral-500">{spec.unit || 'Standard COA'}</td>
                 <td className="py-3.5 px-5 text-right">
-                  {spec.verified === false ? (
-                    <span className="inline-block text-[10px] font-medium text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
-                      Typical Spec
-                    </span>
-                  ) : (
+                  {(spec.verified === true || spec.isVerified === true) ? (
                     <span className="inline-block text-[10px] font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
                       Guaranteed
+                    </span>
+                  ) : (
+                    <span className="inline-block text-[10px] font-medium text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                      Typical Spec
                     </span>
                   )}
                 </td>

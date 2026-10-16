@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { sequelize } from '../../config/db.js';
 import { callLlm, scrubPii } from './ai.provider.js';
 import { AiChatAuditLog } from './aiChatAuditLog.model.js';
@@ -594,12 +594,18 @@ export const detectDuplicateInquiries = async ({ email, company, currentInquiryI
   const orConditions = [];
   if (email) {
     orConditions.push(
-      sequelize.literal(`LOWER("buyer"->>'email') = '${email.toLowerCase().trim().replace(/'/g, "''")}'`)
+      Sequelize.where(
+        Sequelize.fn('lower', Sequelize.literal(`"buyer"->>'email'`)),
+        email.toLowerCase().trim()
+      )
     );
   }
   if (company) {
     orConditions.push(
-      sequelize.literal(`"buyer"->>'company' ILIKE '%${company.trim().replace(/'/g, "''")}%'`)
+      Sequelize.where(
+        Sequelize.literal(`"buyer"->>'company'`),
+        { [Op.iLike]: `%${company.trim()}%` }
+      )
     );
   }
 

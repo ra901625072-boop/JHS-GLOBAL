@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import createSlug from '../../utils/slugify.js';
 import BlogPost from './blog.model.js';
 import logger from '../../utils/logger.js';
@@ -19,17 +19,23 @@ export const getPublishedPosts = async ({
   if (tag) {
     where[Op.and] = where[Op.and] || [];
     where[Op.and].push(
-      BlogPost.sequelize.literal(`"tags"::text ILIKE '%${tag.replace(/'/g, "''")}%'`)
+      Sequelize.where(
+        Sequelize.cast(Sequelize.col('tags'), 'text'),
+        { [Op.iLike]: `%${tag.trim()}%` }
+      )
     );
   }
 
   if (q && q.trim()) {
-    const searchTerm = q.trim().replace(/'/g, "''");
+    const searchTerm = q.trim();
     where[Op.or] = [
       { title: { [Op.iLike]: `%${searchTerm}%` } },
       { excerpt: { [Op.iLike]: `%${searchTerm}%` } },
       { content: { [Op.iLike]: `%${searchTerm}%` } },
-      BlogPost.sequelize.literal(`"tags"::text ILIKE '%${searchTerm}%'`),
+      Sequelize.where(
+        Sequelize.cast(Sequelize.col('tags'), 'text'),
+        { [Op.iLike]: `%${searchTerm}%` }
+      ),
     ];
   }
 

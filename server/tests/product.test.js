@@ -58,8 +58,10 @@ describe('Product API Endpoints', () => {
     expect(res.body.data.hsCode).toBe('1302.19');
     expect(Array.isArray(res.body.data.specs)).toBe(true);
     expect(res.body.data.specs.length).toBeGreaterThan(0);
+    expect(Array.isArray(res.body.data.images)).toBe(true);
     expect(Array.isArray(res.body.data.packing)).toBe(true);
     expect(res.body.data.moq).toBeDefined();
+    expect(res.body.data._id).toBe(res.body.data.id);
   });
 
   it('GET /api/v1/products/:slug/related should return related category products', async () => {

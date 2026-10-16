@@ -27,7 +27,7 @@ export const WorldTradeMap = () => {
       controlY: 380,
       transit: '4–7 Days',
       type: 'Direct FCL / Weekly',
-      volume: 'Spices, Basmati Rice, Oilseeds',
+      volume: 'Castor Derivatives, Personal Care, Animal Feed',
     },
     {
       id: 'jeddah',
@@ -41,7 +41,7 @@ export const WorldTradeMap = () => {
       controlY: 420,
       transit: '6–8 Days',
       type: 'Direct Feeder Sailings',
-      volume: 'Pulses, Sesame, Agro Cargo',
+      volume: 'Soybean Meal DOC, Animal Feed, Herbal Extracts',
     },
     {
       id: 'rotterdam',
@@ -55,7 +55,7 @@ export const WorldTradeMap = () => {
       controlY: 310,
       transit: '16–20 Days',
       type: 'EU MRL Lab Certified FCL',
-      volume: 'Turmeric, Psyllium, Botanical Extracts',
+      volume: 'Curcumin 95%, Psyllium Husk, Botanical Extracts',
     },
     {
       id: 'hamburg',
@@ -69,7 +69,7 @@ export const WorldTradeMap = () => {
       controlY: 305,
       transit: '18–22 Days',
       type: 'Direct Vessel Service',
-      volume: 'Seed Spices, Dehydrated Onion Flakes',
+      volume: 'Castor Oil FSG, 12-HSA, Industrial Raw Materials',
     },
     {
       id: 'felixstowe',
@@ -83,7 +83,7 @@ export const WorldTradeMap = () => {
       controlY: 300,
       transit: '18–22 Days',
       type: 'Direct Container Service',
-      volume: 'Ethnic Foods, Spices, Rice',
+      volume: 'Nutraceutical Ingredients, Ashwagandha, Personal Care',
     },
     {
       id: 'new-york',
@@ -97,7 +97,7 @@ export const WorldTradeMap = () => {
       controlY: 230,
       transit: '22–26 Days',
       type: 'FDA Inspected Liner',
-      volume: 'Curcumin 95%, Psyllium, Essential Oils',
+      volume: 'Curcumin 95%, Psyllium 99%, Botanical Extracts',
     },
     {
       id: 'los-angeles',
@@ -111,7 +111,7 @@ export const WorldTradeMap = () => {
       controlY: 200,
       transit: '28–32 Days',
       type: 'Pacific Ocean Service',
-      volume: 'Superfoods, Moringa, Spices',
+      volume: 'Standardized Botanical Extracts, Nutritional Ingredients',
     },
     {
       id: 'singapore',
@@ -125,7 +125,7 @@ export const WorldTradeMap = () => {
       controlY: 435,
       transit: '6–9 Days',
       type: 'Direct Weekly Sailings',
-      volume: 'Black Pepper, Cardamom, Agro Bulks',
+      volume: 'Personal Care Raw Materials, Castor Derivatives, Feed Meals',
     },
     {
       id: 'tokyo',
@@ -139,7 +139,7 @@ export const WorldTradeMap = () => {
       controlY: 340,
       transit: '14–18 Days',
       type: 'Fast Container Transit',
-      volume: 'Sesame Seeds, Spices, Organic Extracts',
+      volume: 'High-Assay Botanical Extracts, Nutraceutical Raw Materials',
     },
     {
       id: 'sydney',
@@ -153,7 +153,7 @@ export const WorldTradeMap = () => {
       controlY: 520,
       transit: '16–21 Days',
       type: 'Direct Liner Service',
-      volume: 'Basmati Rice, Chickpeas, Spices',
+      volume: 'Nutraceutical Raw Materials, Animal Nutrition, Feed Premix',
     },
     {
       id: 'mombasa',
@@ -167,7 +167,7 @@ export const WorldTradeMap = () => {
       controlY: 440,
       transit: '9–12 Days',
       type: 'Indian Ocean Feeder',
-      volume: 'Grains, Rice, Spices, Pulses',
+      volume: 'Soybean Meal DOC, Animal Feed Meals, Feed Concentrates',
     },
     {
       id: 'santos',
@@ -181,7 +181,7 @@ export const WorldTradeMap = () => {
       controlY: 520,
       transit: '26–30 Days',
       type: 'South Atlantic Liner',
-      volume: 'Spices, Botanical Extracts',
+      volume: 'Personal Care Raw Materials, Botanical Extracts',
     },
   ];
 

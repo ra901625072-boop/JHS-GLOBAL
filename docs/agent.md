@@ -151,4 +151,4 @@ Help overseas **importers and manufacturers** (a) trust the company, (b) find th
 | API base | `/api/v1` |
 | Auth | JWT access (15 min) + httpOnly refresh cookie, roles: admin / sales / editor |
 | Main CTA | **Request a Quote** |
-| Categories | 10 master categories (84 commodities from master catalogue) |
+| Categories | 3 primary export divisions: Personal Care Raw Materials, Nutraceutical Raw Materials, Animal Feed (20 verified catalogue commodities) |

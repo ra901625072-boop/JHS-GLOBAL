@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import Customer from './customer.model.js';
 import User from '../user/user.model.js';
 import Inquiry from '../inquiry/inquiry.model.js';
@@ -109,13 +109,13 @@ export const getCustomers = async ({ q, country, businessType, page = 1, limit =
   }
 
   if (q && q.trim()) {
-    const searchTerm = q.trim().replace(/'/g, "''");
+    const searchTerm = q.trim();
     where[Op.or] = [
       { companyName: { [Op.iLike]: `%${searchTerm}%` } },
       { contactPerson: { [Op.iLike]: `%${searchTerm}%` } },
       { email: { [Op.iLike]: `%${searchTerm}%` } },
       { country: { [Op.iLike]: `%${searchTerm}%` } },
-      Customer.sequelize.literal(`"interested_products"::text ILIKE '%${searchTerm}%'`),
+      Sequelize.where(Sequelize.cast(Sequelize.col('interested_products'), 'text'), { [Op.iLike]: `%${searchTerm}%` }),
     ];
   }
 

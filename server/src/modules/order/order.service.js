@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import Order from './order.model.js';
 import Quotation from '../quotation/quotation.model.js';
 import Inquiry from '../inquiry/inquiry.model.js';
@@ -83,14 +83,14 @@ export const getOrders = async ({ status, q, page = 1, limit = 20 }) => {
   }
 
   if (q && q.trim()) {
-    const searchTerm = q.trim().replace(/'/g, "''");
+    const searchTerm = q.trim();
     where[Op.or] = [
       { orderNumber: { [Op.iLike]: `%${searchTerm}%` } },
-      Order.sequelize.literal(`"buyer"->>'company' ILIKE '%${searchTerm}%'`),
-      Order.sequelize.literal(`"buyer"->>'name' ILIKE '%${searchTerm}%'`),
-      Order.sequelize.literal(`"buyer"->>'email' ILIKE '%${searchTerm}%'`),
-      Order.sequelize.literal(`"shipment"->>'containerNumber' ILIKE '%${searchTerm}%'`),
-      Order.sequelize.literal(`"shipment"->>'billOfLadingNumber' ILIKE '%${searchTerm}%'`),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'company'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'name'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'email'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"shipment"->>'containerNumber'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"shipment"->>'billOfLadingNumber'`), { [Op.iLike]: `%${searchTerm}%` }),
     ];
   }
 

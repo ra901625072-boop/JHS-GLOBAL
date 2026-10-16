@@ -177,7 +177,10 @@ export const productService = {
       limit,
     });
 
-    return products.map((p) => p.toJSON());
+    return products.map((p) => {
+      const plain = p.toJSON();
+      return { ...plain, _id: plain.id };
+    });
   },
 
   /**
@@ -208,6 +211,7 @@ export const productService = {
     });
 
     const plain = product.toJSON();
+    plain._id = plain.id;
 
     // Fetch associated certificates if any
     if (plain.certificateIds && Array.isArray(plain.certificateIds) && plain.certificateIds.length > 0) {
@@ -247,7 +251,10 @@ export const productService = {
       limit,
     });
 
-    return products.map((p) => p.toJSON());
+    return products.map((p) => {
+      const plain = p.toJSON();
+      return { ...plain, _id: plain.id };
+    });
   },
 
   /**

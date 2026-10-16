@@ -403,7 +403,7 @@ export const SampleRequestPage = () => {
                       type="text"
                       value={newProductName}
                       onChange={(e) => setNewProductName(e.target.value)}
-                      placeholder="Add commodity name (e.g. 1121 Steam Basmati Rice)..."
+                      placeholder="Add commodity name (e.g. Organic Psyllium Husk 99% / Ashwagandha Extract)..."
                       className="flex-1 px-3 py-2 text-xs border border-surface-border rounded-lg bg-surface-canvas"
                     />
                     <button

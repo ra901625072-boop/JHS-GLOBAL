@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { sequelize } from '../../config/db.js';
 import createSlug from '../../utils/slugify.js';
 import Inquiry from '../inquiry/inquiry.model.js';
@@ -162,19 +162,22 @@ export const getAdminInquiries = async ({
   if (country) {
     where[Op.and] = where[Op.and] || [];
     where[Op.and].push(
-      sequelize.literal(`"buyer"->>'country' ILIKE '%${country.replace(/'/g, "''")}%'`)
+      Sequelize.where(
+        Sequelize.literal(`"buyer"->>'country'`),
+        { [Op.iLike]: `%${country.trim()}%` }
+      )
     );
   }
 
   if (q && q.trim()) {
-    const searchTerm = q.trim().replace(/'/g, "''");
+    const searchTerm = q.trim();
     where[Op.or] = [
       { referenceNo: { [Op.iLike]: `%${searchTerm}%` } },
-      sequelize.literal(`"buyer"->>'company' ILIKE '%${searchTerm}%'`),
-      sequelize.literal(`"buyer"->>'name' ILIKE '%${searchTerm}%'`),
-      sequelize.literal(`"buyer"->>'email' ILIKE '%${searchTerm}%'`),
-      sequelize.literal(`"buyer"->>'country' ILIKE '%${searchTerm}%'`),
-      sequelize.literal(`"items"::text ILIKE '%${searchTerm}%'`),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'company'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'name'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'email'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'country'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.cast(Sequelize.col('items'), 'text'), { [Op.iLike]: `%${searchTerm}%` }),
     ];
   }
 

@@ -1,4 +1,4 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Op } from 'sequelize';
 import { sequelize } from '../../config/db.js';
 
 export const SampleRequest = sequelize.define(
@@ -58,8 +58,26 @@ export const SampleRequest = sequelize.define(
       beforeValidate: async (sample) => {
         if (!sample.referenceNo) {
           const year = new Date().getFullYear();
-          const count = await SampleRequest.count();
-          sample.referenceNo = `SMP-${year}-${String(count + 1).padStart(6, '0')}`;
+          const prefix = `SMP-${year}-`;
+          const candidates = await SampleRequest.findAll({
+            where: {
+              referenceNo: {
+                [Op.like]: `${prefix}%`,
+              },
+            },
+            attributes: ['referenceNo'],
+            order: [['referenceNo', 'DESC']],
+            limit: 10,
+          });
+          let seq = 1;
+          for (const cand of candidates) {
+            const parts = cand.referenceNo.split('-');
+            if (parts.length === 3 && !isNaN(parseInt(parts[2], 10))) {
+              seq = parseInt(parts[2], 10) + 1;
+              break;
+            }
+          }
+          sample.referenceNo = `${prefix}${String(seq).padStart(6, '0')}`;
         }
       },
     },

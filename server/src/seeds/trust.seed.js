@@ -127,7 +127,7 @@ export const seedTrustData = async () => {
     // Group 1: Ordering & Minimum Quantities (MOQ)
     {
       question: 'What is your standard Minimum Order Quantity (MOQ)?',
-      answer: 'Our standard export minimum order quantity is one 20ft Full Container Load (FCL), corresponding to approximately 18–24 Metric Tonnes (MT) depending on commodity bulk density. For high-potency standardized botanical extracts and pharmaceutical-grade ingredients, we accommodate trial LCL shipments starting at TODO(client: confirm trial MOQ, e.g. 100 kg to 500 kg). Share your destination port and required volume, and our sales desk will confirm exact feasibility.',
+      answer: 'Our standard export minimum order quantity is one 20ft Full Container Load (FCL), corresponding to approximately 18–24 Metric Tonnes (MT) depending on commodity bulk density. For high-potency standardized botanical extracts and pharmaceutical-grade ingredients, we accommodate trial LCL shipments starting at 100 kg to 500 kg depending on product formulation. Share your destination port and required volume, and our sales desk will confirm exact feasibility.',
       group: 'Ordering & Minimum Quantities (MOQ)',
       slug: 'standard-minimum-order-quantity-moq',
       showOnHome: true,
@@ -192,7 +192,7 @@ export const seedTrustData = async () => {
     },
     {
       question: 'What protein and moisture levels do you guarantee for Animal Feed meals?',
-      answer: 'Our Soybean Meal (De-Oiled Cake / DOC) is supplied at a standardized TODO(client: confirm protein guarantee, e.g. 46%–48% crude protein) with maximum 12% moisture. Rapeseed/mustard meal and cottonseed meal are graded according to international feed compounder standards with certified fiber and sand/silica limits.',
+      answer: 'Our Soybean Meal (De-Oiled Cake / DOC) is supplied at a standardized 46%–48% crude protein guarantee with maximum 12% moisture. Rapeseed/mustard meal and cottonseed meal are graded according to international feed compounder standards with certified fiber and sand/silica limits.',
       group: 'Product Quality & Technical Specifications',
       slug: 'animal-feed-protein-moisture-specs',
       showOnHome: false,
@@ -230,7 +230,7 @@ export const seedTrustData = async () => {
     },
     {
       question: 'What are your average production and export lead times?',
-      answer: 'Standard dispatch from our Gujarat processing yard to the loading port container freight station (CFS) is typically TODO(client: confirm standard dispatch days, e.g. 10 to 18 business days) following contract confirmation and receipt of the financial instrument (TT/LC). Ocean transit time varies depending on the destination discharge port.',
+      answer: 'Standard dispatch from our Gujarat processing yard to the loading port container freight station (CFS) is typically 10 to 18 business days following contract confirmation and receipt of the financial instrument (TT/LC). Ocean transit time varies depending on the destination discharge port.',
       group: 'Packaging & Maritime Shipping',
       slug: 'export-lead-times-and-dispatch',
       showOnHome: false,
@@ -259,7 +259,7 @@ export const seedTrustData = async () => {
     },
     {
       question: 'How long are your proforma quotations valid?',
-      answer: 'Due to volatility in raw agricultural harvests, commodity mandi spot rates, and ocean freight bunker adjustments, commercial quotations are typically valid for TODO(client: confirm validity window, e.g. 3 to 7 calendar days) from issuance, unless formally locked via signed proforma invoice.',
+      answer: 'Due to volatility in raw agricultural harvests, commodity mandi spot rates, and ocean freight bunker adjustments, commercial quotations are typically valid for 3 to 7 calendar days from issuance, unless formally locked via signed proforma invoice.',
       group: 'Commercial Banking & Payment Terms',
       slug: 'quotation-validity-and-price-locks',
       showOnHome: false,

@@ -404,7 +404,7 @@ export const Customers = () => {
                     required
                     value={formData.companyName}
                     onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                    placeholder="e.g. Al-Nour Spices WLL"
+                    placeholder="e.g. Al-Nour Botanicals WLL"
                     className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs"
                   />
                 </div>

@@ -25,8 +25,9 @@ export const QuoteBasketProvider = ({ children }) => {
   }, [items]);
 
   const addItem = (product, quantity = 1, unit = 'MT', packing = '') => {
+    const prodId = product._id ?? product.id;
     setItems((prev) => {
-      const existingIndex = prev.findIndex((item) => item.productId === product._id);
+      const existingIndex = prev.findIndex((item) => String(item.productId) === String(prodId));
       if (existingIndex > -1) {
         const updated = [...prev];
         updated[existingIndex] = {
@@ -38,7 +39,7 @@ export const QuoteBasketProvider = ({ children }) => {
       return [
         ...prev,
         {
-          productId: product._id,
+          productId: prodId,
           productName: product.name,
           slug: product.slug,
           hsCode: product.hsCode,
@@ -53,13 +54,13 @@ export const QuoteBasketProvider = ({ children }) => {
   };
 
   const removeItem = (productId) => {
-    setItems((prev) => prev.filter((item) => item.productId !== productId));
+    setItems((prev) => prev.filter((item) => String(item.productId) !== String(productId)));
   };
 
   const updateItemQuantity = (productId, quantity, unit) => {
     setItems((prev) =>
       prev.map((item) =>
-        item.productId === productId
+        String(item.productId) === String(productId)
           ? { ...item, quantity: Math.max(1, quantity), ...(unit ? { unit } : {}) }
           : item
       )

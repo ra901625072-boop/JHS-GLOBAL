@@ -27,7 +27,7 @@ describe('Security & Resilience Hardening Suite', () => {
     if (salesRes.body?.data?.accessToken) {
       salesToken = salesRes.body.data.accessToken;
     }
-  });
+  }, 60000);
 
   afterAll(async () => {
     await disconnectDB();
@@ -52,6 +52,30 @@ describe('Security & Resilience Hardening Suite', () => {
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
     });
+
+    it('should emit strict Content-Security-Policy header via Helmet', async () => {
+      const res = await request(app).get('/api/v1/health');
+      expect(res.headers['content-security-policy']).toBeDefined();
+      expect(res.headers['content-security-policy']).toContain("default-src 'self'");
+    });
+
+    it('should reject untrusted CORS origins with 403 Forbidden', async () => {
+      const res = await request(app)
+        .get('/api/v1/health')
+        .set('Origin', 'http://malicious-attacker.com');
+
+      expect(res.status).toBe(403);
+      expect(res.body.success).toBe(false);
+    });
+
+    it('should accept trusted CORS origin and reflect allowed origin header', async () => {
+      const res = await request(app)
+        .get('/api/v1/health')
+        .set('Origin', 'http://localhost:5173');
+
+      expect(res.status).toBe(200);
+      expect(res.headers['access-control-allow-origin']).toBe('http://localhost:5173');
+    });
   });
 
   // ─── 2. SQL Injection Resistance ──────────────────────────────────
@@ -73,6 +97,39 @@ describe('Security & Resilience Hardening Suite', () => {
         expect(res.body.success).toBe(true);
         expect(Array.isArray(res.body.data?.products || res.body.data)).toBe(true);
       });
+    });
+
+    it('should safely handle SQL injection on administrative and CRM search endpoints', async () => {
+      const injectionVector = "'; DROP TABLE inquiries; -- ' OR '1'='1";
+
+      const adminInquiriesRes = await request(app)
+        .get(`/api/v1/admin/inquiries?q=${encodeURIComponent(injectionVector)}`)
+        .set('Authorization', `Bearer ${salesToken}`);
+      expect(adminInquiriesRes.status).toBe(200);
+      expect(adminInquiriesRes.body.success).toBe(true);
+
+      const customersRes = await request(app)
+        .get(`/api/v1/customers?q=${encodeURIComponent(injectionVector)}`)
+        .set('Authorization', `Bearer ${salesToken}`);
+      expect(customersRes.status).toBe(200);
+      expect(customersRes.body.success).toBe(true);
+
+      const ordersRes = await request(app)
+        .get(`/api/v1/orders?q=${encodeURIComponent(injectionVector)}`)
+        .set('Authorization', `Bearer ${salesToken}`);
+      expect(ordersRes.status).toBe(200);
+      expect(ordersRes.body.success).toBe(true);
+
+      const quotationsRes = await request(app)
+        .get(`/api/v1/quotations?q=${encodeURIComponent(injectionVector)}`)
+        .set('Authorization', `Bearer ${salesToken}`);
+      expect(quotationsRes.status).toBe(200);
+      expect(quotationsRes.body.success).toBe(true);
+
+      const blogRes = await request(app)
+        .get(`/api/v1/blog?q=${encodeURIComponent(injectionVector)}`);
+      expect(blogRes.status).toBe(200);
+      expect(blogRes.body.success).toBe(true);
     });
   });
 

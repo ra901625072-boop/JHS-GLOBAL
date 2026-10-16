@@ -60,7 +60,7 @@ export const ABOUT_CONTENT = {
     story: {
       subheadline: 'Merchants of the Everyday Extraordinary.',
       paragraph1:
-        'We supply premium agricultural products, spices, dehydrated ingredients, superfoods, essential oils, herbal extracts and nutraceutical ingredients to importers, wholesalers, manufacturers, distributors and private-label brands worldwide.',
+        'We supply personal care raw materials, standardized nutraceutical extracts, and animal feed ingredients to importers, wholesalers, manufacturers, distributors and private-label brands worldwide.',
       paragraph2:
         "Our business is built on direct sourcing relationships, clear specifications and accountable execution. We work closely with sourcing partners across India's growing regions, maintaining control over product requirements, quality checks and documentation.",
     },

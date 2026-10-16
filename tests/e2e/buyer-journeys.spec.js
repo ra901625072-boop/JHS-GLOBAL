@@ -102,7 +102,8 @@ test.describe('Buyer Journeys & Platform Integrity Suite', () => {
     // Verify H1 and page identity
     const heading = page.locator('h1').first();
     await expect(heading).toBeVisible();
-    await expect(heading).toContainText(/About Us/i);
+    await expect(heading).toContainText(/An export house built on trust/i);
+    await expect(page).toHaveTitle(/About Us/i);
 
     // Verify desktop/mobile navigation label displays 'About Us'
     const viewport = page.viewportSize();
@@ -182,16 +183,26 @@ test.describe('Buyer Journeys & Platform Integrity Suite', () => {
   test('Journey 11: About Us Page Executive Image & Core Supply Categories', async ({ page }) => {
     await page.goto('/about-us', { waitUntil: 'domcontentloaded' });
 
-    // Verify Executive Portrait Image
-    const execImage = page.locator('img[alt*="Executive leadership"]').first();
-    await expect(execImage).toBeVisible();
-    await expect(execImage).toHaveAttribute('width', '768');
-    await expect(execImage).toHaveAttribute('height', '1024');
+    // Verify 3 Founders Leadership Section & Portrait Images
+    const foundersSection = page.locator('[data-testid="founders-section"]').first();
+    await expect(foundersSection).toBeVisible();
+
+    const jayCard = page.locator('[data-testid="founder-card-jay-prajapati"]').first();
+    await expect(jayCard).toBeVisible();
+    const jayImage = jayCard.locator('img').first();
+    await expect(jayImage).toBeVisible();
+    await expect(jayImage).toHaveAttribute('width', '768');
+    await expect(jayImage).toHaveAttribute('height', '1024');
+
+    const surajCard = page.locator('[data-testid="founder-card-suraj-prajapati"]').first();
+    await expect(surajCard).toBeVisible();
+    const henilCard = page.locator('[data-testid="founder-card-henil-prajapati"]').first();
+    await expect(henilCard).toBeVisible();
 
     // Verify 3 Core Export Categories
-    await expect(page.locator('text=Personal Care Raw Materials & Oleochemicals').first()).toBeVisible();
-    await expect(page.locator('text=Standardized Nutraceutical Extracts').first()).toBeVisible();
-    await expect(page.locator('text=Animal Feed Ingredients & Protein Meals').first()).toBeVisible();
+    await expect(page.locator('text=Personal Care Raw Materials').first()).toBeVisible();
+    await expect(page.locator('text=Nutraceutical Raw Materials').first()).toBeVisible();
+    await expect(page.locator('text=Animal Feed').first()).toBeVisible();
 
     // WCAG Accessibility Scan on /about-us
     const a11yResults = await new AxeBuilder({ page })

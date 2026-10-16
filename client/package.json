@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "echo \"Client lint pass\""
+    "lint": "node ../scripts/verify_name_consistency.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

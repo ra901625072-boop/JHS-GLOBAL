@@ -172,7 +172,10 @@ The core export catalogue with product metadata and commercial export trade para
 
 ---
 
-### 3.4 Product Normalized Child Tables
+### 3.4 Product Normalized Child Tables & Hybrid JSONB Architecture
+
+> **Architecture Design Note (Hybrid JSONB Storage):**  
+> For sub-millisecond atomic read throughput on high-traffic Product Detail Pages (PDP), primary technical specifications, image gallery URLs, and packaging configurations are stored directly in structured JSONB attributes (`specs`, `images`, `packing`) on the `products` table. The normalized child tables defined below (`product_images`, `product_specs`, `product_packing_options`) remain part of the Sequelize database schema for relational integrity, backwards compatibility, and optional normalized analytical queries or third-party ERP synchronization.
 
 #### `product_images`
 | Column | Type | Constraints | Description |

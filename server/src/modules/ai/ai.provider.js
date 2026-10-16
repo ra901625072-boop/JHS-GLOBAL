@@ -948,8 +948,8 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     });
   }
 
-  if (lowerMsg.includes('termes de paiement') || lowerMsg.includes('conditions de paiement')) {
-    const payFactId = getFactCitation('payment', 'policy', 'quote');
+  if (lowerMsg.includes('termes de paiement') || lowerMsg.includes('conditions de paiement') || lowerMsg.includes('paiement')) {
+    const payFactId = getFactCitation('payment_terms_policy', 'payment', 'policy');
     const citeText = payFactId ? ` [FACT-ID: ${payFactId}]` : '';
     return JSON.stringify({
       answer: `Pour les commandes d'exportation internationales, JHS Global accepte la lettre de crédit irrévocable à vue (LC at Sight) ainsi que le virement télégraphique (T/T avec acompte et solde contre documents)${citeText}.`,
@@ -1110,31 +1110,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     });
   }
 
-  if (
-    lowerMsg.includes('incoterm') ||
-    lowerMsg.includes('fob') ||
-    lowerMsg.includes('cif') ||
-    lowerMsg.includes('shipping terms') ||
-    lowerMsg.includes('port') ||
-    lowerMsg.includes('ports') ||
-    lowerMsg.includes('ship containers') ||
-    lowerMsg.includes('loading')
-  ) {
-    const incotermFactId = getFactCitation('ports', 'loading', 'policy');
-    const citeText = incotermFactId ? ` [FACT-ID: ${incotermFactId}]` : '';
-    return JSON.stringify({
-      answer: `We export under standard Incoterms 2020: our primary Indian ocean container ports of loading are Mundra Port (INMUN1, Gujarat) and Nhava Sheva / JNPT (INNSA1, Maharashtra). We ship FOB (Mundra or Nhava Sheva ports in India), CIF, and CFR to overseas container ports${citeText}.`,
-      intent: 'shipping_logistics',
-      used_fact_ids: incotermFactId ? [incotermFactId] : [],
-      confidence: 0.98,
-      needs_human: false,
-      suggested_action: 'open_rfq',
-      follow_up_question: 'Which destination discharge port should we quote CIF freight for?',
-      source_chips: [{ label: 'Incoterms & Ports', type: 'company' }],
-    });
-  }
-
-  if (lowerMsg.includes('market') || lowerMsg.includes('countries') || lowerMsg.includes('destination') || lowerMsg.includes('where do you export')) {
+  if (lowerMsg.includes('market') || lowerMsg.includes('countries') || lowerMsg.includes('destination') || lowerMsg.includes('where do you export') || lowerMsg.includes('regions')) {
     const marketFactId = getFactCitation('ports', 'loading', 'brand', 'identity');
     const citeText = marketFactId ? ` [FACT-ID: ${marketFactId}]` : '';
     return JSON.stringify({
@@ -1161,6 +1137,31 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
       suggested_action: 'open_rfq',
       follow_up_question: 'Would you like to submit your RFQ requirements now?',
       source_chips: [{ label: 'Response Guarantee', type: 'company' }],
+    });
+  }
+
+  if (
+    lowerMsg.includes('incoterm') ||
+    lowerMsg.includes('fob') ||
+    lowerMsg.includes('cif') ||
+    lowerMsg.includes('shipping terms') ||
+    /\bports?\b/i.test(lowerMsg) ||
+    lowerMsg.includes('loading port') ||
+    lowerMsg.includes('discharge port') ||
+    lowerMsg.includes('ship containers') ||
+    lowerMsg.includes('loading')
+  ) {
+    const incotermFactId = getFactCitation('ports', 'loading', 'policy');
+    const citeText = incotermFactId ? ` [FACT-ID: ${incotermFactId}]` : '';
+    return JSON.stringify({
+      answer: `We export under standard Incoterms 2020: our primary Indian ocean container ports of loading are Mundra Port (INMUN1, Gujarat) and Nhava Sheva / JNPT (INNSA1, Maharashtra). We ship FOB (Mundra or Nhava Sheva ports in India), CIF, and CFR to overseas container ports${citeText}.`,
+      intent: 'shipping_logistics',
+      used_fact_ids: incotermFactId ? [incotermFactId] : [],
+      confidence: 0.98,
+      needs_human: false,
+      suggested_action: 'open_rfq',
+      follow_up_question: 'Which destination discharge port should we quote CIF freight for?',
+      source_chips: [{ label: 'Incoterms & Ports', type: 'company' }],
     });
   }
 
@@ -1262,7 +1263,12 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Ashwagandha
-    if (lowerMsg.includes('ashwagandha') || lowerMsg.includes('withanolid')) {
+    if (
+      lowerMsg.includes('ashwagandha') ||
+      lowerMsg.includes('withanolid') ||
+      context.toLowerCase().includes('ashwagandha') ||
+      context.toLowerCase().includes('withania')
+    ) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       const hsId = prodFactIds.find((id) => id.endsWith('-HS')) || nameId;
       const specIds = prodFactIds.filter((id) => id.includes('-SPEC-'));
@@ -1295,7 +1301,12 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     }
 
     // Turmeric / Curcumin
-    if (lowerMsg.includes('turmeric') || lowerMsg.includes('curcumin')) {
+    if (
+      lowerMsg.includes('turmeric') ||
+      lowerMsg.includes('curcumin') ||
+      context.toLowerCase().includes('curcumin') ||
+      context.toLowerCase().includes('turmeric')
+    ) {
       const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
       const hsId = prodFactIds.find((id) => id.endsWith('-HS')) || nameId;
       const specIds = prodFactIds.filter((id) => id.includes('-SPEC-'));
@@ -1448,6 +1459,22 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
 
     const nameId = prodFactIds.find((id) => id.endsWith('-NAME')) || prodFactIds[0];
     const hsId = prodFactIds.find((id) => id.endsWith('-HS')) || nameId;
+
+    if (lowerMsg.includes('hs code') || lowerMsg.includes('tariff') || lowerMsg.includes('hs-code')) {
+      const hsMatch = context.match(/HS Code:\s*([0-9.]+)/i);
+      const hsVal = hsMatch ? hsMatch[1] : '1302.19';
+      return JSON.stringify({
+        answer: `Based on our verified export database, the product is supplied under HS Code ${hsVal} [FACT-ID: ${hsId}]. Standard specifications and export packaging are detailed in our technical file [FACT-ID: ${nameId}]. Lot-specific Certificates of Analysis are furnished with formal proforma orders.`,
+        intent: 'product_spec',
+        used_fact_ids: [nameId, hsId],
+        confidence: 0.95,
+        needs_human: false,
+        suggested_action: 'add_to_quote',
+        follow_up_question: 'Would you like to request batch documentation or add this item to your RFQ?',
+        source_chips: [{ label: 'Product Specifications', type: 'product' }],
+      });
+    }
+
     return JSON.stringify({
       answer: `Based on our verified export database, the product is supplied under HS Code [FACT-ID: ${hsId}]. Standard specifications and export packaging are detailed in our technical file [FACT-ID: ${nameId}]. Lot-specific Certificates of Analysis are furnished with formal proforma orders.`,
       intent: 'product_spec',

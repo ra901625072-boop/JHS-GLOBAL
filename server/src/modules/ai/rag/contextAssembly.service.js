@@ -170,21 +170,36 @@ export const classifyIntent = (message = '', pageContext = null) => {
 
   // 8. Shipping, Freight, Incoterms & Ports
   if (
-    q.includes('ship') ||
+    /\bships?\b/i.test(q) ||
+    /\bshipping\b/i.test(q) ||
+    /\bshipment\b/i.test(q) ||
     q.includes('freight') ||
-    q.includes('port') ||
+    /\bports?\b/i.test(q) ||
+    q.includes('loading port') ||
+    q.includes('discharge port') ||
     q.includes('incoterm') ||
-    q.includes('fob') ||
-    q.includes('cif') ||
-    q.includes('cfr') ||
-    q.includes('fcl') ||
-    q.includes('lcl') ||
+    /\bfob\b/i.test(q) ||
+    /\bcif\b/i.test(q) ||
+    /\bcfr\b/i.test(q) ||
+    /\bfcl\b/i.test(q) ||
+    /\blcl\b/i.test(q) ||
     q.includes('container') ||
     q.includes('transit time') ||
     q.includes('lead time') ||
     q.includes('packing') ||
     q.includes('packaging')
   ) {
+    // If asking about response turnaround or markets served, prioritize company_about
+    if (
+      q.includes('how quickly') ||
+      q.includes('how fast') ||
+      q.includes('turnaround') ||
+      q.includes('response time') ||
+      q.includes('market') ||
+      q.includes('regions')
+    ) {
+      return 'company_about';
+    }
     return 'shipping_logistics';
   }
 
@@ -205,6 +220,10 @@ export const classifyIntent = (message = '', pageContext = null) => {
     q.includes('rfq') ||
     q.includes('request a quote') ||
     q.includes('payment term') ||
+    q.includes('payment') ||
+    q.includes('paiement') ||
+    q.includes('pago') ||
+    q.includes('zahlung') ||
     q.includes('letter of credit') ||
     q.includes('lc at sight') ||
     q.includes('telegraphic transfer')
@@ -212,7 +231,7 @@ export const classifyIntent = (message = '', pageContext = null) => {
     return 'how_to_order';
   }
 
-  // 11. Company Profile, Leadership & Identity
+  // 11. Company Profile, Leadership, Markets & Identity
   if (
     q.includes('who are you') ||
     q.includes('about jhs') ||
@@ -243,7 +262,11 @@ export const classifyIntent = (message = '', pageContext = null) => {
     q.includes('response time') ||
     q.includes('turnaround') ||
     q.includes('how quickly') ||
-    q.includes('how fast')
+    q.includes('how fast') ||
+    q.includes('market') ||
+    q.includes('regions') ||
+    q.includes('countries') ||
+    q.includes('where do you export')
   ) {
     return 'company_about';
   }

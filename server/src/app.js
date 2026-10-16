@@ -42,10 +42,23 @@ export const createApp = () => {
   // Trust proxy for rate limiting behind reverse proxy
   app.set('trust proxy', 1);
 
-  // Security Headers (configured to allow serving SPA static assets)
+  // Security Headers (configured to allow serving SPA static assets with strict Content-Security-Policy)
   app.use(
     helmet({
-      contentSecurityPolicy: false,
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-inline'"],
+          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+          fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+          imgSrc: ["'self'", 'data:', 'blob:', 'https:', 'http:'],
+          connectSrc: ["'self'", 'https:', 'ws:', 'wss:'],
+          objectSrc: ["'none'"],
+          baseUri: ["'self'"],
+          formAction: ["'self'"],
+          frameAncestors: ["'none'"],
+        },
+      },
       crossOriginEmbedderPolicy: false,
     })
   );
@@ -54,14 +67,24 @@ export const createApp = () => {
   app.use(
     cors({
       origin: (origin, callback) => {
-        if (!origin || env.NODE_ENV !== 'production') {
+        if (!origin) {
           return callback(null, true);
         }
-        const allowedOrigins = [env.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'].filter(Boolean);
-        if (allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+        const defaultAllowedOrigins = [
+          env.CLIENT_URL,
+          'http://localhost:5173',
+          'http://127.0.0.1:5173',
+          'http://localhost:4173',
+          'http://127.0.0.1:4173',
+          'http://localhost:3000',
+        ].filter(Boolean);
+
+        if (defaultAllowedOrigins.includes(origin)) {
           return callback(null, true);
         }
-        return callback(new Error('Not allowed by CORS'));
+        const corsError = new Error('Not allowed by CORS');
+        corsError.status = 403;
+        return callback(corsError);
       },
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],

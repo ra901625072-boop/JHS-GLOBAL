@@ -46,8 +46,8 @@ export const connectDB = async () => {
       logger.debug(`PostgreSQL extension check notice: ${extErr.message}`);
     }
 
-    // Sync all models (create tables if they don't exist)
-    if (env.NODE_ENV !== 'production') {
+    // Sync all models (create tables if they don't exist in development)
+    if (env.NODE_ENV !== 'production' && env.NODE_ENV !== 'test') {
       try {
         await sequelize.query(`
           ALTER TABLE faqs ADD COLUMN IF NOT EXISTS slug VARCHAR(150);

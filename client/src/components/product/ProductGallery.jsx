@@ -79,6 +79,15 @@ export const ProductGallery = ({ images = [], productName = 'Product' }) => {
           </picture>
         ) : null}
 
+        {/* Illustrative raw material image disclaimer badge */}
+        {currentImage?.url ? (
+          <div className="absolute bottom-3 left-3 z-10 pointer-events-none">
+            <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-neutral-900/75 backdrop-blur-sm border border-white/10 text-white text-[10px] font-sans font-medium tracking-wide shadow-sm">
+              Illustrative raw material image
+            </span>
+          </div>
+        ) : null}
+
         {/* Placeholder fallback */}
         <div
           className={`fallback-placeholder w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-neutral-50 to-neutral-200 ${

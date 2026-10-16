@@ -13,6 +13,12 @@ export const errorHandler = (err, req, res, _next) => {
     return errorResponse(res, 'Validation failed', 422, 'VALIDATION_ERROR', details);
   }
 
+  // Handle CORS errors
+  if (err.message === 'Not allowed by CORS') {
+    logger.warn(`CORS Rejected [${req.method} ${req.originalUrl}]: Origin ${req.headers?.origin || 'unknown'}`);
+    return errorResponse(res, 'Not allowed by CORS', 403, 'CORS_FORBIDDEN');
+  }
+
   // Log client vs server errors
   if ((err.status && err.status < 500) || (err.statusCode && err.statusCode < 500)) {
     logger.warn(`Client Error [${req.method} ${req.originalUrl}]: ${err.message}`);

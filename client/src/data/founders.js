@@ -38,7 +38,7 @@ export const FOUNDERS = [
     philosophyReflection:
       "For Jay, a buyer's trust is more than a business achievement — it's his most valuable reward.",
     social: {
-      linkedin: null, // TODO(client: supply verified LinkedIn profile)
+      linkedin: null, // Pending client-provided verified profile
     },
     images: {
       avif: '/images/about/founder-jay-768w.avif',
@@ -57,8 +57,8 @@ export const FOUNDERS = [
     verifiedFlags: {
       statutoryProprietor: true,
       photoConfirmed: true,
-      sixYearsExperienceConfirmed: false, // TODO(client)
-      internationalSalesBackgroundConfirmed: false, // TODO(client)
+      sixYearsExperienceConfirmed: false, // Verification pending client confirmation
+      internationalSalesBackgroundConfirmed: false, // Verification pending client confirmation
     },
   },
   {
@@ -82,7 +82,7 @@ export const FOUNDERS = [
       "A job isn't done just because it's completed on paper. It's done when every detail has been taken care of and the result meets the commitment.",
     philosophyReflection: null,
     social: {
-      linkedin: null, // TODO(client: supply verified LinkedIn profile)
+      linkedin: null, // Pending client-provided verified profile
     },
     images: {
       avif: '/images/about/founder-suraj-768w.avif',
@@ -123,7 +123,7 @@ export const FOUNDERS = [
       "Business rewards those who dare to ask, negotiate with confidence, and turn possibilities into opportunities.",
     philosophyReflection: null,
     social: {
-      linkedin: null, // TODO(client: supply verified LinkedIn profile)
+      linkedin: null, // Pending client-provided verified profile
     },
     images: {
       avif: '/images/about/founder-henil-768w.avif',

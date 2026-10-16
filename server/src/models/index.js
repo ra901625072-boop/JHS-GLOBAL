@@ -41,9 +41,11 @@ import AiUsageLog from '../modules/ai/aiUsageLog.model.js';
 import Embedding from '../modules/ai/embedding.model.js';
 import CompanyFact from '../modules/companyFact/companyFact.model.js';
 
-// ─── Associations ──────────────────────────────────────
-
-// Product child tables
+// ─── Product Associations (Hybrid Architecture) ─────────────────
+// Primary specifications, image galleries, and packaging options are stored
+// directly in first-class JSONB columns (specs, images, packing) on the products table
+// for sub-millisecond atomic PDP reads. The child models below remain registered
+// for schema compatibility and optional future normalized data exports.
 Product.hasMany(ProductImage, { foreignKey: 'product_id', as: 'imagesList', onDelete: 'CASCADE' });
 ProductImage.belongsTo(Product, { foreignKey: 'product_id' });
 

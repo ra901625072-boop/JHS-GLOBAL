@@ -5,8 +5,16 @@ import connectDB, { disconnectDB } from '../src/config/db.js';
 import Inquiry from '../src/modules/inquiry/inquiry.model.js';
 
 describe('Inquiry & Sample API Suite', () => {
+  let salesToken = '';
+
   beforeAll(async () => {
     await connectDB();
+
+    const salesRes = await request(app).post('/api/v1/auth/login').send({
+      email: 'sales@exportb2b.com',
+      password: 'Sales@Export2026!',
+    });
+    salesToken = salesRes.body.data.accessToken;
   });
 
   afterAll(async () => {
@@ -134,4 +142,35 @@ describe('Inquiry & Sample API Suite', () => {
     expect(res.body.data.referenceNo).toMatch(/^SMP-\d{4}-\d{6}$/);
     expect(res.body.data.status).toBe('new');
   });
+
+  it('GET /api/v1/inquiries should require staff authentication (401 without Bearer token)', async () => {
+    const res = await request(app).get('/api/v1/inquiries');
+    expect(res.status).toBe(401);
+    expect(res.body.success).toBe(false);
+  });
+
+  it('GET /api/v1/samples should require staff authentication (401 without Bearer token)', async () => {
+    const res = await request(app).get('/api/v1/samples');
+    expect(res.status).toBe(401);
+    expect(res.body.success).toBe(false);
+  });
+
+  it('GET /api/v1/inquiries should succeed with 200 when authenticated as sales staff', async () => {
+    const res = await request(app)
+      .get('/api/v1/inquiries')
+      .set('Authorization', `Bearer ${salesToken}`);
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
+  });
+
+  it('GET /api/v1/samples should succeed with 200 when authenticated as sales staff', async () => {
+    const res = await request(app)
+      .get('/api/v1/samples')
+      .set('Authorization', `Bearer ${salesToken}`);
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
+  });
 });
+

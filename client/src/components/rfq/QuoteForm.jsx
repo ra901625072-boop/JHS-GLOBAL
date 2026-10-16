@@ -466,7 +466,7 @@ export const QuoteForm = () => {
               rows={4}
               value={rawRfqText}
               onChange={(e) => setRawRfqText(e.target.value)}
-              placeholder="e.g. We are EuroFoods GmbH (Munich). Sourcing 20 MT Salem Turmeric Finger (50kg PP bags) and 40 MT Basmati Rice to Hamburg CIF, Nov shipment. Contact: procurement@eurofoods.de / +4989123456."
+              placeholder="e.g. We are EuroFoods GmbH (Munich). Sourcing 20 MT Soybean Meal DOC (50kg PP bags) and 5 MT Ashwagandha Extract (25kg drums) to Hamburg CIF, Nov shipment. Contact: procurement@eurofoods.de / +4989123456."
               maxLength={2000}
               className="w-full text-xs sm:text-sm rounded-lg border border-primary-200 bg-white p-3 focus:outline-none focus:ring-2 focus:ring-primary-800 placeholder:text-neutral-400"
             />

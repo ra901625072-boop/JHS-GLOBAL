@@ -32,7 +32,7 @@ export const ContactPage = () => {
   const tradeFaqs = [
     {
       q: 'What is your standard Minimum Order Quantity (MOQ)?',
-      a: 'For bulk agricultural commodities, grains, and animal feed, our standard MOQ is one 20ft Full Container Load (FCL, approx. 18–26 Metric Tonnes depending on density). For high-value spices, essential oils, and botanical extracts, we accommodate LCL trial orders starting from 250 kg to 1,000 kg.',
+      a: 'For bulk raw materials and animal feed, our standard MOQ is one 20ft Full Container Load (FCL, approx. 18–26 Metric Tonnes depending on density). For high-potency nutraceutical and botanical extracts, we accommodate LCL trial orders starting from 250 kg to 1,000 kg.',
     },
     {
       q: 'What payment and commercial terms do you accept?',
@@ -54,7 +54,7 @@ export const ContactPage = () => {
         <title>Request a Formal Quote (RFQ) & Contact Trade Desk — {brandName}</title>
         <meta
           name="description"
-          content="Submit formal B2B request for quotation for Indian agro commodities, spices, and ingredients. Binding proforma quotation issued within 48 business hours by JHS GLOBAL."
+          content="Submit formal B2B request for quotation for Personal Care Raw Materials, Nutraceutical Ingredients, and Animal Feed. Binding proforma quotation issued within 48 business hours by JHS GLOBAL."
         />
       </Helmet>
 

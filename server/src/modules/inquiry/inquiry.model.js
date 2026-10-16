@@ -1,4 +1,4 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Op } from 'sequelize';
 import { sequelize } from '../../config/db.js';
 import { INQUIRY_STATUSES, INQUIRY_PRIORITIES } from '../../config/constants.js';
 
@@ -153,18 +153,26 @@ export const Inquiry = sequelize.define(
       beforeValidate: async (inquiry) => {
         if (!inquiry.referenceNo) {
           const year = new Date().getFullYear();
-          const last = await Inquiry.findOne({
+          const prefix = `RFQ-${year}-`;
+          const candidates = await Inquiry.findAll({
+            where: {
+              referenceNo: {
+                [Op.like]: `${prefix}%`,
+              },
+            },
             attributes: ['referenceNo'],
-            order: [['id', 'DESC']],
+            order: [['referenceNo', 'DESC']],
+            limit: 10,
           });
           let seq = 1;
-          if (last && last.referenceNo) {
-            const parts = last.referenceNo.split('-');
+          for (const cand of candidates) {
+            const parts = cand.referenceNo.split('-');
             if (parts.length === 3 && !isNaN(parseInt(parts[2], 10))) {
               seq = parseInt(parts[2], 10) + 1;
+              break;
             }
           }
-          inquiry.referenceNo = `RFQ-${year}-${String(seq).padStart(6, '0')}`;
+          inquiry.referenceNo = `${prefix}${String(seq).padStart(6, '0')}`;
         }
       },
     },

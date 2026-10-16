@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import Inquiry from './inquiry.model.js';
 import emailService from '../../services/email.service.js';
 import { processInquiryAiJob } from '../ai/ai.service.js';
@@ -12,19 +12,27 @@ export const inquiryService = {
    */
   async generateReferenceNo() {
     const year = new Date().getFullYear();
-    const last = await Inquiry.findOne({
+    const prefix = `RFQ-${year}-`;
+    const candidates = await Inquiry.findAll({
+      where: {
+        referenceNo: {
+          [Op.like]: `${prefix}%`,
+        },
+      },
       attributes: ['referenceNo'],
-      order: [['id', 'DESC']],
+      order: [['referenceNo', 'DESC']],
+      limit: 10,
     });
     let seq = 1;
-    if (last && last.referenceNo) {
-      const parts = last.referenceNo.split('-');
+    for (const cand of candidates) {
+      const parts = cand.referenceNo.split('-');
       if (parts.length === 3 && !isNaN(parseInt(parts[2], 10))) {
         seq = parseInt(parts[2], 10) + 1;
+        break;
       }
     }
     const sequence = String(seq).padStart(6, '0');
-    return `RFQ-${year}-${sequence}`;
+    return `${prefix}${sequence}`;
   },
 
   /**
@@ -33,8 +41,6 @@ export const inquiryService = {
   async createInquiry(data, clientMeta = {}) {
     // 1. Honeypot anti-spam verification
     const isSpam = Boolean(data.website_hp && data.website_hp.trim().length > 0);
-
-    const referenceNo = await this.generateReferenceNo();
 
     // 2. Hash IP for privacy compliance
     const ipHash = clientMeta.ip
@@ -50,35 +56,48 @@ export const inquiryService = {
       priority = 'hot';
     }
 
-    const savedInquiry = await Inquiry.create({
-      referenceNo,
-      buyer: {
-        name: data.name,
-        email: data.email,
-        phone: data.phone || '',
-        whatsapp: data.whatsapp || '',
-        company: data.company,
-        designation: data.designation || '',
-        website: data.website || '',
-        country: data.country,
-        city: data.city || '',
-        buyerType: data.buyerType || 'importer',
-      },
-      items: data.items || [],
-      destinationPort: data.destinationPort || '',
-      incoterm: data.incoterm || 'CIF',
-      targetShipmentMonth: data.targetShipmentMonth || '',
-      paymentTerm: data.paymentTerm || 'TT',
-      needsPrivateLabel: Boolean(data.needsPrivateLabel),
-      needsSample: Boolean(data.needsSample),
-      message: data.message || '',
-      status: isSpam ? 'spam' : 'new',
-      priority: isSpam ? 'cold' : priority,
-      meta: {
-        ip: ipHash,
-        userAgent: clientMeta.userAgent || '',
-      },
-    });
+    let savedInquiry;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const referenceNo = await this.generateReferenceNo();
+      try {
+        savedInquiry = await Inquiry.create({
+          referenceNo,
+          buyer: {
+            name: data.name,
+            email: data.email,
+            phone: data.phone || '',
+            whatsapp: data.whatsapp || '',
+            company: data.company,
+            designation: data.designation || '',
+            website: data.website || '',
+            country: data.country,
+            city: data.city || '',
+            buyerType: data.buyerType || 'importer',
+          },
+          items: data.items || [],
+          destinationPort: data.destinationPort || '',
+          incoterm: data.incoterm || 'CIF',
+          targetShipmentMonth: data.targetShipmentMonth || '',
+          paymentTerm: data.paymentTerm || 'TT',
+          needsPrivateLabel: Boolean(data.needsPrivateLabel),
+          needsSample: Boolean(data.needsSample),
+          message: data.message || '',
+          status: isSpam ? 'spam' : 'new',
+          priority: isSpam ? 'cold' : priority,
+          meta: {
+            ip: ipHash,
+            userAgent: clientMeta.userAgent || '',
+          },
+        });
+        break;
+      } catch (err) {
+        if (err.name === 'SequelizeUniqueConstraintError' && attempt < 2) {
+          logger.warn(`Reference ${referenceNo} collision detected. Retrying with next sequence...`);
+          continue;
+        }
+        throw err;
+      }
+    }
 
     logger.info(`Inquiry created: ${savedInquiry.referenceNo} for ${savedInquiry.buyer.company}`);
 
@@ -123,7 +142,10 @@ export const inquiryService = {
     if (filters.country) {
       where[Op.and] = where[Op.and] || [];
       where[Op.and].push(
-        Inquiry.sequelize.literal(`"buyer"->>'country' ILIKE '%${filters.country.replace(/'/g, "''")}%'`)
+        Sequelize.where(
+          Sequelize.literal(`"buyer"->>'country'`),
+          { [Op.iLike]: `%${filters.country.trim()}%` }
+        )
       );
     }
 

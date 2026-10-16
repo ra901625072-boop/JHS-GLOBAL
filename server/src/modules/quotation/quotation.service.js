@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import Quotation from './quotation.model.js';
 import Inquiry from '../inquiry/inquiry.model.js';
 import User from '../user/user.model.js';
@@ -60,13 +60,13 @@ export const getQuotations = async ({ status, q, customerId, page = 1, limit = 2
   }
 
   if (q && q.trim()) {
-    const searchTerm = q.trim().replace(/'/g, "''");
+    const searchTerm = q.trim();
     where[Op.or] = [
       { quotationNumber: { [Op.iLike]: `%${searchTerm}%` } },
-      Quotation.sequelize.literal(`"buyer"->>'company' ILIKE '%${searchTerm}%'`),
-      Quotation.sequelize.literal(`"buyer"->>'name' ILIKE '%${searchTerm}%'`),
-      Quotation.sequelize.literal(`"buyer"->>'email' ILIKE '%${searchTerm}%'`),
-      Quotation.sequelize.literal(`"items"::text ILIKE '%${searchTerm}%'`),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'company'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'name'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.literal(`"buyer"->>'email'`), { [Op.iLike]: `%${searchTerm}%` }),
+      Sequelize.where(Sequelize.cast(Sequelize.col('items'), 'text'), { [Op.iLike]: `%${searchTerm}%` }),
     ];
   }
 
