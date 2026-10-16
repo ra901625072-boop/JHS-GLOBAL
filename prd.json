@@ -1,45 +1,46 @@
 {
   "project": "JHS GLOBAL Admin Suite",
-  "branchName": "feat/admin-step2-inquiries-rfq-dashboard",
-  "created_at": "2026-10-16T14:30:00.000Z",
+  "branchName": "feat/admin-step3-sample-dispatch-desk",
+  "created_at": "2026-10-16T15:00:00.000Z",
   "userStories": [
     {
-      "id": "US-INQ-001",
-      "title": "Inquiry Backend, Spam Handling & SLA Endpoints",
-      "description": "Enhance Inquiry model with 48h SLA deadline and spam flags, implement spam/unspam endpoints with audit logging, and calculate remaining SLA time in inquiries queries",
+      "id": "US-SMP-001",
+      "title": "Sample Dispatch Model & Dispatch Management API",
+      "description": "Extend SampleRequest model with courier details, AWB tracking, documents (COA/SDS), notes, and implement admin sample management endpoints with RBAC and audit logging",
       "acceptanceCriteria": [
-        "Inquiry model correctly stores slaDeadline, isSpam, spamFlaggedAt, and spamFlaggedBy with proper beforeCreate and beforeValidate hooks",
-        "POST /api/v1/admin/inquiries/:id/spam flags inquiry as spam with audit log record",
-        "POST /api/v1/admin/inquiries/:id/unspam restores inquiry to 'new' status with audit log record",
-        "GET /api/v1/admin/inquiries calculates slaDeadline, slaRemainingHours, and slaStatus ('critical', 'warning', 'ok', 'breached', 'resolved')",
-        "Unit tests in server/tests/inquiry.test.js or server/tests/admin.test.js pass 100%"
+        "SampleRequest model includes courier, awbNumber, trackingUrl, dispatchedAt, deliveredAt, documents, notes, and assignedTo fields with idempotent table migration",
+        "Courier tracking URL generator automatically creates live tracking links for DHL, FedEx, UPS, Aramex, and India Post",
+        "GET /api/v1/samples supports filtering by status, search query, country, and pagination",
+        "PATCH /api/v1/samples/:id allows updating pipeline status, courier, AWB, and notes with audit log recording",
+        "POST /api/v1/samples/:id/dispatch transitions sample to dispatched, records AWB and tracking URL, and logs audit record",
+        "RBAC strictly enforces that only admin and sales roles can manage sample dispatches"
       ],
       "priority": 1,
       "passes": true
     },
     {
-      "id": "US-INQ-002",
-      "title": "Operations Dashboard Telemetry & SLA Timer",
-      "description": "Provide real-time pipeline telemetry, 48-hour SLA countdown, and urgent alert banners on the Admin Dashboard",
+      "id": "US-SMP-002",
+      "title": "Sample Dispatch Desk UI with Pipeline & Detail Drawer",
+      "description": "Build complete Sample Dispatch Desk page using DataTable, FilterBar, and AdminDrawer with 4 operational tabs",
       "acceptanceCriteria": [
-        "Dashboard metrics endpoint returns urgentSlaLeads count (unreplied RFQs with < 12h remaining or overdue) and pipeline breakdown for canonical 8 statuses",
-        "Dashboard UI displays high-priority SLA warning banner when urgent leads exist",
-        "Recent inquiries table on dashboard displays live SLA badge with color coding (amber < 24h, red < 12h or breached)"
+        "Samples page renders with DataTable, FilterBar, and AdminStatusBadge components",
+        "Table displays Reference No, Buyer & Organization, Destination Country, Products & Qty, Testing Parameters, Courier & AWB with live link, Status, and Received Date",
+        "FilterBar provides status pills for all sample pipeline stages (New, In Review, Preparing, Dispatched, In Transit, Delivered, Feedback Received)",
+        "Detail drawer features 4 focused tabs: Sample Specs & Shipping Address, Dispatch & AWB Tracker, COA/SDS Attachments, and Audit Notes",
+        "Dispatch action validates courier and AWB before confirming dispatch with live tracking URL preview"
       ],
       "priority": 2,
       "passes": true
     },
     {
-      "id": "US-INQ-003",
-      "title": "Inquiries & RFQ Desk UI with DataTable and SLA Countdown",
-      "description": "Upgrade Inquiries desk with DataTable, FilterBar, SLA countdown badges, spam triage, and human-approved AI reply composer",
+      "id": "US-SMP-003",
+      "title": "Technical Document Attachments & Sample Test Coverage",
+      "description": "Implement COA/SDS technical document management for evaluation samples and verify with automated test suite",
       "acceptanceCriteria": [
-        "Inquiries desk uses reusable DataTable, FilterBar, and AdminStatusBadge components",
-        "Table displays Reference No, Buyer Organization/Country, Products, Value/Volume, Status, SLA Timer, and Lead Score",
-        "Detail drawer displays complete buyer profile, commercial terms, line items, and audit history",
-        "AI summary and suggested reply are explicitly badged as [AI GENERATED SUGGESTION — REQUIRES HUMAN APPROVAL]",
-        "Spam action can be triggered from drawer/table with confirmation and instant filter removal",
-        "Zero visual regression on public site"
+        "Admin API client in client/src/admin/api.js provides fetchAdminSamples, fetchAdminSampleById, updateAdminSample, dispatchAdminSample, and attachSampleDocument",
+        "Automated integration tests in server/tests/sample.test.js cover sample creation, status updates, AWB dispatch, document attachments, and RBAC security",
+        "All client and server test suites pass with 100% success",
+        "Zero visual regression on public site verified via verify:no-change"
       ],
       "priority": 3,
       "passes": true

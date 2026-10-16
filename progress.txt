@@ -41,3 +41,24 @@
   - DataTable and FilterBar provide high-density CRM capabilities with zero bundle penalty for public site
   - All AI reply recommendations must display [AI GENERATED SUGGESTION — REQUIRES HUMAN APPROVAL]
 ---
+
+## [2026-10-16 15:49:34] - [US-SMP-001, US-SMP-002, US-SMP-003]
+- Summary: Step 3 complete: Sample Dispatch Desk, live courier tracking URL generation, 4-tab slide-over AdminDrawer, COA/SDS document attachments, automated backend and client test suites, and 0 visual regressions verified.
+- Files modified:
+  - server/src/config/db.js
+  - server/src/modules/sample/sample.model.js
+  - server/src/models/index.js
+  - server/src/modules/sample/sample.validation.js
+  - server/src/modules/sample/sample.service.js
+  - server/src/modules/sample/sample.controller.js
+  - server/src/modules/sample/sample.routes.js
+  - client/src/admin/api.js
+  - client/src/admin/pages/Samples.jsx
+  - client/src/admin/components/AdminStatusBadge.jsx
+  - client/src/tests/components/AdminKit.test.jsx
+  - server/tests/sample.test.js
+- **Learnings for future iterations:**
+  - In Supabase PostgreSQL, new model columns must be guarded with ALTER TABLE IF NOT EXISTS in db.js connectDB() during migrations
+  - AdminStatusBadge must explicitly format and style canonical sample pipeline stages: preparing, dispatched, in_transit, delivered, feedback_received
+  - Live courier tracking URLs support DHL, FedEx, UPS, Aramex, and India Post formats
+---

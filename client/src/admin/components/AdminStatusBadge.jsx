@@ -45,16 +45,18 @@ export const AdminStatusBadge = ({ status, priority, className = '' }) => {
     'negotiation',
     'order_processing',
     'in_production',
+    'preparing',
     'booked',
     'dispatched',
+    'in_transit',
     'on_water',
     'customs_clearance',
     'sample_dispatched',
     'in_progress',
   ].includes(raw);
 
-  // Tier 3: Confirmed / Won / Delivered / Active
-  const isSuccess = ['won', 'confirmed', 'completed', 'delivered', 'active', 'paid', 'stuffing_completed'].includes(raw);
+  // Tier 3: Confirmed / Won / Delivered / Active / Feedback Received
+  const isSuccess = ['won', 'confirmed', 'completed', 'delivered', 'feedback_received', 'active', 'paid', 'stuffing_completed'].includes(raw);
 
   // Tier 4: Critical / Lost / Spam / Overdue
   const isDanger = ['lost', 'spam', 'cancelled', 'rejected', 'overdue', 'hold'].includes(raw);

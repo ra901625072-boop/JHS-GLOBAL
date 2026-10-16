@@ -55,6 +55,35 @@ export const unspamAdminInquiry = async (id) => {
   return response.data;
 };
 
+// Sample Dispatch Desk Management
+export const fetchAdminSamples = async (params = {}) => {
+  const response = await apiClient.get('/samples', { params });
+  return {
+    samples: response.data || [],
+    meta: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
+  };
+};
+
+export const fetchAdminSampleById = async (id) => {
+  const response = await apiClient.get(`/samples/${id}`);
+  return response.data;
+};
+
+export const updateAdminSample = async (id, data) => {
+  const response = await apiClient.patch(`/samples/${id}`, data);
+  return response.data;
+};
+
+export const dispatchAdminSample = async (id, data) => {
+  const response = await apiClient.post(`/samples/${id}/dispatch`, data);
+  return response.data;
+};
+
+export const attachAdminSampleDocument = async (id, data) => {
+  const response = await apiClient.post(`/samples/${id}/documents`, data);
+  return response.data;
+};
+
 // Product Catalogue Management
 export const createAdminProduct = async (data) => {
   const response = await apiClient.post('/admin/products', data);

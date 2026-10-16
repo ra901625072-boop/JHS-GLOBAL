@@ -47,6 +47,17 @@ export const connectDB = async () => {
         ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS is_spam BOOLEAN DEFAULT false;
         ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS spam_flagged_at TIMESTAMP WITH TIME ZONE;
         ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS spam_flagged_by INTEGER;
+
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS courier VARCHAR(50) DEFAULT 'DHL';
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS awb_number VARCHAR(100) DEFAULT '';
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS tracking_url TEXT DEFAULT '';
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS dispatched_at TIMESTAMP WITH TIME ZONE;
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS delivered_at TIMESTAMP WITH TIME ZONE;
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS documents JSONB DEFAULT '[]'::jsonb;
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS notes JSONB DEFAULT '[]'::jsonb;
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS assigned_to INTEGER;
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS inquiry_id INTEGER;
+        ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS estimated_delivery_date TIMESTAMP WITH TIME ZONE;
       `);
     } catch (extErr) {
       logger.debug(`PostgreSQL extension/migration check notice: ${extErr.message}`);

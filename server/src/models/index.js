@@ -85,6 +85,10 @@ CustomerNote.belongsTo(Customer, { foreignKey: 'customer_id' });
 SampleRequest.hasMany(SampleProduct, { foreignKey: 'sample_id', as: 'productsList', onDelete: 'CASCADE' });
 SampleProduct.belongsTo(SampleRequest, { foreignKey: 'sample_id' });
 SampleProduct.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
+SampleRequest.belongsTo(User, { foreignKey: 'assigned_to', as: 'assignee' });
+SampleRequest.belongsTo(Inquiry, { foreignKey: 'inquiry_id', as: 'inquiry' });
+User.hasMany(SampleRequest, { foreignKey: 'assigned_to', as: 'assignedSamples' });
+Inquiry.hasMany(SampleRequest, { foreignKey: 'inquiry_id', as: 'samples' });
 
 // Quotation associations
 Quotation.belongsTo(Inquiry, { foreignKey: 'inquiry_id', as: 'inquiry' });

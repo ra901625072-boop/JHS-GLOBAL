@@ -44,10 +44,65 @@ export const SampleRequest = sequelize.define(
       type: DataTypes.STRING(30),
       defaultValue: 'new',
     },
+    courier: {
+      type: DataTypes.STRING(50),
+      defaultValue: 'DHL',
+    },
+    awbNumber: {
+      type: DataTypes.STRING(100),
+      defaultValue: '',
+      field: 'awb_number',
+    },
     trackingNo: {
       type: DataTypes.STRING(100),
       defaultValue: '',
       field: 'tracking_no',
+    },
+    trackingUrl: {
+      type: DataTypes.TEXT,
+      defaultValue: '',
+      field: 'tracking_url',
+    },
+    dispatchedAt: {
+      type: DataTypes.DATE,
+      defaultValue: null,
+      field: 'dispatched_at',
+    },
+    deliveredAt: {
+      type: DataTypes.DATE,
+      defaultValue: null,
+      field: 'delivered_at',
+    },
+    estimatedDeliveryDate: {
+      type: DataTypes.DATE,
+      defaultValue: null,
+      field: 'estimated_delivery_date',
+    },
+    documents: {
+      type: DataTypes.JSONB,
+      defaultValue: [],
+    },
+    notes: {
+      type: DataTypes.JSONB,
+      defaultValue: [],
+    },
+    assignedTo: {
+      type: DataTypes.INTEGER,
+      defaultValue: null,
+      field: 'assigned_to',
+      references: {
+        model: 'users',
+        key: 'id',
+      },
+    },
+    inquiryId: {
+      type: DataTypes.INTEGER,
+      defaultValue: null,
+      field: 'inquiry_id',
+      references: {
+        model: 'inquiries',
+        key: 'id',
+      },
     },
   },
   {
