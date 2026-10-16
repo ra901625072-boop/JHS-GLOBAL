@@ -33,3 +33,11 @@
   - In PostgreSQL test environment, call await AuditLog.sync() in test beforeAll to guarantee relation existence when testing in isolation.
   - All newly mounted admin module pages are cleanly code-split into sub-1kB chunks, preserving public site performance budgets.
 ---
+
+## [2026-10-16 14:53:11] - [US-INQ-001, US-INQ-002, US-INQ-003]
+- Summary: Step 2: Inquiries, RFQ Desk & Operations Dashboard - 48h SLA deadline calculation, spam/unspam endpoints, audit logging, dashboard urgent alerts, and upgraded Inquiries desk with DataTable and FilterBar.
+- **Learnings for future iterations:**
+  - Include idempotent ALTER TABLE column definitions in connectDB for newly added model fields
+  - DataTable and FilterBar provide high-density CRM capabilities with zero bundle penalty for public site
+  - All AI reply recommendations must display [AI GENERATED SUGGESTION — REQUIRES HUMAN APPROVAL]
+---

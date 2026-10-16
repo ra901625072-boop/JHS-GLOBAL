@@ -116,6 +116,29 @@ export const Dashboard = () => {
         </div>
       </Reveal>
 
+      {/* Urgent 48h SLA Operational Alert */}
+      {operations.urgentSlaLeads > 0 && (
+        <Reveal direction="up" distance={12} duration={0.4} className="mb-4">
+          <div className="p-3.5 bg-gradient-to-r from-rose-500/15 via-rose-500/5 to-transparent border border-rose-300 rounded-xl flex items-center justify-between gap-3 text-xs shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <span className="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs animate-pulse">
+                !
+              </span>
+              <span className="text-rose-950 font-medium">
+                <strong>{operations.urgentSlaLeads} RFQs Awaiting Immediate Response (&le; 12h or Overdue):</strong> JHS GLOBAL 48-hour commercial SLA requires timely quote dispatch to international buyers.
+              </span>
+            </div>
+            <Link
+              to="/admin/inquiries"
+              className="inline-flex items-center gap-1 font-bold text-rose-900 hover:text-rose-700 underline text-xs shrink-0"
+            >
+              <span>Triage Inquiries Desk</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </Reveal>
+      )}
+
       {/* Urgent Operational Outreach Alert */}
       {operations.pendingFollowups > 0 && (
         <Reveal direction="up" distance={12} duration={0.4} className="mb-6">
@@ -377,9 +400,9 @@ export const Dashboard = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 pt-1">
-          {Object.entries(statusCounts)
-            .filter(([_, count]) => count > 0 || ['new', 'quoted', 'negotiation', 'won'].includes(_))
-            .map(([statusKey, count]) => (
+          {['new', 'in_review', 'quoted', 'sample_sent', 'negotiation', 'won', 'lost', 'spam'].map((statusKey) => {
+            const count = statusCounts[statusKey] || 0;
+            return (
               <div
                 key={statusKey}
                 className="p-3 rounded-lg border border-neutral-200/80 bg-neutral-50/70 text-center hover:border-neutral-400 transition-colors"
@@ -391,7 +414,8 @@ export const Dashboard = () => {
                   {count}
                 </div>
               </div>
-            ))}
+            );
+          })}
         </div>
       </Reveal>
 
@@ -422,48 +446,76 @@ export const Dashboard = () => {
                 <th className="px-5 py-3">Requested Commodities</th>
                 <th className="px-5 py-3">Priority</th>
                 <th className="px-5 py-3">Trade Status</th>
+                <th className="px-5 py-3">48H SLA Timer</th>
                 <th className="px-5 py-3 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-100 text-neutral-700 bg-white">
-              {inquiries?.recent?.map((inq) => (
-                <tr key={inq._id} className="hover:bg-primary-50/30 transition-colors">
-                  <td className="px-5 py-3.5 font-mono font-bold text-primary-900 whitespace-nowrap">
-                    {inq.referenceNo}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <div className="font-semibold text-neutral-900">{inq.buyer?.name}</div>
-                    <div className="text-neutral-500 text-[11px]">{inq.buyer?.company}</div>
-                  </td>
-                  <td className="px-5 py-3.5 whitespace-nowrap font-medium text-neutral-800">
-                    {inq.buyer?.country || 'International'}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {inq.items?.length > 0 ? (
-                      <div className="line-clamp-1 text-neutral-700">
-                        {inq.items.map((i) => `${i.productName} (${i.quantity} ${i.unit})`).join(', ')}
-                      </div>
-                    ) : (
-                      <span className="text-neutral-400 italic">Custom inquiry spec</span>
-                    )}
-                  </td>
-                  <td className="px-5 py-3.5 whitespace-nowrap">
-                    <AdminStatusBadge priority={inq.priority} />
-                  </td>
-                  <td className="px-5 py-3.5 whitespace-nowrap">
-                    <AdminStatusBadge status={inq.status} />
-                  </td>
-                  <td className="px-5 py-3.5 text-right whitespace-nowrap">
-                    <Link
-                      to={`/admin/inquiries?id=${inq._id}`}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-neutral-100 hover:bg-primary-50 text-neutral-800 hover:text-primary-900 font-semibold border border-neutral-200 text-xs transition-colors"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>Dossier</span>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+              {inquiries?.recent?.map((inq) => {
+                const inqId = inq.id || inq._id;
+                return (
+                  <tr key={inqId || inq.referenceNo} className="hover:bg-primary-50/30 transition-colors">
+                    <td className="px-5 py-3.5 font-mono font-bold text-primary-900 whitespace-nowrap">
+                      {inq.referenceNo}
+                    </td>
+                    <td className="px-5 py-3.5">
+                      <div className="font-semibold text-neutral-900">{inq.buyer?.name}</div>
+                      <div className="text-neutral-500 text-[11px]">{inq.buyer?.company}</div>
+                    </td>
+                    <td className="px-5 py-3.5 whitespace-nowrap font-medium text-neutral-800">
+                      {inq.buyer?.country || 'International'}
+                    </td>
+                    <td className="px-5 py-3.5">
+                      {inq.items?.length > 0 ? (
+                        <div className="line-clamp-1 text-neutral-700">
+                          {inq.items.map((i) => `${i.productName} (${i.quantity} ${i.unit})`).join(', ')}
+                        </div>
+                      ) : (
+                        <span className="text-neutral-400 italic">Custom inquiry spec</span>
+                      )}
+                    </td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
+                      <AdminStatusBadge priority={inq.priority} />
+                    </td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
+                      <AdminStatusBadge status={inq.status} />
+                    </td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
+                      <span
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold ${
+                          inq.slaStatus === 'resolved'
+                            ? 'bg-neutral-100 text-neutral-600 border border-neutral-200'
+                            : inq.slaStatus === 'breached'
+                            ? 'bg-rose-100 text-rose-800 border border-rose-300 font-bold'
+                            : inq.slaStatus === 'critical'
+                            ? 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse'
+                            : inq.slaStatus === 'warning'
+                            ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                            : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                        }`}
+                      >
+                        <Clock className="w-3 h-3" />
+                        <span>
+                          {inq.slaStatus === 'resolved'
+                            ? 'Resolved'
+                            : inq.slaStatus === 'breached'
+                            ? 'Breached'
+                            : `${inq.slaRemainingHours ?? '--'}h rem`}
+                        </span>
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 text-right whitespace-nowrap">
+                      <Link
+                        to={`/admin/inquiries?id=${inqId}`}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-neutral-100 hover:bg-primary-50 text-neutral-800 hover:text-primary-900 font-semibold border border-neutral-200 text-xs transition-colors"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>Dossier</span>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </AdminTableShell>

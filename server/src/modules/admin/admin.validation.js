@@ -16,6 +16,10 @@ export const sendInquiryReplySchema = z.object({
   status: z.enum(INQUIRY_STATUSES).optional().default('quoted'),
 });
 
+export const spamInquirySchema = z.object({
+  reason: z.string().max(500).optional(),
+});
+
 export const adminProductSchema = z.object({
   name: z.string({ required_error: 'Product name is required' }).min(2).trim(),
   slug: z.string().optional(),

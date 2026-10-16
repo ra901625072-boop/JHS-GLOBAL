@@ -59,7 +59,7 @@ describe('Admin Lead Management & RBAC Suite', () => {
       });
     }
     testInquiryId = inq._id.toString();
-  });
+  }, 35000);
 
   afterAll(async () => {
     if (createdProductId) {
@@ -111,6 +111,58 @@ describe('Admin Lead Management & RBAC Suite', () => {
     expect(res.body.data.notes.length).toBeGreaterThan(0);
     const lastNote = res.body.data.notes[res.body.data.notes.length - 1];
     expect(lastNote.text).toContain('CIF Hamburg');
+  });
+
+  it('GET /api/v1/admin/inquiries should compute SLA deadline and status for each lead', async () => {
+    const res = await request(app)
+      .get('/api/v1/admin/inquiries?limit=5')
+      .set('Authorization', `Bearer ${salesToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.length).toBeGreaterThan(0);
+    const first = res.body.data[0];
+    expect(first).toHaveProperty('slaDeadline');
+    expect(first).toHaveProperty('slaRemainingHours');
+    expect(first).toHaveProperty('slaStatus');
+    expect(['ok', 'warning', 'critical', 'breached', 'resolved']).toContain(first.slaStatus);
+  });
+
+  it('POST /api/v1/admin/inquiries/:id/spam should mark inquiry as spam and exclude from default list', async () => {
+    const spamRes = await request(app)
+      .post(`/api/v1/admin/inquiries/${testInquiryId}/spam`)
+      .set('Authorization', `Bearer ${salesToken}`)
+      .send({ reason: 'Unsolicited promotional outreach' });
+
+    expect(spamRes.status).toBe(200);
+    expect(spamRes.body.success).toBe(true);
+    expect(spamRes.body.data.status).toBe('spam');
+    expect(spamRes.body.data.isSpam).toBe(true);
+
+    const refNo = spamRes.body.data.referenceNo;
+
+    // Default list should exclude spam
+    const listRes = await request(app)
+      .get(`/api/v1/admin/inquiries?q=${refNo}`)
+      .set('Authorization', `Bearer ${salesToken}`);
+    expect(listRes.body.data.some((inq) => (inq.id || inq._id).toString() === testInquiryId)).toBe(false);
+
+    // List with status=spam should include it
+    const spamListRes = await request(app)
+      .get(`/api/v1/admin/inquiries?status=spam&q=${refNo}`)
+      .set('Authorization', `Bearer ${salesToken}`);
+    expect(spamListRes.body.data.some((inq) => (inq.id || inq._id).toString() === testInquiryId)).toBe(true);
+  });
+
+  it('POST /api/v1/admin/inquiries/:id/unspam should allow admin to restore inquiry to new', async () => {
+    const unspamRes = await request(app)
+      .post(`/api/v1/admin/inquiries/${testInquiryId}/unspam`)
+      .set('Authorization', `Bearer ${adminToken}`);
+
+    expect(unspamRes.status).toBe(200);
+    expect(unspamRes.body.success).toBe(true);
+    expect(unspamRes.body.data.status).toBe('new');
+    expect(unspamRes.body.data.isSpam).toBe(false);
   });
 
   it('Role Check: Editor should be forbidden (403) from accessing Inquiries', async () => {

@@ -16,6 +16,8 @@ router.get('/inquiries', authorize('admin', 'sales'), adminController.getInquiri
 router.get('/inquiries/:id', authorize('admin', 'sales'), adminController.getInquiryById);
 router.patch('/inquiries/:id/status', authorize('admin', 'sales'), adminController.updateInquiryStatus);
 router.post('/inquiries/:id/reply', authorize('admin', 'sales'), adminController.sendInquiryReply);
+router.post('/inquiries/:id/spam', authorize('admin', 'sales'), adminController.flagInquirySpam);
+router.post('/inquiries/:id/unspam', authorize('admin'), adminController.unspamInquiry);
 
 // Product Catalogue Administration (accessible by admin and editor)
 router.post('/products', authorize('admin', 'editor'), adminController.createProduct);

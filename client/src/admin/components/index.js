@@ -9,4 +9,4 @@ export { default as AdminDrawer } from './AdminDrawer';
 export { default as DataTable } from './DataTable';
 export { default as FilterBar } from './FilterBar';
 export { default as ModulePlaceholder } from './ModulePlaceholder';
-export { TableSkeleton, CardGridSkeleton, DrawerSkeleton } from './AdminSkeleton';
+export { default as AdminSkeleton, TableSkeleton, CardGridSkeleton, DrawerSkeleton } from './AdminSkeleton';

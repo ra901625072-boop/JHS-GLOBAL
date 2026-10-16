@@ -126,30 +126,38 @@ export const Inquiry = sequelize.define(
       defaultValue: { buyer: false, team: false },
       field: 'email_sent',
     },
+    slaDeadline: {
+      type: DataTypes.DATE,
+      defaultValue: null,
+      field: 'sla_deadline',
+    },
+    isSpam: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      field: 'is_spam',
+    },
+    spamFlaggedAt: {
+      type: DataTypes.DATE,
+      defaultValue: null,
+      field: 'spam_flagged_at',
+    },
+    spamFlaggedBy: {
+      type: DataTypes.INTEGER,
+      defaultValue: null,
+      field: 'spam_flagged_by',
+    },
   },
   {
     tableName: 'inquiries',
     timestamps: true,
     underscored: true,
-    indexes: [
-      {
-        fields: ['reference_no'],
-        unique: true,
-      },
-      {
-        name: 'idx_inquiries_status',
-        fields: ['status'],
-      },
-      {
-        name: 'idx_inquiries_priority',
-        fields: ['priority'],
-      },
-      {
-        name: 'idx_inquiries_created_at',
-        fields: ['created_at'],
-      },
-    ],
     hooks: {
+      beforeCreate: (inquiry) => {
+        if (!inquiry.slaDeadline) {
+          const created = inquiry.createdAt ? new Date(inquiry.createdAt) : new Date();
+          inquiry.slaDeadline = new Date(created.getTime() + 48 * 3600 * 1000);
+        }
+      },
       beforeValidate: async (inquiry) => {
         if (!inquiry.referenceNo) {
           const year = new Date().getFullYear();
@@ -176,6 +184,24 @@ export const Inquiry = sequelize.define(
         }
       },
     },
+    indexes: [
+      {
+        fields: ['reference_no'],
+        unique: true,
+      },
+      {
+        name: 'idx_inquiries_status',
+        fields: ['status'],
+      },
+      {
+        name: 'idx_inquiries_priority',
+        fields: ['priority'],
+      },
+      {
+        name: 'idx_inquiries_created_at',
+        fields: ['created_at'],
+      },
+    ],
   }
 );
 

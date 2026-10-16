@@ -60,8 +60,10 @@ export const DrawerSkeleton = () => {
   );
 };
 
-export default {
-  TableSkeleton,
-  CardGridSkeleton,
-  DrawerSkeleton,
+export const AdminSkeleton = ({ variant = 'table', rows = 5, cols = 6, count = 4, className = '' }) => {
+  if (variant === 'cards') return <div className={className}><CardGridSkeleton count={count} /></div>;
+  if (variant === 'drawer') return <div className={className}><DrawerSkeleton /></div>;
+  return <div className={className}><TableSkeleton rows={rows} cols={cols} /></div>;
 };
+
+export default AdminSkeleton;

@@ -45,6 +45,16 @@ export const sendAdminInquiryReply = async (id, data) => {
   return response.data;
 };
 
+export const flagAdminInquirySpam = async (id, reason = '') => {
+  const response = await apiClient.post(`/admin/inquiries/${id}/spam`, { reason });
+  return response.data;
+};
+
+export const unspamAdminInquiry = async (id) => {
+  const response = await apiClient.post(`/admin/inquiries/${id}/unspam`);
+  return response.data;
+};
+
 // Product Catalogue Management
 export const createAdminProduct = async (data) => {
   const response = await apiClient.post('/admin/products', data);

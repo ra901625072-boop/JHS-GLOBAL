@@ -1,44 +1,45 @@
 {
   "project": "JHS GLOBAL Admin Suite",
-  "branchName": "feat/admin-foundation",
-  "created_at": "2026-10-16T14:04:00.284Z",
+  "branchName": "feat/admin-step2-inquiries-rfq-dashboard",
+  "created_at": "2026-10-16T14:30:00.000Z",
   "userStories": [
     {
-      "id": "US-FND-001",
-      "title": "Admin Layout & Grouped Navigation",
-      "description": "Refactor AdminLayout into 6 grouped categories with responsive sidebar and standardized JHS GLOBAL branding",
+      "id": "US-INQ-001",
+      "title": "Inquiry Backend, Spam Handling & SLA Endpoints",
+      "description": "Enhance Inquiry model with 48h SLA deadline and spam flags, implement spam/unspam endpoints with audit logging, and calculate remaining SLA time in inquiries queries",
       "acceptanceCriteria": [
-        "Admin navigation is organized into 6 clear operational groups: Commercial Sales, Commodity Catalogue, Compliance & Trust, Content CMS, AI Desk, Governance & Settings",
-        "Brand string is standardized to 'JHS GLOBAL' throughout navigation and layout",
-        "Mobile topbar and sliding responsive drawer work smoothly across desktop, tablet, and mobile viewports",
-        "Active route styling and breadcrumbs accurately indicate current location"
+        "Inquiry model correctly stores slaDeadline, isSpam, spamFlaggedAt, and spamFlaggedBy with proper beforeCreate and beforeValidate hooks",
+        "POST /api/v1/admin/inquiries/:id/spam flags inquiry as spam with audit log record",
+        "POST /api/v1/admin/inquiries/:id/unspam restores inquiry to 'new' status with audit log record",
+        "GET /api/v1/admin/inquiries calculates slaDeadline, slaRemainingHours, and slaStatus ('critical', 'warning', 'ok', 'breached', 'resolved')",
+        "Unit tests in server/tests/inquiry.test.js or server/tests/admin.test.js pass 100%"
       ],
       "priority": 1,
       "passes": true
     },
     {
-      "id": "US-FND-002",
-      "title": "Server-Side RBAC & Audit Logging",
-      "description": "Implement AuditLog Sequelize model and server-side RBAC authorization verification",
+      "id": "US-INQ-002",
+      "title": "Operations Dashboard Telemetry & SLA Timer",
+      "description": "Provide real-time pipeline telemetry, 48-hour SLA countdown, and urgent alert banners on the Admin Dashboard",
       "acceptanceCriteria": [
-        "AuditLog Sequelize model created in server/src/modules/audit/auditLog.model.js and registered in models/index.js",
-        "Audit log helper utility logs mutations with sanitized before/after snapshots and IP addresses",
-        "Role authorization middleware strictly enforces access rules for admin, sales, editor, and viewer roles"
+        "Dashboard metrics endpoint returns urgentSlaLeads count (unreplied RFQs with < 12h remaining or overdue) and pipeline breakdown for canonical 8 statuses",
+        "Dashboard UI displays high-priority SLA warning banner when urgent leads exist",
+        "Recent inquiries table on dashboard displays live SLA badge with color coding (amber < 24h, red < 12h or breached)"
       ],
       "priority": 2,
       "passes": true
     },
     {
-      "id": "US-FND-003",
-      "title": "Core Admin Component Kit & Skeletons",
-      "description": "Build and test reusable admin component kit: DataTable, FilterBar, StatusBadge, DetailDrawer, FormKit, and Skeletons",
+      "id": "US-INQ-003",
+      "title": "Inquiries & RFQ Desk UI with DataTable and SLA Countdown",
+      "description": "Upgrade Inquiries desk with DataTable, FilterBar, SLA countdown badges, spam triage, and human-approved AI reply composer",
       "acceptanceCriteria": [
-        "DataTable component supports sorting, pagination, empty states, and selection",
-        "FilterBar component supports debounced search and status pills",
-        "StatusBadge component pairs status color tokens with icons and accessible text",
-        "DetailDrawer component provides slide-out drawer with focus trap and unsaved changes warning",
-        "Admin skeleton loaders prevent layout shift during queries",
-        "Component kit unit tests pass with 100% success"
+        "Inquiries desk uses reusable DataTable, FilterBar, and AdminStatusBadge components",
+        "Table displays Reference No, Buyer Organization/Country, Products, Value/Volume, Status, SLA Timer, and Lead Score",
+        "Detail drawer displays complete buyer profile, commercial terms, line items, and audit history",
+        "AI summary and suggested reply are explicitly badged as [AI GENERATED SUGGESTION — REQUIRES HUMAN APPROVAL]",
+        "Spam action can be triggered from drawer/table with confirmation and instant filter removal",
+        "Zero visual regression on public site"
       ],
       "priority": 3,
       "passes": true

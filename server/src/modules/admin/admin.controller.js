@@ -1,5 +1,5 @@
 import * as adminService from './admin.service.js';
-import { updateInquiryStatusSchema, sendInquiryReplySchema, adminProductSchema } from './admin.validation.js';
+import { updateInquiryStatusSchema, sendInquiryReplySchema, adminProductSchema, spamInquirySchema } from './admin.validation.js';
 import { successResponse } from '../../utils/apiResponse.js';
 
 export const getDashboard = async (req, res, next) => {
@@ -37,7 +37,7 @@ export const getInquiryById = async (req, res, next) => {
 export const updateInquiryStatus = async (req, res, next) => {
   try {
     const validatedData = updateInquiryStatusSchema.parse(req.body);
-    const updated = await adminService.updateInquiryStatus(req.params.id, validatedData, req.user);
+    const updated = await adminService.updateInquiryStatus(req.params.id, validatedData, req.user, req);
     return successResponse(res, updated, 200);
   } catch (error) {
     next(error);
@@ -47,7 +47,26 @@ export const updateInquiryStatus = async (req, res, next) => {
 export const sendInquiryReply = async (req, res, next) => {
   try {
     const validatedData = sendInquiryReplySchema.parse(req.body);
-    const updated = await adminService.sendInquiryReply(req.params.id, validatedData, req.user);
+    const updated = await adminService.sendInquiryReply(req.params.id, validatedData, req.user, req);
+    return successResponse(res, updated, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const flagInquirySpam = async (req, res, next) => {
+  try {
+    const validatedData = spamInquirySchema.parse(req.body);
+    const updated = await adminService.flagInquiryAsSpam(req.params.id, validatedData, req.user, req);
+    return successResponse(res, updated, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const unspamInquiry = async (req, res, next) => {
+  try {
+    const updated = await adminService.unspamInquiry(req.params.id, req.user, req);
     return successResponse(res, updated, 200);
   } catch (error) {
     next(error);

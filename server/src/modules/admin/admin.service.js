@@ -12,6 +12,43 @@ import Customer from '../customer/customer.model.js';
 import emailService from '../../services/email.service.js';
 import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
+import { recordAuditLog } from '../audit/audit.service.js';
+
+export const computeSla = (inquiry) => {
+  const plain = inquiry.toJSON ? inquiry.toJSON() : { ...inquiry };
+  const createdDate = plain.createdAt ? new Date(plain.createdAt) : new Date();
+  const slaDeadlineDate = plain.slaDeadline
+    ? new Date(plain.slaDeadline)
+    : new Date(createdDate.getTime() + 48 * 3600 * 1000);
+
+  const deadlineMs = slaDeadlineDate.getTime();
+  const nowMs = Date.now();
+  const diffMs = deadlineMs - nowMs;
+  const slaRemainingHours = Math.round((diffMs / (3600 * 1000)) * 10) / 10;
+
+  const resolvedStatuses = ['quoted', 'sample_sent', 'negotiation', 'won', 'lost', 'spam'];
+  let slaStatus = 'ok';
+
+  if (resolvedStatuses.includes(plain.status) || plain.isSpam || plain.emailSent?.buyer) {
+    slaStatus = 'resolved';
+  } else if (diffMs <= 0) {
+    slaStatus = 'breached';
+  } else if (slaRemainingHours <= 12) {
+    slaStatus = 'critical';
+  } else if (slaRemainingHours <= 24) {
+    slaStatus = 'warning';
+  } else {
+    slaStatus = 'ok';
+  }
+
+  return {
+    ...plain,
+    slaDeadline: slaDeadlineDate.toISOString(),
+    slaRemainingHours,
+    slaRemainingMs: diffMs,
+    slaStatus,
+  };
+};
 
 export const getDashboardMetrics = async () => {
   const DASHBOARD_CACHE_KEY = 'admin:dashboard_metrics';
@@ -25,6 +62,7 @@ export const getDashboardMetrics = async () => {
     newInquiries,
     inquiriesByStatusRows,
     recentInquiriesRows,
+    activeUnrepliedInquiries,
     totalProducts,
     activeProducts,
     totalSamples,
@@ -38,7 +76,7 @@ export const getDashboardMetrics = async () => {
     topCountriesRows,
   ] = await Promise.all([
     Inquiry.count(),
-    Inquiry.count({ where: { status: 'new' } }),
+    Inquiry.count({ where: { status: 'new', isSpam: false } }),
     Inquiry.findAll({
       attributes: ['status', [sequelize.fn('count', sequelize.col('id')), 'count']],
       group: ['status'],
@@ -47,7 +85,14 @@ export const getDashboardMetrics = async () => {
     Inquiry.findAll({
       order: [['createdAt', 'DESC']],
       limit: 5,
-      attributes: ['id', 'referenceNo', 'buyer', 'status', 'priority', 'items', 'createdAt'],
+      attributes: ['id', 'referenceNo', 'buyer', 'status', 'priority', 'items', 'createdAt', 'slaDeadline', 'isSpam', 'emailSent'],
+    }),
+    Inquiry.findAll({
+      where: {
+        status: { [Op.in]: ['new', 'in_review'] },
+        isSpam: false,
+      },
+      attributes: ['id', 'status', 'createdAt', 'slaDeadline', 'isSpam', 'emailSent'],
     }),
     Product.count(),
     Product.count({ where: { isActive: true } }),
@@ -79,27 +124,30 @@ export const getDashboardMetrics = async () => {
 
   const statusMap = {
     new: 0,
-    contacted: 0,
-    requirement_confirmed: 0,
-    quotation_preparing: 0,
-    quotation_sent: 0,
-    negotiation: 0,
-    confirmed: 0,
-    order_processing: 0,
-    completed: 0,
-    rejected: 0,
-    lost: 0,
-    on_hold: 0,
     in_review: 0,
     quoted: 0,
     sample_sent: 0,
+    negotiation: 0,
     won: 0,
+    lost: 0,
     spam: 0,
   };
 
   inquiriesByStatusRows.forEach((item) => {
     if (statusMap[item.status] !== undefined) {
       statusMap[item.status] = parseInt(item.count, 10);
+    }
+  });
+
+  const now = Date.now();
+  let urgentSlaLeads = 0;
+  activeUnrepliedInquiries.forEach((inq) => {
+    const deadline = inq.slaDeadline
+      ? new Date(inq.slaDeadline).getTime()
+      : new Date(inq.createdAt || now).getTime() + 48 * 3600 * 1000;
+    const remainingHours = (deadline - now) / (3600 * 1000);
+    if (remainingHours <= 12) {
+      urgentSlaLeads += 1;
     }
   });
 
@@ -111,10 +159,11 @@ export const getDashboardMetrics = async () => {
       total: totalInquiries,
       new: newInquiries,
       byStatus: statusMap,
-      recent: recentInquiriesRows.map((r) => r.toJSON()),
+      recent: recentInquiriesRows.map((r) => computeSla(r)),
     },
     operations: {
       newInquiries,
+      urgentSlaLeads,
       pendingFollowups: pendingTasks,
       quotesSent: totalQuotes,
       awaitingReply: quotesSent,
@@ -151,8 +200,14 @@ export const getAdminInquiries = async ({
 }) => {
   const where = {};
 
-  if (status && status !== 'all') {
+  if (status === 'spam') {
+    where[Op.or] = [{ status: 'spam' }, { isSpam: true }];
+  } else if (status && status !== 'all') {
     where.status = status;
+    where.isSpam = false;
+  } else {
+    where.status = { [Op.ne]: 'spam' };
+    where.isSpam = false;
   }
 
   if (priority && priority !== 'all') {
@@ -202,11 +257,11 @@ export const getAdminInquiries = async ({
 
   return {
     inquiries: rows.map((r) => {
-      const plain = r.toJSON();
-      if (plain.assignee) {
-        plain.assignedTo = plain.assignee;
+      const withSla = computeSla(r);
+      if (withSla.assignee) {
+        withSla.assignedTo = withSla.assignee;
       }
-      return plain;
+      return withSla;
     }),
     pagination: {
       total: count,
@@ -234,20 +289,22 @@ export const getAdminInquiryById = async (id) => {
     throw error;
   }
 
-  const plain = inquiry.toJSON();
-  if (plain.assignee) {
-    plain.assignedTo = plain.assignee;
+  const withSla = computeSla(inquiry);
+  if (withSla.assignee) {
+    withSla.assignedTo = withSla.assignee;
   }
-  return plain;
+  return withSla;
 };
 
-export const updateInquiryStatus = async (id, { status, priority, note, assignedTo }, user) => {
+export const updateInquiryStatus = async (id, { status, priority, note, assignedTo }, user = null, req = null) => {
   const inquiry = await Inquiry.findByPk(id);
   if (!inquiry) {
     const error = new Error('Inquiry not found');
     error.statusCode = 404;
     throw error;
   }
+
+  const beforeSnapshot = inquiry.toJSON();
 
   if (status) inquiry.status = status;
   if (priority) inquiry.priority = priority;
@@ -258,7 +315,7 @@ export const updateInquiryStatus = async (id, { status, priority, note, assigned
   if (note && note.trim()) {
     const existingNotes = Array.isArray(inquiry.notes) ? [...inquiry.notes] : [];
     existingNotes.push({
-      by: user.name || 'Admin',
+      by: user?.name || 'Admin',
       text: note.trim(),
       at: new Date().toISOString(),
     });
@@ -266,12 +323,25 @@ export const updateInquiryStatus = async (id, { status, priority, note, assigned
   }
 
   await inquiry.save();
-  logger.info(`Inquiry ${inquiry.referenceNo} updated by ${user.name} (${user.role}) - Status: ${inquiry.status}`);
 
-  return inquiry;
+  await recordAuditLog({
+    req,
+    user,
+    action: 'inquiry.update_status',
+    entityType: 'inquiry',
+    entityId: inquiry.id,
+    beforeSnapshot,
+    afterSnapshot: inquiry.toJSON(),
+    metadata: { status, priority, assignedTo },
+  });
+
+  cacheService.del('admin:dashboard_metrics').catch(() => {});
+  logger.info(`Inquiry ${inquiry.referenceNo} updated by ${user?.name || 'Admin'} (${user?.role || 'staff'}) - Status: ${inquiry.status}`);
+
+  return computeSla(inquiry);
 };
 
-export const sendInquiryReply = async (id, { subject, message, status = 'quoted' }, user) => {
+export const sendInquiryReply = async (id, { subject, message, status = 'quoted' }, user = null, req = null) => {
   if (!id || isNaN(Number(id)) || Number(id) > 2147483647) {
     const error = new Error('Inquiry not found');
     error.statusCode = 404;
@@ -291,13 +361,15 @@ export const sendInquiryReply = async (id, { subject, message, status = 'quoted'
     throw error;
   }
 
+  const beforeSnapshot = inquiry.toJSON();
+
   // 1. Dispatch approved email through email service
   const emailResult = await emailService.sendBuyerReply({
     to: inquiry.buyer.email,
     subject,
     message,
     referenceNo: inquiry.referenceNo,
-    senderName: user.name || 'International Trade Desk',
+    senderName: user?.name || 'International Trade Desk',
   });
 
   if (!emailResult.success) {
@@ -312,25 +384,130 @@ export const sendInquiryReply = async (id, { subject, message, status = 'quoted'
 
   // 3. Record approval and audit note
   const ai = inquiry.ai ? { ...inquiry.ai } : {};
-  ai.approvedBy = user.id;
+  ai.approvedBy = user?.id || null;
   ai.approvedAt = new Date().toISOString();
   ai.replySubject = subject;
   inquiry.ai = ai;
 
   const existingNotes = Array.isArray(inquiry.notes) ? [...inquiry.notes] : [];
   existingNotes.push({
-    by: user.name || 'Sales Desk',
+    by: user?.name || 'Sales Desk',
     text: `Commercial reply approved and sent to buyer (${inquiry.buyer.email}) with subject: "${subject}"`,
     at: new Date().toISOString(),
   });
   inquiry.notes = existingNotes;
 
   await inquiry.save();
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'inquiry.send_reply',
+    entityType: 'inquiry',
+    entityId: inquiry.id,
+    beforeSnapshot,
+    afterSnapshot: inquiry.toJSON(),
+    metadata: { subject, recipient: inquiry.buyer?.email },
+  });
+
+  cacheService.del('admin:dashboard_metrics').catch(() => {});
   logger.info(
-    `Inquiry ${inquiry.referenceNo} reply approved & sent by ${user.name} (${user.role}) - Status: ${inquiry.status}`
+    `Inquiry ${inquiry.referenceNo} reply approved & sent by ${user?.name || 'Staff'} (${user?.role || 'sales'}) - Status: ${inquiry.status}`
   );
 
-  return inquiry;
+  return computeSla(inquiry);
+};
+
+export const flagInquiryAsSpam = async (id, { reason = '' } = {}, user = null, req = null) => {
+  const inquiry = await Inquiry.findByPk(id);
+  if (!inquiry) {
+    const error = new Error('Inquiry not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = inquiry.toJSON();
+
+  inquiry.status = 'spam';
+  inquiry.isSpam = true;
+  inquiry.spamFlaggedAt = new Date();
+  inquiry.spamFlaggedBy = user?.id || null;
+
+  const notes = Array.isArray(inquiry.notes) ? [...inquiry.notes] : [];
+  notes.push({
+    by: user?.name || 'Admin',
+    text: `Marked as SPAM${reason ? `: ${reason}` : ''}`,
+    at: new Date().toISOString(),
+  });
+  inquiry.notes = notes;
+
+  const ai = inquiry.ai ? { ...inquiry.ai } : {};
+  ai.isSpam = true;
+  if (reason) ai.spamReason = reason;
+  inquiry.ai = ai;
+
+  await inquiry.save();
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'inquiry.spam',
+    entityType: 'inquiry',
+    entityId: inquiry.id,
+    beforeSnapshot,
+    afterSnapshot: inquiry.toJSON(),
+    metadata: { reason },
+  });
+
+  cacheService.del('admin:dashboard_metrics').catch(() => {});
+  logger.info(`Inquiry ${inquiry.referenceNo} marked as SPAM by ${user?.name || 'Admin'}`);
+
+  return computeSla(inquiry);
+};
+
+export const unspamInquiry = async (id, user = null, req = null) => {
+  const inquiry = await Inquiry.findByPk(id);
+  if (!inquiry) {
+    const error = new Error('Inquiry not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = inquiry.toJSON();
+
+  inquiry.status = 'new';
+  inquiry.isSpam = false;
+  inquiry.spamFlaggedAt = null;
+  inquiry.spamFlaggedBy = null;
+
+  const notes = Array.isArray(inquiry.notes) ? [...inquiry.notes] : [];
+  notes.push({
+    by: user?.name || 'Admin',
+    text: 'Restored from SPAM to NEW status',
+    at: new Date().toISOString(),
+  });
+  inquiry.notes = notes;
+
+  const ai = inquiry.ai ? { ...inquiry.ai } : {};
+  ai.isSpam = false;
+  inquiry.ai = ai;
+
+  await inquiry.save();
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'inquiry.unspam',
+    entityType: 'inquiry',
+    entityId: inquiry.id,
+    beforeSnapshot,
+    afterSnapshot: inquiry.toJSON(),
+  });
+
+  cacheService.del('admin:dashboard_metrics').catch(() => {});
+  logger.info(`Inquiry ${inquiry.referenceNo} un-spammed by ${user?.name || 'Admin'}`);
+
+  return computeSla(inquiry);
 };
 
 export const createAdminProduct = async (productData) => {
@@ -385,11 +562,14 @@ export const softDeleteAdminProduct = async (id) => {
 };
 
 export default {
+  computeSla,
   getDashboardMetrics,
   getAdminInquiries,
   getAdminInquiryById,
   updateInquiryStatus,
   sendInquiryReply,
+  flagInquiryAsSpam,
+  unspamInquiry,
   createAdminProduct,
   updateAdminProduct,
   softDeleteAdminProduct,

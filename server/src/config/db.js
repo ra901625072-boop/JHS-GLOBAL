@@ -38,12 +38,18 @@ export const connectDB = async () => {
     await sequelize.authenticate();
     logger.info(`PostgreSQL connected: ${sequelize.config.host}/${sequelize.config.database}`);
 
-    // Ensure PostgreSQL extensions exist if user has permission
+    // Ensure PostgreSQL extensions and columns exist if user has permission
     try {
       await sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
       await sequelize.query('CREATE EXTENSION IF NOT EXISTS "pg_trgm";');
+      await sequelize.query(`
+        ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS sla_deadline TIMESTAMP WITH TIME ZONE;
+        ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS is_spam BOOLEAN DEFAULT false;
+        ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS spam_flagged_at TIMESTAMP WITH TIME ZONE;
+        ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS spam_flagged_by INTEGER;
+      `);
     } catch (extErr) {
-      logger.debug(`PostgreSQL extension check notice: ${extErr.message}`);
+      logger.debug(`PostgreSQL extension/migration check notice: ${extErr.message}`);
     }
 
     // Sync all models (create tables if they don't exist in development)
