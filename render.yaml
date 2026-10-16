@@ -22,7 +22,7 @@ services:
       - key: JWT_REFRESH_EXPIRES_IN
         value: 7d
       - key: CLIENT_URL
-        value: ""
+        value: https://jhs-global.onrender.com
       - key: LLM_PROVIDER
         value: gemini
       - key: LLM_API_KEY

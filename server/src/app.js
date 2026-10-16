@@ -63,32 +63,88 @@ export const createApp = () => {
     })
   );
 
+  // Helper to determine if an origin is permitted
+  const isAllowedOrigin = (origin, req) => {
+    if (!origin) return true;
+
+    // Configured allowed origins from environment and standard development ports
+    const allowedOrigins = [
+      env.CLIENT_URL,
+      process.env.CLIENT_URL,
+      process.env.RENDER_EXTERNAL_URL,
+      ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim()) : []),
+      'https://jhs-global.onrender.com',
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      'http://localhost:4173',
+      'http://127.0.0.1:4173',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      'http://localhost:5000',
+      'http://127.0.0.1:5000',
+    ].filter(Boolean);
+
+    if (allowedOrigins.includes(origin)) {
+      return true;
+    }
+
+    try {
+      const parsedOrigin = new URL(origin);
+
+      // 1. Same-Origin Check: Request Origin host matches server Host header
+      const host = req?.headers?.host;
+      if (host && (parsedOrigin.host === host || parsedOrigin.hostname === host.split(':')[0])) {
+        return true;
+      }
+
+      // 2. Render wildcard deployments (*.onrender.com)
+      if (parsedOrigin.hostname.endsWith('.onrender.com')) {
+        return true;
+      }
+
+      // 3. Localhost on any port in development/test
+      if (env.NODE_ENV !== 'production' && (parsedOrigin.hostname === 'localhost' || parsedOrigin.hostname === '127.0.0.1')) {
+        return true;
+      }
+    } catch {
+      return false;
+    }
+
+    return false;
+  };
+
   // CORS Configuration
   app.use(
-    cors({
-      origin: (origin, callback) => {
-        if (!origin) {
-          return callback(null, true);
-        }
-        const defaultAllowedOrigins = [
-          env.CLIENT_URL,
-          'http://localhost:5173',
-          'http://127.0.0.1:5173',
-          'http://localhost:4173',
-          'http://127.0.0.1:4173',
-          'http://localhost:3000',
-        ].filter(Boolean);
+    cors((req, callback) => {
+      // Allow public static assets and SEO metadata to be fetched freely without CORS blocking
+      const isPublicStatic =
+        req.path.startsWith('/assets/') ||
+        req.path.startsWith('/fonts/') ||
+        req.path.startsWith('/images/') ||
+        req.path === '/favicon.ico' ||
+        req.path === '/robots.txt' ||
+        req.path === '/sitemap.xml';
 
-        if (defaultAllowedOrigins.includes(origin)) {
-          return callback(null, true);
-        }
-        const corsError = new Error('Not allowed by CORS');
-        corsError.status = 403;
-        return callback(corsError);
-      },
-      credentials: true,
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization', 'Idempotency-Key'],
+      if (isPublicStatic) {
+        return callback(null, {
+          origin: true,
+          methods: ['GET', 'HEAD', 'OPTIONS'],
+        });
+      }
+
+      const origin = req.headers.origin;
+      if (isAllowedOrigin(origin, req)) {
+        return callback(null, {
+          origin: true,
+          credentials: true,
+          methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+          allowedHeaders: ['Content-Type', 'Authorization', 'Idempotency-Key'],
+        });
+      }
+
+      const corsError = new Error('Not allowed by CORS');
+      corsError.status = 403;
+      return callback(corsError);
     })
   );
 
@@ -166,6 +222,8 @@ export const createApp = () => {
         maxAge: '1y',
         immutable: true,
         setHeaders: (res, filePath) => {
+          // Allow cross-origin asset access for fonts, styles, and module scripts
+          res.setHeader('Access-Control-Allow-Origin', '*');
           // HTML files and service worker must revalidate immediately
           if (filePath.endsWith('.html') || filePath.endsWith('sw.js')) {
             res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');

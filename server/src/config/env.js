@@ -14,7 +14,10 @@ dotenv.config();
 const envSchema = z.object({
   PORT: z.coerce.number().default(5000),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  CLIENT_URL: z.string().default('http://localhost:5173'),
+  CLIENT_URL: z
+    .string()
+    .optional()
+    .transform((val) => (val && val.trim() !== '' ? val.trim() : (process.env.RENDER_EXTERNAL_URL || 'http://localhost:5173'))),
   DATABASE_URL: z.string().default('postgres://postgres:postgres@localhost:5432/export_b2b'),
   REDIS_URL: z.string().optional().default(''),
   JWT_ACCESS_SECRET: z.string().min(16).default('dev_jwt_access_secret_export_b2b_super_secure_key_32bytes_min'),

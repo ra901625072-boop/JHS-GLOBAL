@@ -76,6 +76,40 @@ describe('Security & Resilience Hardening Suite', () => {
       expect(res.status).toBe(200);
       expect(res.headers['access-control-allow-origin']).toBe('http://localhost:5173');
     });
+
+    it('should accept Render production domain and wildcard onrender.com origins', async () => {
+      const res = await request(app)
+        .get('/api/v1/health')
+        .set('Origin', 'https://jhs-global.onrender.com');
+
+      expect(res.status).toBe(200);
+      expect(res.headers['access-control-allow-origin']).toBe('https://jhs-global.onrender.com');
+    });
+
+    it('should accept same-origin requests matching request Host header', async () => {
+      const res = await request(app)
+        .get('/api/v1/health')
+        .set('Host', 'export-hub.jhsglobal.com')
+        .set('Origin', 'https://export-hub.jhsglobal.com');
+
+      expect(res.status).toBe(200);
+      expect(res.headers['access-control-allow-origin']).toBe('https://export-hub.jhsglobal.com');
+    });
+
+    it('should allow static assets and fonts to be fetched with Origin without CORS 403 rejection', async () => {
+      const fontRes = await request(app)
+        .get('/fonts/playfair-display-latin-600-normal.woff2')
+        .set('Origin', 'https://jhs-global.onrender.com');
+
+      // Should not be rejected with CORS 403 (can be 200 or 404 if file missing in dev test, but NOT 403)
+      expect(fontRes.status).not.toBe(403);
+
+      const assetRes = await request(app)
+        .get('/assets/vendor-react-test.js')
+        .set('Origin', 'https://jhs-global.onrender.com');
+
+      expect(assetRes.status).not.toBe(403);
+    });
   });
 
   // ─── 2. SQL Injection Resistance ──────────────────────────────────
