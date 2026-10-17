@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import AuditLog from './auditLog.model.js';
 import logger from '../../utils/logger.js';
 
@@ -77,6 +78,15 @@ export const getAuditLogs = async (params = {}) => {
   if (params.entityType) where.entityType = String(params.entityType).toLowerCase();
   if (params.action) where.action = String(params.action).toLowerCase();
   if (params.userId) where.userId = parseInt(params.userId, 10);
+  if (params.search && params.search.trim()) {
+    const s = params.search.trim();
+    where[Op.or] = [
+      { userName: { [Op.iLike]: `%${s}%` } },
+      { action: { [Op.iLike]: `%${s}%` } },
+      { entityType: { [Op.iLike]: `%${s}%` } },
+      { ipAddress: { [Op.iLike]: `%${s}%` } },
+    ];
+  }
 
   const { rows, count } = await AuditLog.findAndCountAll({
     where,

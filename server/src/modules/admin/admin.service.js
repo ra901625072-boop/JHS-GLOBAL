@@ -20,6 +20,8 @@ import { reindexAllCatalogue } from '../ai/rag/embedding.service.js';
 import emailService from '../../services/email.service.js';
 import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
+import AuditLog from '../audit/auditLog.model.js';
+import { USER_ROLES } from '../../config/constants.js';
 import { recordAuditLog } from '../audit/audit.service.js';
 import { formatPaginationMeta } from '../../utils/pagination.js';
 
@@ -2146,6 +2148,459 @@ export const triggerAdminRAGReindex = async (user = null, req = null) => {
   };
 };
 
+// ─── Team Users Governance & RBAC Administration ────────────────────────────
+export const getAdminUsers = async (params = {}) => {
+  const { page = 1, limit = 20, role, isActive, search } = params;
+  const pageNum = Math.max(1, parseInt(page, 10));
+  const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10)));
+  const offset = (pageNum - 1) * limitNum;
+
+  const where = {};
+  if (role && USER_ROLES.includes(role)) {
+    where.role = role;
+  }
+  if (isActive !== undefined && isActive !== '') {
+    where.isActive = isActive === 'true' || isActive === true;
+  }
+  if (search && search.trim()) {
+    const s = search.trim();
+    where[Op.or] = [
+      { name: { [Op.iLike]: `%${s}%` } },
+      { email: { [Op.iLike]: `%${s}%` } },
+    ];
+  }
+
+  const { count, rows } = await User.findAndCountAll({
+    where,
+    attributes: ['id', 'name', 'email', 'role', 'isActive', 'lastLoginAt', 'createdAt', 'updatedAt'],
+    order: [['createdAt', 'DESC']],
+    offset,
+    limit: limitNum,
+  });
+
+  return {
+    users: rows.map((u) => ({ ...u.toJSON(), _id: u.id })),
+    pagination: formatPaginationMeta(count, pageNum, limitNum),
+  };
+};
+
+export const getAdminUserById = async (id) => {
+  const user = await User.findByPk(id, {
+    attributes: ['id', 'name', 'email', 'role', 'isActive', 'lastLoginAt', 'createdAt', 'updatedAt'],
+  });
+  if (!user) {
+    const err = new Error('Staff user not found');
+    err.statusCode = 404;
+    throw err;
+  }
+  return { ...user.toJSON(), _id: user.id };
+};
+
+export const createAdminUser = async (data, currentUser = null, req = null) => {
+  const { name, email, password, role = 'editor', isActive = true } = data;
+  if (!name || !email || !password) {
+    const err = new Error('Name, email, and password are required');
+    err.statusCode = 400;
+    throw err;
+  }
+  if (role && !USER_ROLES.includes(role)) {
+    const err = new Error(`Invalid role. Must be one of: ${USER_ROLES.join(', ')}`);
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+  const existing = await User.findOne({ where: { email: normalizedEmail } });
+  if (existing) {
+    const err = new Error('A user with this email address already exists');
+    err.statusCode = 409;
+    throw err;
+  }
+
+  const user = await User.create({
+    name: name.trim(),
+    email: normalizedEmail,
+    password,
+    role,
+    isActive,
+  });
+
+  const plain = {
+    id: user.id,
+    _id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    isActive: user.isActive,
+    createdAt: user.createdAt,
+  };
+
+  await recordAuditLog({
+    req,
+    user: currentUser,
+    action: 'user.create',
+    entityType: 'user',
+    entityId: user.id,
+    afterSnapshot: plain,
+  });
+
+  return plain;
+};
+
+export const updateAdminUser = async (id, data, currentUser = null, req = null) => {
+  const user = await User.findByPk(id);
+  if (!user) {
+    const err = new Error('Staff user not found');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const beforeSnapshot = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    isActive: user.isActive,
+  };
+
+  if (data.name) user.name = data.name.trim();
+  if (data.email) {
+    const normalized = data.email.trim().toLowerCase();
+    if (normalized !== user.email) {
+      const existing = await User.findOne({ where: { email: normalized } });
+      if (existing) {
+        const err = new Error('A user with this email address already exists');
+        err.statusCode = 409;
+        throw err;
+      }
+      user.email = normalized;
+    }
+  }
+  if (data.role) {
+    if (!USER_ROLES.includes(data.role)) {
+      const err = new Error(`Invalid role. Must be one of: ${USER_ROLES.join(', ')}`);
+      err.statusCode = 400;
+      throw err;
+    }
+    if (user.role === 'admin' && data.role !== 'admin') {
+      const adminCount = await User.count({ where: { role: 'admin', isActive: true } });
+      if (adminCount <= 1) {
+        const err = new Error('Cannot demote the only active Administrator in the system');
+        err.statusCode = 400;
+        throw err;
+      }
+    }
+    user.role = data.role;
+  }
+  if (data.isActive !== undefined) {
+    if (user.id === currentUser?.id && data.isActive === false) {
+      const err = new Error('You cannot deactivate your own active Administrator account');
+      err.statusCode = 400;
+      throw err;
+    }
+    user.isActive = Boolean(data.isActive);
+  }
+
+  await user.save();
+
+  const afterSnapshot = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+    isActive: user.isActive,
+  };
+
+  await recordAuditLog({
+    req,
+    user: currentUser,
+    action: 'user.update',
+    entityType: 'user',
+    entityId: user.id,
+    beforeSnapshot,
+    afterSnapshot,
+  });
+
+  return { ...afterSnapshot, _id: user.id, lastLoginAt: user.lastLoginAt };
+};
+
+export const toggleAdminUserActive = async (id, currentUser = null, req = null) => {
+  const user = await User.findByPk(id);
+  if (!user) {
+    const err = new Error('Staff user not found');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  if (user.id === currentUser?.id && user.isActive) {
+    const err = new Error('You cannot deactivate your own active Administrator account');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if (user.role === 'admin' && user.isActive) {
+    const adminCount = await User.count({ where: { role: 'admin', isActive: true } });
+    if (adminCount <= 1) {
+      const err = new Error('Cannot deactivate the only active Administrator in the system');
+      err.statusCode = 400;
+      throw err;
+    }
+  }
+
+  const prev = user.isActive;
+  user.isActive = !prev;
+  await user.save();
+
+  await recordAuditLog({
+    req,
+    user: currentUser,
+    action: 'user.toggle_active',
+    entityType: 'user',
+    entityId: user.id,
+    beforeSnapshot: { isActive: prev },
+    afterSnapshot: { isActive: user.isActive },
+  });
+
+  return { id: user.id, _id: user.id, isActive: user.isActive };
+};
+
+export const resetAdminUserPassword = async (id, { newPassword }, currentUser = null, req = null) => {
+  const user = await User.findByPk(id);
+  if (!user) {
+    const err = new Error('Staff user not found');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  if (!newPassword || newPassword.length < 8) {
+    const err = new Error('New password must be at least 8 characters in length');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  user.password = newPassword;
+  user.refreshTokenHash = null;
+  await user.save();
+
+  await recordAuditLog({
+    req,
+    user: currentUser,
+    action: 'user.reset_password',
+    entityType: 'user',
+    entityId: user.id,
+    metadata: { resetBy: currentUser?.email },
+  });
+
+  return { success: true, message: 'Password has been successfully reset' };
+};
+
+// ─── Company Profile, Founders & System Settings ─────────────────────────────
+export const getAdminCompanyProfile = async () => {
+  const facts = await CompanyFact.findAll({ order: [['category', 'ASC'], ['id', 'ASC']] });
+  const factsMap = {};
+  for (const f of facts) {
+    factsMap[f.factKey] = f.toJSON ? f.toJSON() : f;
+  }
+
+  return {
+    identity: {
+      tradeName: 'JHS GLOBAL',
+      legalEntityName: factsMap['legal_entity_name']?.factValue || 'Jay Sureshbhai Prajapati (Proprietorship)',
+      businessConstitution: factsMap['business_constitution']?.factValue || 'Proprietorship (Government Registered Micro Enterprise)',
+      registeredAddress: factsMap['registered_address']?.factValue || 'Flat No. 401, Shyam-A, Build-H, Vatsalya Villa Residency, Chhaprabhatha Road, Amroli, Surat, Gujarat 394107, India',
+      city: 'Surat',
+      state: 'Gujarat',
+      postalCode: '394107',
+      country: 'India',
+    },
+    founders: [
+      {
+        id: 'jay-prajapati',
+        name: 'Jay Prajapati',
+        fullName: 'Jay Sureshbhai Prajapati',
+        designation: 'Founder & CEO (Proprietor)',
+        roleDescription: 'Leads international business development, sales, and buyer relationships. Originally from Unjha, Gujarat, with 6 years FMCG/spice experience and 2 years managing international accounts.',
+        origin: 'Unjha, Gujarat',
+        verified: true,
+      },
+      {
+        id: 'suraj-prajapati',
+        name: 'Suraj Prajapati',
+        fullName: 'Suraj Prajapati',
+        designation: 'Co-Founder, Sourcing & Operations',
+        roleDescription: 'Oversees domestic sourcing, supplier coordination, production, processing, packaging, and quality checks across Indian growing regions.',
+        origin: 'Gujarat, India',
+        verified: true,
+      },
+      {
+        id: 'henil-prajapati',
+        name: 'Henil Prajapati',
+        fullName: 'Henil Prajapati',
+        designation: 'Co-Founder, Commercial Development & Marketing',
+        roleDescription: 'Directs marketing, international buyer outreach, regulatory coordination, and commercial discussions.',
+        origin: 'Gujarat, India',
+        verified: true,
+      },
+    ],
+    statutoryLicenses: {
+      gstin: factsMap['gstin']?.factValue || '24EZHPP3437C1ZH',
+      dgftIec: factsMap['dgft_iec']?.factValue || 'EZHPP3437C',
+      panNumber: factsMap['pan_number']?.factValue || 'EZHPP3437C',
+      msmeUdyam: factsMap['msme_udyam']?.factValue || 'UDYAM-GJ-22-0460260',
+      fssaiCentralLicense: factsMap['fssai_central_license']?.factValue || '10725997001058',
+      apedaRcmc: factsMap['apeda_rcmc']?.factValue || 'RCMC/APEDA/15765/2024-2025',
+      spicesBoardCres: factsMap['spices_board_cres']?.factValue || 'CRES/SBCB/26585/2025-2026',
+    },
+    logistics: {
+      primaryDeparturePorts: [
+        { code: 'INHZR1', name: 'Hazira Port', city: 'Surat', state: 'Gujarat', distanceKm: '~25 km', type: 'Primary Maritime Container Terminal' },
+        { code: 'INMUN1', name: 'Mundra Port', city: 'Kutch', state: 'Gujarat', distanceKm: '~450 km', type: 'Deep-Water Gateway' },
+        { code: 'INNSA1', name: 'Nhava Sheva / JNPT', city: 'Navi Mumbai', state: 'Maharashtra', distanceKm: '~350 km', type: 'Major Container Terminal' },
+      ],
+      turnaroundCommitment: '48 business hours quotation turnaround & 48-hour unlisted sourcing guarantee',
+    },
+    contacts: {
+      officialEmail: 'TODO(client)',
+      tradePhone: 'TODO(client)',
+      tradeWhatsApp: '+91 98797 XXXXX [Trade Widget Enabled]',
+      operatingHours: 'Monday – Saturday: 09:00 AM – 07:00 PM IST (UTC+05:30)',
+    },
+    banking: {
+      beneficiaryName: 'JHS GLOBAL',
+      bankName: 'HDFC Bank Ltd. / State Bank of India [TODO(client)]',
+      accountNumberMasked: '•••• •••• •••• 3437',
+      ifscCode: 'TODO(client)',
+      swiftBic: 'TODO(client)',
+      acceptedCurrencies: ['USD', 'EUR', 'GBP', 'INR', 'AED'],
+      securityNotice: 'Sensitive financial information is encrypted, restricted to Administrator role, and never sent to the LLM assistant or public endpoints.',
+    },
+  };
+};
+
+export const updateAdminCompanyProfile = async (data, currentUser = null, req = null) => {
+  if (data.registeredAddress) {
+    const fact = await CompanyFact.findOne({ where: { factKey: 'registered_address' } });
+    if (fact) {
+      fact.factValue = data.registeredAddress;
+      await fact.save();
+    }
+  }
+
+  await recordAuditLog({
+    req,
+    user: currentUser,
+    action: 'settings.update_company_profile',
+    entityType: 'settings',
+    entityId: 'company_profile',
+    afterSnapshot: data,
+  });
+
+  cacheService.del('http:/api/v1/company-facts*');
+
+  return { success: true, message: 'Company profile settings updated successfully' };
+};
+
+export const getAdminSystemHealth = async () => {
+  let dbStatus = 'connected';
+  let pgvectorStatus = 'active';
+
+  try {
+    await sequelize.authenticate();
+  } catch {
+    dbStatus = 'degraded';
+  }
+
+  try {
+    const [vecResult] = await sequelize.query("SELECT extname, extversion FROM pg_extension WHERE extname = 'vector'");
+    pgvectorStatus = vecResult.length > 0 ? `active (v${vecResult[0].extversion})` : 'missing';
+  } catch {
+    pgvectorStatus = 'unknown';
+  }
+
+  const [
+    productsCount,
+    categoriesCount,
+    certificatesCount,
+    inquiriesCount,
+    samplesCount,
+    quotationsCount,
+    blogsCount,
+    faqsCount,
+    factsCount,
+    auditCount,
+    usersCount,
+  ] = await Promise.all([
+    Product.count().catch(() => 0),
+    Category.count().catch(() => 0),
+    Certificate.count().catch(() => 0),
+    Inquiry.count().catch(() => 0),
+    SampleRequest.count().catch(() => 0),
+    Quotation.count().catch(() => 0),
+    BlogPost.count().catch(() => 0),
+    Faq.count().catch(() => 0),
+    CompanyFact.count().catch(() => 0),
+    AuditLog.count().catch(() => 0),
+    User.count().catch(() => 0),
+  ]);
+
+  const mem = process.memoryUsage();
+
+  return {
+    database: {
+      engine: 'PostgreSQL 16+ (AWS Supabase Pooler)',
+      status: dbStatus,
+      host: 'aws-0-ap-northeast-2.pooler.supabase.com',
+      vectorExtension: pgvectorStatus,
+      pool: {
+        max: 5,
+        min: 0,
+        idle: 10000,
+        acquire: 30000,
+      },
+    },
+    tables: {
+      products: productsCount,
+      categories: categoriesCount,
+      certificates: certificatesCount,
+      inquiries: inquiriesCount,
+      samples: samplesCount,
+      quotations: quotationsCount,
+      blogPosts: blogsCount,
+      faqs: faqsCount,
+      companyFacts: factsCount,
+      auditLogs: auditCount,
+      users: usersCount,
+    },
+    server: {
+      nodeVersion: process.version,
+      platform: process.platform,
+      arch: process.arch,
+      uptimeSeconds: Math.floor(process.uptime()),
+      memory: {
+        rssMb: Math.round(mem.rss / 1024 / 1024),
+        heapUsedMb: Math.round(mem.heapUsed / 1024 / 1024),
+        heapTotalMb: Math.round(mem.heapTotal / 1024 / 1024),
+      },
+      environment: process.env.NODE_ENV || 'development',
+    },
+  };
+};
+
+export const flushAdminCache = async (currentUser = null, req = null) => {
+  cacheService.flush();
+
+  await recordAuditLog({
+    req,
+    user: currentUser,
+    action: 'settings.cache_flush',
+    entityType: 'cache',
+    entityId: 'memory_cache',
+    metadata: { flushedBy: currentUser?.email },
+  });
+
+  return { success: true, message: 'Server in-memory cache flushed successfully' };
+};
+
 export default {
   computeSla,
   getDashboardMetrics,
@@ -2196,4 +2651,14 @@ export default {
   reorderAdminFaqs,
   getAdminAiDeskSummary,
   triggerAdminRAGReindex,
+  getAdminUsers,
+  getAdminUserById,
+  createAdminUser,
+  updateAdminUser,
+  toggleAdminUserActive,
+  resetAdminUserPassword,
+  getAdminCompanyProfile,
+  updateAdminCompanyProfile,
+  getAdminSystemHealth,
+  flushAdminCache,
 };

@@ -504,3 +504,67 @@ export const triggerAdminReindex = async () => {
   const response = await apiClient.post('/admin/ai-desk/reindex');
   return response.data;
 };
+
+// ─── Team Users Governance & RBAC ───────────────────────────
+export const fetchAdminUsers = async (params = {}) => {
+  const response = await apiClient.get('/admin/users', { params });
+  return {
+    users: response.data || [],
+    pagination: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
+  };
+};
+
+export const fetchAdminUserById = async (id) => {
+  const response = await apiClient.get(`/admin/users/${id}`);
+  return response.data;
+};
+
+export const createAdminUser = async (data) => {
+  const response = await apiClient.post('/admin/users', data);
+  return response.data;
+};
+
+export const updateAdminUser = async (id, data) => {
+  const response = await apiClient.put(`/admin/users/${id}`, data);
+  return response.data;
+};
+
+export const toggleAdminUserActive = async (id) => {
+  const response = await apiClient.patch(`/admin/users/${id}/toggle-active`);
+  return response.data;
+};
+
+export const resetAdminUserPassword = async (id, data) => {
+  const response = await apiClient.post(`/admin/users/${id}/reset-password`, data);
+  return response.data;
+};
+
+// ─── Compliance & Security Audit Logs ───────────────────────
+export const fetchAdminAuditLogs = async (params = {}) => {
+  const response = await apiClient.get('/audit-logs', { params });
+  return {
+    logs: response.data || [],
+    pagination: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
+  };
+};
+
+// ─── Company Profile, Founders & System Settings ────────────
+export const fetchCompanyProfileSettings = async () => {
+  const response = await apiClient.get('/admin/settings/company-profile');
+  return response.data;
+};
+
+export const updateCompanyProfileSettings = async (data) => {
+  const response = await apiClient.put('/admin/settings/company-profile', data);
+  return response.data;
+};
+
+export const fetchSystemHealth = async () => {
+  const response = await apiClient.get('/admin/settings/system-health');
+  return response.data;
+};
+
+export const flushServerCache = async () => {
+  const response = await apiClient.post('/admin/settings/cache-flush');
+  return response.data;
+};

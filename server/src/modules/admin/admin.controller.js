@@ -464,4 +464,96 @@ export const triggerRAGReindex = async (req, res, next) => {
   }
 };
 
+// ─── Team Users Administration (RBAC) ───────────────────────
+export const getUsers = async (req, res, next) => {
+  try {
+    const result = await adminService.getAdminUsers(req.query);
+    return successResponse(res, result.users, 200, result.pagination);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserById = async (req, res, next) => {
+  try {
+    const user = await adminService.getAdminUserById(req.params.id);
+    return successResponse(res, user, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createUser = async (req, res, next) => {
+  try {
+    const user = await adminService.createAdminUser(req.body, req.user, req);
+    return successResponse(res, user, 201);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUser = async (req, res, next) => {
+  try {
+    const user = await adminService.updateAdminUser(req.params.id, req.body, req.user, req);
+    return successResponse(res, user, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const toggleUserActive = async (req, res, next) => {
+  try {
+    const result = await adminService.toggleAdminUserActive(req.params.id, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetUserPassword = async (req, res, next) => {
+  try {
+    const result = await adminService.resetAdminUserPassword(req.params.id, req.body, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ─── Company Profile, Founders & System Settings ────────────
+export const getCompanyProfile = async (req, res, next) => {
+  try {
+    const profile = await adminService.getAdminCompanyProfile();
+    return successResponse(res, profile, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateCompanyProfile = async (req, res, next) => {
+  try {
+    const result = await adminService.updateAdminCompanyProfile(req.body, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getSystemHealth = async (req, res, next) => {
+  try {
+    const health = await adminService.getAdminSystemHealth();
+    return successResponse(res, health, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const flushCache = async (req, res, next) => {
+  try {
+    const result = await adminService.flushAdminCache(req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 

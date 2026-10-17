@@ -71,5 +71,19 @@ router.patch('/faqs/:id/toggle-active', authorize('admin', 'editor'), adminContr
 router.get('/ai-desk/summary', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getAiDeskSummary);
 router.post('/ai-desk/reindex', authorize('admin', 'editor'), adminController.triggerRAGReindex);
 
+// Team Users Governance & RBAC (Strictly Admin only)
+router.get('/users', authorize('admin'), adminController.getUsers);
+router.get('/users/:id', authorize('admin'), adminController.getUserById);
+router.post('/users', authorize('admin'), adminController.createUser);
+router.put('/users/:id', authorize('admin'), adminController.updateUser);
+router.patch('/users/:id/toggle-active', authorize('admin'), adminController.toggleUserActive);
+router.post('/users/:id/reset-password', authorize('admin'), adminController.resetUserPassword);
+
+// Company Profile, Founders & System Settings
+router.get('/settings/company-profile', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getCompanyProfile);
+router.put('/settings/company-profile', authorize('admin'), adminController.updateCompanyProfile);
+router.get('/settings/system-health', authorize('admin'), adminController.getSystemHealth);
+router.post('/settings/cache-flush', authorize('admin'), adminController.flushCache);
+
 export default router;
 
