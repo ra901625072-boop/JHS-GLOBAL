@@ -26,6 +26,9 @@ import {
   History,
   Settings,
   Sparkles,
+  Search,
+  Globe2,
+  Anchor,
 } from 'lucide-react';
 import { useAdminAuth } from '../context/AuthContext';
 import AdminCommandPalette from './AdminCommandPalette';
