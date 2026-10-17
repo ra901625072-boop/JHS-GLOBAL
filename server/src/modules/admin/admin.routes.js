@@ -57,5 +57,15 @@ router.put('/blog/:id', authorize('admin', 'editor'), adminController.updateBlog
 router.delete('/blog/:id', authorize('admin', 'editor'), adminController.deleteBlogPost);
 router.patch('/blog/:id/status', authorize('admin', 'editor'), adminController.updateBlogPostStatus);
 
+// FAQ Manager Desk
+router.get('/faqs', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getFaqs);
+router.patch('/faqs/reorder', authorize('admin', 'editor'), adminController.reorderFaqs);
+router.get('/faqs/:id', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getFaqById);
+router.post('/faqs', authorize('admin', 'editor'), adminController.createFaq);
+router.put('/faqs/:id', authorize('admin', 'editor'), adminController.updateFaq);
+router.delete('/faqs/:id', authorize('admin', 'editor'), adminController.deleteFaq);
+router.patch('/faqs/:id/toggle-home', authorize('admin', 'editor'), adminController.toggleFaqHome);
+router.patch('/faqs/:id/toggle-active', authorize('admin', 'editor'), adminController.toggleFaqActive);
+
 export default router;
 

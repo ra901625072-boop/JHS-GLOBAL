@@ -133,3 +133,20 @@
   - Public blog endpoints (GET /api/v1/blog and GET /api/v1/blog/:slug) are cached for 600s, so cacheService.del('http:/api/v1/blog*') must be executed on all admin blog mutations
   - Soft deletion archives articles rather than hard-deleting to preserve historical SEO redirects and internal referential integrity
 ---
+
+## [2026-10-17 04:32:01] - [US-FAQ-001..003]
+- Summary: Step 8: FAQ Manager Desk completed. Built administrative FAQ management API and Desk UI with category grouping presets, homepage featured toggle, sequence reordering, Markdown live preview, RAG synchronization, 10/10 automated tests, and 0 regression across all viewports.
+- Files modified:
+  - server/src/modules/admin/admin.validation.js
+  - server/src/modules/admin/admin.service.js
+  - server/src/modules/admin/admin.controller.js
+  - server/src/modules/admin/admin.routes.js
+  - client/src/admin/api.js
+  - client/src/admin/pages/FaqManager.jsx
+  - server/tests/faq-admin.test.js
+  - prd.json
+- **Learnings for future iterations:**
+  - Homepage FAQ section displays a curated 5-item accordion driven by showOnHome and homeOrder; full /faq renders all active questions by category group
+  - Public FAQ cache keys are invalidated via cacheService.del('http:/api/v1/faqs*') on all CRUD and visibility toggle operations
+  - Reordering supports both bulk item mapping and one-click move-up/down swaps in the DataTable
+---

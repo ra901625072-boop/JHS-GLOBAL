@@ -12,6 +12,8 @@ import {
   reorderCertificatesSchema,
   adminBlogPostSchema,
   updateBlogStatusSchema,
+  adminFaqSchema,
+  reorderFaqsSchema,
 } from './admin.validation.js';
 import { successResponse } from '../../utils/apiResponse.js';
 
@@ -364,6 +366,81 @@ export const updateBlogPostStatus = async (req, res, next) => {
     const validatedData = updateBlogStatusSchema.parse(req.body);
     const post = await adminService.updateAdminBlogPostStatus(req.params.id, validatedData, req.user, req);
     return successResponse(res, post, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getFaqs = async (req, res, next) => {
+  try {
+    const result = await adminService.getAdminFaqs(req.query);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getFaqById = async (req, res, next) => {
+  try {
+    const faq = await adminService.getAdminFaqById(req.params.id);
+    return successResponse(res, faq, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createFaq = async (req, res, next) => {
+  try {
+    const validatedData = adminFaqSchema.parse(req.body);
+    const faq = await adminService.createAdminFaq(validatedData, req.user, req);
+    return successResponse(res, faq, 201);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateFaq = async (req, res, next) => {
+  try {
+    const validatedData = adminFaqSchema.partial().parse(req.body);
+    const faq = await adminService.updateAdminFaq(req.params.id, validatedData, req.user, req);
+    return successResponse(res, faq, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteFaq = async (req, res, next) => {
+  try {
+    const result = await adminService.deleteAdminFaq(req.params.id, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const toggleFaqHome = async (req, res, next) => {
+  try {
+    const faq = await adminService.toggleAdminFaqHome(req.params.id, req.user, req);
+    return successResponse(res, faq, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const toggleFaqActive = async (req, res, next) => {
+  try {
+    const faq = await adminService.toggleAdminFaqActive(req.params.id, req.user, req);
+    return successResponse(res, faq, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const reorderFaqs = async (req, res, next) => {
+  try {
+    const validatedData = reorderFaqsSchema.parse(req.body);
+    const result = await adminService.reorderAdminFaqs(validatedData.items, req.user, req);
+    return successResponse(res, result, 200);
   } catch (error) {
     next(error);
   }

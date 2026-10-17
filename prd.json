@@ -1,45 +1,47 @@
 {
   "project": "JHS GLOBAL Admin Suite",
-  "branchName": "feat/admin-step7-blog-cms",
-  "created_at": "2026-10-17T04:15:00.000Z",
+  "branchName": "feat/admin-step8-faq-manager",
+  "created_at": "2026-10-17T04:20:54.913Z",
   "userStories": [
     {
-      "id": "US-BLG-001",
-      "title": "Blog & Trade Intelligence Administration API",
-      "description": "Implement administrative blog endpoints supporting full article lifecycle (draft, published, scheduled, archived), author attribution, cover image, category tagging adhering to the 3 divisions, reading minutes estimation, and audit logging",
+      "id": "US-FAQ-001",
+      "title": "FAQ Administration API & Lifecycle Governance",
+      "description": "Implement administrative FAQ management API with search, category filtering, homepage visibility toggle, reordering, RAG embedding synchronization, and audit logging",
       "acceptanceCriteria": [
-        "GET /api/v1/admin/blog returns all articles (draft, published, scheduled, archived) with pagination, search, status, and category filtering",
-        "GET /api/v1/admin/blog/:id returns article detail with SEO metadata, author profile, and content",
-        "POST /api/v1/admin/blog creates new article with slug auto-generation, reading time calculation, and audit log",
-        "PUT /api/v1/admin/blog/:id updates article content, author, status, and audit log",
-        "DELETE /api/v1/admin/blog/:id deletes or archives article with audit log",
-        "PATCH /api/v1/admin/blog/:id/status toggles status between published and draft",
-        "RBAC strictly restricts article creation, editing, and deletion to admin and editor roles"
+        "GET /api/v1/admin/faqs returns all FAQs with search, group filter, showOnHome filter, isActive filter, pagination, and sorting",
+        "GET /api/v1/admin/faqs/:id returns FAQ detail with group, order, showOnHome, homeOrder, isActive, question, answer, and slug",
+        "POST /api/v1/admin/faqs creates new FAQ with automatic slug generation, RAG embedding sync, audit logging, and cache invalidation",
+        "PUT /api/v1/admin/faqs/:id updates FAQ content, order, group, showOnHome, homeOrder, isActive, with slug conflict check, RAG sync, audit logging, and cache invalidation",
+        "DELETE /api/v1/admin/faqs/:id soft-deletes FAQ (isActive: false) with audit logging, RAG sync, and cache invalidation",
+        "PATCH /api/v1/admin/faqs/:id/toggle-home toggles showOnHome boolean flag with audit log and cache invalidation",
+        "PATCH /api/v1/admin/faqs/:id/toggle-active toggles isActive boolean flag with audit log and cache invalidation",
+        "PATCH /api/v1/admin/faqs/reorder accepts array of { id, order, homeOrder } and updates sequence in transaction with audit log and cache invalidation",
+        "Strict RBAC: creation, editing, reordering, deletion restricted to admin and editor roles; read accessible to admin, editor, sales, viewer"
       ],
       "priority": 1,
       "passes": true
     },
     {
-      "id": "US-BLG-002",
-      "title": "Blog & Trade Intelligence Desk UI with Rich Drawer & Live Preview Link",
-      "description": "Build complete Blog CMS page using DataTable, FilterBar, and AdminDrawer with 4-tab article editor and public site preview link (/blog/:slug)",
+      "id": "US-FAQ-002",
+      "title": "FAQ Manager Desk UI with Live Markdown Preview & Reordering",
+      "description": "Build comprehensive FAQ Manager page using DataTable, FilterBar, and AdminDrawer with Markdown answer preview and homepage featured toggle",
       "acceptanceCriteria": [
-        "Blog page renders with DataTable, FilterBar, and AdminStatusBadge components",
-        "Top metric strip displays Total Articles, Published on Site, Drafts in Progress, and Scheduled Publications",
-        "FilterBar supports search by title/tags/author, status filter (All, Published, Draft, Scheduled), and category filter",
-        "Table displays Article Title with cover thumbnail, Category division badge, Author with designation, Status badge, Read time, Publication Date, and Actions",
-        "Detail drawer features 4 focused tabs: 1) Article Core & Content, 2) Author & Taxonomy, 3) Media & Cover Image, 4) SEO & Publishing with live public preview link"
+        "FAQ Manager renders with DataTable, FilterBar, and AdminStatusBadge components",
+        "Top metric strip displays Total FAQs, Featured on Homepage, Active Groups, and Inactive FAQs",
+        "FilterBar supports search, category group dropdown, homepage filter (All, Homepage Only, Full FAQ Only), and status filter",
+        "Table displays Question text, Category Group badge, Homepage Featured toggle pill, Active status badge, Display Order, and Quick Actions",
+        "Slide-over AdminDrawer features question input, category group selector with commercial presets, order inputs, homepage toggle, active toggle, Markdown answer editor with live rendered preview, and deep-link preview"
       ],
       "priority": 2,
       "passes": true
     },
     {
-      "id": "US-BLG-003",
-      "title": "Automated Blog Test Coverage & Zero Public Regression",
-      "description": "Verify blog administration features with integration tests and confirm zero public site regression",
+      "id": "US-FAQ-003",
+      "title": "Automated FAQ Test Coverage & Zero Public Regression",
+      "description": "Verify FAQ administration features with integration tests and confirm zero public site regression",
       "acceptanceCriteria": [
-        "Admin API client in client/src/admin/api.js provides fetchAdminBlogPosts, fetchAdminBlogPostById, createAdminBlogPost, updateAdminBlogPost, deleteAdminBlogPost, and updateAdminBlogPostStatus",
-        "Automated integration tests in server/tests/blog-admin.test.js cover article CRUD, auto read-time estimation, status transitions, and RBAC security",
+        "Admin API client in client/src/admin/api.js provides fetchAdminFaqs, fetchAdminFaqById, createAdminFaq, updateAdminFaq, deleteAdminFaq, toggleAdminFaqHome, toggleAdminFaqActive, and reorderAdminFaqs",
+        "Automated integration tests in server/tests/faq-admin.test.js cover list filtering, creation with auto slug, update with RAG sync, toggle homepage, toggle active, reorder, soft delete, and RBAC rejection",
         "All client and server test suites pass with 100% success",
         "Zero visual regression on public site verified via verify:no-change"
       ],

@@ -12,6 +12,7 @@ import Customer from '../customer/customer.model.js';
 import Category from '../category/category.model.js';
 import Certificate from '../certificate/certificate.model.js';
 import BlogPost from '../blog/blog.model.js';
+import Faq from '../faq/faq.model.js';
 import emailService from '../../services/email.service.js';
 import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
@@ -1699,6 +1700,363 @@ export const updateAdminBlogPostStatus = async (id, { status, publishedAt }, use
   return plain;
 };
 
+// ==========================================
+// FAQ MANAGER ADMINISTRATION
+// ==========================================
+
+export const getAdminFaqs = async ({
+  search = '',
+  group = '',
+  showOnHome = '',
+  isActive = '',
+  page = 1,
+  limit = 50,
+  sort = 'order',
+  order = 'ASC',
+} = {}) => {
+  const pageNum = Math.max(1, parseInt(page, 10) || 1);
+  const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10) || 50));
+  const offset = (pageNum - 1) * limitNum;
+
+  const where = {};
+
+  if (search && search.trim()) {
+    const term = `%${search.trim().toLowerCase()}%`;
+    where[Op.or] = [
+      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('question')), { [Op.like]: term }),
+      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('answer')), { [Op.like]: term }),
+      Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('group')), { [Op.like]: term }),
+    ];
+  }
+
+  if (group && group.trim() && group !== 'all') {
+    where.group = group.trim();
+  }
+
+  if (showOnHome === 'true' || showOnHome === true) {
+    where.showOnHome = true;
+  } else if (showOnHome === 'false' || showOnHome === false) {
+    where.showOnHome = false;
+  }
+
+  if (isActive === 'true' || isActive === true) {
+    where.isActive = true;
+  } else if (isActive === 'false' || isActive === false) {
+    where.isActive = false;
+  }
+
+  const validSortCols = ['order', 'homeOrder', 'question', 'group', 'createdAt', 'updatedAt'];
+  const sortCol = validSortCols.includes(sort) ? sort : 'order';
+  const sortOrder = order && order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+
+  const orderClause =
+    sortCol === 'homeOrder'
+      ? [
+          ['homeOrder', sortOrder],
+          ['order', 'ASC'],
+        ]
+      : [
+          [sortCol, sortOrder],
+          ['id', 'ASC'],
+        ];
+
+  const { count, rows } = await Faq.findAndCountAll({
+    where,
+    order: orderClause,
+    limit: limitNum,
+    offset,
+  });
+
+  const [totalCount, activeCount, homeCount, groupRows] = await Promise.all([
+    Faq.count(),
+    Faq.count({ where: { isActive: true } }),
+    Faq.count({ where: { showOnHome: true, isActive: true } }),
+    Faq.findAll({
+      attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('group')), 'group']],
+      raw: true,
+    }),
+  ]);
+
+  const groups = groupRows
+    .map((g) => g.group)
+    .filter(Boolean)
+    .sort();
+
+  const faqs = rows.map((f) => {
+    const plain = f.toJSON();
+    return {
+      ...plain,
+      _id: plain.id,
+    };
+  });
+
+  return {
+    faqs,
+    groups,
+    metrics: {
+      total: totalCount,
+      active: activeCount,
+      inactive: totalCount - activeCount,
+      homepageFeatured: homeCount,
+      groupCount: groups.length,
+    },
+    pagination: formatPaginationMeta(count, pageNum, limitNum),
+  };
+};
+
+export const getAdminFaqById = async (id) => {
+  const faq = await Faq.findByPk(id);
+  if (!faq) {
+    const error = new Error('FAQ item not found');
+    error.statusCode = 404;
+    throw error;
+  }
+  const plain = faq.toJSON();
+  plain._id = faq.id;
+  return plain;
+};
+
+export const createAdminFaq = async (faqData, user = null, req = null) => {
+  const baseSlug = faqData.slug || createSlug(faqData.question);
+  let uniqueSlug = baseSlug;
+  let count = 1;
+  while (await Faq.findOne({ where: { slug: uniqueSlug } })) {
+    uniqueSlug = `${baseSlug}-${count++}`;
+  }
+
+  let assignedOrder = faqData.order;
+  if (assignedOrder === undefined || assignedOrder === null || assignedOrder === 0) {
+    const maxOrder = await Faq.max('order', {
+      where: { group: faqData.group || 'Ordering & Minimum Quantities (MOQ)' },
+    });
+    assignedOrder = (maxOrder || 0) + 1;
+  }
+
+  const faq = await Faq.create({
+    ...faqData,
+    order: assignedOrder,
+    slug: uniqueSlug,
+  });
+
+  try {
+    const { syncFaqEmbedding } = await import('../ai/rag/embedding.service.js');
+    await syncFaqEmbedding(faq);
+  } catch {
+    // Non-blocking embedding sync
+  }
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'faq.create',
+    entityType: 'faq',
+    entityId: faq.id,
+    afterSnapshot: faq.toJSON(),
+    metadata: { question: faq.question, group: faq.group, slug: faq.slug },
+  });
+
+  cacheService.del('http:/api/v1/faqs*');
+  logger.info(`FAQ created by ${user?.name || 'Staff'}: "${faq.question.slice(0, 40)}..."`);
+
+  const plain = faq.toJSON();
+  plain._id = faq.id;
+  return plain;
+};
+
+export const updateAdminFaq = async (id, updateData, user = null, req = null) => {
+  const faq = await Faq.findByPk(id);
+  if (!faq) {
+    const error = new Error('FAQ item not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = faq.toJSON();
+
+  if (updateData.slug && updateData.slug !== faq.slug) {
+    const existing = await Faq.findOne({ where: { slug: updateData.slug } });
+    if (existing && existing.id !== faq.id) {
+      const error = new Error(`FAQ with slug "${updateData.slug}" already exists`);
+      error.statusCode = 409;
+      throw error;
+    }
+  }
+
+  await faq.update(updateData);
+
+  try {
+    const { syncFaqEmbedding } = await import('../ai/rag/embedding.service.js');
+    await syncFaqEmbedding(faq);
+  } catch {
+    // Non-blocking
+  }
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'faq.update',
+    entityType: 'faq',
+    entityId: faq.id,
+    beforeSnapshot,
+    afterSnapshot: faq.toJSON(),
+    metadata: { question: faq.question, group: faq.group },
+  });
+
+  cacheService.del('http:/api/v1/faqs*');
+  logger.info(`FAQ updated by ${user?.name || 'Staff'}: "${faq.question.slice(0, 40)}..."`);
+
+  const plain = faq.toJSON();
+  plain._id = faq.id;
+  return plain;
+};
+
+export const deleteAdminFaq = async (id, user = null, req = null) => {
+  const faq = await Faq.findByPk(id);
+  if (!faq) {
+    const error = new Error('FAQ item not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = faq.toJSON();
+  await faq.update({ isActive: false });
+
+  try {
+    const { syncFaqEmbedding } = await import('../ai/rag/embedding.service.js');
+    await syncFaqEmbedding(faq);
+  } catch {
+    // Non-blocking
+  }
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'faq.archive',
+    entityType: 'faq',
+    entityId: faq.id,
+    beforeSnapshot,
+    afterSnapshot: faq.toJSON(),
+    metadata: { question: faq.question, slug: faq.slug },
+  });
+
+  cacheService.del('http:/api/v1/faqs*');
+  logger.info(`FAQ archived by ${user?.name || 'Staff'}: "${faq.question.slice(0, 40)}..."`);
+
+  return { success: true, id: faq.id, isActive: false };
+};
+
+export const toggleAdminFaqHome = async (id, user = null, req = null) => {
+  const faq = await Faq.findByPk(id);
+  if (!faq) {
+    const error = new Error('FAQ item not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = faq.toJSON();
+  const nextVal = !faq.showOnHome;
+
+  let nextHomeOrder = faq.homeOrder;
+  if (nextVal && (!nextHomeOrder || nextHomeOrder === 0)) {
+    const maxHomeOrder = await Faq.max('homeOrder', { where: { showOnHome: true } });
+    nextHomeOrder = (maxHomeOrder || 0) + 1;
+  }
+
+  await faq.update({
+    showOnHome: nextVal,
+    homeOrder: nextHomeOrder,
+  });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'faq.toggle_home',
+    entityType: 'faq',
+    entityId: faq.id,
+    beforeSnapshot,
+    afterSnapshot: faq.toJSON(),
+    metadata: { question: faq.question, showOnHome: nextVal, homeOrder: nextHomeOrder },
+  });
+
+  cacheService.del('http:/api/v1/faqs*');
+  const plain = faq.toJSON();
+  plain._id = faq.id;
+  return plain;
+};
+
+export const toggleAdminFaqActive = async (id, user = null, req = null) => {
+  const faq = await Faq.findByPk(id);
+  if (!faq) {
+    const error = new Error('FAQ item not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = faq.toJSON();
+  const nextVal = !faq.isActive;
+
+  await faq.update({ isActive: nextVal });
+
+  try {
+    const { syncFaqEmbedding } = await import('../ai/rag/embedding.service.js');
+    await syncFaqEmbedding(faq);
+  } catch {
+    // Non-blocking
+  }
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'faq.toggle_active',
+    entityType: 'faq',
+    entityId: faq.id,
+    beforeSnapshot,
+    afterSnapshot: faq.toJSON(),
+    metadata: { question: faq.question, isActive: nextVal },
+  });
+
+  cacheService.del('http:/api/v1/faqs*');
+  const plain = faq.toJSON();
+  plain._id = faq.id;
+  return plain;
+};
+
+export const reorderAdminFaqs = async (items = [], user = null, req = null) => {
+  const transaction = await sequelize.transaction();
+  try {
+    for (const item of items) {
+      const updateFields = {};
+      if (item.order !== undefined) updateFields.order = parseInt(item.order, 10);
+      if (item.homeOrder !== undefined) updateFields.homeOrder = parseInt(item.homeOrder, 10);
+
+      if (Object.keys(updateFields).length > 0) {
+        await Faq.update(updateFields, {
+          where: { id: item.id },
+          transaction,
+        });
+      }
+    }
+
+    await transaction.commit();
+
+    await recordAuditLog({
+      req,
+      user,
+      action: 'faq.reorder',
+      entityType: 'faq',
+      entityId: null,
+      metadata: { count: items.length },
+    });
+
+    cacheService.del('http:/api/v1/faqs*');
+    logger.info(`Reordered ${items.length} FAQs by ${user?.name || 'Staff'}`);
+    return { success: true, count: items.length };
+  } catch (err) {
+    await transaction.rollback();
+    throw err;
+  }
+};
+
 export default {
   computeSla,
   getDashboardMetrics,
@@ -1739,4 +2097,12 @@ export default {
   updateAdminBlogPost,
   deleteAdminBlogPost,
   updateAdminBlogPostStatus,
+  getAdminFaqs,
+  getAdminFaqById,
+  createAdminFaq,
+  updateAdminFaq,
+  deleteAdminFaq,
+  toggleAdminFaqHome,
+  toggleAdminFaqActive,
+  reorderAdminFaqs,
 };

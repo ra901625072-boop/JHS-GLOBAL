@@ -244,6 +244,52 @@ export const updateAdminBlogPostStatus = async (id, data) => {
   return response.data;
 };
 
+// FAQ Manager Desk
+export const fetchAdminFaqs = async (params = {}) => {
+  const response = await apiClient.get('/admin/faqs', { params });
+  return {
+    faqs: response.data?.faqs || [],
+    groups: response.data?.groups || [],
+    metrics: response.data?.metrics || { total: 0, active: 0, inactive: 0, homepageFeatured: 0, groupCount: 0 },
+    meta: response.data?.pagination || response.meta || { total: 0, page: 1, limit: 50, pages: 1 },
+  };
+};
+
+export const fetchAdminFaqById = async (id) => {
+  const response = await apiClient.get(`/admin/faqs/${id}`);
+  return response.data;
+};
+
+export const createAdminFaq = async (data) => {
+  const response = await apiClient.post('/admin/faqs', data);
+  return response.data;
+};
+
+export const updateAdminFaq = async (id, data) => {
+  const response = await apiClient.put(`/admin/faqs/${id}`, data);
+  return response.data;
+};
+
+export const deleteAdminFaq = async (id) => {
+  const response = await apiClient.delete(`/admin/faqs/${id}`);
+  return response.data;
+};
+
+export const toggleAdminFaqHome = async (id) => {
+  const response = await apiClient.patch(`/admin/faqs/${id}/toggle-home`);
+  return response.data;
+};
+
+export const toggleAdminFaqActive = async (id) => {
+  const response = await apiClient.patch(`/admin/faqs/${id}/toggle-active`);
+  return response.data;
+};
+
+export const reorderAdminFaqs = async (items) => {
+  const response = await apiClient.patch('/admin/faqs/reorder', { items });
+  return response.data;
+};
+
 // Quotations Management
 export const fetchAdminQuotations = async (params = {}) => {
   const response = await apiClient.get('/quotations', { params });

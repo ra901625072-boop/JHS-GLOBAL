@@ -251,4 +251,27 @@ export const updateBlogStatusSchema = z.object({
   publishedAt: z.string().nullable().optional(),
 });
 
+export const adminFaqSchema = z.object({
+  question: z.string({ required_error: 'Question is required' }).min(5, 'Question must be at least 5 characters').max(500).trim(),
+  answer: z.string({ required_error: 'Answer is required' }).min(10, 'Answer must be at least 10 characters').trim(),
+  group: z.string().min(2).max(100).default('Ordering & Minimum Quantities (MOQ)'),
+  order: z.number().int().optional().default(0),
+  slug: z.string().max(150).optional(),
+  showOnHome: z.boolean().optional().default(false),
+  homeOrder: z.number().int().optional().default(0),
+  isActive: z.boolean().optional().default(true),
+});
+
+export const reorderFaqsSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        id: z.union([z.string(), z.number()]).transform((val) => parseInt(val, 10)),
+        order: z.number().int().optional(),
+        homeOrder: z.number().int().optional(),
+      })
+    )
+    .min(1, 'At least one FAQ order mapping must be provided'),
+});
+
 
