@@ -25,6 +25,7 @@ import {
   UserCheck,
   History,
   Settings,
+  Sparkles,
 } from 'lucide-react';
 import { useAdminAuth } from '../context/AuthContext';
 import AdminCommandPalette from './AdminCommandPalette';
