@@ -11,6 +11,7 @@ import Task from '../task/task.model.js';
 import Customer from '../customer/customer.model.js';
 import Category from '../category/category.model.js';
 import Certificate from '../certificate/certificate.model.js';
+import BlogPost from '../blog/blog.model.js';
 import emailService from '../../services/email.service.js';
 import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
@@ -1468,6 +1469,236 @@ export const reorderCertificates = async (items, user = null, req = null) => {
   return { success: true, count: items.length };
 };
 
+export const getAdminBlogPosts = async ({
+  status,
+  category,
+  q,
+  page = 1,
+  limit = 20,
+  sort = '-publishedAt',
+} = {}) => {
+  const where = {};
+
+  if (status && status !== 'all') {
+    where.status = status;
+  }
+
+  if (category && category !== 'all') {
+    where.category = { [Op.iLike]: `%${category}%` };
+  }
+
+  if (q && q.trim()) {
+    const searchTerm = q.trim();
+    where[Op.or] = [
+      { title: { [Op.iLike]: `%${searchTerm}%` } },
+      { slug: { [Op.iLike]: `%${searchTerm}%` } },
+      { excerpt: { [Op.iLike]: `%${searchTerm}%` } },
+      { content: { [Op.iLike]: `%${searchTerm}%` } },
+      Sequelize.where(
+        Sequelize.cast(Sequelize.col('BlogPost.tags'), 'text'),
+        { [Op.iLike]: `%${searchTerm}%` }
+      ),
+      Sequelize.where(
+        Sequelize.cast(Sequelize.col('BlogPost.author'), 'text'),
+        { [Op.iLike]: `%${searchTerm}%` }
+      ),
+    ];
+  }
+
+  let order = [['publishedAt', 'DESC']];
+  if (sort === 'title') order = [['title', 'ASC']];
+  else if (sort === '-title') order = [['title', 'DESC']];
+  else if (sort === 'publishedAt') order = [['publishedAt', 'ASC']];
+  else if (sort === '-createdAt') order = [['createdAt', 'DESC']];
+
+  const pageNum = Math.max(1, parseInt(page, 10));
+  const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10)));
+  const offset = (pageNum - 1) * limitNum;
+
+  const { count, rows } = await BlogPost.findAndCountAll({
+    where,
+    order,
+    offset,
+    limit: limitNum,
+  });
+
+  const posts = rows.map((p) => {
+    const plain = p.toJSON();
+    return {
+      ...plain,
+      _id: plain.id,
+    };
+  });
+
+  return {
+    posts,
+    pagination: formatPaginationMeta(count, pageNum, limitNum),
+  };
+};
+
+export const getAdminBlogPostById = async (id) => {
+  const post = await BlogPost.findByPk(id);
+  if (!post) {
+    const error = new Error('Article not found');
+    error.statusCode = 404;
+    throw error;
+  }
+  const plain = post.toJSON();
+  plain._id = post.id;
+  return plain;
+};
+
+export const createAdminBlogPost = async (data, user = null, req = null) => {
+  const slug = data.slug || createSlug(data.title);
+
+  const existing = await BlogPost.findOne({ where: { slug } });
+  if (existing) {
+    const error = new Error(`Article with slug '${slug}' already exists`);
+    error.statusCode = 409;
+    throw error;
+  }
+
+  const words = (data.content || '').split(/\s+/).length;
+  const readMinutes = data.readMinutes || Math.max(1, Math.ceil(words / 200));
+
+  const post = await BlogPost.create({
+    ...data,
+    slug,
+    readMinutes,
+    publishedAt: data.publishedAt ? new Date(data.publishedAt) : new Date(),
+  });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'blog.create',
+    entityType: 'blog_post',
+    entityId: post.id,
+    beforeSnapshot: null,
+    afterSnapshot: post.toJSON(),
+    metadata: { title: post.title, slug: post.slug, status: post.status },
+  });
+
+  cacheService.del('http:/api/v1/blog*');
+  logger.info(`Article created by ${user?.name || 'admin'}: ${post.title} [${post.slug}]`);
+
+  const plain = post.toJSON();
+  plain._id = post.id;
+  return plain;
+};
+
+export const updateAdminBlogPost = async (id, data, user = null, req = null) => {
+  const post = await BlogPost.findByPk(id);
+  if (!post) {
+    const error = new Error('Article not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = post.toJSON();
+  const updatePayload = { ...data };
+
+  if (data.slug && data.slug !== post.slug) {
+    const existing = await BlogPost.findOne({ where: { slug: data.slug } });
+    if (existing && existing.id !== post.id) {
+      const error = new Error(`Article with slug '${data.slug}' already exists`);
+      error.statusCode = 409;
+      throw error;
+    }
+  }
+
+  if (data.content) {
+    const words = data.content.split(/\s+/).length;
+    updatePayload.readMinutes = Math.max(1, Math.ceil(words / 200));
+  }
+
+  await post.update(updatePayload);
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'blog.update',
+    entityType: 'blog_post',
+    entityId: post.id,
+    beforeSnapshot,
+    afterSnapshot: post.toJSON(),
+    metadata: { title: post.title, slug: post.slug, status: post.status },
+  });
+
+  cacheService.del('http:/api/v1/blog*');
+  logger.info(`Article updated by ${user?.name || 'admin'}: ${post.title}`);
+
+  const plain = post.toJSON();
+  plain._id = post.id;
+  return plain;
+};
+
+export const deleteAdminBlogPost = async (id, user = null, req = null) => {
+  const post = await BlogPost.findByPk(id);
+  if (!post) {
+    const error = new Error('Article not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = post.toJSON();
+  await post.update({ status: 'archived' });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'blog.delete',
+    entityType: 'blog_post',
+    entityId: post.id,
+    beforeSnapshot,
+    afterSnapshot: post.toJSON(),
+    metadata: { title: post.title, slug: post.slug, status: 'archived' },
+  });
+
+  cacheService.del('http:/api/v1/blog*');
+  logger.info(`Article archived by ${user?.name || 'admin'}: ${post.title}`);
+  return { id: post.id, _id: post.id, status: 'archived' };
+};
+
+export const updateAdminBlogPostStatus = async (id, { status, publishedAt }, user = null, req = null) => {
+  const post = await BlogPost.findByPk(id);
+  if (!post) {
+    const error = new Error('Article not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = post.toJSON();
+  const updatePayload = { status };
+
+  if (status === 'published' && !post.publishedAt) {
+    updatePayload.publishedAt = new Date();
+  }
+  if (publishedAt) {
+    updatePayload.publishedAt = new Date(publishedAt);
+  }
+
+  await post.update(updatePayload);
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'blog.status_change',
+    entityType: 'blog_post',
+    entityId: post.id,
+    beforeSnapshot,
+    afterSnapshot: post.toJSON(),
+    metadata: { title: post.title, status, publishedAt: updatePayload.publishedAt },
+  });
+
+  cacheService.del('http:/api/v1/blog*');
+  logger.info(`Article ${post.title} status changed to ${status}`);
+
+  const plain = post.toJSON();
+  plain._id = post.id;
+  return plain;
+};
+
 export default {
   computeSla,
   getDashboardMetrics,
@@ -1502,4 +1733,10 @@ export default {
   deleteAdminCertificate,
   toggleCertificatePublic,
   reorderCertificates,
+  getAdminBlogPosts,
+  getAdminBlogPostById,
+  createAdminBlogPost,
+  updateAdminBlogPost,
+  deleteAdminBlogPost,
+  updateAdminBlogPostStatus,
 };

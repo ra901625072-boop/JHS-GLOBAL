@@ -1,46 +1,45 @@
 {
   "project": "JHS GLOBAL Admin Suite",
-  "branchName": "feat/admin-step6-certificates-compliance",
-  "created_at": "2026-10-17T04:05:00.000Z",
+  "branchName": "feat/admin-step7-blog-cms",
+  "created_at": "2026-10-17T04:15:00.000Z",
   "userStories": [
     {
-      "id": "US-CRT-001",
-      "title": "Certificate & Statutory Compliance Administration API",
-      "description": "Implement administrative certificate endpoints supporting full CRUD, validity date tracking, 60-day renewal status computation, public trust visibility toggles, display sequence reordering, and audit logging",
+      "id": "US-BLG-001",
+      "title": "Blog & Trade Intelligence Administration API",
+      "description": "Implement administrative blog endpoints supporting full article lifecycle (draft, published, scheduled, archived), author attribution, cover image, category tagging adhering to the 3 divisions, reading minutes estimation, and audit logging",
       "acceptanceCriteria": [
-        "GET /api/v1/admin/certificates returns all certificates with computed validity status (valid, expiring_soon, expired, permanent), days remaining, and renewal alert flags",
-        "GET /api/v1/admin/certificates/:id returns certificate detail with document attachments (PDF, logo/scanned image) and legal scope",
-        "POST /api/v1/admin/certificates creates a new certificate with number, authority, dates, document URLs, and audit log",
-        "PUT /api/v1/admin/certificates/:id updates certificate fields and audit log",
-        "DELETE /api/v1/admin/certificates/:id soft-deletes certificate (isActive: false) with audit log",
-        "PATCH /api/v1/admin/certificates/:id/toggle-public toggles presence on the public /quality page accreditation grid and homepage trust marks",
-        "PATCH /api/v1/admin/certificates/reorder reorders display sequence across certificates",
-        "RBAC strictly restricts certificate creation, editing, and deletion to admin and editor roles"
+        "GET /api/v1/admin/blog returns all articles (draft, published, scheduled, archived) with pagination, search, status, and category filtering",
+        "GET /api/v1/admin/blog/:id returns article detail with SEO metadata, author profile, and content",
+        "POST /api/v1/admin/blog creates new article with slug auto-generation, reading time calculation, and audit log",
+        "PUT /api/v1/admin/blog/:id updates article content, author, status, and audit log",
+        "DELETE /api/v1/admin/blog/:id deletes or archives article with audit log",
+        "PATCH /api/v1/admin/blog/:id/status toggles status between published and draft",
+        "RBAC strictly restricts article creation, editing, and deletion to admin and editor roles"
       ],
       "priority": 1,
       "passes": true
     },
     {
-      "id": "US-CRT-002",
-      "title": "Certificates & Compliance Desk UI with Document Vault Drawer",
-      "description": "Build complete Certificates & Compliance page using DataTable, FilterBar, and AdminDrawer with document inspector and renewal alert banner",
+      "id": "US-BLG-002",
+      "title": "Blog & Trade Intelligence Desk UI with Rich Drawer & Live Preview Link",
+      "description": "Build complete Blog CMS page using DataTable, FilterBar, and AdminDrawer with 4-tab article editor and public site preview link (/blog/:slug)",
       "acceptanceCriteria": [
-        "Certificates page renders with DataTable, FilterBar, and AdminStatusBadge components",
-        "Top metric strip displays Total Certificates, Publicly Verified, Perpetual Licenses, and Active Renewal Alerts",
-        "Renewal alert banner surfaces any credential expiring within 60 days with direct renew action",
-        "Table displays Authority/Certificate Name, Registration Number, Issuing Body, Validity Status, Public Visibility toggle, and Actions",
-        "Detail drawer features 3 focused tabs: 1) Credentials & Authority, 2) Validity & Renewal Schedule, 3) Document Vault & Trust Display"
+        "Blog page renders with DataTable, FilterBar, and AdminStatusBadge components",
+        "Top metric strip displays Total Articles, Published on Site, Drafts in Progress, and Scheduled Publications",
+        "FilterBar supports search by title/tags/author, status filter (All, Published, Draft, Scheduled), and category filter",
+        "Table displays Article Title with cover thumbnail, Category division badge, Author with designation, Status badge, Read time, Publication Date, and Actions",
+        "Detail drawer features 4 focused tabs: 1) Article Core & Content, 2) Author & Taxonomy, 3) Media & Cover Image, 4) SEO & Publishing with live public preview link"
       ],
       "priority": 2,
       "passes": true
     },
     {
-      "id": "US-CRT-003",
-      "title": "Automated Certificate Test Coverage & Zero Public Regression",
-      "description": "Verify certificate administration features with integration tests and confirm zero public site regression",
+      "id": "US-BLG-003",
+      "title": "Automated Blog Test Coverage & Zero Public Regression",
+      "description": "Verify blog administration features with integration tests and confirm zero public site regression",
       "acceptanceCriteria": [
-        "Admin API client in client/src/admin/api.js provides fetchAdminCertificates, fetchAdminCertificateById, createAdminCertificate, updateAdminCertificate, deleteAdminCertificate, toggleAdminCertificatePublic, and reorderAdminCertificates",
-        "Automated integration tests in server/tests/certificate-admin.test.js cover certificate CRUD, validity calculation, 60-day renewal alert flags, public toggle, and RBAC security",
+        "Admin API client in client/src/admin/api.js provides fetchAdminBlogPosts, fetchAdminBlogPostById, createAdminBlogPost, updateAdminBlogPost, deleteAdminBlogPost, and updateAdminBlogPostStatus",
+        "Automated integration tests in server/tests/blog-admin.test.js cover article CRUD, auto read-time estimation, status transitions, and RBAC security",
         "All client and server test suites pass with 100% success",
         "Zero visual regression on public site verified via verify:no-change"
       ],

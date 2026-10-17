@@ -204,3 +204,51 @@ export const reorderCertificatesSchema = z.object({
     .min(1, 'At least one certificate order mapping must be provided'),
 });
 
+export const adminBlogPostSchema = z.object({
+  title: z.string({ required_error: 'Title is required' }).min(5).max(200).trim(),
+  slug: z.string().optional(),
+  excerpt: z.string({ required_error: 'Excerpt is required' }).min(10).trim(),
+  content: z.string({ required_error: 'Content is required' }).min(20),
+  coverImage: z
+    .object({
+      url: z.string().optional().default('/images/placeholders/blog-default.jpg'),
+      alt: z.string().optional().default('Commodity export intelligence'),
+    })
+    .optional()
+    .default({
+      url: '/images/placeholders/blog-default.jpg',
+      alt: 'Commodity export intelligence',
+    }),
+  author: z
+    .object({
+      name: z.string().optional().default('Export Quality Desk'),
+      designation: z.string().optional().default('International Trade & QA Specialist'),
+      avatar: z.string().optional().default('/images/placeholders/avatar-default.jpg'),
+    })
+    .optional()
+    .default({
+      name: 'Export Quality Desk',
+      designation: 'International Trade & QA Specialist',
+      avatar: '/images/placeholders/avatar-default.jpg',
+    }),
+  category: z.string().optional().default('Nutraceutical Raw Materials'),
+  tags: z.array(z.string()).optional().default([]),
+  status: z.enum(['draft', 'published', 'scheduled', 'archived']).default('published'),
+  publishedAt: z.string().nullable().optional(),
+  readMinutes: z.number().int().optional(),
+  seo: z
+    .object({
+      title: z.string().optional().default(''),
+      description: z.string().optional().default(''),
+      keywords: z.array(z.string()).optional().default([]),
+    })
+    .optional()
+    .default({ title: '', description: '', keywords: [] }),
+});
+
+export const updateBlogStatusSchema = z.object({
+  status: z.enum(['draft', 'published', 'scheduled', 'archived']),
+  publishedAt: z.string().nullable().optional(),
+});
+
+

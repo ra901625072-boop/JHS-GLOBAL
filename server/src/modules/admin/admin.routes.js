@@ -49,5 +49,13 @@ router.put('/certificates/:id', authorize('admin', 'editor'), adminController.up
 router.delete('/certificates/:id', authorize('admin', 'editor'), adminController.deleteCertificate);
 router.patch('/certificates/:id/toggle-public', authorize('admin', 'editor'), adminController.toggleCertificatePublic);
 
+// Blog & Trade Intelligence CMS Desk
+router.get('/blog', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getBlogPosts);
+router.get('/blog/:id', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getBlogPostById);
+router.post('/blog', authorize('admin', 'editor'), adminController.createBlogPost);
+router.put('/blog/:id', authorize('admin', 'editor'), adminController.updateBlogPost);
+router.delete('/blog/:id', authorize('admin', 'editor'), adminController.deleteBlogPost);
+router.patch('/blog/:id/status', authorize('admin', 'editor'), adminController.updateBlogPostStatus);
+
 export default router;
 

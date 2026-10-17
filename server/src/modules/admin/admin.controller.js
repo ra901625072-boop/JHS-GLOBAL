@@ -10,6 +10,8 @@ import {
   reorderCategoriesSchema,
   adminCertificateSchema,
   reorderCertificatesSchema,
+  adminBlogPostSchema,
+  updateBlogStatusSchema,
 } from './admin.validation.js';
 import { successResponse } from '../../utils/apiResponse.js';
 
@@ -309,4 +311,62 @@ export const deleteCertificate = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getBlogPosts = async (req, res, next) => {
+  try {
+    const result = await adminService.getAdminBlogPosts(req.query);
+    return successResponse(res, result.posts, 200, result.pagination);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getBlogPostById = async (req, res, next) => {
+  try {
+    const post = await adminService.getAdminBlogPostById(req.params.id);
+    return successResponse(res, post, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createBlogPost = async (req, res, next) => {
+  try {
+    const validatedData = adminBlogPostSchema.parse(req.body);
+    const post = await adminService.createAdminBlogPost(validatedData, req.user, req);
+    return successResponse(res, post, 201);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateBlogPost = async (req, res, next) => {
+  try {
+    const validatedData = adminBlogPostSchema.partial().parse(req.body);
+    const post = await adminService.updateAdminBlogPost(req.params.id, validatedData, req.user, req);
+    return successResponse(res, post, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteBlogPost = async (req, res, next) => {
+  try {
+    const result = await adminService.deleteAdminBlogPost(req.params.id, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateBlogPostStatus = async (req, res, next) => {
+  try {
+    const validatedData = updateBlogStatusSchema.parse(req.body);
+    const post = await adminService.updateAdminBlogPostStatus(req.params.id, validatedData, req.user, req);
+    return successResponse(res, post, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 

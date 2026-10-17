@@ -210,6 +210,40 @@ export const reorderAdminCertificates = async (items) => {
   return response.data;
 };
 
+// Blog & Trade Intelligence CMS Management
+export const fetchAdminBlogPosts = async (params = {}) => {
+  const response = await apiClient.get('/admin/blog', { params });
+  return {
+    posts: response.data || [],
+    meta: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
+  };
+};
+
+export const fetchAdminBlogPostById = async (id) => {
+  const response = await apiClient.get(`/admin/blog/${id}`);
+  return response.data;
+};
+
+export const createAdminBlogPost = async (data) => {
+  const response = await apiClient.post('/admin/blog', data);
+  return response.data;
+};
+
+export const updateAdminBlogPost = async (id, data) => {
+  const response = await apiClient.put(`/admin/blog/${id}`, data);
+  return response.data;
+};
+
+export const deleteAdminBlogPost = async (id) => {
+  const response = await apiClient.delete(`/admin/blog/${id}`);
+  return response.data;
+};
+
+export const updateAdminBlogPostStatus = async (id, data) => {
+  const response = await apiClient.patch(`/admin/blog/${id}/status`, data);
+  return response.data;
+};
+
 // Quotations Management
 export const fetchAdminQuotations = async (params = {}) => {
   const response = await apiClient.get('/quotations', { params });

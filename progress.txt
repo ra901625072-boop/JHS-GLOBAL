@@ -116,3 +116,20 @@
   - Toggling isPublic invalidates cache for the visitor /quality accreditation grid and homepage trust marks.
   - Restricted modification routes to admin and editor with RBAC, while sales and viewer can view certificate details.
 ---
+
+## [2026-10-17 04:18:42] - [US-BLG-001..003]
+- Summary: Step 7: Blog & Trade Intelligence CMS Desk completed. Built administrative blog management with lifecycle states (draft, published, scheduled, archived), division taxonomy mapping, reading time estimation, author profiles, 4-tab slide-over editor drawer, public preview links, integration test suite passing 8/8, and 0 regression verified across all viewports.
+- Files modified:
+  - server/src/modules/admin/admin.validation.js
+  - server/src/modules/admin/admin.service.js
+  - server/src/modules/admin/admin.controller.js
+  - server/src/modules/admin/admin.routes.js
+  - client/src/admin/api.js
+  - client/src/admin/pages/BlogCms.jsx
+  - server/tests/blog-admin.test.js
+  - prd.json
+- **Learnings for future iterations:**
+  - Reading time is auto-calculated using Math.max(1, Math.ceil(wordCount / 200)) upon article creation and update
+  - Public blog endpoints (GET /api/v1/blog and GET /api/v1/blog/:slug) are cached for 600s, so cacheService.del('http:/api/v1/blog*') must be executed on all admin blog mutations
+  - Soft deletion archives articles rather than hard-deleting to preserve historical SEO redirects and internal referential integrity
+---
