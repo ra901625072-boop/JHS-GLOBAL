@@ -1,5 +1,12 @@
 import * as adminService from './admin.service.js';
-import { updateInquiryStatusSchema, sendInquiryReplySchema, adminProductSchema, spamInquirySchema } from './admin.validation.js';
+import {
+  updateInquiryStatusSchema,
+  sendInquiryReplySchema,
+  adminProductSchema,
+  spamInquirySchema,
+  verifyProductSpecSchema,
+  attachProductDocumentSchema,
+} from './admin.validation.js';
 import { successResponse } from '../../utils/apiResponse.js';
 
 export const getDashboard = async (req, res, next) => {
@@ -73,10 +80,28 @@ export const unspamInquiry = async (req, res, next) => {
   }
 };
 
+export const getProducts = async (req, res, next) => {
+  try {
+    const result = await adminService.getAdminProducts(req.query);
+    return successResponse(res, result.products, 200, result.pagination);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getProductById = async (req, res, next) => {
+  try {
+    const product = await adminService.getAdminProductById(req.params.id);
+    return successResponse(res, product, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const createProduct = async (req, res, next) => {
   try {
     const validatedData = adminProductSchema.parse(req.body);
-    const product = await adminService.createAdminProduct(validatedData);
+    const product = await adminService.createAdminProduct(validatedData, req.user, req);
     return successResponse(res, product, 201);
   } catch (error) {
     next(error);
@@ -86,7 +111,7 @@ export const createProduct = async (req, res, next) => {
 export const updateProduct = async (req, res, next) => {
   try {
     const validatedData = adminProductSchema.partial().parse(req.body);
-    const product = await adminService.updateAdminProduct(req.params.id, validatedData);
+    const product = await adminService.updateAdminProduct(req.params.id, validatedData, req.user, req);
     return successResponse(res, product, 200);
   } catch (error) {
     next(error);
@@ -95,8 +120,55 @@ export const updateProduct = async (req, res, next) => {
 
 export const deleteProduct = async (req, res, next) => {
   try {
-    const product = await adminService.softDeleteAdminProduct(req.params.id);
+    const product = await adminService.softDeleteAdminProduct(req.params.id, req.user, req);
     return successResponse(res, { id: product._id, isActive: product.isActive }, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const toggleProductActive = async (req, res, next) => {
+  try {
+    const result = await adminService.toggleProductActive(req.params.id, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const toggleProductFeatured = async (req, res, next) => {
+  try {
+    const result = await adminService.toggleProductFeatured(req.params.id, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const verifyProductSpec = async (req, res, next) => {
+  try {
+    const validatedData = verifyProductSpecSchema.parse(req.body);
+    const result = await adminService.verifyProductSpec(req.params.id, validatedData, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const attachProductDocument = async (req, res, next) => {
+  try {
+    const validatedData = attachProductDocumentSchema.parse(req.body);
+    const result = await adminService.attachProductDocument(req.params.id, validatedData, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeProductDocument = async (req, res, next) => {
+  try {
+    const result = await adminService.removeProductDocument(req.params.id, req.params.docId, req.user, req);
+    return successResponse(res, result, 200);
   } catch (error) {
     next(error);
   }

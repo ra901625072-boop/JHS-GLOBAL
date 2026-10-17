@@ -115,6 +115,15 @@ export const Product = sequelize.define(
       defaultValue: '10–15 business days',
       field: 'lead_time',
     },
+    containerLoad: {
+      type: DataTypes.JSONB,
+      defaultValue: { fcl20: '', fcl40: '', lcl: '' },
+      field: 'container_load',
+    },
+    documents: {
+      type: DataTypes.JSONB,
+      defaultValue: [],
+    },
     certificateIds: {
       type: DataTypes.JSONB,
       defaultValue: [],

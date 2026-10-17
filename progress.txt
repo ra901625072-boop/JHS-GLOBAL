@@ -62,3 +62,21 @@
   - AdminStatusBadge must explicitly format and style canonical sample pipeline stages: preparing, dispatched, in_transit, delivered, feedback_received
   - Live courier tracking URLs support DHL, FedEx, UPS, Aramex, and India Post formats
 ---
+
+## [2026-10-17 03:44:19] - [US-PRD-001, US-PRD-002, US-PRD-003]
+- Summary: Step 4 complete: Products & Technical Specs Desk with 5-tab AdminDrawer (Basic Info, Lab Spec Table Editor, Trade & Logistics, TDS/SDS/COA Document Attachments, and SEO & Publishing), automated integration tests (39/39 passing), client tests (65/65 passing), and 0 visual regressions on public site.
+- Files modified:
+  - server/src/config/db.js
+  - server/src/modules/product/product.model.js
+  - server/src/modules/admin/admin.validation.js
+  - server/src/modules/admin/admin.service.js
+  - server/src/modules/admin/admin.controller.js
+  - server/src/modules/admin/admin.routes.js
+  - client/src/admin/api.js
+  - client/src/admin/pages/Products.jsx
+  - server/tests/product-admin.test.js
+- **Learnings for future iterations:**
+  - Product model requires containerLoad and documents JSONB columns guarded by IF NOT EXISTS migration in db.js
+  - Spec table editor supports per-spec verification flag which automatically computes isVerified when all specs are verified
+  - Admin product routes strictly enforce that only admin and editor roles have write/delete permissions while sales and viewer have read access
+---

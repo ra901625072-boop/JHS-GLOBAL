@@ -19,9 +19,16 @@ router.post('/inquiries/:id/reply', authorize('admin', 'sales'), adminController
 router.post('/inquiries/:id/spam', authorize('admin', 'sales'), adminController.flagInquirySpam);
 router.post('/inquiries/:id/unspam', authorize('admin'), adminController.unspamInquiry);
 
-// Product Catalogue Administration (accessible by admin and editor)
+// Product Catalogue Administration
+router.get('/products', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getProducts);
+router.get('/products/:id', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getProductById);
 router.post('/products', authorize('admin', 'editor'), adminController.createProduct);
 router.put('/products/:id', authorize('admin', 'editor'), adminController.updateProduct);
 router.delete('/products/:id', authorize('admin', 'editor'), adminController.deleteProduct);
+router.patch('/products/:id/toggle-active', authorize('admin', 'editor'), adminController.toggleProductActive);
+router.patch('/products/:id/toggle-featured', authorize('admin', 'editor'), adminController.toggleProductFeatured);
+router.patch('/products/:id/verify-spec', authorize('admin', 'editor'), adminController.verifyProductSpec);
+router.post('/products/:id/documents', authorize('admin', 'editor'), adminController.attachProductDocument);
+router.delete('/products/:id/documents/:docId', authorize('admin', 'editor'), adminController.removeProductDocument);
 
 export default router;

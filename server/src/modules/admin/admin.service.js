@@ -9,10 +9,12 @@ import Quotation from '../quotation/quotation.model.js';
 import Order from '../order/order.model.js';
 import Task from '../task/task.model.js';
 import Customer from '../customer/customer.model.js';
+import Category from '../category/category.model.js';
 import emailService from '../../services/email.service.js';
 import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
 import { recordAuditLog } from '../audit/audit.service.js';
+import { formatPaginationMeta } from '../../utils/pagination.js';
 
 export const computeSla = (inquiry) => {
   const plain = inquiry.toJSON ? inquiry.toJSON() : { ...inquiry };
@@ -510,7 +512,129 @@ export const unspamInquiry = async (id, user = null, req = null) => {
   return computeSla(inquiry);
 };
 
-export const createAdminProduct = async (productData) => {
+export const getAdminProducts = async ({
+  category,
+  status,
+  isFeatured,
+  q,
+  page = 1,
+  limit = 20,
+  sort = '-createdAt',
+}) => {
+  const where = {};
+
+  if (status === 'active' || status === 'published') {
+    where.isActive = true;
+  } else if (status === 'draft' || status === 'inactive') {
+    where.isActive = false;
+  }
+
+  if (isFeatured === 'true' || isFeatured === true) {
+    where.isFeatured = true;
+  }
+
+  if (category && category !== 'all') {
+    let catId = parseInt(category, 10);
+    if (isNaN(catId)) {
+      const foundCat = await Category.findOne({
+        where: {
+          [Op.or]: [{ slug: category }, { name: category }],
+        },
+      });
+      if (foundCat) catId = foundCat.id;
+    }
+    if (catId) {
+      where[Op.or] = [{ categoryId: catId }, { subCategoryId: catId }];
+    }
+  }
+
+  if (q && q.trim()) {
+    const searchTerm = q.trim();
+    where[Op.or] = [
+      { name: { [Op.iLike]: `%${searchTerm}%` } },
+      { hsCode: { [Op.iLike]: `%${searchTerm}%` } },
+      { slug: { [Op.iLike]: `%${searchTerm}%` } },
+      { botanicalName: { [Op.iLike]: `%${searchTerm}%` } },
+      Sequelize.where(
+        Sequelize.cast(Sequelize.col('Product.tags'), 'text'),
+        { [Op.iLike]: `%${searchTerm}%` }
+      ),
+    ];
+  }
+
+  let order = [['createdAt', 'DESC']];
+  if (sort === 'name') order = [['name', 'ASC']];
+  else if (sort === '-name') order = [['name', 'DESC']];
+  else if (sort === 'hsCode') order = [['hsCode', 'ASC']];
+
+  const pageNum = Math.max(1, parseInt(page, 10));
+  const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10)));
+  const offset = (pageNum - 1) * limitNum;
+
+  const { count, rows } = await Product.findAndCountAll({
+    where,
+    order,
+    offset,
+    limit: limitNum,
+    include: [
+      {
+        model: Category,
+        as: 'category',
+        attributes: ['id', 'name', 'slug', 'parentId'],
+      },
+      {
+        model: Category,
+        as: 'subCategory',
+        attributes: ['id', 'name', 'slug'],
+      },
+    ],
+    distinct: true,
+  });
+
+  const products = rows.map((p) => {
+    const plain = p.toJSON();
+    return {
+      ...plain,
+      _id: plain.id,
+    };
+  });
+
+  return {
+    products,
+    pagination: formatPaginationMeta(count, pageNum, limitNum),
+  };
+};
+
+export const getAdminProductById = async (id) => {
+  const product = await Product.findByPk(id, {
+    include: [
+      {
+        model: Category,
+        as: 'category',
+        attributes: ['id', 'name', 'slug', 'parentId'],
+      },
+      {
+        model: Category,
+        as: 'subCategory',
+        attributes: ['id', 'name', 'slug'],
+      },
+    ],
+  });
+
+  if (!product) {
+    const error = new Error('Product not found in catalogue');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const plain = product.toJSON();
+  return {
+    ...plain,
+    _id: plain.id,
+  };
+};
+
+export const createAdminProduct = async (productData, user = null, req = null) => {
   const slug = productData.slug || createSlug(productData.name);
 
   const existing = await Product.findOne({ where: { slug } });
@@ -520,18 +644,43 @@ export const createAdminProduct = async (productData) => {
     throw error;
   }
 
+  const categoryId = parseInt(productData.categoryId, 10);
+  const subCategoryId = productData.subCategoryId ? parseInt(productData.subCategoryId, 10) : null;
+
+  let shelfLife = productData.shelfLife;
+  if (!shelfLife && productData.shelfLifeMonths) {
+    shelfLife = `${productData.shelfLifeMonths} months`;
+  }
+
   const product = await Product.create({
     ...productData,
+    categoryId,
+    subCategoryId,
+    shelfLife: shelfLife || '24 months',
     slug,
+  });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'product.create',
+    entityType: 'product',
+    entityId: product.id,
+    beforeSnapshot: null,
+    afterSnapshot: product.toJSON(),
+    metadata: { name: product.name, slug: product.slug, hsCode: product.hsCode },
   });
 
   cacheService.del('http:/api/v1/products*');
   cacheService.del('admin:dashboard_metrics');
-  logger.info(`Product created by admin: ${product.name} [${product.slug}]`);
-  return product;
+  logger.info(`Product created by ${user?.name || 'admin'}: ${product.name} [${product.slug}]`);
+
+  const plain = product.toJSON();
+  plain._id = product.id;
+  return plain;
 };
 
-export const updateAdminProduct = async (id, productData) => {
+export const updateAdminProduct = async (id, productData, user = null, req = null) => {
   const product = await Product.findByPk(id);
   if (!product) {
     const error = new Error('Product not found');
@@ -539,14 +688,42 @@ export const updateAdminProduct = async (id, productData) => {
     throw error;
   }
 
-  await product.update(productData);
+  const beforeSnapshot = product.toJSON();
+
+  const updatePayload = { ...productData };
+  if (productData.categoryId) {
+    updatePayload.categoryId = parseInt(productData.categoryId, 10);
+  }
+  if (productData.subCategoryId !== undefined) {
+    updatePayload.subCategoryId = productData.subCategoryId ? parseInt(productData.subCategoryId, 10) : null;
+  }
+  if (productData.shelfLifeMonths && !productData.shelfLife) {
+    updatePayload.shelfLife = `${productData.shelfLifeMonths} months`;
+  }
+
+  await product.update(updatePayload);
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'product.update',
+    entityType: 'product',
+    entityId: product.id,
+    beforeSnapshot,
+    afterSnapshot: product.toJSON(),
+    metadata: { name: product.name, slug: product.slug },
+  });
+
   cacheService.del('http:/api/v1/products*');
   cacheService.del('admin:dashboard_metrics');
-  logger.info(`Product updated by admin: ${product.name} [${product.slug}]`);
-  return product;
+  logger.info(`Product updated by ${user?.name || 'admin'}: ${product.name} [${product.slug}]`);
+
+  const plain = product.toJSON();
+  plain._id = product.id;
+  return plain;
 };
 
-export const softDeleteAdminProduct = async (id) => {
+export const softDeleteAdminProduct = async (id, user = null, req = null) => {
   const product = await Product.findByPk(id);
   if (!product) {
     const error = new Error('Product not found');
@@ -554,11 +731,212 @@ export const softDeleteAdminProduct = async (id) => {
     throw error;
   }
 
+  const beforeSnapshot = product.toJSON();
   await product.update({ isActive: false });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'product.delete',
+    entityType: 'product',
+    entityId: product.id,
+    beforeSnapshot,
+    afterSnapshot: product.toJSON(),
+    metadata: { name: product.name },
+  });
+
   cacheService.del('http:/api/v1/products*');
   cacheService.del('admin:dashboard_metrics');
-  logger.info(`Product soft-deleted by admin: ${product.name}`);
-  return product;
+  logger.info(`Product soft-deleted by ${user?.name || 'admin'}: ${product.name}`);
+
+  const plain = product.toJSON();
+  plain._id = product.id;
+  return plain;
+};
+
+export const toggleProductActive = async (id, user = null, req = null) => {
+  const product = await Product.findByPk(id);
+  if (!product) {
+    const error = new Error('Product not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = product.toJSON();
+  const newActive = !product.isActive;
+  await product.update({ isActive: newActive });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'product.toggle_active',
+    entityType: 'product',
+    entityId: product.id,
+    beforeSnapshot,
+    afterSnapshot: product.toJSON(),
+    metadata: { name: product.name, isActive: newActive },
+  });
+
+  cacheService.del('http:/api/v1/products*');
+  cacheService.del('admin:dashboard_metrics');
+  logger.info(`Product ${product.name} isActive toggled to ${newActive}`);
+  return { id: product.id, _id: product.id, isActive: product.isActive };
+};
+
+export const toggleProductFeatured = async (id, user = null, req = null) => {
+  const product = await Product.findByPk(id);
+  if (!product) {
+    const error = new Error('Product not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = product.toJSON();
+  const newFeatured = !product.isFeatured;
+  await product.update({ isFeatured: newFeatured });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'product.toggle_featured',
+    entityType: 'product',
+    entityId: product.id,
+    beforeSnapshot,
+    afterSnapshot: product.toJSON(),
+    metadata: { name: product.name, isFeatured: newFeatured },
+  });
+
+  cacheService.del('http:/api/v1/products*');
+  cacheService.del('admin:dashboard_metrics');
+  logger.info(`Product ${product.name} isFeatured toggled to ${newFeatured}`);
+  return { id: product.id, _id: product.id, isFeatured: product.isFeatured };
+};
+
+export const verifyProductSpec = async (id, { specIndex, specKey, verified = true }, user = null, req = null) => {
+  const product = await Product.findByPk(id);
+  if (!product) {
+    const error = new Error('Product not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = product.toJSON();
+  const specs = Array.isArray(product.specs) ? [...product.specs] : [];
+
+  if (specIndex !== undefined && specs[specIndex]) {
+    specs[specIndex] = { ...specs[specIndex], verified };
+  } else if (specKey) {
+    const idx = specs.findIndex((s) => s.key === specKey || s.parameter === specKey);
+    if (idx !== -1) {
+      specs[idx] = { ...specs[idx], verified };
+    }
+  }
+
+  const verifiedFields = product.verifiedFields ? { ...product.verifiedFields } : {};
+  if (specKey) {
+    verifiedFields[specKey] = verified;
+  }
+
+  const allVerified = specs.length > 0 && specs.every((s) => s.verified === true);
+
+  await product.update({
+    specs,
+    verifiedFields,
+    isVerified: allVerified,
+  });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'product.verify_spec',
+    entityType: 'product',
+    entityId: product.id,
+    beforeSnapshot,
+    afterSnapshot: product.toJSON(),
+    metadata: { specIndex, specKey, verified },
+  });
+
+  cacheService.del('http:/api/v1/products*');
+  logger.info(`Product spec verified for ${product.name} [spec: ${specKey || specIndex}]`);
+  const plain = product.toJSON();
+  plain._id = product.id;
+  return plain;
+};
+
+export const attachProductDocument = async (id, docData, user = null, req = null) => {
+  const product = await Product.findByPk(id);
+  if (!product) {
+    const error = new Error('Product not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = product.toJSON();
+  const documents = Array.isArray(product.documents) ? [...product.documents] : [];
+
+  const newDoc = {
+    id: `doc_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    title: docData.title,
+    type: docData.type,
+    url: docData.url,
+    fileSize: docData.fileSize || '',
+    addedAt: new Date().toISOString(),
+    addedBy: user?.name || 'Staff',
+  };
+
+  documents.push(newDoc);
+  await product.update({ documents });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'product.attach_document',
+    entityType: 'product',
+    entityId: product.id,
+    beforeSnapshot,
+    afterSnapshot: product.toJSON(),
+    metadata: { docTitle: newDoc.title, docType: newDoc.type },
+  });
+
+  cacheService.del('http:/api/v1/products*');
+  logger.info(`Document attached to product ${product.name}: [${newDoc.type.toUpperCase()}] ${newDoc.title}`);
+  return { documents, product: { ...product.toJSON(), _id: product.id } };
+};
+
+export const removeProductDocument = async (id, docIdOrIndex, user = null, req = null) => {
+  const product = await Product.findByPk(id);
+  if (!product) {
+    const error = new Error('Product not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = product.toJSON();
+  let documents = Array.isArray(product.documents) ? [...product.documents] : [];
+
+  const index = parseInt(docIdOrIndex, 10);
+  if (!isNaN(index) && documents[index]) {
+    documents.splice(index, 1);
+  } else {
+    documents = documents.filter((d) => d.id !== docIdOrIndex && d.url !== docIdOrIndex);
+  }
+
+  await product.update({ documents });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'product.remove_document',
+    entityType: 'product',
+    entityId: product.id,
+    beforeSnapshot,
+    afterSnapshot: product.toJSON(),
+    metadata: { removedDocId: docIdOrIndex },
+  });
+
+  cacheService.del('http:/api/v1/products*');
+  logger.info(`Document removed from product ${product.name}`);
+  return { documents, product: { ...product.toJSON(), _id: product.id } };
 };
 
 export default {
@@ -570,7 +948,14 @@ export default {
   sendInquiryReply,
   flagInquiryAsSpam,
   unspamInquiry,
+  getAdminProducts,
+  getAdminProductById,
   createAdminProduct,
   updateAdminProduct,
   softDeleteAdminProduct,
+  toggleProductActive,
+  toggleProductFeatured,
+  verifyProductSpec,
+  attachProductDocument,
+  removeProductDocument,
 };

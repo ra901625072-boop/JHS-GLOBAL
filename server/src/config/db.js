@@ -58,6 +58,9 @@ export const connectDB = async () => {
         ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS assigned_to INTEGER;
         ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS inquiry_id INTEGER;
         ALTER TABLE sample_requests ADD COLUMN IF NOT EXISTS estimated_delivery_date TIMESTAMP WITH TIME ZONE;
+
+        ALTER TABLE products ADD COLUMN IF NOT EXISTS container_load JSONB DEFAULT '{"fcl20":"","fcl40":"","lcl":""}'::jsonb;
+        ALTER TABLE products ADD COLUMN IF NOT EXISTS documents JSONB DEFAULT '[]'::jsonb;
       `);
     } catch (extErr) {
       logger.debug(`PostgreSQL extension/migration check notice: ${extErr.message}`);

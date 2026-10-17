@@ -85,6 +85,19 @@ export const attachAdminSampleDocument = async (id, data) => {
 };
 
 // Product Catalogue Management
+export const fetchAdminProducts = async (params = {}) => {
+  const response = await apiClient.get('/admin/products', { params });
+  return {
+    products: response.data || [],
+    meta: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
+  };
+};
+
+export const fetchAdminProductById = async (id) => {
+  const response = await apiClient.get(`/admin/products/${id}`);
+  return response.data;
+};
+
 export const createAdminProduct = async (data) => {
   const response = await apiClient.post('/admin/products', data);
   return response.data;
@@ -97,6 +110,31 @@ export const updateAdminProduct = async (id, data) => {
 
 export const deleteAdminProduct = async (id) => {
   const response = await apiClient.delete(`/admin/products/${id}`);
+  return response.data;
+};
+
+export const toggleAdminProductActive = async (id) => {
+  const response = await apiClient.patch(`/admin/products/${id}/toggle-active`);
+  return response.data;
+};
+
+export const toggleAdminProductFeatured = async (id) => {
+  const response = await apiClient.patch(`/admin/products/${id}/toggle-featured`);
+  return response.data;
+};
+
+export const verifyAdminProductSpec = async (id, data) => {
+  const response = await apiClient.patch(`/admin/products/${id}/verify-spec`, data);
+  return response.data;
+};
+
+export const attachAdminProductDocument = async (id, data) => {
+  const response = await apiClient.post(`/admin/products/${id}/documents`, data);
+  return response.data;
+};
+
+export const removeAdminProductDocument = async (id, docId) => {
+  const response = await apiClient.delete(`/admin/products/${id}/documents/${docId}`);
   return response.data;
 };
 
