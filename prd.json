@@ -1,46 +1,46 @@
 {
   "project": "JHS GLOBAL Admin Suite",
-  "branchName": "feat/admin-step5-categories-divisions",
-  "created_at": "2026-10-17T03:50:00.000Z",
+  "branchName": "feat/admin-step6-certificates-compliance",
+  "created_at": "2026-10-17T04:05:00.000Z",
   "userStories": [
     {
-      "id": "US-CAT-001",
-      "title": "Category Hierarchy & Administration API",
-      "description": "Implement administrative category endpoints supporting 3-division hierarchy, product counts, ordering, active toggles, and deletion safety checks with audit logging",
+      "id": "US-CRT-001",
+      "title": "Certificate & Statutory Compliance Administration API",
+      "description": "Implement administrative certificate endpoints supporting full CRUD, validity date tracking, 60-day renewal status computation, public trust visibility toggles, display sequence reordering, and audit logging",
       "acceptanceCriteria": [
-        "GET /api/v1/admin/categories returns all divisions and subcategories with product counts, level, order, and parent references",
-        "GET /api/v1/admin/categories/:id returns category details with associated active products and child subcategories",
-        "POST /api/v1/admin/categories creates a new category or subcategory with slug, order, HS chapter, and audit log",
-        "PUT /api/v1/admin/categories/:id updates category attributes, level, and parentId with audit log",
-        "PATCH /api/v1/admin/categories/:id/toggle-active toggles public visibility on visitor menus and search filters",
-        "PATCH /api/v1/admin/categories/reorder updates sequence order across siblings",
-        "DELETE /api/v1/admin/categories/:id safely prevents deletion if active products exist in category, or soft-deletes with audit log",
-        "RBAC strictly restricts category modifications to admin and editor roles"
+        "GET /api/v1/admin/certificates returns all certificates with computed validity status (valid, expiring_soon, expired, permanent), days remaining, and renewal alert flags",
+        "GET /api/v1/admin/certificates/:id returns certificate detail with document attachments (PDF, logo/scanned image) and legal scope",
+        "POST /api/v1/admin/certificates creates a new certificate with number, authority, dates, document URLs, and audit log",
+        "PUT /api/v1/admin/certificates/:id updates certificate fields and audit log",
+        "DELETE /api/v1/admin/certificates/:id soft-deletes certificate (isActive: false) with audit log",
+        "PATCH /api/v1/admin/certificates/:id/toggle-public toggles presence on the public /quality page accreditation grid and homepage trust marks",
+        "PATCH /api/v1/admin/certificates/reorder reorders display sequence across certificates",
+        "RBAC strictly restricts certificate creation, editing, and deletion to admin and editor roles"
       ],
       "priority": 1,
       "passes": true
     },
     {
-      "id": "US-CAT-002",
-      "title": "Categories & Divisions Desk UI with Hierarchy Drawer",
-      "description": "Build complete Categories & Divisions page using DataTable, FilterBar, and AdminDrawer with tree view and division tabs",
+      "id": "US-CRT-002",
+      "title": "Certificates & Compliance Desk UI with Document Vault Drawer",
+      "description": "Build complete Certificates & Compliance page using DataTable, FilterBar, and AdminDrawer with document inspector and renewal alert banner",
       "acceptanceCriteria": [
-        "Categories page renders with DataTable, FilterBar, and AdminStatusBadge components",
-        "Table displays Division/Category Name with level badges, Slug, HS Chapter, Display Order, Assigned Products count, and Active status",
-        "FilterBar provides division tabs (All, Personal Care, Nutraceutical, Animal Feed) and search input",
-        "Detail drawer features 3 focused tabs: 1) Division Details & HS Chapter, 2) Parent Nesting & Ordering, 3) SEO Metadata & Visibility",
-        "Delete action warns user and blocks deletion if active products are assigned to the category"
+        "Certificates page renders with DataTable, FilterBar, and AdminStatusBadge components",
+        "Top metric strip displays Total Certificates, Publicly Verified, Perpetual Licenses, and Active Renewal Alerts",
+        "Renewal alert banner surfaces any credential expiring within 60 days with direct renew action",
+        "Table displays Authority/Certificate Name, Registration Number, Issuing Body, Validity Status, Public Visibility toggle, and Actions",
+        "Detail drawer features 3 focused tabs: 1) Credentials & Authority, 2) Validity & Renewal Schedule, 3) Document Vault & Trust Display"
       ],
       "priority": 2,
       "passes": true
     },
     {
-      "id": "US-CAT-003",
-      "title": "Automated Category Test Coverage & Zero Public Regression",
-      "description": "Verify category administration features with integration tests and confirm zero public site regression",
+      "id": "US-CRT-003",
+      "title": "Automated Certificate Test Coverage & Zero Public Regression",
+      "description": "Verify certificate administration features with integration tests and confirm zero public site regression",
       "acceptanceCriteria": [
-        "Admin API client in client/src/admin/api.js provides fetchAdminCategories, fetchAdminCategoryById, createAdminCategory, updateAdminCategory, deleteAdminCategory, toggleAdminCategoryActive, and reorderAdminCategories",
-        "Automated integration tests in server/tests/category-admin.test.js cover category hierarchy, product count calculation, active toggles, and RBAC security",
+        "Admin API client in client/src/admin/api.js provides fetchAdminCertificates, fetchAdminCertificateById, createAdminCertificate, updateAdminCertificate, deleteAdminCertificate, toggleAdminCertificatePublic, and reorderAdminCertificates",
+        "Automated integration tests in server/tests/certificate-admin.test.js cover certificate CRUD, validity calculation, 60-day renewal alert flags, public toggle, and RBAC security",
         "All client and server test suites pass with 100% success",
         "Zero visual regression on public site verified via verify:no-change"
       ],

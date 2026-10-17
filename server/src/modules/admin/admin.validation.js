@@ -166,3 +166,41 @@ export const reorderCategoriesSchema = z.object({
     )
     .min(1, 'At least one category order mapping must be provided'),
 });
+
+export const adminCertificateSchema = z.object({
+  name: z.string({ required_error: 'Certificate name is required' }).min(2).max(100).trim(),
+  fullName: z.string().max(255).optional().default(''),
+  issuedBy: z.string().max(255).optional().default(''),
+  number: z.string().max(100).optional().default(''),
+  issueDate: z.string().nullable().optional(),
+  expiryDate: z.string().nullable().optional(),
+  logo: z
+    .object({
+      url: z.string().optional().default(''),
+    })
+    .optional()
+    .default({ url: '' }),
+  file: z
+    .object({
+      url: z.string().optional().default(''),
+      type: z.string().optional().default('pdf'),
+    })
+    .optional()
+    .default({ url: '', type: 'pdf' }),
+  scope: z.string().optional().default(''),
+  isPublic: z.boolean().optional().default(true),
+  order: z.number().int().optional().default(0),
+  isActive: z.boolean().optional().default(true),
+});
+
+export const reorderCertificatesSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        id: z.union([z.string(), z.number()]).transform((val) => parseInt(val, 10)),
+        order: z.number().int(),
+      })
+    )
+    .min(1, 'At least one certificate order mapping must be provided'),
+});
+

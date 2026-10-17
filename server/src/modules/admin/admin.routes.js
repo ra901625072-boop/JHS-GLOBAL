@@ -40,5 +40,14 @@ router.put('/categories/:id', authorize('admin', 'editor'), adminController.upda
 router.delete('/categories/:id', authorize('admin', 'editor'), adminController.deleteCategory);
 router.patch('/categories/:id/toggle-active', authorize('admin', 'editor'), adminController.toggleCategoryActive);
 
+// Certificates & Statutory Compliance Desk
+router.get('/certificates', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getCertificates);
+router.patch('/certificates/reorder', authorize('admin', 'editor'), adminController.reorderCertificates);
+router.get('/certificates/:id', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getCertificateById);
+router.post('/certificates', authorize('admin', 'editor'), adminController.createCertificate);
+router.put('/certificates/:id', authorize('admin', 'editor'), adminController.updateCertificate);
+router.delete('/certificates/:id', authorize('admin', 'editor'), adminController.deleteCertificate);
+router.patch('/certificates/:id/toggle-public', authorize('admin', 'editor'), adminController.toggleCertificatePublic);
+
 export default router;
 

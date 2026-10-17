@@ -98,3 +98,21 @@
   - Admin routes require careful mounting order: /categories/reorder must precede /categories/:id so :id does not swallow reorder.
   - When editing admin.routes.js, verify all sibling routes like /products/:id/documents/:docId are preserved intact.
 ---
+
+## [2026-10-17 04:10:24] - [US-CRT-001, US-CRT-002, US-CRT-003]
+- Summary: Built Certificates & Compliance Desk with statutory registry, 60-day renewal countdown alerts, document vault inspector drawer, public trust visibility toggles, and comprehensive test suite (11/11 passed, 51/51 full admin tests passed).
+- Files modified:
+  - server/src/modules/admin/admin.validation.js
+  - server/src/modules/admin/admin.service.js
+  - server/src/modules/admin/admin.controller.js
+  - server/src/modules/admin/admin.routes.js
+  - client/src/admin/api.js
+  - client/src/admin/pages/Certificates.jsx
+  - server/tests/certificate-admin.test.js
+  - prd.json
+- **Learnings for future iterations:**
+  - Perpetual licenses (DGFT IEC, GSTIN, MSME Udyam) do not have an expiration date (expiryDate: null). The system accurately handles them as validityStatus: 'permanent' without triggering false expiration alerts.
+  - Term-bound licenses (FSSAI, APEDA, CRES) calculate days remaining; if <= 60 days, they automatically flag as 'expiring_soon' and trigger the prominent compliance renewal attention banner.
+  - Toggling isPublic invalidates cache for the visitor /quality accreditation grid and homepage trust marks.
+  - Restricted modification routes to admin and editor with RBAC, while sales and viewer can view certificate details.
+---

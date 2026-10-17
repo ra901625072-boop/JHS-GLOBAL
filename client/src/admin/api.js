@@ -174,6 +174,42 @@ export const reorderAdminCategories = async (items) => {
   return response.data;
 };
 
+// Certificates & Statutory Compliance Management
+export const fetchAdminCertificates = async (params = {}) => {
+  const response = await apiClient.get('/admin/certificates', { params });
+  return response.data || [];
+};
+
+export const fetchAdminCertificateById = async (id) => {
+  const response = await apiClient.get(`/admin/certificates/${id}`);
+  return response.data;
+};
+
+export const createAdminCertificate = async (data) => {
+  const response = await apiClient.post('/admin/certificates', data);
+  return response.data;
+};
+
+export const updateAdminCertificate = async (id, data) => {
+  const response = await apiClient.put(`/admin/certificates/${id}`, data);
+  return response.data;
+};
+
+export const deleteAdminCertificate = async (id) => {
+  const response = await apiClient.delete(`/admin/certificates/${id}`);
+  return response.data;
+};
+
+export const toggleAdminCertificatePublic = async (id) => {
+  const response = await apiClient.patch(`/admin/certificates/${id}/toggle-public`);
+  return response.data;
+};
+
+export const reorderAdminCertificates = async (items) => {
+  const response = await apiClient.patch('/admin/certificates/reorder', { items });
+  return response.data;
+};
+
 // Quotations Management
 export const fetchAdminQuotations = async (params = {}) => {
   const response = await apiClient.get('/quotations', { params });

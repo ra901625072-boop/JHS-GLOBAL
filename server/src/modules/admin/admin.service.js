@@ -10,6 +10,7 @@ import Order from '../order/order.model.js';
 import Task from '../task/task.model.js';
 import Customer from '../customer/customer.model.js';
 import Category from '../category/category.model.js';
+import Certificate from '../certificate/certificate.model.js';
 import emailService from '../../services/email.service.js';
 import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
@@ -1249,6 +1250,224 @@ export const deleteAdminCategory = async (id, user = null, req = null) => {
   return { id: category.id, _id: category.id, isActive: false };
 };
 
+export const computeCertificateValidity = (cert) => {
+  const plain = cert.toJSON ? cert.toJSON() : { ...cert };
+  plain._id = plain.id;
+
+  if (!plain.expiryDate) {
+    return {
+      ...plain,
+      validityStatus: 'permanent',
+      daysRemaining: null,
+      isExpiringSoon: false,
+      isExpired: false,
+    };
+  }
+
+  const now = new Date();
+  const expiry = new Date(plain.expiryDate);
+  const diffMs = expiry.getTime() - now.getTime();
+  const daysRemaining = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+  const isExpired = daysRemaining < 0;
+  const isExpiringSoon = !isExpired && daysRemaining <= 60;
+
+  let validityStatus = 'valid';
+  if (isExpired) {
+    validityStatus = 'expired';
+  } else if (isExpiringSoon) {
+    validityStatus = 'expiring_soon';
+  }
+
+  return {
+    ...plain,
+    validityStatus,
+    daysRemaining,
+    isExpiringSoon,
+    isExpired,
+  };
+};
+
+export const getAdminCertificates = async ({ status, validity, isPublic, q } = {}) => {
+  const where = {};
+
+  if (status === 'active') {
+    where.isActive = true;
+  } else if (status === 'inactive') {
+    where.isActive = false;
+  }
+
+  if (isPublic === 'true' || isPublic === true) {
+    where.isPublic = true;
+  } else if (isPublic === 'false' || isPublic === false) {
+    where.isPublic = false;
+  }
+
+  if (q && q.trim()) {
+    const searchTerm = q.trim();
+    where[Op.or] = [
+      { name: { [Op.iLike]: `%${searchTerm}%` } },
+      { fullName: { [Op.iLike]: `%${searchTerm}%` } },
+      { issuedBy: { [Op.iLike]: `%${searchTerm}%` } },
+      { number: { [Op.iLike]: `%${searchTerm}%` } },
+      { scope: { [Op.iLike]: `%${searchTerm}%` } },
+    ];
+  }
+
+  const certs = await Certificate.findAll({
+    where,
+    order: [
+      ['order', 'ASC'],
+      ['name', 'ASC'],
+    ],
+  });
+
+  let mapped = certs.map(computeCertificateValidity);
+
+  if (validity && validity !== 'all') {
+    mapped = mapped.filter((c) => c.validityStatus === validity);
+  }
+
+  return mapped;
+};
+
+export const getAdminCertificateById = async (id) => {
+  const cert = await Certificate.findByPk(id);
+  if (!cert) {
+    const error = new Error('Certificate not found');
+    error.statusCode = 404;
+    throw error;
+  }
+  return computeCertificateValidity(cert);
+};
+
+export const createAdminCertificate = async (data, user = null, req = null) => {
+  const cert = await Certificate.create(data);
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'certificate.create',
+    entityType: 'certificate',
+    entityId: cert.id,
+    beforeSnapshot: null,
+    afterSnapshot: cert.toJSON(),
+    metadata: { name: cert.name, number: cert.number },
+  });
+
+  cacheService.del('http:/api/v1/certificates*');
+  logger.info(`Certificate created by ${user?.name || 'admin'}: ${cert.name} [${cert.number}]`);
+  return computeCertificateValidity(cert);
+};
+
+export const updateAdminCertificate = async (id, data, user = null, req = null) => {
+  const cert = await Certificate.findByPk(id);
+  if (!cert) {
+    const error = new Error('Certificate not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = cert.toJSON();
+  await cert.update(data);
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'certificate.update',
+    entityType: 'certificate',
+    entityId: cert.id,
+    beforeSnapshot,
+    afterSnapshot: cert.toJSON(),
+    metadata: { name: cert.name, number: cert.number },
+  });
+
+  cacheService.del('http:/api/v1/certificates*');
+  logger.info(`Certificate updated by ${user?.name || 'admin'}: ${cert.name}`);
+  return computeCertificateValidity(cert);
+};
+
+export const deleteAdminCertificate = async (id, user = null, req = null) => {
+  const cert = await Certificate.findByPk(id);
+  if (!cert) {
+    const error = new Error('Certificate not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = cert.toJSON();
+  await cert.update({ isActive: false });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'certificate.delete',
+    entityType: 'certificate',
+    entityId: cert.id,
+    beforeSnapshot,
+    afterSnapshot: cert.toJSON(),
+    metadata: { name: cert.name, number: cert.number },
+  });
+
+  cacheService.del('http:/api/v1/certificates*');
+  logger.info(`Certificate soft-deleted by ${user?.name || 'admin'}: ${cert.name}`);
+  return { id: cert.id, _id: cert.id, isActive: false };
+};
+
+export const toggleCertificatePublic = async (id, user = null, req = null) => {
+  const cert = await Certificate.findByPk(id);
+  if (!cert) {
+    const error = new Error('Certificate not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = cert.toJSON();
+  const newPublic = !cert.isPublic;
+  await cert.update({ isPublic: newPublic });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'certificate.toggle_public',
+    entityType: 'certificate',
+    entityId: cert.id,
+    beforeSnapshot,
+    afterSnapshot: cert.toJSON(),
+    metadata: { name: cert.name, isPublic: newPublic },
+  });
+
+  cacheService.del('http:/api/v1/certificates*');
+  logger.info(`Certificate ${cert.name} isPublic toggled to ${newPublic}`);
+  return { id: cert.id, _id: cert.id, isPublic: cert.isPublic };
+};
+
+export const reorderCertificates = async (items, user = null, req = null) => {
+  const beforeSnapshot = await Certificate.findAll({
+    where: { id: items.map((i) => i.id) },
+    attributes: ['id', 'name', 'order'],
+  });
+
+  for (const item of items) {
+    await Certificate.update({ order: item.order }, { where: { id: item.id } });
+  }
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'certificate.reorder',
+    entityType: 'certificate',
+    entityId: items[0]?.id || 0,
+    beforeSnapshot,
+    afterSnapshot: items,
+    metadata: { count: items.length },
+  });
+
+  cacheService.del('http:/api/v1/certificates*');
+  logger.info(`Reordered ${items.length} certificates`);
+  return { success: true, count: items.length };
+};
+
 export default {
   computeSla,
   getDashboardMetrics,
@@ -1275,4 +1494,12 @@ export default {
   toggleCategoryActive,
   reorderCategories,
   deleteAdminCategory,
+  computeCertificateValidity,
+  getAdminCertificates,
+  getAdminCertificateById,
+  createAdminCertificate,
+  updateAdminCertificate,
+  deleteAdminCertificate,
+  toggleCertificatePublic,
+  reorderCertificates,
 };

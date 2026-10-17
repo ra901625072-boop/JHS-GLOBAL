@@ -8,6 +8,8 @@ import {
   attachProductDocumentSchema,
   adminCategorySchema,
   reorderCategoriesSchema,
+  adminCertificateSchema,
+  reorderCertificatesSchema,
 } from './admin.validation.js';
 import { successResponse } from '../../utils/apiResponse.js';
 
@@ -241,3 +243,70 @@ export const deleteCategory = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getCertificates = async (req, res, next) => {
+  try {
+    const certificates = await adminService.getAdminCertificates(req.query);
+    return successResponse(res, certificates, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getCertificateById = async (req, res, next) => {
+  try {
+    const certificate = await adminService.getAdminCertificateById(req.params.id);
+    return successResponse(res, certificate, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createCertificate = async (req, res, next) => {
+  try {
+    const validatedData = adminCertificateSchema.parse(req.body);
+    const certificate = await adminService.createAdminCertificate(validatedData, req.user, req);
+    return successResponse(res, certificate, 201);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateCertificate = async (req, res, next) => {
+  try {
+    const validatedData = adminCertificateSchema.partial().parse(req.body);
+    const certificate = await adminService.updateAdminCertificate(req.params.id, validatedData, req.user, req);
+    return successResponse(res, certificate, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const toggleCertificatePublic = async (req, res, next) => {
+  try {
+    const result = await adminService.toggleCertificatePublic(req.params.id, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const reorderCertificates = async (req, res, next) => {
+  try {
+    const validatedData = reorderCertificatesSchema.parse(req.body);
+    const result = await adminService.reorderCertificates(validatedData.items, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteCertificate = async (req, res, next) => {
+  try {
+    const result = await adminService.deleteAdminCertificate(req.params.id, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
