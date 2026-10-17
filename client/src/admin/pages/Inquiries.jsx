@@ -236,7 +236,7 @@ export const Inquiries = () => {
         label: 'Reference No',
         sortable: true,
         headerClassName: 'w-36',
-        render: (row) => (
+        render: (_, row) => (
           <span className="font-mono font-bold text-primary-900">{row.referenceNo}</span>
         ),
       },
@@ -244,7 +244,7 @@ export const Inquiries = () => {
         key: 'buyer',
         label: 'Buyer & Company',
         sortable: false,
-        render: (row) => (
+        render: (_, row) => (
           <div>
             <div className="font-semibold text-neutral-900">{row.buyer?.name}</div>
             <div className="text-neutral-500 text-[11px]">{row.buyer?.company}</div>
@@ -255,7 +255,7 @@ export const Inquiries = () => {
         key: 'country',
         label: 'Destination',
         sortable: false,
-        render: (row) => (
+        render: (_, row) => (
           <span className="font-medium text-neutral-800">{row.buyer?.country || 'International'}</span>
         ),
       },
@@ -263,7 +263,7 @@ export const Inquiries = () => {
         key: 'items',
         label: 'Commodities & Volume',
         sortable: false,
-        render: (row) =>
+        render: (_, row) =>
           row.items?.length > 0 ? (
             <div className="max-w-xs truncate text-neutral-700">
               {row.items.map((i) => `${i.productName} (${i.quantity} ${i.unit})`).join(', ')}
@@ -276,7 +276,7 @@ export const Inquiries = () => {
         key: 'priority',
         label: 'Priority / Score',
         sortable: false,
-        render: (row) => (
+        render: (_, row) => (
           <div className="flex items-center gap-1.5">
             <AdminStatusBadge priority={row.priority} />
             {row.ai?.leadScore != null && (
@@ -294,13 +294,13 @@ export const Inquiries = () => {
         key: 'status',
         label: 'Status',
         sortable: false,
-        render: (row) => <AdminStatusBadge status={row.status} />,
+        render: (_, row) => <AdminStatusBadge status={row.status} />,
       },
       {
         key: 'sla',
         label: '48H SLA Timer',
         sortable: false,
-        render: (row) => (
+        render: (_, row) => (
           <span
             className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold ${
               row.slaStatus === 'resolved'
@@ -329,7 +329,7 @@ export const Inquiries = () => {
         key: 'createdAt',
         label: 'Received',
         sortable: true,
-        render: (row) => (
+        render: (_, row) => (
           <span className="font-mono text-neutral-500 text-[11px]">
             {new Date(row.createdAt).toLocaleDateString()}
           </span>
@@ -339,7 +339,7 @@ export const Inquiries = () => {
         key: 'actions',
         label: 'Action',
         headerClassName: 'text-right',
-        render: (row) => (
+        render: (_, row) => (
           <div className="flex items-center justify-end gap-1.5">
             <button
               onClick={(e) => {

@@ -225,7 +225,7 @@ export const Samples = () => {
         label: 'Reference No',
         sortable: true,
         headerClassName: 'w-36',
-        render: (row) => (
+        render: (_, row) => (
           <span className="font-mono font-bold text-primary-900">{row.referenceNo}</span>
         ),
       },
@@ -233,7 +233,7 @@ export const Samples = () => {
         key: 'buyer',
         label: 'Buyer & Company',
         sortable: false,
-        render: (row) => (
+        render: (_, row) => (
           <div>
             <div className="font-semibold text-neutral-900">{row.buyer?.name}</div>
             <div className="text-neutral-500 text-[11px]">{row.buyer?.company}</div>
@@ -244,7 +244,7 @@ export const Samples = () => {
         key: 'country',
         label: 'Destination',
         sortable: false,
-        render: (row) => (
+        render: (_, row) => (
           <div>
             <div className="font-medium text-neutral-800">
               {row.shippingAddress?.country || row.buyer?.country || 'International'}
@@ -259,7 +259,7 @@ export const Samples = () => {
         key: 'products',
         label: 'Requested Products & Qty',
         sortable: false,
-        render: (row) =>
+        render: (_, row) =>
           row.products?.length > 0 ? (
             <div className="max-w-xs truncate text-neutral-700">
               {row.products.map((p) => `${p.productName} (${p.qty || '250g'})`).join(', ')}
@@ -272,7 +272,7 @@ export const Samples = () => {
         key: 'courierAwb',
         label: 'Courier & AWB Tracking',
         sortable: false,
-        render: (row) => {
+        render: (_, row) => {
           const awb = row.awbNumber || row.trackingNo;
           if (!awb) {
             return (
@@ -306,13 +306,13 @@ export const Samples = () => {
         key: 'status',
         label: 'Status',
         sortable: false,
-        render: (row) => <AdminStatusBadge status={row.status} />,
+        render: (_, row) => <AdminStatusBadge status={row.status} />,
       },
       {
         key: 'createdAt',
         label: 'Requested Date',
         sortable: true,
-        render: (row) => (
+        render: (_, row) => (
           <span className="font-mono text-neutral-500 text-[11px]">
             {new Date(row.createdAt).toLocaleDateString()}
           </span>
@@ -322,7 +322,7 @@ export const Samples = () => {
         key: 'actions',
         label: 'Action',
         headerClassName: 'text-right',
-        render: (row) => (
+        render: (_, row) => (
           <div className="flex items-center justify-end gap-1.5">
             <button
               onClick={(e) => {

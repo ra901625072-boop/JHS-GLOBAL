@@ -26,7 +26,7 @@ export const DataTable = ({
 
   const handleHeaderSort = (col) => {
     if (!col.sortable || !onSort) return;
-    onSort(col.key);
+    onSort(col.key || col.accessor);
   };
 
   return (
@@ -47,19 +47,23 @@ export const DataTable = ({
                   />
                 </th>
               )}
-              {columns.map((col) => {
-                const isSorted = sortColumn === col.key;
+              {columns.map((col, cIdx) => {
+                const colKey = col.key || col.accessor || col.id || col.header || col.title || `col-${cIdx}`;
+                const sortKey = col.key || col.accessor || colKey;
+                const isSorted = sortColumn === sortKey;
+                const headerText = col.label || col.header || col.title || '';
                 return (
                   <th
-                    key={col.key}
+                    key={colKey}
                     scope="col"
                     onClick={() => handleHeaderSort(col)}
                     className={`p-3.5 ${col.headerClassName || ''} ${
                       col.sortable ? 'cursor-pointer hover:bg-neutral-100/80 select-none' : ''
                     }`}
+                    style={col.width ? { width: col.width } : undefined}
                   >
                     <div className="inline-flex items-center gap-1.5">
-                      <span>{col.label}</span>
+                      <span>{headerText}</span>
                       {col.sortable && (
                         <span className="text-neutral-400">
                           {isSorted ? (
@@ -134,11 +138,26 @@ export const DataTable = ({
                         />
                       </td>
                     )}
-                    {columns.map((col) => (
-                      <td key={col.key} className={`p-3.5 ${col.className || ''}`}>
-                        {col.render ? col.render(row[col.key], row) : (row[col.key] ?? '—')}
-                      </td>
-                    ))}
+                    {columns.map((col, cIdx) => {
+                      const colKey = col.key || col.accessor || col.id || col.header || col.title || `col-${cIdx}`;
+                      const colField = col.key || col.accessor;
+                      const cellVal = (colField !== undefined && row && typeof row === 'object') ? row[colField] : undefined;
+
+                      let cellContent;
+                      if (typeof col.cell === 'function') {
+                        cellContent = col.cell(row);
+                      } else if (typeof col.render === 'function') {
+                        cellContent = col.render(cellVal, row);
+                      } else {
+                        cellContent = cellVal ?? '—';
+                      }
+
+                      return (
+                        <td key={colKey} className={`p-3.5 ${col.className || ''}`}>
+                          {cellContent}
+                        </td>
+                      );
+                    })}
                   </tr>
                 );
               })
