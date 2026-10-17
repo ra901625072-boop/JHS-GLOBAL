@@ -67,5 +67,9 @@ router.delete('/faqs/:id', authorize('admin', 'editor'), adminController.deleteF
 router.patch('/faqs/:id/toggle-home', authorize('admin', 'editor'), adminController.toggleFaqHome);
 router.patch('/faqs/:id/toggle-active', authorize('admin', 'editor'), adminController.toggleFaqActive);
 
+// AI Desk & RAG Knowledge Repository
+router.get('/ai-desk/summary', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getAiDeskSummary);
+router.post('/ai-desk/reindex', authorize('admin', 'editor'), adminController.triggerRAGReindex);
+
 export default router;
 

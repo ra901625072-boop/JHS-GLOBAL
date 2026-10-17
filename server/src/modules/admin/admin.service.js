@@ -13,6 +13,10 @@ import Category from '../category/category.model.js';
 import Certificate from '../certificate/certificate.model.js';
 import BlogPost from '../blog/blog.model.js';
 import Faq from '../faq/faq.model.js';
+import CompanyFact from '../companyFact/companyFact.model.js';
+import Embedding from '../ai/embedding.model.js';
+import AiChatAuditLog from '../ai/aiChatAuditLog.model.js';
+import { reindexAllCatalogue } from '../ai/rag/embedding.service.js';
 import emailService from '../../services/email.service.js';
 import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
@@ -2057,6 +2061,91 @@ export const reorderAdminFaqs = async (items = [], user = null, req = null) => {
   }
 };
 
+// ==========================================
+// AI DESK & KNOWLEDGE BASE ADMINISTRATION
+// ==========================================
+
+export const getAdminAiDeskSummary = async () => {
+  const [
+    totalEmbeddings,
+    productEmbeddings,
+    faqEmbeddings,
+    factEmbeddings,
+    totalFacts,
+    verifiedFacts,
+    unverifiedFacts,
+    publicFacts,
+    totalChats,
+    needsHumanChats,
+    lowConfidenceChats,
+    unhelpfulChats,
+    resolvedChats,
+  ] = await Promise.all([
+    Embedding.count().catch(() => 0),
+    Embedding.count({ where: { sourceType: 'product' } }).catch(() => 0),
+    Embedding.count({ where: { sourceType: 'faq' } }).catch(() => 0),
+    Embedding.count({ where: { sourceType: 'company_fact' } }).catch(() => 0),
+    CompanyFact.count().catch(() => 0),
+    CompanyFact.count({ where: { isVerified: true } }).catch(() => 0),
+    CompanyFact.count({ where: { isVerified: false } }).catch(() => 0),
+    CompanyFact.count({ where: { isPublic: true } }).catch(() => 0),
+    AiChatAuditLog.count().catch(() => 0),
+    AiChatAuditLog.count({ where: { needsHuman: true, isResolved: false } }).catch(() => 0),
+    AiChatAuditLog.count({ where: { confidence: { [Op.lt]: 0.75 }, isResolved: false } }).catch(() => 0),
+    AiChatAuditLog.count({ where: { feedbackRating: 'unhelpful' } }).catch(() => 0),
+    AiChatAuditLog.count({ where: { isResolved: true } }).catch(() => 0),
+  ]);
+
+  return {
+    embeddings: {
+      total: totalEmbeddings,
+      bySource: {
+        products: productEmbeddings,
+        faqs: faqEmbeddings,
+        companyFacts: factEmbeddings,
+      },
+      status: totalEmbeddings > 0 ? 'healthy' : 'indexing_required',
+    },
+    facts: {
+      total: totalFacts,
+      verified: verifiedFacts,
+      unverified: unverifiedFacts,
+      public: publicFacts,
+      verificationRate: totalFacts > 0 ? Math.round((verifiedFacts / totalFacts) * 100) : 100,
+    },
+    chats: {
+      total: totalChats,
+      needsHuman: needsHumanChats,
+      lowConfidence: lowConfidenceChats,
+      unhelpful: unhelpfulChats,
+      resolved: resolvedChats,
+    },
+  };
+};
+
+export const triggerAdminRAGReindex = async (user = null, req = null) => {
+  logger.info(`RAG Catalogue re-indexing initiated by ${user?.name || 'Staff'}`);
+  const result = await reindexAllCatalogue();
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'ai.reindex_catalogue',
+    entityType: 'embedding',
+    entityId: null,
+    metadata: result,
+  });
+
+  cacheService.del('http:/api/v1/faqs*');
+  cacheService.del('http:/api/v1/products*');
+  cacheService.del('http:/api/v1/company-facts*');
+
+  return {
+    success: true,
+    ...result,
+  };
+};
+
 export default {
   computeSla,
   getDashboardMetrics,
@@ -2105,4 +2194,6 @@ export default {
   toggleAdminFaqHome,
   toggleAdminFaqActive,
   reorderAdminFaqs,
+  getAdminAiDeskSummary,
+  triggerAdminRAGReindex,
 };

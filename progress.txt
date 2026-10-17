@@ -150,3 +150,21 @@
   - Public FAQ cache keys are invalidated via cacheService.del('http:/api/v1/faqs*') on all CRUD and visibility toggle operations
   - Reordering supports both bulk item mapping and one-click move-up/down swaps in the DataTable
 ---
+
+## [2026-10-17 04:47:36] - [US-AI-001, US-AI-002, US-AI-003]
+- Summary: Phase 2 Step 9 (AI Desk & Knowledge Base Desk) completed: Company Facts CRUD & attribution metadata, RAG vector index health metrics, manual RAG re-index trigger with audit logging, visitor chat audit triage with governance labeling, and knowledge gap resolution. All 81 backend tests pass and 0 visual/DOM regressions across 5 viewports.
+- Files modified:
+  - client/src/admin/api.js
+  - client/src/admin/pages/CompanyKnowledgeBase.jsx
+  - client/src/admin/pages/AiInquiryReview.jsx
+  - server/src/modules/admin/admin.service.js
+  - server/src/modules/admin/admin.controller.js
+  - server/src/modules/admin/admin.routes.js
+  - server/tests/ai-admin.test.js
+  - prd.json
+- **Learnings for future iterations:**
+  - Fact Key Formatting: companyFact.validation.js enforces regex /^[a-z0-9_]+$/ (lowercase alphanumeric and underscores only; no dots).
+  - RAG Vector Reindexing Duration: Full catalogue reindexing executes sequentially across products, FAQs, and company facts, taking ~15-20 seconds. Tests exercising this endpoint must set a 35,000ms Vitest timeout.
+  - Sequelize Teardown Concurrency: Running all 8 backend test files in parallel without --no-file-parallelism against the remote PostgreSQL pool can cause transient pool disconnects. Use --no-file-parallelism when running the entire 8-suite test runner.
+  - Admin AI Governance: Explicit requirement that any AI-generated response or suggested draft must visually carry [AI GENERATED SUGGESTION — REQUIRES HUMAN APPROVAL] pill and allow quick transformation into verified Company Fact or FAQ.
+---

@@ -1,47 +1,45 @@
 {
   "project": "JHS GLOBAL Admin Suite",
-  "branchName": "feat/admin-step8-faq-manager",
-  "created_at": "2026-10-17T04:20:54.913Z",
+  "branchName": "feat/admin-step9-ai-desk",
+  "created_at": "2026-10-17T04:35:14.931Z",
   "userStories": [
     {
-      "id": "US-FAQ-001",
-      "title": "FAQ Administration API & Lifecycle Governance",
-      "description": "Implement administrative FAQ management API with search, category filtering, homepage visibility toggle, reordering, RAG embedding synchronization, and audit logging",
+      "id": "US-AI-001",
+      "title": "AI Desk & RAG Knowledge Repository Administration API",
+      "description": "Implement administrative AI Desk and RAG knowledge endpoints supporting embedding maintenance, company facts lifecycle, and chat transcript audit triage",
       "acceptanceCriteria": [
-        "GET /api/v1/admin/faqs returns all FAQs with search, group filter, showOnHome filter, isActive filter, pagination, and sorting",
-        "GET /api/v1/admin/faqs/:id returns FAQ detail with group, order, showOnHome, homeOrder, isActive, question, answer, and slug",
-        "POST /api/v1/admin/faqs creates new FAQ with automatic slug generation, RAG embedding sync, audit logging, and cache invalidation",
-        "PUT /api/v1/admin/faqs/:id updates FAQ content, order, group, showOnHome, homeOrder, isActive, with slug conflict check, RAG sync, audit logging, and cache invalidation",
-        "DELETE /api/v1/admin/faqs/:id soft-deletes FAQ (isActive: false) with audit logging, RAG sync, and cache invalidation",
-        "PATCH /api/v1/admin/faqs/:id/toggle-home toggles showOnHome boolean flag with audit log and cache invalidation",
-        "PATCH /api/v1/admin/faqs/:id/toggle-active toggles isActive boolean flag with audit log and cache invalidation",
-        "PATCH /api/v1/admin/faqs/reorder accepts array of { id, order, homeOrder } and updates sequence in transaction with audit log and cache invalidation",
-        "Strict RBAC: creation, editing, reordering, deletion restricted to admin and editor roles; read accessible to admin, editor, sales, viewer"
+        "GET /api/v1/admin/ai-desk/summary returns vector embedding metrics (total, products, FAQs, company facts), chat audit triage counts, and confidence stats",
+        "POST /api/v1/admin/ai-desk/reindex triggers full catalogue vector reindexing with audit log and returns indexed/skipped counts",
+        "GET /api/v1/company-facts/admin returns company knowledge facts with category, verified, and public filtering",
+        "POST /api/v1/company-facts/admin creates new verified company fact and syncs vector embedding",
+        "GET /api/v1/ai/admin/audit-logs returns paginated visitor chat transcripts with confidence, intent, and resolution filters",
+        "PATCH /api/v1/ai/admin/audit-logs/:id/resolve resolves flagged query with staff resolution note",
+        "RBAC restricts re-indexing and fact creation to admin and editor; chat triage accessible to sales"
       ],
       "priority": 1,
       "passes": true
     },
     {
-      "id": "US-FAQ-002",
-      "title": "FAQ Manager Desk UI with Live Markdown Preview & Reordering",
-      "description": "Build comprehensive FAQ Manager page using DataTable, FilterBar, and AdminDrawer with Markdown answer preview and homepage featured toggle",
+      "id": "US-AI-002",
+      "title": "AI Knowledge Base & Chat Review Desk UI with RAG Maintenance",
+      "description": "Build complete AI Desk and Knowledge Base pages with RAG vector maintenance, transcript review, and knowledge gap triage",
       "acceptanceCriteria": [
-        "FAQ Manager renders with DataTable, FilterBar, and AdminStatusBadge components",
-        "Top metric strip displays Total FAQs, Featured on Homepage, Active Groups, and Inactive FAQs",
-        "FilterBar supports search, category group dropdown, homepage filter (All, Homepage Only, Full FAQ Only), and status filter",
-        "Table displays Question text, Category Group badge, Homepage Featured toggle pill, Active status badge, Display Order, and Quick Actions",
-        "Slide-over AdminDrawer features question input, category group selector with commercial presets, order inputs, homepage toggle, active toggle, Markdown answer editor with live rendered preview, and deep-link preview"
+        "Company Knowledge Base renders with DataTable, FilterBar, and AdminDrawer for fact authoring",
+        "Header displays RAG vector index status strip with total chunk counts and one-click Trigger Re-index button",
+        "Fact editor drawer features category dropdown, fact key, formal label, value content, source document attribution, and verified status toggle",
+        "AI Chat Review desk features transcript timeline, intent badges, confidence meter, buyer feedback pills, and quick action to turn unknown query into a verified fact or FAQ",
+        "All AI responses and suggestions strictly display [AI GENERATED SUGGESTION — REQUIRES HUMAN APPROVAL]"
       ],
       "priority": 2,
       "passes": true
     },
     {
-      "id": "US-FAQ-003",
-      "title": "Automated FAQ Test Coverage & Zero Public Regression",
-      "description": "Verify FAQ administration features with integration tests and confirm zero public site regression",
+      "id": "US-AI-003",
+      "title": "Automated AI Desk Test Coverage & Zero Public Regression",
+      "description": "Verify AI Desk and Knowledge Base features with integration tests and confirm zero public site regression",
       "acceptanceCriteria": [
-        "Admin API client in client/src/admin/api.js provides fetchAdminFaqs, fetchAdminFaqById, createAdminFaq, updateAdminFaq, deleteAdminFaq, toggleAdminFaqHome, toggleAdminFaqActive, and reorderAdminFaqs",
-        "Automated integration tests in server/tests/faq-admin.test.js cover list filtering, creation with auto slug, update with RAG sync, toggle homepage, toggle active, reorder, soft delete, and RBAC rejection",
+        "Admin API client in client/src/admin/api.js provides fetchAiDeskSummary, triggerAdminReindex, fetchAdminCompanyFacts, createAdminCompanyFact, fetchAiChatAuditLogs, and resolveAiChatAuditLog",
+        "Automated integration tests in server/tests/ai-admin.test.js cover AI desk summary, RAG reindexing, company fact lifecycle, chat audit log resolution, and RBAC security",
         "All client and server test suites pass with 100% success",
         "Zero visual regression on public site verified via verify:no-change"
       ],

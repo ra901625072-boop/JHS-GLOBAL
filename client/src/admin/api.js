@@ -493,3 +493,14 @@ export const resolveAiChatAuditLog = async (id, data = {}) => {
   const response = await apiClient.patch(`/ai/admin/audit-logs/${id}/resolve`, data);
   return response.data;
 };
+
+// AI Desk & RAG Knowledge Repository Summary
+export const fetchAiDeskSummary = async () => {
+  const response = await apiClient.get('/admin/ai-desk/summary');
+  return response.data;
+};
+
+export const triggerAdminReindex = async () => {
+  const response = await apiClient.post('/admin/ai-desk/reindex');
+  return response.data;
+};

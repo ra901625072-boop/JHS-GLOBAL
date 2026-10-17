@@ -537,10 +537,15 @@ export const AiInquiryReview = () => {
               </div>
 
               {/* Generated Answer */}
-              <div className="bg-white border border-neutral-200 rounded-lg p-3 space-y-1 shadow-2xs">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
-                  Ground-Truth Model Response
-                </span>
+              <div className="bg-white border border-neutral-200 rounded-lg p-3 space-y-2 shadow-2xs">
+                <div className="flex flex-wrap items-center justify-between gap-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
+                    Ground-Truth Model Response
+                  </span>
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-amber-100 text-amber-900 border border-amber-300">
+                    [AI GENERATED SUGGESTION — REQUIRES HUMAN APPROVAL]
+                  </span>
+                </div>
                 <p className="text-xs leading-relaxed text-neutral-800 whitespace-pre-wrap">
                   {selectedLog.answer}
                 </p>
@@ -591,25 +596,32 @@ export const AiInquiryReview = () => {
                 <textarea
                   value={resolveNote}
                   onChange={(e) => setResolveNote(e.target.value)}
-                  placeholder="Notes (e.g., Added Ashwagandha bulk density to company facts)..."
+                  placeholder="Notes (e.g., Added bulk density specification to company knowledge base)..."
                   rows={2}
                   className="w-full text-xs p-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary-800"
                 />
-                <div className="flex items-center gap-2 pt-1">
+                <div className="flex flex-wrap items-center gap-2 pt-1">
                   <button
                     onClick={() => handleResolve(selectedLog.id)}
                     disabled={resolvingId === selectedLog.id}
-                    className="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs flex items-center gap-1 transition-colors"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-medium text-xs flex items-center gap-1 transition-colors"
                   >
                     <Check className="w-3.5 h-3.5" />
                     <span>Mark as Resolved</span>
                   </button>
                   <Link
                     to="/admin/company-knowledge"
-                    className="px-3 py-1.5 rounded-lg bg-primary-900 hover:bg-primary-950 text-accent-300 font-bold text-xs flex items-center gap-1 transition-colors"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-800 hover:bg-emerald-900 text-white font-medium text-xs flex items-center gap-1 transition-colors"
                   >
                     <Plus className="w-3.5 h-3.5" />
-                    <span>Add to Knowledge Base</span>
+                    <span>Turn into Fact</span>
+                  </Link>
+                  <Link
+                    to="/admin/faqs"
+                    className="px-3 py-1.5 rounded-lg border border-stone-300 hover:bg-stone-50 text-stone-700 font-medium text-xs flex items-center gap-1 transition-colors"
+                  >
+                    <HelpCircle className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>Turn into FAQ</span>
                   </Link>
                 </div>
               </div>

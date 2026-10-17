@@ -446,4 +446,22 @@ export const reorderFaqs = async (req, res, next) => {
   }
 };
 
+export const getAiDeskSummary = async (req, res, next) => {
+  try {
+    const summary = await adminService.getAdminAiDeskSummary();
+    return successResponse(res, summary, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const triggerRAGReindex = async (req, res, next) => {
+  try {
+    const result = await adminService.triggerAdminRAGReindex(req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 

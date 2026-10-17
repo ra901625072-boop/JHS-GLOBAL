@@ -43,3 +43,7 @@ logs/
 *.njsproj
 *.sln
 *.sw?
+
+# Agent Tools
+.agents/
+skills-lock.json
