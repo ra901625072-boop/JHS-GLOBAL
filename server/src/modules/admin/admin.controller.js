@@ -6,6 +6,8 @@ import {
   spamInquirySchema,
   verifyProductSpecSchema,
   attachProductDocumentSchema,
+  adminCategorySchema,
+  reorderCategoriesSchema,
 } from './admin.validation.js';
 import { successResponse } from '../../utils/apiResponse.js';
 
@@ -168,6 +170,72 @@ export const attachProductDocument = async (req, res, next) => {
 export const removeProductDocument = async (req, res, next) => {
   try {
     const result = await adminService.removeProductDocument(req.params.id, req.params.docId, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getCategories = async (req, res, next) => {
+  try {
+    const categories = await adminService.getAdminCategories(req.query);
+    return successResponse(res, categories, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getCategoryById = async (req, res, next) => {
+  try {
+    const category = await adminService.getAdminCategoryById(req.params.id);
+    return successResponse(res, category, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createCategory = async (req, res, next) => {
+  try {
+    const validatedData = adminCategorySchema.parse(req.body);
+    const category = await adminService.createAdminCategory(validatedData, req.user, req);
+    return successResponse(res, category, 201);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateCategory = async (req, res, next) => {
+  try {
+    const validatedData = adminCategorySchema.partial().parse(req.body);
+    const category = await adminService.updateAdminCategory(req.params.id, validatedData, req.user, req);
+    return successResponse(res, category, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const toggleCategoryActive = async (req, res, next) => {
+  try {
+    const result = await adminService.toggleCategoryActive(req.params.id, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const reorderCategories = async (req, res, next) => {
+  try {
+    const validatedData = reorderCategoriesSchema.parse(req.body);
+    const result = await adminService.reorderCategories(validatedData.items, req.user, req);
+    return successResponse(res, result, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteCategory = async (req, res, next) => {
+  try {
+    const result = await adminService.deleteAdminCategory(req.params.id, req.user, req);
     return successResponse(res, result, 200);
   } catch (error) {
     next(error);

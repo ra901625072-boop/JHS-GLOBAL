@@ -939,6 +939,316 @@ export const removeProductDocument = async (id, docIdOrIndex, user = null, req =
   return { documents, product: { ...product.toJSON(), _id: product.id } };
 };
 
+export const getAdminCategories = async ({ q, parentId, isActive } = {}) => {
+  const where = {};
+
+  if (isActive !== undefined && isActive !== 'all') {
+    where.isActive = isActive === 'true' || isActive === true;
+  }
+
+  if (parentId !== undefined && parentId !== 'all') {
+    if (parentId === 'root' || parentId === 'null') {
+      where.parentId = null;
+    } else {
+      where.parentId = parseInt(parentId, 10);
+    }
+  }
+
+  if (q && q.trim()) {
+    const searchTerm = q.trim();
+    where[Op.or] = [
+      { name: { [Op.iLike]: `%${searchTerm}%` } },
+      { slug: { [Op.iLike]: `%${searchTerm}%` } },
+      { hsChapter: { [Op.iLike]: `%${searchTerm}%` } },
+    ];
+  }
+
+  const categories = await Category.findAll({
+    where,
+    order: [
+      ['level', 'ASC'],
+      ['order', 'ASC'],
+      ['name', 'ASC'],
+    ],
+    include: [
+      {
+        model: Category,
+        as: 'parent',
+        attributes: ['id', 'name', 'slug'],
+      },
+      {
+        model: Category,
+        as: 'children',
+        attributes: ['id', 'name', 'slug', 'order', 'isActive', 'level'],
+      },
+    ],
+  });
+
+  const categoriesWithCounts = await Promise.all(
+    categories.map(async (cat) => {
+      const plain = cat.toJSON();
+      const productCount = await Product.count({
+        where: {
+          [Op.or]: [{ categoryId: cat.id }, { subCategoryId: cat.id }],
+          isActive: true,
+        },
+      });
+      return {
+        ...plain,
+        _id: plain.id,
+        productCount,
+      };
+    })
+  );
+
+  return categoriesWithCounts;
+};
+
+export const getAdminCategoryById = async (id) => {
+  const category = await Category.findByPk(id, {
+    include: [
+      {
+        model: Category,
+        as: 'parent',
+        attributes: ['id', 'name', 'slug', 'level'],
+      },
+      {
+        model: Category,
+        as: 'children',
+        attributes: ['id', 'name', 'slug', 'order', 'isActive', 'level', 'hsChapter'],
+      },
+    ],
+  });
+
+  if (!category) {
+    const error = new Error('Category not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const plain = category.toJSON();
+  const productCount = await Product.count({
+    where: {
+      [Op.or]: [{ categoryId: category.id }, { subCategoryId: category.id }],
+      isActive: true,
+    },
+  });
+
+  return {
+    ...plain,
+    _id: plain.id,
+    productCount,
+  };
+};
+
+export const createAdminCategory = async (data, user = null, req = null) => {
+  const slug = data.slug || createSlug(data.name);
+
+  const existing = await Category.findOne({ where: { slug } });
+  if (existing) {
+    const error = new Error(`Category with slug '${slug}' already exists.`);
+    error.statusCode = 409;
+    throw error;
+  }
+
+  let level = 1;
+  let path = slug;
+
+  if (data.parentId) {
+    const parent = await Category.findByPk(data.parentId);
+    if (parent) {
+      level = Math.min(3, (parent.level || 1) + 1);
+      path = `${parent.path || parent.slug}/${slug}`;
+    }
+  }
+
+  const category = await Category.create({
+    ...data,
+    slug,
+    level,
+    path,
+  });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'category.create',
+    entityType: 'category',
+    entityId: category.id,
+    beforeSnapshot: null,
+    afterSnapshot: category.toJSON(),
+    metadata: { name: category.name, slug: category.slug, level: category.level },
+  });
+
+  cacheService.del('http:/api/v1/categories*');
+  logger.info(`Category created by ${user?.name || 'admin'}: ${category.name} [${category.slug}]`);
+
+  const plain = category.toJSON();
+  plain._id = category.id;
+  return plain;
+};
+
+export const updateAdminCategory = async (id, data, user = null, req = null) => {
+  const category = await Category.findByPk(id);
+  if (!category) {
+    const error = new Error('Category not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = category.toJSON();
+  const updatePayload = { ...data };
+
+  if (data.parentId !== undefined && data.parentId !== category.parentId) {
+    if (data.parentId) {
+      if (parseInt(data.parentId, 10) === category.id) {
+        const error = new Error('A category cannot be its own parent.');
+        error.statusCode = 400;
+        throw error;
+      }
+      const parent = await Category.findByPk(data.parentId);
+      if (parent) {
+        updatePayload.level = Math.min(3, (parent.level || 1) + 1);
+        updatePayload.path = `${parent.path || parent.slug}/${category.slug}`;
+      }
+    } else {
+      updatePayload.parentId = null;
+      updatePayload.level = 1;
+      updatePayload.path = category.slug;
+    }
+  }
+
+  await category.update(updatePayload);
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'category.update',
+    entityType: 'category',
+    entityId: category.id,
+    beforeSnapshot,
+    afterSnapshot: category.toJSON(),
+    metadata: { name: category.name },
+  });
+
+  cacheService.del('http:/api/v1/categories*');
+  logger.info(`Category updated by ${user?.name || 'admin'}: ${category.name}`);
+
+  const plain = category.toJSON();
+  plain._id = category.id;
+  return plain;
+};
+
+export const toggleCategoryActive = async (id, user = null, req = null) => {
+  const category = await Category.findByPk(id);
+  if (!category) {
+    const error = new Error('Category not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const beforeSnapshot = category.toJSON();
+  const newActive = !category.isActive;
+  await category.update({ isActive: newActive });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'category.toggle_active',
+    entityType: 'category',
+    entityId: category.id,
+    beforeSnapshot,
+    afterSnapshot: category.toJSON(),
+    metadata: { name: category.name, isActive: newActive },
+  });
+
+  cacheService.del('http:/api/v1/categories*');
+  logger.info(`Category ${category.name} isActive toggled to ${newActive}`);
+  return { id: category.id, _id: category.id, isActive: category.isActive };
+};
+
+export const reorderCategories = async (items, user = null, req = null) => {
+  const beforeSnapshot = await Category.findAll({
+    where: { id: items.map((i) => i.id) },
+    attributes: ['id', 'name', 'order'],
+  });
+
+  for (const item of items) {
+    await Category.update({ order: item.order }, { where: { id: item.id } });
+  }
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'category.reorder',
+    entityType: 'category',
+    entityId: items[0]?.id || 0,
+    beforeSnapshot,
+    afterSnapshot: items,
+    metadata: { count: items.length },
+  });
+
+  cacheService.del('http:/api/v1/categories*');
+  logger.info(`Reordered ${items.length} categories`);
+  return { success: true, count: items.length };
+};
+
+export const deleteAdminCategory = async (id, user = null, req = null) => {
+  const category = await Category.findByPk(id);
+  if (!category) {
+    const error = new Error('Category not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  // Safety check: Active products
+  const activeProductCount = await Product.count({
+    where: {
+      [Op.or]: [{ categoryId: id }, { subCategoryId: id }],
+      isActive: true,
+    },
+  });
+
+  if (activeProductCount > 0) {
+    const error = new Error(
+      `Cannot delete category "${category.name}". ${activeProductCount} active product(s) are assigned to this category. Please reassign or deactivate the products first.`
+    );
+    error.statusCode = 400;
+    throw error;
+  }
+
+  // Safety check: Active child subcategories
+  const childCount = await Category.count({
+    where: { parentId: id, isActive: true },
+  });
+
+  if (childCount > 0) {
+    const error = new Error(
+      `Cannot delete category "${category.name}". It contains ${childCount} active subcategory(ies). Please reassign or delete the subcategories first.`
+    );
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const beforeSnapshot = category.toJSON();
+  await category.update({ isActive: false });
+
+  await recordAuditLog({
+    req,
+    user,
+    action: 'category.delete',
+    entityType: 'category',
+    entityId: category.id,
+    beforeSnapshot,
+    afterSnapshot: category.toJSON(),
+    metadata: { name: category.name },
+  });
+
+  cacheService.del('http:/api/v1/categories*');
+  logger.info(`Category soft-deleted by ${user?.name || 'admin'}: ${category.name}`);
+  return { id: category.id, _id: category.id, isActive: false };
+};
+
 export default {
   computeSla,
   getDashboardMetrics,
@@ -958,4 +1268,11 @@ export default {
   verifyProductSpec,
   attachProductDocument,
   removeProductDocument,
+  getAdminCategories,
+  getAdminCategoryById,
+  createAdminCategory,
+  updateAdminCategory,
+  toggleCategoryActive,
+  reorderCategories,
+  deleteAdminCategory,
 };

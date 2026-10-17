@@ -138,6 +138,42 @@ export const removeAdminProductDocument = async (id, docId) => {
   return response.data;
 };
 
+// Categories & Divisions Governance
+export const fetchAdminCategories = async (params = {}) => {
+  const response = await apiClient.get('/admin/categories', { params });
+  return response.data || [];
+};
+
+export const fetchAdminCategoryById = async (id) => {
+  const response = await apiClient.get(`/admin/categories/${id}`);
+  return response.data;
+};
+
+export const createAdminCategory = async (data) => {
+  const response = await apiClient.post('/admin/categories', data);
+  return response.data;
+};
+
+export const updateAdminCategory = async (id, data) => {
+  const response = await apiClient.put(`/admin/categories/${id}`, data);
+  return response.data;
+};
+
+export const deleteAdminCategory = async (id) => {
+  const response = await apiClient.delete(`/admin/categories/${id}`);
+  return response.data;
+};
+
+export const toggleAdminCategoryActive = async (id) => {
+  const response = await apiClient.patch(`/admin/categories/${id}/toggle-active`);
+  return response.data;
+};
+
+export const reorderAdminCategories = async (items) => {
+  const response = await apiClient.patch('/admin/categories/reorder', { items });
+  return response.data;
+};
+
 // Quotations Management
 export const fetchAdminQuotations = async (params = {}) => {
   const response = await apiClient.get('/quotations', { params });

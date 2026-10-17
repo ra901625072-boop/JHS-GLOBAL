@@ -80,3 +80,21 @@
   - Spec table editor supports per-spec verification flag which automatically computes isVerified when all specs are verified
   - Admin product routes strictly enforce that only admin and editor roles have write/delete permissions while sales and viewer have read access
 ---
+
+## [2026-10-17 04:00:33] - [US-CAT-001, US-CAT-002, US-CAT-003]
+- Summary: Built Categories & Divisions Desk with 3-tier hierarchy governance, live assigned product count calculation, display reordering, public mega-menu toggle, deletion safeguard guards, and full test suite (10/10 passed).
+- Files modified:
+  - server/src/modules/admin/admin.validation.js
+  - server/src/modules/admin/admin.service.js
+  - server/src/modules/admin/admin.controller.js
+  - server/src/modules/admin/admin.routes.js
+  - client/src/admin/api.js
+  - client/src/admin/pages/Categories.jsx
+  - server/tests/category-admin.test.js
+  - prd.json
+- **Learnings for future iterations:**
+  - In Sequelize Category model, level is 1 for root divisions, 2 for subcategories, 3 for micro-segments. Computed automatically from parentId.
+  - Deletion invariant: categories cannot be deleted if active products exist in categoryId or subCategoryId, or if active child subcategories exist. Returns 400 Bad Request with descriptive guidance.
+  - Admin routes require careful mounting order: /categories/reorder must precede /categories/:id so :id does not swallow reorder.
+  - When editing admin.routes.js, verify all sibling routes like /products/:id/documents/:docId are preserved intact.
+---

@@ -1,49 +1,46 @@
 {
   "project": "JHS GLOBAL Admin Suite",
-  "branchName": "feat/admin-step4-products-specs-desk",
-  "created_at": "2026-10-17T03:35:00.000Z",
+  "branchName": "feat/admin-step5-categories-divisions",
+  "created_at": "2026-10-17T03:50:00.000Z",
   "userStories": [
     {
-      "id": "US-PRD-001",
-      "title": "Product Model & Technical Specs Admin API",
-      "description": "Extend Product model with container load and technical documents, and implement comprehensive admin product management endpoints with RBAC and audit logging",
+      "id": "US-CAT-001",
+      "title": "Category Hierarchy & Administration API",
+      "description": "Implement administrative category endpoints supporting 3-division hierarchy, product counts, ordering, active toggles, and deletion safety checks with audit logging",
       "acceptanceCriteria": [
-        "Product model includes containerLoad and documents fields with idempotent PostgreSQL migration",
-        "GET /api/v1/admin/products returns paginated products with search, category, status (active/draft), and featured filters",
-        "GET /api/v1/admin/products/:id returns full commodity dossier including technical specs and verifiedFields",
-        "POST /api/v1/admin/products creates a new product with full specifications, trade parameters, and audit logging",
-        "PUT /api/v1/admin/products/:id updates product details, specs, and trade parameters with audit logging",
-        "PATCH /api/v1/admin/products/:id/toggle-active toggles active/draft state with audit logging",
-        "PATCH /api/v1/admin/products/:id/toggle-featured toggles featured status with audit logging",
-        "PATCH /api/v1/admin/products/:id/verify-spec toggles per-spec verification flag and updates verifiedFields",
-        "POST /api/v1/admin/products/:id/documents attaches TDS/SDS/COA documents with title, type, and url",
-        "RBAC strictly enforces that only admin and editor roles can modify products while sales/viewer have read access"
+        "GET /api/v1/admin/categories returns all divisions and subcategories with product counts, level, order, and parent references",
+        "GET /api/v1/admin/categories/:id returns category details with associated active products and child subcategories",
+        "POST /api/v1/admin/categories creates a new category or subcategory with slug, order, HS chapter, and audit log",
+        "PUT /api/v1/admin/categories/:id updates category attributes, level, and parentId with audit log",
+        "PATCH /api/v1/admin/categories/:id/toggle-active toggles public visibility on visitor menus and search filters",
+        "PATCH /api/v1/admin/categories/reorder updates sequence order across siblings",
+        "DELETE /api/v1/admin/categories/:id safely prevents deletion if active products exist in category, or soft-deletes with audit log",
+        "RBAC strictly restricts category modifications to admin and editor roles"
       ],
       "priority": 1,
       "passes": true
     },
     {
-      "id": "US-PRD-002",
-      "title": "Products & Technical Specs Desk UI with 5-Tab AdminDrawer",
-      "description": "Build complete Products & Technical Specs Desk page using DataTable, FilterBar, and AdminDrawer with spec table editor, trade parameters, document uploads, and live public preview",
+      "id": "US-CAT-002",
+      "title": "Categories & Divisions Desk UI with Hierarchy Drawer",
+      "description": "Build complete Categories & Divisions page using DataTable, FilterBar, and AdminDrawer with tree view and division tabs",
       "acceptanceCriteria": [
-        "Products page renders with DataTable, FilterBar, and AdminStatusBadge components",
-        "Table displays Commodity Name with thumbnail, HS Code, Category & Division, MOQ, Shelf Life & Lead Time, Published Status, and Actions",
-        "FilterBar provides category filtering, search input, and status pills (All, Published, Draft, Featured)",
-        "Detail drawer features 5 focused tabs: 1) Basic Info & HS Classification, 2) Laboratory Spec Table Editor (with per-spec verified toggle), 3) Export Trade & Container Logistics (MOQ, Incoterms, Ports, FCL/LCL), 4) Technical Documents & Images (TDS/SDS/COA), 5) SEO & Publishing",
-        "Spec Table Editor allows adding, editing, deleting specification rows (parameter, test method, specification, typical value, verified flag)",
-        "Live public page preview link (/products/:slug) allows instant verification of public commodity view"
+        "Categories page renders with DataTable, FilterBar, and AdminStatusBadge components",
+        "Table displays Division/Category Name with level badges, Slug, HS Chapter, Display Order, Assigned Products count, and Active status",
+        "FilterBar provides division tabs (All, Personal Care, Nutraceutical, Animal Feed) and search input",
+        "Detail drawer features 3 focused tabs: 1) Division Details & HS Chapter, 2) Parent Nesting & Ordering, 3) SEO Metadata & Visibility",
+        "Delete action warns user and blocks deletion if active products are assigned to the category"
       ],
       "priority": 2,
       "passes": true
     },
     {
-      "id": "US-PRD-003",
-      "title": "Automated Test Coverage & Zero Public Regression",
-      "description": "Verify product administration features with integration tests and ensure zero public site regression",
+      "id": "US-CAT-003",
+      "title": "Automated Category Test Coverage & Zero Public Regression",
+      "description": "Verify category administration features with integration tests and confirm zero public site regression",
       "acceptanceCriteria": [
-        "Admin API client in client/src/admin/api.js provides fetchAdminProducts, fetchAdminProductById, toggleAdminProductActive, toggleAdminProductFeatured, and verifyProductSpec",
-        "Automated integration tests in server/tests/product-admin.test.js cover product CRUD, spec verification, document attachments, and RBAC security",
+        "Admin API client in client/src/admin/api.js provides fetchAdminCategories, fetchAdminCategoryById, createAdminCategory, updateAdminCategory, deleteAdminCategory, toggleAdminCategoryActive, and reorderAdminCategories",
+        "Automated integration tests in server/tests/category-admin.test.js cover category hierarchy, product count calculation, active toggles, and RBAC security",
         "All client and server test suites pass with 100% success",
         "Zero visual regression on public site verified via verify:no-change"
       ],

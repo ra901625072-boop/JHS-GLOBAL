@@ -31,4 +31,14 @@ router.patch('/products/:id/verify-spec', authorize('admin', 'editor'), adminCon
 router.post('/products/:id/documents', authorize('admin', 'editor'), adminController.attachProductDocument);
 router.delete('/products/:id/documents/:docId', authorize('admin', 'editor'), adminController.removeProductDocument);
 
+// Categories & Divisions Governance
+router.get('/categories', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getCategories);
+router.patch('/categories/reorder', authorize('admin', 'editor'), adminController.reorderCategories);
+router.get('/categories/:id', authorize('admin', 'editor', 'sales', 'viewer'), adminController.getCategoryById);
+router.post('/categories', authorize('admin', 'editor'), adminController.createCategory);
+router.put('/categories/:id', authorize('admin', 'editor'), adminController.updateCategory);
+router.delete('/categories/:id', authorize('admin', 'editor'), adminController.deleteCategory);
+router.patch('/categories/:id/toggle-active', authorize('admin', 'editor'), adminController.toggleCategoryActive);
+
 export default router;
+

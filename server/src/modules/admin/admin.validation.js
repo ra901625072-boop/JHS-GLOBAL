@@ -129,3 +129,40 @@ export const attachProductDocumentSchema = z.object({
   url: z.string().min(3, 'Document URL is required').trim(),
   fileSize: z.string().optional().default(''),
 });
+
+export const adminCategorySchema = z.object({
+  name: z.string({ required_error: 'Category name is required' }).min(2).max(100).trim(),
+  slug: z.string().optional(),
+  description: z.string().optional().default(''),
+  parentId: z.union([z.string(), z.number()]).optional().nullable().transform((val) => (val ? parseInt(val, 10) : null)),
+  level: z.number().int().min(1).max(3).optional().default(1),
+  hsChapter: z.string().max(10).optional().default(''),
+  order: z.number().int().optional().default(0),
+  icon: z.string().optional().default(''),
+  image: z
+    .object({
+      url: z.string().optional().default(''),
+      alt: z.string().optional().default(''),
+    })
+    .optional()
+    .default({ url: '', alt: '' }),
+  isActive: z.boolean().default(true),
+  seo: z
+    .object({
+      title: z.string().optional().default(''),
+      description: z.string().optional().default(''),
+    })
+    .optional()
+    .default({ title: '', description: '' }),
+});
+
+export const reorderCategoriesSchema = z.object({
+  items: z
+    .array(
+      z.object({
+        id: z.union([z.string(), z.number()]).transform((val) => parseInt(val, 10)),
+        order: z.number().int(),
+      })
+    )
+    .min(1, 'At least one category order mapping must be provided'),
+});
