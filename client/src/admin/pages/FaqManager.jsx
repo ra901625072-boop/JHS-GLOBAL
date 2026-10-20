@@ -8,7 +8,7 @@ import {
   Search,
   CheckCircle2,
   AlertCircle,
-  Edit,
+  Edit2,
   Trash2,
   X,
   ExternalLink,
@@ -23,6 +23,7 @@ import {
   Layers,
   Sparkles,
   FileText,
+  RotateCw,
 } from 'lucide-react';
 import {
   fetchAdminFaqs,
@@ -35,6 +36,8 @@ import {
 } from '../api';
 import Button from '../../components/ui/Button';
 import {
+  AdminPageHeader,
+  AdminStatCard,
   DataTable,
   FilterBar,
   AdminStatusBadge,
@@ -131,6 +134,7 @@ export const FaqManager = () => {
     mutationFn: createAdminFaq,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-faqs'] });
+      queryClient.invalidateQueries({ queryKey: ['faqs'] });
       setIsDrawerOpen(false);
       resetForm();
       showNotification('success', 'FAQ question successfully created and published');
@@ -144,6 +148,7 @@ export const FaqManager = () => {
     mutationFn: ({ id, data }) => updateAdminFaq(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-faqs'] });
+      queryClient.invalidateQueries({ queryKey: ['faqs'] });
       setIsDrawerOpen(false);
       resetForm();
       showNotification('success', 'FAQ updated and RAG index refreshed');
@@ -157,6 +162,7 @@ export const FaqManager = () => {
     mutationFn: deleteAdminFaq,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-faqs'] });
+      queryClient.invalidateQueries({ queryKey: ['faqs'] });
       setDeleteModalState({ isOpen: false, faq: null });
       showNotification('success', 'FAQ archived from public view');
     },
@@ -169,6 +175,7 @@ export const FaqManager = () => {
     mutationFn: toggleAdminFaqHome,
     onSuccess: (updatedFaq) => {
       queryClient.invalidateQueries({ queryKey: ['admin-faqs'] });
+      queryClient.invalidateQueries({ queryKey: ['faqs'] });
       showNotification(
         'success',
         updatedFaq.showOnHome
@@ -185,6 +192,7 @@ export const FaqManager = () => {
     mutationFn: toggleAdminFaqActive,
     onSuccess: (updatedFaq) => {
       queryClient.invalidateQueries({ queryKey: ['admin-faqs'] });
+      queryClient.invalidateQueries({ queryKey: ['faqs'] });
       showNotification(
         'success',
         updatedFaq.isActive ? 'FAQ activated on public site' : 'FAQ deactivated/hidden'
@@ -199,6 +207,7 @@ export const FaqManager = () => {
     mutationFn: reorderAdminFaqs,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-faqs'] });
+      queryClient.invalidateQueries({ queryKey: ['faqs'] });
       showNotification('success', 'FAQ sequence reordered successfully');
     },
     onError: (err) => {
@@ -297,13 +306,13 @@ export const FaqManager = () => {
   const renderMarkdownPreview = (text) => {
     if (!text) {
       return (
-        <p className="text-sm text-stone-400 italic">No answer content provided yet...</p>
+        <p className="text-xs text-neutral-400 italic">No answer content provided yet...</p>
       );
     }
 
     const paragraphs = text.split('\n\n');
     return (
-      <div className="space-y-3 text-sm text-stone-700 leading-relaxed">
+      <div className="space-y-3 text-xs text-neutral-700 leading-relaxed">
         {paragraphs.map((para, i) => {
           if (para.startsWith('- ') || para.startsWith('* ')) {
             const listItems = para.split('\n').filter(Boolean);
@@ -391,20 +400,20 @@ export const FaqManager = () => {
       title: 'Seq',
       width: '80px',
       render: (val, row) => (
-        <div className="flex items-center space-x-1.5 font-mono text-xs text-stone-500">
-          <span className="font-semibold text-stone-800">#{row.order || 0}</span>
+        <div className="flex items-center space-x-1 font-mono text-xs text-neutral-500">
+          <span className="font-semibold text-neutral-800 tabular-nums">#{row.order || 0}</span>
           <div className="flex flex-col">
             <button
               onClick={() => handleMoveOrder(row, 'up')}
               title="Move Up"
-              className="hover:text-emerald-700 text-stone-400 p-0.5"
+              className="hover:text-primary-800 text-neutral-400 p-0.5 rounded transition-colors"
             >
               <MoveUp className="w-3 h-3" />
             </button>
             <button
               onClick={() => handleMoveOrder(row, 'down')}
               title="Move Down"
-              className="hover:text-emerald-700 text-stone-400 p-0.5"
+              className="hover:text-primary-800 text-neutral-400 p-0.5 rounded transition-colors"
             >
               <MoveDown className="w-3 h-3" />
             </button>
@@ -414,25 +423,25 @@ export const FaqManager = () => {
     },
     {
       key: 'question',
-      title: 'Question & Category',
+      title: 'Question & Commercial Category',
       render: (_, row) => (
-        <div className="space-y-1.5 max-w-xl">
-          <div className="font-medium text-stone-900 line-clamp-2 leading-snug">
+        <div className="space-y-1 max-w-xl">
+          <div className="font-semibold text-neutral-900 text-sm line-clamp-2 leading-snug">
             {row.question}
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
-              <Tag className="w-3 h-3 mr-1" />
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">
+              <Tag className="w-3 h-3 mr-1 text-neutral-500" />
               {row.group || 'General'}
             </span>
-            <span className="text-stone-400 font-mono text-[11px]">
+            <span className="text-neutral-400 font-mono text-[11px]">
               /{row.slug}
             </span>
             <a
               href={`/faq#${row.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center text-emerald-700 hover:text-emerald-800 hover:underline text-[11px]"
+              className="inline-flex items-center text-primary-900 hover:text-accent-700 hover:underline text-[11px]"
               title="View on public site"
             >
               <ExternalLink className="w-3 h-3 ml-0.5" />
@@ -443,21 +452,24 @@ export const FaqManager = () => {
     },
     {
       key: 'showOnHome',
-      title: 'Homepage',
-      width: '130px',
+      title: 'Homepage Accordion',
+      width: '140px',
       render: (val, row) => (
         <button
           onClick={() => toggleHomeMutation.mutate(row.id)}
           disabled={toggleHomeMutation.isPending}
-          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border transition-colors ${
-            row.showOnHome
-              ? 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100'
-              : 'bg-stone-50 text-stone-500 border-stone-200 hover:bg-stone-100'
-          }`}
+          className="focus:outline-none focus:ring-2 focus:ring-primary-700 rounded-full"
           title="Toggle Homepage FAQ Accordion"
         >
-          <Home className="w-3 h-3 mr-1.5" />
-          {row.showOnHome ? `Home #${row.homeOrder || 0}` : 'Standard'}
+          {row.showOnHome ? (
+            <AdminStatusBadge
+              status={`Home #${row.homeOrder || 0}`}
+              variant="accent"
+              dot
+            />
+          ) : (
+            <AdminStatusBadge status="Standard" variant="neutral" />
+          )}
         </button>
       ),
     },
@@ -469,29 +481,33 @@ export const FaqManager = () => {
         <button
           onClick={() => toggleActiveMutation.mutate(row.id)}
           disabled={toggleActiveMutation.isPending}
-          className="focus:outline-none"
+          className="focus:outline-none focus:ring-2 focus:ring-primary-700 rounded-full"
           title="Click to toggle active status"
         >
-          <AdminStatusBadge status={row.isActive ? 'active' : 'archived'} />
+          <AdminStatusBadge
+            status={row.isActive ? 'ACTIVE' : 'ARCHIVED'}
+            variant={row.isActive ? 'success' : 'neutral'}
+            dot
+          />
         </button>
       ),
     },
     {
       key: 'actions',
       title: 'Actions',
-      width: '110px',
+      width: '90px',
       render: (_, row) => (
-        <div className="flex items-center space-x-1.5">
+        <div className="flex items-center space-x-1">
           <button
             onClick={() => handleOpenEdit(row)}
-            className="p-1.5 text-stone-500 hover:text-emerald-700 hover:bg-stone-100 rounded transition-colors"
+            className="p-1.5 text-neutral-500 hover:text-primary-800 hover:bg-neutral-100 rounded-md transition-colors"
             title="Edit Question"
           >
-            <Edit className="w-4 h-4" />
+            <Edit2 className="w-4 h-4" />
           </button>
           <button
             onClick={() => setDeleteModalState({ isOpen: true, faq: row })}
-            className="p-1.5 text-stone-400 hover:text-red-700 hover:bg-red-50 rounded transition-colors"
+            className="p-1.5 text-neutral-400 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
             title="Archive FAQ"
           >
             <Trash2 className="w-4 h-4" />
@@ -502,12 +518,45 @@ export const FaqManager = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <Helmet>
         <title>FAQ Manager Desk | JHS GLOBAL Admin</title>
       </Helmet>
 
-      {/* Desk Notification Banner */}
+      {/* Symmetrical Page Header */}
+      <AdminPageHeader
+        breadcrumb={[
+          { label: 'JHS GLOBAL Desk', to: '/admin' },
+          { label: 'FAQ Manager', to: '/admin/faqs' },
+        ]}
+        title="Export FAQ & Knowledge Desk"
+        badge="RAG SYNCED"
+        description="Commercial FAQ governance, category grouping, homepage featured accordion control, and RAG knowledge synchronization."
+        actions={
+          <div className="flex items-center gap-3">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => refetch()}
+              className="flex items-center space-x-1.5 border-neutral-300 text-neutral-700 hover:bg-neutral-50"
+            >
+              <RotateCw className="w-4 h-4 text-neutral-600" />
+              <span>Refresh Desk</span>
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={handleOpenCreate}
+              className="flex items-center space-x-1.5 bg-accent-600 hover:bg-accent-700 text-neutral-950 font-medium"
+            >
+              <Plus className="w-4 h-4" />
+              <span>New Question</span>
+            </Button>
+          </div>
+        }
+      />
+
+      {/* Desk Notification Toast */}
       {notification && (
         <div
           className={`flex items-center justify-between px-4 py-3 rounded-lg border text-sm ${
@@ -526,90 +575,48 @@ export const FaqManager = () => {
           </div>
           <button
             onClick={() => setNotification(null)}
-            className="text-stone-400 hover:text-stone-600"
+            className="text-neutral-400 hover:text-neutral-600"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* Header with Title and Primary Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-semibold text-stone-900 tracking-tight">
-              Export FAQ Manager Desk
-            </h1>
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium bg-emerald-100 text-emerald-800">
-              RAG SYNCED
-            </span>
-          </div>
-          <p className="text-sm text-stone-500 mt-1">
-            Commercial FAQ governance, category grouping, homepage featured accordion control, and RAG knowledge synchronization.
-          </p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => refetch()}
-            className="flex items-center space-x-1.5"
-          >
-            <ArrowUpDown className="w-4 h-4" />
-            <span>Refresh</span>
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleOpenCreate}
-            className="flex items-center space-x-1.5 bg-emerald-800 hover:bg-emerald-900 text-white"
-          >
-            <Plus className="w-4 h-4" />
-            <span>New Question</span>
-          </Button>
-        </div>
+      {/* Symmetrical 4 KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <AdminStatCard
+          label="Total Questions"
+          value={metrics.total}
+          sublabel="Export repository entries"
+          icon={HelpCircle}
+        />
+        <AdminStatCard
+          label="Homepage Featured"
+          value={metrics.homepageFeatured}
+          sublabel="Rendered on public index"
+          icon={Home}
+          badge={{ text: 'Front Page', variant: 'accent' }}
+        />
+        <AdminStatCard
+          label="Active Categories"
+          value={metrics.groupCount}
+          sublabel="Commercial trade domains"
+          icon={Layers}
+        />
+        <AdminStatCard
+          label="Draft / Inactive"
+          value={metrics.inactive}
+          sublabel="Hidden from public view"
+          icon={AlertCircle}
+          badge={
+            metrics.inactive > 0
+              ? { text: `${metrics.inactive} draft`, variant: 'neutral' }
+              : { text: 'All live', variant: 'success' }
+          }
+        />
       </div>
 
-      {/* Metric Strip */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-stone-200 shadow-xs">
-          <div className="flex items-center justify-between text-stone-500 mb-1">
-            <span className="text-xs font-medium uppercase tracking-wider">Total Questions</span>
-            <HelpCircle className="w-4 h-4 text-emerald-600" />
-          </div>
-          <div className="text-2xl font-bold text-stone-900">{metrics.total}</div>
-          <div className="text-xs text-stone-500 mt-1">Export repository entries</div>
-        </div>
-
-        <div className="bg-white p-4 rounded-xl border border-stone-200 shadow-xs">
-          <div className="flex items-center justify-between text-stone-500 mb-1">
-            <span className="text-xs font-medium uppercase tracking-wider">Homepage Featured</span>
-            <Home className="w-4 h-4 text-amber-600" />
-          </div>
-          <div className="text-2xl font-bold text-stone-900">{metrics.homepageFeatured}</div>
-          <div className="text-xs text-amber-700 mt-1">Rendered on public index</div>
-        </div>
-
-        <div className="bg-white p-4 rounded-xl border border-stone-200 shadow-xs">
-          <div className="flex items-center justify-between text-stone-500 mb-1">
-            <span className="text-xs font-medium uppercase tracking-wider">Active Categories</span>
-            <Layers className="w-4 h-4 text-emerald-600" />
-          </div>
-          <div className="text-2xl font-bold text-stone-900">{metrics.groupCount}</div>
-          <div className="text-xs text-stone-500 mt-1">Commercial trade domains</div>
-        </div>
-
-        <div className="bg-white p-4 rounded-xl border border-stone-200 shadow-xs">
-          <div className="flex items-center justify-between text-stone-500 mb-1">
-            <span className="text-xs font-medium uppercase tracking-wider">Draft / Inactive</span>
-            <AlertCircle className="w-4 h-4 text-stone-400" />
-          </div>
-          <div className="text-2xl font-bold text-stone-900">{metrics.inactive}</div>
-          <div className="text-xs text-stone-500 mt-1">Hidden from public view</div>
-        </div>
-      </div>
-
-      {/* Filter Bar */}
+      {/* Unified Filter Bar */}
       <FilterBar
         filters={filterConfig}
         onChange={handleFilterChange}
@@ -620,30 +627,12 @@ export const FaqManager = () => {
       {isLoading ? (
         <AdminSkeleton type="table" rows={6} />
       ) : isError ? (
-        <div className="bg-white rounded-xl border border-red-200 p-8 text-center space-y-3">
+        <div className="elevation-flat bg-white rounded-admin-lg border border-red-200 p-8 text-center space-y-3">
           <AlertCircle className="w-8 h-8 text-red-600 mx-auto" />
-          <h3 className="text-base font-semibold text-stone-900">Failed to load FAQs</h3>
-          <p className="text-sm text-stone-500">There was an error communicating with the export database.</p>
+          <h3 className="text-base font-semibold text-neutral-900">Failed to load FAQs</h3>
+          <p className="text-sm text-neutral-500">There was an error communicating with the export database.</p>
           <Button variant="outline" size="sm" onClick={() => refetch()}>
             Try Again
-          </Button>
-        </div>
-      ) : faqs.length === 0 ? (
-        <div className="bg-white rounded-xl border border-stone-200 p-12 text-center space-y-4">
-          <HelpCircle className="w-12 h-12 text-stone-300 mx-auto" />
-          <div className="space-y-1">
-            <h3 className="text-base font-medium text-stone-900">No FAQ questions found</h3>
-            <p className="text-sm text-stone-500 max-w-md mx-auto">
-              No questions matched your current search filters. Clear filters or create a new FAQ entry.
-            </p>
-          </div>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleOpenCreate}
-            className="bg-emerald-800 hover:bg-emerald-900 text-white"
-          >
-            Create Question
           </Button>
         </div>
       ) : (
@@ -669,14 +658,14 @@ export const FaqManager = () => {
       >
         <form onSubmit={handleSubmit} className="flex flex-col h-full">
           {/* Drawer Tabs */}
-          <div className="flex border-b border-stone-200 mb-6 -mt-2">
+          <div className="flex border-b border-neutral-200 mb-6 -mt-2">
             <button
               type="button"
               onClick={() => setActiveTab('content')}
-              className={`py-2.5 px-4 text-sm font-medium border-b-2 transition-colors flex items-center space-x-2 ${
+              className={`py-2.5 px-4 text-xs font-semibold uppercase tracking-wider border-b-2 transition-colors flex items-center space-x-2 ${
                 activeTab === 'content'
-                  ? 'border-emerald-700 text-emerald-800 font-semibold'
-                  : 'border-transparent text-stone-500 hover:text-stone-700'
+                  ? 'border-primary-900 text-primary-900'
+                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
               <FileText className="w-4 h-4" />
@@ -685,10 +674,10 @@ export const FaqManager = () => {
             <button
               type="button"
               onClick={() => setActiveTab('markdown')}
-              className={`py-2.5 px-4 text-sm font-medium border-b-2 transition-colors flex items-center space-x-2 ${
+              className={`py-2.5 px-4 text-xs font-semibold uppercase tracking-wider border-b-2 transition-colors flex items-center space-x-2 ${
                 activeTab === 'markdown'
-                  ? 'border-emerald-700 text-emerald-800 font-semibold'
-                  : 'border-transparent text-stone-500 hover:text-stone-700'
+                  ? 'border-primary-900 text-primary-900'
+                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
               }`}
             >
               <Eye className="w-4 h-4" />
@@ -698,10 +687,10 @@ export const FaqManager = () => {
 
           {/* Tab 1: Question & Grouping */}
           {activeTab === 'content' && (
-            <div className="space-y-5 flex-1 overflow-y-auto pr-1">
+            <div className="space-y-4 flex-1 overflow-y-auto pr-1">
               {/* Question */}
               <div>
-                <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
                   Question Text <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -709,25 +698,25 @@ export const FaqManager = () => {
                   value={formData.question}
                   onChange={(e) => handleFormChange('question', e.target.value)}
                   placeholder="e.g., What is your standard Minimum Order Quantity (MOQ) for botanical extracts?"
-                  className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 transition-colors"
+                  className="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-900/20 focus:border-primary-900 transition-colors"
                   required
                 />
-                <div className="flex justify-between items-center mt-1 text-[11px] text-stone-400">
+                <div className="flex justify-between items-center mt-1 text-[11px] text-neutral-400">
                   <span>Buyer question as queried on trade portals or WhatsApp desk</span>
-                  <span>{formData.question.length}/500</span>
+                  <span className="tabular-nums">{formData.question.length}/500</span>
                 </div>
               </div>
 
               {/* Group / Category */}
               <div>
-                <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
                   Category Group <span className="text-red-500">*</span>
                 </label>
                 <div className="space-y-2">
                   <select
                     value={formData.group}
                     onChange={(e) => handleFormChange('group', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 bg-white"
+                    className="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-900/20 focus:border-primary-900 bg-white"
                   >
                     {FAQ_GROUP_PRESETS.map((p) => (
                       <option key={p} value={p}>
@@ -743,7 +732,7 @@ export const FaqManager = () => {
                       value={formData.customGroup}
                       onChange={(e) => handleFormChange('customGroup', e.target.value)}
                       placeholder="Enter custom category name..."
-                      className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700"
+                      className="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-900/20 focus:border-primary-900"
                     />
                   )}
                 </div>
@@ -751,7 +740,7 @@ export const FaqManager = () => {
 
               {/* URL Slug */}
               <div>
-                <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
                   URL Anchor Slug
                 </label>
                 <div className="relative">
@@ -760,10 +749,10 @@ export const FaqManager = () => {
                     value={formData.slug}
                     onChange={(e) => handleFormChange('slug', slugify(e.target.value))}
                     placeholder="standard-minimum-order-quantity-moq"
-                    className="w-full px-3 py-2 text-sm font-mono border border-stone-300 rounded-lg focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700"
+                    className="w-full px-3 py-2 text-sm font-mono border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-900/20 focus:border-primary-900"
                   />
                   {formData.slug && (
-                    <span className="absolute right-3 top-2.5 text-xs text-stone-400 font-mono">
+                    <span className="absolute right-3 top-2.5 text-xs text-neutral-400 font-mono">
                       /faq#{formData.slug}
                     </span>
                   )}
@@ -773,7 +762,7 @@ export const FaqManager = () => {
               {/* Sequencing Grid */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
                     Category Display Order
                   </label>
                   <input
@@ -781,13 +770,13 @@ export const FaqManager = () => {
                     min={0}
                     value={formData.order}
                     onChange={(e) => handleFormChange('order', e.target.value)}
-                    className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700"
+                    className="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-900/20 focus:border-primary-900 tabular-nums"
                   />
-                  <p className="text-[11px] text-stone-400 mt-1">Lower numbers appear first</p>
+                  <p className="text-[11px] text-neutral-400 mt-1">Lower numbers appear first</p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider mb-1.5">
+                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
                     Homepage Order
                   </label>
                   <input
@@ -796,21 +785,21 @@ export const FaqManager = () => {
                     value={formData.homeOrder}
                     onChange={(e) => handleFormChange('homeOrder', e.target.value)}
                     disabled={!formData.showOnHome}
-                    className="w-full px-3 py-2 text-sm border border-stone-300 rounded-lg focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 disabled:bg-stone-100 disabled:text-stone-400"
+                    className="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-900/20 focus:border-primary-900 disabled:bg-neutral-100 disabled:text-neutral-400 tabular-nums"
                   />
-                  <p className="text-[11px] text-stone-400 mt-1">Position on homepage (1-5)</p>
+                  <p className="text-[11px] text-neutral-400 mt-1">Position on homepage (1-5)</p>
                 </div>
               </div>
 
               {/* Toggles */}
               <div className="space-y-3 pt-2">
-                <div className="flex items-center justify-between p-3.5 bg-stone-50 rounded-lg border border-stone-200">
+                <div className="flex items-center justify-between p-3.5 bg-neutral-50 rounded-lg border border-neutral-200">
                   <div className="space-y-0.5">
-                    <div className="text-sm font-medium text-stone-900 flex items-center space-x-1.5">
-                      <Home className="w-4 h-4 text-amber-600" />
+                    <div className="text-sm font-medium text-neutral-900 flex items-center space-x-1.5">
+                      <Home className="w-4 h-4 text-accent-700" />
                       <span>Feature on Homepage FAQ Accordion</span>
                     </div>
-                    <p className="text-xs text-stone-500">
+                    <p className="text-xs text-neutral-500">
                       When enabled, this question will appear in the curated 5-item FAQ section on the public homepage.
                     </p>
                   </div>
@@ -821,17 +810,17 @@ export const FaqManager = () => {
                       onChange={(e) => handleFormChange('showOnHome', e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-600"></div>
+                    <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent-600"></div>
                   </label>
                 </div>
 
-                <div className="flex items-center justify-between p-3.5 bg-stone-50 rounded-lg border border-stone-200">
+                <div className="flex items-center justify-between p-3.5 bg-neutral-50 rounded-lg border border-neutral-200">
                   <div className="space-y-0.5">
-                    <div className="text-sm font-medium text-stone-900 flex items-center space-x-1.5">
+                    <div className="text-sm font-medium text-neutral-900 flex items-center space-x-1.5">
                       <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                       <span>Active on Public Website</span>
                     </div>
-                    <p className="text-xs text-stone-500">
+                    <p className="text-xs text-neutral-500">
                       Unchecking this hides the question from visitor queries and disables deep-link resolution.
                     </p>
                   </div>
@@ -842,7 +831,7 @@ export const FaqManager = () => {
                       onChange={(e) => handleFormChange('isActive', e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-700"></div>
+                    <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-900"></div>
                   </label>
                 </div>
               </div>
@@ -854,17 +843,17 @@ export const FaqManager = () => {
             <div className="space-y-4 flex-1 overflow-y-auto pr-1">
               <div>
                 <div className="flex justify-between items-center mb-1.5">
-                  <label className="block text-xs font-semibold text-stone-700 uppercase tracking-wider">
+                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider">
                     Answer Content (Markdown Supported) <span className="text-red-500">*</span>
                   </label>
-                  <span className="text-[11px] text-stone-400">{formData.answer.length} characters</span>
+                  <span className="text-[11px] text-neutral-400 tabular-nums">{formData.answer.length} characters</span>
                 </div>
                 <textarea
                   rows={8}
                   value={formData.answer}
                   onChange={(e) => handleFormChange('answer', e.target.value)}
                   placeholder="Enter detailed B2B commercial answer. Use paragraphs and bullet points..."
-                  className="w-full px-3 py-2 text-sm font-mono border border-stone-300 rounded-lg focus:ring-2 focus:ring-emerald-700/20 focus:border-emerald-700 leading-relaxed"
+                  className="w-full px-3 py-2 text-sm font-mono border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-900/20 focus:border-primary-900 leading-relaxed"
                   required
                 />
               </div>
@@ -872,8 +861,8 @@ export const FaqManager = () => {
               {/* Live Rendered Preview Box */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-semibold text-stone-700 uppercase tracking-wider flex items-center space-x-1">
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-xs font-semibold text-neutral-700 uppercase tracking-wider flex items-center space-x-1">
+                    <Sparkles className="w-3.5 h-3.5 text-primary-900" />
                     <span>Live Public Site Preview</span>
                   </span>
                   {formData.slug && (
@@ -881,15 +870,15 @@ export const FaqManager = () => {
                       href={`/faq#${formData.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-emerald-700 hover:text-emerald-800 inline-flex items-center space-x-1"
+                      className="text-xs text-primary-900 hover:text-accent-700 inline-flex items-center space-x-1"
                     >
                       <span>Public Link</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   )}
                 </div>
-                <div className="p-4 bg-stone-50 rounded-lg border border-stone-200">
-                  <div className="font-semibold text-stone-900 mb-2">
+                <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200">
+                  <div className="font-semibold text-neutral-900 mb-2">
                     {formData.question || 'Question title will appear here'}
                   </div>
                   {renderMarkdownPreview(formData.answer)}
@@ -899,7 +888,7 @@ export const FaqManager = () => {
           )}
 
           {/* Drawer Actions Footer */}
-          <div className="border-t border-stone-200 pt-4 mt-6 flex items-center justify-between">
+          <div className="border-t border-neutral-200 pt-4 mt-6 flex items-center justify-between">
             <Button
               type="button"
               variant="outline"
@@ -908,42 +897,40 @@ export const FaqManager = () => {
             >
               Cancel
             </Button>
-            <div className="flex items-center space-x-2">
-              <Button
-                type="submit"
-                variant="primary"
-                size="sm"
-                disabled={createMutation.isPending || updateMutation.isPending}
-                className="bg-emerald-800 hover:bg-emerald-900 text-white flex items-center space-x-1.5"
-              >
-                {(createMutation.isPending || updateMutation.isPending) && (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                )}
-                <span>{editingFaq ? 'Update Question' : 'Publish Question'}</span>
-              </Button>
-            </div>
+            <Button
+              type="submit"
+              variant="primary"
+              size="sm"
+              disabled={createMutation.isPending || updateMutation.isPending}
+              className="bg-accent-600 hover:bg-accent-700 text-neutral-950 font-medium flex items-center space-x-1.5"
+            >
+              {(createMutation.isPending || updateMutation.isPending) && (
+                <Loader2 className="w-4 h-4 animate-spin text-neutral-950" />
+              )}
+              <span>{editingFaq ? 'Update Question' : 'Publish Question'}</span>
+            </Button>
           </div>
         </form>
       </AdminDrawer>
 
       {/* Archive / Deletion Confirmation Modal */}
       {deleteModalState.isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/50 backdrop-blur-xs">
-          <div className="bg-white rounded-xl border border-stone-200 max-w-md w-full p-6 shadow-xl space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-950/40 backdrop-blur-xs">
+          <div className="elevation-overlay bg-white rounded-admin-lg border border-neutral-200 max-w-md w-full p-6 space-y-4">
             <div className="flex items-center space-x-3 text-amber-700">
-              <div className="p-2 bg-amber-100 rounded-full">
-                <AlertCircle className="w-6 h-6" />
+              <div className="p-2.5 bg-amber-50 rounded-full border border-amber-200">
+                <AlertCircle className="w-5 h-5 text-amber-700" />
               </div>
-              <h3 className="text-lg font-semibold text-stone-900">Archive Export FAQ?</h3>
+              <h3 className="text-base font-semibold text-neutral-900">Archive Export FAQ?</h3>
             </div>
-            <p className="text-sm text-stone-600 leading-relaxed">
+            <p className="text-sm text-neutral-600 leading-relaxed">
               Are you sure you want to archive{' '}
-              <strong className="text-stone-900">
+              <strong className="text-neutral-900">
                 "{deleteModalState.faq?.question?.slice(0, 60)}..."
               </strong>
               ? This will soft-delete the question and remove it from public FAQ queries and RAG retrieval.
             </p>
-            <div className="flex items-center justify-end space-x-3 pt-2">
+            <div className="flex items-center justify-end space-x-3 pt-3 border-t border-neutral-100">
               <Button
                 variant="outline"
                 size="sm"

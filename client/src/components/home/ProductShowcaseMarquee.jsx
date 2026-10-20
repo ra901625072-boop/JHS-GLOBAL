@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { SHOWCASE_PRODUCTS } from '../../data/productShowcase';
 import { useSafeQueryClient, prefetchProductDetail } from '../../utils/prefetch';
+import { useFeaturedProducts } from '../../features/products/hooks';
 
 /**
  * ProductShowcaseMarquee Component
@@ -17,6 +18,39 @@ import { useSafeQueryClient, prefetchProductDetail } from '../../utils/prefetch'
  * - Accessible with prefers-reduced-motion fallback
  */
 export const ProductShowcaseMarquee = () => {
+  const { data: featuredData } = useFeaturedProducts();
+
+  const products = useMemo(() => {
+    if (Array.isArray(featuredData) && featuredData.length > 0) {
+      return featuredData.map((p) => {
+        const catName = p.category?.name || '';
+        const catSlug = p.category?.slug || '';
+        let divisionBadge = 'EXP';
+        if (catSlug.includes('personal') || catName.toLowerCase().includes('personal')) divisionBadge = 'PC';
+        else if (catSlug.includes('nutra') || catName.toLowerCase().includes('nutra')) divisionBadge = 'NUT';
+        else if (catSlug.includes('feed') || catName.toLowerCase().includes('feed')) divisionBadge = 'FEED';
+
+        const rawImg =
+          Array.isArray(p.images) && p.images[0]
+            ? typeof p.images[0] === 'string'
+              ? p.images[0]
+              : p.images[0].url
+            : p.image || `/images/products/${p.slug}.webp`;
+
+        return {
+          id: p.id || p.slug,
+          name: p.name,
+          shortName: p.name ? p.name.split('(')[0].trim() : 'Commodity',
+          category: catName || 'Export Commodity',
+          divisionBadge,
+          slug: p.slug,
+          image: rawImg,
+        };
+      });
+    }
+    return SHOWCASE_PRODUCTS;
+  }, [featuredData]);
+
   return (
     <section
       id="product-marquee-showcase"
@@ -63,14 +97,14 @@ export const ProductShowcaseMarquee = () => {
         >
           {/* Buffer 1 */}
           <div className="flex items-start gap-6 sm:gap-10 shrink-0 pr-6 sm:pr-10">
-            {SHOWCASE_PRODUCTS.map((product) => (
+            {products.map((product) => (
               <ProductMarqueeItem key={`p1-${product.id}`} product={product} />
             ))}
           </div>
 
           {/* Buffer 2 (Cloned for seamless, zero-stutter loop) */}
           <div className="flex items-start gap-6 sm:gap-10 shrink-0 pr-6 sm:pr-10" aria-hidden="true">
-            {SHOWCASE_PRODUCTS.map((product) => (
+            {products.map((product) => (
               <ProductMarqueeItem key={`p2-${product.id}`} product={product} isDuplicate />
             ))}
           </div>
@@ -102,17 +136,29 @@ const ProductMarqueeItem = ({ product, isDuplicate = false }) => {
       {/* Circular Product Photography Frame ("cercal") */}
       <div className="relative w-18 h-18 sm:w-22 sm:h-22 rounded-full p-1 bg-white border-2 border-surface-border shadow-xs group-hover:border-accent-500 group-hover:shadow-card group-hover:scale-105 transition-all duration-300">
         <div className="w-full h-full rounded-full overflow-hidden bg-neutral-100 aspect-square">
-          <picture className="w-full h-full">
-            <source
-              type="image/avif"
-              srcSet={product.image.replace('.webp', '-176w.avif')}
-            />
-            <source
-              type="image/webp"
-              srcSet={product.image.replace('.webp', '-176w.webp')}
-            />
+          {typeof product.image === 'string' && product.image.endsWith('.webp') ? (
+            <picture className="w-full h-full">
+              <source
+                type="image/avif"
+                srcSet={product.image.replace('.webp', '-176w.avif')}
+              />
+              <source
+                type="image/webp"
+                srcSet={product.image.replace('.webp', '-176w.webp')}
+              />
+              <img
+                src={product.image}
+                alt={isDuplicate ? '' : product.name}
+                width="88"
+                height="88"
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover rounded-full transform-gpu group-hover:scale-110 transition-transform duration-500 ease-out"
+              />
+            </picture>
+          ) : (
             <img
-              src={product.image}
+              src={product.image || '/images/placeholder.webp'}
               alt={isDuplicate ? '' : product.name}
               width="88"
               height="88"
@@ -120,7 +166,7 @@ const ProductMarqueeItem = ({ product, isDuplicate = false }) => {
               decoding="async"
               className="w-full h-full object-cover rounded-full transform-gpu group-hover:scale-110 transition-transform duration-500 ease-out"
             />
-          </picture>
+          )}
         </div>
 
         {/* Division Badge */}

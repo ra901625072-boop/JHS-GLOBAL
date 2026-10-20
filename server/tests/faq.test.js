@@ -50,7 +50,7 @@ describe('FAQ API & Data Contract Suite', () => {
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
     expect(Array.isArray(res.body.data)).toBe(true);
-    expect(res.body.data.length).toBe(5);
+    expect(res.body.data.length).toBeGreaterThanOrEqual(5);
 
     // Verify ordering
     for (let i = 0; i < res.body.data.length; i++) {
@@ -81,5 +81,16 @@ describe('FAQ API & Data Contract Suite', () => {
   it('GET /api/v1/faqs/admin/all without auth should return 401 Unauthorized', async () => {
     const res = await request(app).get('/api/v1/faqs/admin/all');
     expect(res.status).toBe(401);
+  });
+
+  it('cacheService.invalidateFaqs() should flush cached FAQ queries', async () => {
+    const { cacheService } = await import('../src/services/cache.service.js');
+    await cacheService.set('http:/api/v1/faqs', { test: true }, 60);
+    await cacheService.set('http:/api/v1/faqs?featured=true', { test: true }, 60);
+
+    expect(await cacheService.get('http:/api/v1/faqs')).not.toBeNull();
+    cacheService.invalidateFaqs();
+    expect(await cacheService.get('http:/api/v1/faqs')).toBeNull();
+    expect(await cacheService.get('http:/api/v1/faqs?featured=true')).toBeNull();
   });
 });

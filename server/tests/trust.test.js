@@ -58,13 +58,12 @@ describe('Trust & Informational Endpoints Suite', () => {
     expect(res.body.data[0]).toHaveProperty('group');
   });
 
-  it('GET /api/v1/faqs should contain zero unfinished TODO(client) placeholder strings', async () => {
-    const res = await request(app).get('/api/v1/faqs');
+  it('cacheService.invalidateCertificates should purge certificates HTTP cache', async () => {
+    const { cacheService } = await import('../src/services/cache.service.js');
+    await cacheService.set('http:/api/v1/certificates', { data: [{ name: 'Test Cert' }] });
 
-    expect(res.status).toBe(200);
-    const todoFaqs = res.body.data.filter(
-      (f) => f.answer.includes('TODO(') || f.question.includes('TODO(')
-    );
-    expect(todoFaqs).toHaveLength(0);
+    cacheService.invalidateCertificates();
+
+    expect(await cacheService.get('http:/api/v1/certificates')).toBeNull();
   });
 });

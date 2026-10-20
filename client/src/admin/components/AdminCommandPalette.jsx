@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import {
   Search,
   LayoutDashboard,
-  TrendingUp,
   Inbox,
-  FileText,
-  Users,
-  Ship,
+  FlaskConical,
   Package,
+  Layers,
+  Award,
+  Building,
+  BookOpen,
+  HelpCircle,
+  UserCheck,
+  Settings,
   Plus,
   Globe,
-  ExternalLink,
-  Sparkles,
   X,
   ArrowRight,
   LogOut,
@@ -21,13 +23,9 @@ import {
 import { useAdminAuth } from '../context/AuthContext';
 
 /**
- * AdminCommandPalette (⌘K / Ctrl+K)
+ * AdminCommandPalette (⌘K / Ctrl+K) — Phase 2
  *
- * Keyboard-first navigation and quick action launcher for export officers:
- * - Instant route navigation
- * - One-click commercial operations
- * - Keyboard navigation (Arrows, Enter, Escape)
- * - Deep Forest Green and Champagne Gold accents
+ * Keyboard-first navigation and quick action launcher.
  */
 export const AdminCommandPalette = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -55,88 +53,111 @@ export const AdminCommandPalette = ({ isOpen, onClose }) => {
     {
       id: 'nav-dashboard',
       category: 'Navigation',
-      label: 'Operations Command Center',
-      sublabel: 'Executive trade metrics, port velocity & KPIs',
+      label: 'Operations Dashboard',
+      sublabel: 'Executive metrics, recent leads & overview',
       icon: LayoutDashboard,
       action: () => navigate('/admin'),
     },
     {
-      id: 'nav-sales-desk',
-      category: 'Navigation',
-      label: 'Sales Desk & Kanban Pipeline',
-      sublabel: 'Daily follow-up queue & deal stages',
-      icon: TrendingUp,
-      action: () => navigate('/admin/sales-desk'),
-    },
-    {
       id: 'nav-inquiries',
       category: 'Navigation',
-      label: 'Inquiries & RFQ Leads Desk',
-      sublabel: 'Inbound international buyer specifications',
+      label: 'Inquiries & RFQ Leads',
+      sublabel: 'Inbound international buyer specifications & 48h sourcing',
       icon: Inbox,
       action: () => navigate('/admin/inquiries'),
     },
     {
-      id: 'nav-quotations',
+      id: 'nav-samples',
       category: 'Navigation',
-      label: 'Quotations & Proforma Invoices',
-      sublabel: 'Issue CIF/FOB proformas and generate PDFs',
-      icon: FileText,
-      action: () => navigate('/admin/quotations'),
-    },
-    {
-      id: 'nav-customers',
-      category: 'Navigation',
-      label: 'Buyer Accounts (CRM)',
-      sublabel: 'Overseas buyer dossiers & trade terms',
-      icon: Users,
-      action: () => navigate('/admin/customers'),
-    },
-    {
-      id: 'nav-orders',
-      category: 'Navigation',
-      label: 'Orders & Ocean Shipments',
-      sublabel: 'Container tracking, B/L vault & milestones',
-      icon: Ship,
-      action: () => navigate('/admin/orders'),
+      label: 'Sample Dispatch Desk',
+      sublabel: 'Courier tracking, AWB numbers & sample status',
+      icon: FlaskConical,
+      action: () => navigate('/admin/samples'),
     },
     {
       id: 'nav-products',
       category: 'Navigation',
-      label: 'Commodity Catalogue & HS Codes',
-      sublabel: 'Export commodities, specs & packaging',
+      label: 'Products & Specifications',
+      sublabel: 'Export commodities, specs, HS codes & packaging',
       icon: Package,
       action: () => navigate('/admin/products'),
+    },
+    {
+      id: 'nav-categories',
+      category: 'Navigation',
+      label: 'Categories & Divisions',
+      sublabel: 'Manage 3 main export divisions and taxonomy',
+      icon: Layers,
+      action: () => navigate('/admin/categories'),
+    },
+    {
+      id: 'nav-certificates',
+      category: 'Navigation',
+      label: 'Statutory Certificates',
+      sublabel: 'FSSAI, APEDA, Spice Board, DGFT & GST documents',
+      icon: Award,
+      action: () => navigate('/admin/certificates'),
+    },
+    {
+      id: 'nav-knowledge',
+      category: 'Navigation',
+      label: 'Company Knowledge Base',
+      sublabel: 'Company facts, facility specs & AI chatbot data',
+      icon: Building,
+      action: () => navigate('/admin/company-knowledge'),
+    },
+    {
+      id: 'nav-blog',
+      category: 'Navigation',
+      label: 'Trade Intelligence & Blog',
+      sublabel: 'Export articles, market trends & SEO posts',
+      icon: BookOpen,
+      action: () => navigate('/admin/blog'),
+    },
+    {
+      id: 'nav-faqs',
+      category: 'Navigation',
+      label: 'Export FAQ Manager',
+      sublabel: 'Frequently asked trade & shipping questions',
+      icon: HelpCircle,
+      action: () => navigate('/admin/faqs'),
+    },
+    {
+      id: 'nav-users',
+      category: 'Navigation',
+      label: 'Team Users & Roles',
+      sublabel: 'Admin staff accounts, credentials & permissions',
+      icon: UserCheck,
+      action: () => navigate('/admin/users'),
+    },
+    {
+      id: 'nav-settings',
+      category: 'Navigation',
+      label: 'Company Profile & Settings',
+      sublabel: 'Office address, WhatsApp/phone, system health',
+      icon: Settings,
+      action: () => navigate('/admin/settings'),
     },
   ];
 
   const quickActions = [
     {
-      id: 'action-new-quote',
-      category: 'Quick Actions',
-      label: 'Issue New Proforma Quotation',
-      sublabel: 'Build a multi-commodity CIF/FOB quote',
-      icon: Plus,
-      badge: 'Sales',
-      action: () => navigate('/admin/quotations?new=true'),
-    },
-    {
-      id: 'action-schedule-task',
-      category: 'Quick Actions',
-      label: 'Schedule Commercial Follow-up',
-      sublabel: 'Set WhatsApp / Call reminder for buyer',
-      icon: TrendingUp,
-      badge: 'CRM',
-      action: () => navigate('/admin/sales-desk?new_task=true'),
-    },
-    {
       id: 'action-add-product',
       category: 'Quick Actions',
-      label: 'Add Commodity to Catalogue',
-      sublabel: 'Register new agri/spice specification',
-      icon: Package,
-      badge: 'Products',
+      label: 'Add New Product',
+      sublabel: 'Register new export specification to catalog',
+      icon: Plus,
+      badge: 'Catalogue',
       action: () => navigate('/admin/products?new=true'),
+    },
+    {
+      id: 'action-view-inquiries',
+      category: 'Quick Actions',
+      label: 'View New RFQ Leads',
+      sublabel: 'Check incoming buyer inquiries awaiting reply',
+      icon: Inbox,
+      badge: 'Leads',
+      action: () => navigate('/admin/inquiries?status=new'),
     },
     {
       id: 'action-open-store',
@@ -204,23 +225,33 @@ export const AdminCommandPalette = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden flex items-start justify-center pt-16 sm:pt-24 px-4">
-      {/* Dimmed Blurred Backdrop */}
+    <div
+      className="fixed inset-0 overflow-hidden flex items-start justify-center pt-16 sm:pt-24 px-4"
+      style={{ zIndex: 'var(--admin-z-overlay)' }}
+    >
+      {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-neutral-950/60 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-neutral-950/50 transition-opacity"
         aria-hidden="true"
+        style={{
+          transitionDuration: 'var(--admin-duration-base)',
+          transitionTimingFunction: 'var(--admin-ease-out)',
+        }}
       />
 
       {/* Palette Container */}
       <div
-        className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden z-10 flex flex-col animate-in fade-in zoom-in-95 duration-150"
+        className="relative w-full max-w-xl bg-white rounded-admin-lg shadow-admin-overlay border border-[var(--admin-border)] overflow-hidden z-10 flex flex-col transform-gpu"
+        style={{
+          animation: 'paletteIn var(--admin-duration-base) var(--admin-ease-out) forwards',
+        }}
         role="dialog"
         aria-modal="true"
       >
         {/* Search Header */}
-        <div className="p-4 border-b border-neutral-100 flex items-center gap-3 bg-neutral-50/70">
-          <Search className="w-5 h-5 text-neutral-400 shrink-0" />
+        <div className="p-3.5 border-b border-[var(--admin-border)] flex items-center gap-3 bg-[var(--admin-surface-subtle)]">
+          <Search className="w-4 h-4 text-[var(--admin-text-placeholder)] shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -229,32 +260,33 @@ export const AdminCommandPalette = ({ isOpen, onClose }) => {
               setQuery(e.target.value);
               setSelectedIndex(0);
             }}
-            placeholder="Search commands, pages, or quick actions..."
-            className="w-full bg-transparent text-sm sm:text-base text-neutral-900 placeholder-neutral-400 focus:outline-none font-sans"
+            placeholder="Type a command or search..."
+            className="w-full bg-transparent text-sm text-[var(--admin-text-primary)] placeholder-[var(--admin-text-placeholder)] focus:outline-none"
           />
           {query ? (
             <button
               onClick={() => setQuery('')}
-              className="p-1 text-neutral-400 hover:text-neutral-600 rounded-md"
+              className="p-1 text-[var(--admin-text-placeholder)] hover:text-[var(--admin-text-primary)] rounded-admin-sm"
+              aria-label="Clear search"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           ) : (
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono bg-white border border-neutral-200 rounded text-neutral-400 shadow-2xs">
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono bg-white border border-[var(--admin-border)] rounded-admin-sm text-[var(--admin-text-muted)]">
               ESC
             </kbd>
           )}
         </div>
 
         {/* Results List */}
-        <div className="max-h-[380px] overflow-y-auto p-2 admin-scrollbar divide-y divide-neutral-100/60">
+        <div className="max-h-[360px] overflow-y-auto p-1.5 admin-scrollbar">
           {filteredItems.length === 0 ? (
-            <div className="py-12 text-center text-xs text-neutral-400">
-              <p className="font-semibold text-neutral-700 text-sm">No matching commands found</p>
-              <p className="mt-1">Try searching "Inquiries", "Quotation", "Products", or "Sales".</p>
+            <div className="py-10 text-center text-xs text-[var(--admin-text-muted)]">
+              <p className="font-semibold text-[var(--admin-text-primary)] text-sm">No matching commands</p>
+              <p className="mt-1">Try searching "Inquiries", "Products", or "Settings".</p>
             </div>
           ) : (
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {filteredItems.map((item, idx) => {
                 const Icon = item.icon;
                 const isSelected = idx === selectedIndex;
@@ -266,37 +298,38 @@ export const AdminCommandPalette = ({ isOpen, onClose }) => {
                       onClose();
                     }}
                     onMouseEnter={() => setSelectedIndex(idx)}
-                    className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all text-left ${
+                    className={`group flex items-center justify-between px-3 py-2 rounded-admin-md cursor-pointer transition-colors text-left ${
                       isSelected
-                        ? 'bg-primary-900 text-white shadow-xs'
-                        : 'hover:bg-neutral-50 text-neutral-800'
+                        ? 'bg-[var(--admin-brand)] text-white'
+                        : 'hover:bg-[var(--admin-surface-subtle)] text-[var(--admin-text-primary)]'
                     }`}
+                    style={{ transitionDuration: 'var(--admin-duration-micro)' }}
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div
-                        className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border transition-colors ${
+                        className={`w-7 h-7 rounded-admin-sm flex items-center justify-center shrink-0 border ${
                           isSelected
                             ? 'bg-white/10 border-white/20 text-white'
-                            : 'bg-neutral-100 border-neutral-200/80 text-neutral-600 group-hover:text-primary-900 group-hover:border-neutral-300'
+                            : 'bg-white border-[var(--admin-border)] text-[var(--admin-text-muted)]'
                         }`}
                       >
-                        <Icon className="w-4 h-4" />
+                        <Icon className="w-3.5 h-3.5" />
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
                           <p
-                            className={`text-xs sm:text-sm font-semibold truncate ${
-                              isSelected ? 'text-white' : 'text-neutral-900'
+                            className={`text-xs font-semibold truncate ${
+                              isSelected ? 'text-white' : 'text-[var(--admin-text-primary)]'
                             }`}
                           >
                             {item.label}
                           </p>
                           {item.badge && (
                             <span
-                              className={`text-[9px] uppercase font-bold px-1.5 py-0.2 rounded border ${
+                              className={`text-[9px] uppercase font-semibold px-1.5 py-0.2 rounded-admin-sm border ${
                                 isSelected
-                                  ? 'bg-white/10 text-white border-white/20'
-                                  : 'bg-neutral-100 text-neutral-500 border-neutral-200'
+                                  ? 'bg-white/15 text-white border-white/20'
+                                  : 'bg-[var(--admin-surface-subtle)] text-[var(--admin-text-muted)] border-[var(--admin-border)]'
                               }`}
                             >
                               {item.badge}
@@ -304,8 +337,8 @@ export const AdminCommandPalette = ({ isOpen, onClose }) => {
                           )}
                         </div>
                         <p
-                          className={`text-[11px] truncate mt-0.5 ${
-                            isSelected ? 'text-neutral-300' : 'text-neutral-400'
+                          className={`text-[11px] truncate mt-0.2 ${
+                            isSelected ? 'text-neutral-300' : 'text-[var(--admin-text-muted)]'
                           }`}
                         >
                           {item.sublabel}
@@ -314,10 +347,10 @@ export const AdminCommandPalette = ({ isOpen, onClose }) => {
                     </div>
 
                     <ArrowRight
-                      className={`w-4 h-4 shrink-0 transition-transform ${
+                      className={`w-3.5 h-3.5 shrink-0 ${
                         isSelected
-                          ? 'text-white translate-x-0.5 opacity-100'
-                          : 'text-neutral-300 opacity-0 group-hover:opacity-100'
+                          ? 'text-white opacity-100'
+                          : 'text-[var(--admin-text-placeholder)] opacity-0 group-hover:opacity-100'
                       }`}
                     />
                   </div>
@@ -328,28 +361,40 @@ export const AdminCommandPalette = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer Shortcut Bar */}
-        <div className="p-3 bg-neutral-50 border-t border-neutral-100 flex items-center justify-between text-[11px] text-neutral-400">
+        <div className="px-3 py-2 bg-[var(--admin-surface-subtle)] border-t border-[var(--admin-border)] flex items-center justify-between text-[11px] text-[var(--admin-text-muted)]">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 bg-white border border-neutral-200 rounded font-mono text-[10px] shadow-2xs">
+              <kbd className="px-1 py-0.2 bg-white border border-[var(--admin-border)] rounded-admin-sm font-mono text-[10px]">
                 ↑↓
               </kbd>
               <span>Navigate</span>
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 bg-white border border-neutral-200 rounded font-mono text-[10px] shadow-2xs">
+              <kbd className="px-1 py-0.2 bg-white border border-[var(--admin-border)] rounded-admin-sm font-mono text-[10px]">
                 ↵
               </kbd>
               <span>Select</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-neutral-500">
-            <Command className="w-3.5 h-3.5 text-neutral-700" />
-            <span>Commercial Command Desk</span>
+          <div className="flex items-center gap-1.5 text-[var(--admin-text-muted)]">
+            <Command className="w-3 h-3 text-[var(--admin-brand)]" />
+            <span>Command Desk</span>
           </div>
         </div>
       </div>
+      <style>{`
+        @keyframes paletteIn {
+          from {
+            opacity: 0;
+            transform: scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
     </div>
   );
 };

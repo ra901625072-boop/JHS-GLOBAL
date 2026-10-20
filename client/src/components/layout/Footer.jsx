@@ -1,6 +1,7 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShieldCheck, Mail, Phone, MapPin, FileText, ArrowUpRight, LockOpen, ArrowRight, Instagram } from 'lucide-react';
+import { useCategories } from '../../features/products/hooks';
 
 export const Footer = () => {
   const navigate = useNavigate();
@@ -10,6 +11,8 @@ export const Footer = () => {
   const [isUnlocking, setIsUnlocking] = useState(false);
   const clickCountRef = useRef(0);
   const clickTimerRef = useRef(null);
+
+  const { data: categoriesData } = useCategories();
 
   const triggerAdminLogin = useCallback(() => {
     setIsUnlocking(true);
@@ -61,6 +64,26 @@ export const Footer = () => {
       chapter: 'Ch. 23',
     },
   ];
+
+  const displayedDivisions = useMemo(() => {
+    if (Array.isArray(categoriesData) && categoriesData.length > 0) {
+      const topLevel = categoriesData.filter((c) => !c.parentId || c.level === 0);
+      if (topLevel.length > 0) {
+        return topLevel.slice(0, 4).map((c) => {
+          let chapter = '';
+          if (c.slug.includes('personal')) chapter = 'Ch. 33';
+          else if (c.slug.includes('nutra')) chapter = 'Ch. 13';
+          else if (c.slug.includes('feed')) chapter = 'Ch. 23';
+          return {
+            name: c.name,
+            slug: c.slug,
+            chapter,
+          };
+        });
+      }
+    }
+    return divisions;
+  }, [categoriesData]);
 
   const keyProducts = [
     { name: 'Castor Oil & Derivatives', slug: 'castor-oil-and-derivatives' },
@@ -121,18 +144,24 @@ export const Footer = () => {
             className="inline-flex items-center gap-3 cursor-pointer select-none group focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-lg p-1 -m-1 transition-all duration-200"
           >
             <div
-              className={`w-10 h-10 rounded-xl flex items-center justify-center font-serif font-bold text-sm tracking-tight shrink-0 transition-all duration-300 transform-gpu ${
+              className={`w-10 h-10 rounded-xl flex items-center justify-center font-serif font-bold text-sm tracking-tight shrink-0 transition-all duration-300 transform-gpu overflow-hidden ${
                 isUnlocking
                   ? 'bg-accent-500 text-primary-950 scale-110 shadow-[0_0_24px_rgba(210,182,132,0.95)] ring-2 ring-accent-300'
                   : firstClickFeedback
-                  ? 'bg-primary-800 text-accent-300 scale-105 ring-2 ring-accent-400/60 shadow-md'
-                  : 'bg-gradient-to-br from-primary-950 via-primary-900 to-primary-850 border border-primary-700/60 text-accent-400 shadow-xs group-hover:border-accent-500/50 group-hover:scale-[1.03]'
+                  ? 'bg-primary-800 text-accent-300 scale-105 ring-2 ring-accent-400/60 shadow-md p-1'
+                  : 'bg-white border border-white/20 shadow-xs group-hover:scale-[1.03] p-1'
               }`}
             >
               {isUnlocking ? (
                 <LockOpen className="w-5 h-5 text-primary-950 animate-bounce" />
               ) : (
-                'JHS'
+                <img
+                  src="/images/logo/logo-mark.png"
+                  alt="JHS GLOBAL Logo"
+                  className="w-full h-full object-contain"
+                  width="40"
+                  height="40"
+                />
               )}
             </div>
             <div className="flex flex-col">
@@ -187,7 +216,7 @@ export const Footer = () => {
             Commercial Divisions
           </h4>
           <ul className="space-y-2 text-xs">
-            {divisions.map((div) => (
+            {displayedDivisions.map((div) => (
               <li key={div.slug}>
                 <Link
                   to={`/products?category=${div.slug}`}

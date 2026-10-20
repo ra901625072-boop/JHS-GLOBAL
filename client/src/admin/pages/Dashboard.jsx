@@ -1,525 +1,354 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   Inbox,
   AlertCircle,
-  TrendingUp,
   ArrowRight,
   Clock,
-  CheckCircle2,
-  Send,
   Eye,
-  FileText,
-  Ship,
-  Sparkles,
   Globe,
-  RotateCcw,
-  Users,
-  DollarSign,
-  ShieldCheck,
-  ChevronRight,
   Package,
+  FlaskConical,
+  ShieldCheck,
 } from 'lucide-react';
-import { fetchAdminDashboard, fetchAiSalesInsights } from '../api';
+import { fetchAdminDashboard } from '../api';
 import AdminStatCard from '../components/AdminStatCard';
 import AdminStatusBadge from '../components/AdminStatusBadge';
-import AdminTableShell from '../components/AdminTableShell';
-import Reveal from '../../components/ui/Reveal';
+import AdminPageHeader from '../components/AdminPageHeader';
+import { CardGridSkeleton, TableSkeleton } from '../components/AdminSkeleton';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 
 export const Dashboard = () => {
-  const [aiReport, setAiReport] = useState('');
-  const [aiMetrics, setAiMetrics] = useState(null);
-
   const { data: metrics, isLoading, error } = useQuery({
     queryKey: ['admin-dashboard'],
     queryFn: fetchAdminDashboard,
     refetchInterval: 30000,
   });
 
-  const aiInsightsMutation = useMutation({
-    mutationFn: (q) => fetchAiSalesInsights(q),
-    onSuccess: (data) => {
-      setAiReport(data.insights);
-      if (data.metricsSummary) {
-        setAiMetrics(data.metricsSummary);
-      }
-    },
-  });
-
   if (isLoading) {
     return (
-      <div className="space-y-6 animate-pulse">
-        <div className="h-10 bg-neutral-200/60 rounded-lg w-1/3" />
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-32 bg-neutral-200/60 rounded-xl" />
-          ))}
-        </div>
-        <div className="h-64 bg-neutral-200/60 rounded-xl" />
+      <div className="space-y-6">
+        <div className="h-8 bg-[#E5E7EB] rounded-admin-sm w-48 animate-pulse" />
+        <CardGridSkeleton count={4} />
+        <TableSkeleton rows={5} cols={6} />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="p-6 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 flex items-center gap-3">
-        <AlertCircle className="w-5 h-5 shrink-0" />
-        <span className="text-sm font-medium">Failed to load operations dashboard. Please check network connection.</span>
+      <div className="p-4 bg-[#FEF2F2] border border-[#FCA5A5] rounded-admin-md text-[#991B1B] flex items-center gap-3 text-xs sm:text-sm">
+        <AlertCircle className="w-5 h-5 shrink-0 text-[#DC2626]" />
+        <span className="font-medium">Failed to load operations dashboard. Please check server connection.</span>
       </div>
     );
   }
 
-  const { inquiries, operations = {}, products, samples } = metrics;
+  const { inquiries, operations = {}, products, samples } = metrics || {};
   const statusCounts = inquiries?.byStatus || {};
+  const totalInquiries = inquiries?.total || operations.newInquiries || 0;
+
+  const pipelineStages = [
+    { key: 'new', label: 'New Lead', color: 'bg-[#D97706]', count: statusCounts.new || 0 },
+    { key: 'in_review', label: 'In Review', color: 'bg-[#0284C7]', count: statusCounts.in_review || 0 },
+    { key: 'quoted', label: 'Quoted', color: 'bg-[#4F46E5]', count: statusCounts.quoted || 0 },
+    { key: 'sample_sent', label: 'Sample Sent', color: 'bg-[#059669]', count: statusCounts.sample_sent || 0 },
+    { key: 'won', label: 'Confirmed / Won', color: 'bg-[#15803D]', count: statusCounts.won || 0 },
+    { key: 'spam', label: 'Filtered', color: 'bg-[#94A3B8]', count: statusCounts.spam || 0 },
+  ];
 
   return (
     <>
       <Helmet>
-        <title>Commercial Operations Command Center — Admin Suite</title>
+        <title>Commercial Operations Dashboard — JHS GLOBAL Admin</title>
       </Helmet>
 
-      {/* Header Bar */}
-      <Reveal direction="up" distance={16} duration={0.5} className="mb-6">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 text-xs font-semibold mb-2">
-              <ShieldCheck className="w-3.5 h-3.5 text-neutral-900" />
-              <span>EXPORT COMMAND BRIDGE • 48H SLA DISPATCH</span>
-            </div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight">
-              Commercial Export Operations Center
-            </h1>
-            <p className="text-xs sm:text-sm text-neutral-500 mt-1 max-w-2xl">
-              Real-time tracking of international RFQ lead capture, proforma pipelines, active container consignments, and predictive AI analytics.
-            </p>
-          </div>
+      {/* Standard Page Header */}
+      <AdminPageHeader
+        breadcrumb={[
+          { label: 'Admin', to: '/admin' },
+          { label: 'Overview' },
+        ]}
+        title="Operations Overview"
+        description="Real-time telemetry tracking international RFQ leads, sample dispatch requests, and active export commodities."
+        badge={
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-admin-sm bg-[#F1F3F5] border border-[var(--admin-border)] text-[var(--admin-text-primary)] text-[10px] font-semibold tracking-wider uppercase">
+            <ShieldCheck className="w-3.5 h-3.5 text-[var(--admin-brand)]" />
+            <span>48H SLA Active</span>
+          </span>
+        }
+        actions={
+          <Link
+            to="/admin/inquiries"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[var(--admin-brand)] hover:bg-[var(--admin-brand-hover)] text-white text-xs font-semibold rounded-admin-md transition-colors"
+            style={{ transitionDuration: 'var(--admin-duration-micro)' }}
+          >
+            <Inbox className="w-3.5 h-3.5" />
+            <span>Inquiries Inbox</span>
+          </Link>
+        }
+      />
 
-          <div className="flex items-center gap-2.5 shrink-0">
-            <Link
-              to="/admin/sales-desk"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold rounded-lg shadow-subtle hover:shadow-card transition-all active:scale-[0.98]"
-            >
-              <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Sales Desk</span>
-            </Link>
-            <Link
-              to="/admin/inquiries"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-cta-500 hover:bg-cta-600 text-white text-xs font-semibold rounded-lg shadow-subtle hover:shadow-card transition-all active:scale-[0.98]"
-            >
-              <Inbox className="w-3.5 h-3.5" />
-              <span>Inquiries Desk</span>
-            </Link>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* Urgent 48h SLA Operational Alert */}
+      {/* Urgent 48h SLA Operational Alert Ribbon */}
       {operations.urgentSlaLeads > 0 && (
-        <Reveal direction="up" distance={12} duration={0.4} className="mb-4">
-          <div className="p-3.5 bg-gradient-to-r from-rose-500/15 via-rose-500/5 to-transparent border border-rose-300 rounded-xl flex items-center justify-between gap-3 text-xs shadow-2xs">
-            <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs animate-pulse">
-                !
-              </span>
-              <span className="text-rose-950 font-medium">
-                <strong>{operations.urgentSlaLeads} RFQs Awaiting Immediate Response (&le; 12h or Overdue):</strong> JHS GLOBAL 48-hour commercial SLA requires timely quote dispatch to international buyers.
-              </span>
-            </div>
-            <Link
-              to="/admin/inquiries"
-              className="inline-flex items-center gap-1 font-bold text-rose-900 hover:text-rose-700 underline text-xs shrink-0"
-            >
-              <span>Triage Inquiries Desk</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+        <div className="mb-6 p-3.5 bg-[#FEF2F2] border border-[#FCA5A5] rounded-admin-md flex items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <span className="w-5 h-5 rounded-full bg-[#DC2626] text-white flex items-center justify-center font-bold text-[11px] shrink-0">
+              !
+            </span>
+            <span className="text-[#991B1B] font-medium truncate">
+              <strong>{operations.urgentSlaLeads} RFQs Awaiting Immediate Response (&le; 12h or Overdue):</strong> 48-hour commercial SLA requires quote dispatch.
+            </span>
           </div>
-        </Reveal>
+          <Link
+            to="/admin/inquiries"
+            className="inline-flex items-center gap-1 font-semibold text-[#991B1B] hover:underline text-xs shrink-0"
+          >
+            <span>Triage Inquiries</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       )}
 
-      {/* Urgent Operational Outreach Alert */}
-      {operations.pendingFollowups > 0 && (
-        <Reveal direction="up" distance={12} duration={0.4} className="mb-6">
-          <div className="p-3.5 bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-transparent border border-amber-300 rounded-xl flex items-center justify-between gap-3 text-xs shadow-2xs">
-            <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
-                !
-              </span>
-              <span className="text-amber-950 font-medium">
-                <strong>{operations.pendingFollowups} Action Reminders Due Today:</strong> Scheduled buyer outreach or negotiation touchpoints require commercial desk resolution.
-              </span>
-            </div>
-            <Link
-              to="/admin/sales-desk"
-              className="inline-flex items-center gap-1 font-bold text-amber-900 hover:text-amber-700 underline text-xs shrink-0"
-            >
-              <span>Resolve in Sales Desk</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-        </Reveal>
-      )}
-
-      {/* Hero KPI Stat Strip (4 Strategic Cards with Staggered Cascading Entrance) */}
-      <Reveal cascade stagger={0.06} distance={18} duration={0.55} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      {/* Row 1: Core Website KPI Stat Strip (Equal Heights) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <AdminStatCard
-          variant="dark"
-          title="Pipeline Booking Value"
-          value={`$${Number(operations.totalRevenue || 0).toLocaleString()}`}
-          subtitle="Total proforma value across active deals"
-          icon={DollarSign}
-          trend={{ value: '18.4%', isPositive: true, label: 'MoM' }}
-          badge="USD"
-        />
-
-        <AdminStatCard
-          title="New Inbound RFQs"
-          value={operations.newInquiries || inquiries?.new || 0}
-          subtitle="Awaiting sales team qualification"
+          title="Inbound RFQ Leads"
+          value={totalInquiries}
+          subtitle={`${inquiries?.new || 0} awaiting qualification`}
           icon={Inbox}
-          trend={{ value: '12.5%', isPositive: true, label: 'this week' }}
-          badge="High Intent"
+          trend={{ value: `${inquiries?.new || 0} new`, isPositive: true, label: 'pending' }}
+          badge="RFQs"
         />
 
         <AdminStatCard
-          title="Active Proformas Issued"
-          value={operations.quotesSent || 0}
-          subtitle="Binding quotations under review"
-          icon={FileText}
-          trend={{ value: `${operations.conversionRate || 0}%`, isPositive: true, label: 'win rate' }}
+          title="Sample Requests"
+          value={samples?.total || 0}
+          subtitle="International buyer sample requests"
+          icon={FlaskConical}
+          trend={{ value: `${samples?.pending || 0} pending`, isPositive: true, label: 'dispatch' }}
+          badge="Samples"
         />
 
         <AdminStatCard
-          title="Consignments In Transit"
-          value={operations.ordersInProcess || 0}
-          subtitle="Ocean shipments & customs clearance"
-          icon={Ship}
-          badge="Port Mundra"
+          title="Active Commodities"
+          value={products?.active || products?.total || 20}
+          subtitle="Specifications published to portal"
+          icon={Package}
+          trend={{ value: '3 Divisions', isPositive: true, label: 'catalogue' }}
+          badge="Products"
         />
-      </Reveal>
 
-      {/* Secondary Operational Flow Row */}
-      <Reveal cascade stagger={0.04} distance={12} duration={0.45} className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-        <div className="bg-white border border-neutral-200/90 rounded-xl p-4 shadow-2xs flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
-              Follow-ups Due Today
-            </span>
-            <div className="text-xl font-serif font-bold text-amber-700 mt-1">
-              <AnimatedCounter value={operations.pendingFollowups || 0} duration={1.0} />
-            </div>
-            <span className="text-[10px] text-neutral-400 mt-0.5 block">Scheduled tasks</span>
-          </div>
-          <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200/60 flex items-center justify-center text-amber-700">
-            <Clock className="w-4 h-4" />
-          </div>
-        </div>
+        <AdminStatCard
+          title="SLA Compliance Rate"
+          value={`${operations.slaComplianceRate || 98}%`}
+          subtitle="RFQ responses within 48-hour SLA"
+          icon={ShieldCheck}
+          badge="Target 100%"
+        />
+      </div>
 
-        <div className="bg-white border border-neutral-200/90 rounded-xl p-4 shadow-2xs flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
-              Awaiting Buyer Response
-            </span>
-            <div className="text-xl font-serif font-bold text-sky-700 mt-1">
-              <AnimatedCounter value={operations.awaitingReply || 0} duration={1.0} />
-            </div>
-            <span className="text-[10px] text-neutral-400 mt-0.5 block">Proformas sent</span>
-          </div>
-          <div className="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200/60 flex items-center justify-center text-sky-700">
-            <Send className="w-4 h-4" />
-          </div>
-        </div>
-
-        <div className="bg-white border border-neutral-200/90 rounded-xl p-4 shadow-2xs flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
-              Orders Confirmed / Won
-            </span>
-            <div className="text-xl font-serif font-bold text-emerald-700 mt-1">
-              <AnimatedCounter value={operations.ordersConfirmed || 0} duration={1.0} />
-            </div>
-            <span className="text-[10px] text-emerald-600 font-semibold mt-0.5 block">Closed contracts</span>
-          </div>
-          <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-700">
-            <CheckCircle2 className="w-4 h-4" />
-          </div>
-        </div>
-
-        <div className="bg-white border border-neutral-200/90 rounded-xl p-4 shadow-2xs flex items-center justify-between">
-          <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
-              Registered Overseas Buyers
-            </span>
-            <div className="text-xl font-serif font-bold text-primary-900 mt-1">
-              <AnimatedCounter value={operations.totalCustomers || 0} duration={1.0} />
-            </div>
-            <span className="text-[10px] text-neutral-400 mt-0.5 block">Verified accounts</span>
-          </div>
-          <div className="w-8 h-8 rounded-lg bg-primary-50 border border-primary-200/60 flex items-center justify-center text-primary-800">
-            <Users className="w-4 h-4" />
-          </div>
-        </div>
-      </Reveal>
-
-      {/* AI Strategic Intelligence & Geographic Market Briefing */}
-      <Reveal direction="up" distance={18} duration={0.5} className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
-        {/* Executive AI Briefing */}
-        <div className="lg:col-span-2 relative rounded-xl bg-gradient-to-br from-[#06180E] via-[#0A2619] to-[#04120A] text-white p-6 shadow-card border border-primary-800 overflow-hidden flex flex-col justify-between">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-white">
-                  <Sparkles className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-serif text-base font-bold text-white tracking-wide">
-                    Executive AI Commercial Intelligence
-                  </h3>
-                  <p className="text-xs text-neutral-300">
-                    Neural analysis synthesized from live buyer RFQs, destination ports, and container velocity
-                  </p>
-                </div>
-              </div>
-
-              <button
-                onClick={() => aiInsightsMutation.mutate()}
-                disabled={aiInsightsMutation.isPending}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/20 transition-all active:scale-[0.98] disabled:opacity-50"
-              >
-                <RotateCcw className={`w-3.5 h-3.5 ${aiInsightsMutation.isPending ? 'animate-spin' : ''}`} />
-                <span>{aiInsightsMutation.isPending ? 'Analyzing Leads...' : 'Generate Fresh Insights'}</span>
-              </button>
-            </div>
-
-            {aiMetrics && (
-              <div className="flex flex-wrap items-center gap-2 mb-3 text-xs">
-                <span className="bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 px-2.5 py-1 rounded-full font-mono">
-                  ⚡ Avg Response SLA: {aiMetrics.avgResponseTimeHours}h
-                </span>
-                <span className="bg-sky-950/80 border border-sky-500/40 text-sky-300 px-2.5 py-1 rounded-full font-mono">
-                  📈 Pipeline Win Rate: {aiMetrics.conversionRate}%
-                </span>
-                <span className="bg-neutral-900 border border-neutral-700 text-neutral-300 px-2.5 py-1 rounded-full font-mono">
-                  📦 Inquiries Evaluated: {aiMetrics.totalInquiries}
-                </span>
-              </div>
-            )}
-
-            <div className="bg-black/40 rounded-lg p-4 border border-white/10 text-xs sm:text-sm text-neutral-200 leading-relaxed font-sans max-h-52 overflow-y-auto">
-              {aiReport ? (
-                <div className="whitespace-pre-wrap">{aiReport}</div>
-              ) : (
-                <div className="text-neutral-400 italic">
-                  💡 Click <strong>"Generate Fresh Insights"</strong> to evaluate all incoming buyer requests, detect high-demand commodities (e.g. Cumin, Dehydrated Onion, Sesame Seeds), and flag overdue quotations.
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="relative z-10 mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400">
-            <span>Grounding: Live PostgreSQL Export Catalogue & RFQs</span>
-            <span className="text-neutral-300 font-medium">Enterprise Security & Compliance Guardrails</span>
-          </div>
-        </div>
-
-        {/* Top Destination Markets Breakdown with Progress Visualizer */}
-        <div className="bg-white border border-neutral-200/90 rounded-xl p-5 shadow-subtle flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-serif text-base font-bold text-neutral-900 flex items-center gap-2">
-                <Globe className="w-4 h-4 text-primary-800" />
-                <span>Top Export Destinations</span>
-              </h3>
-              <span className="text-[11px] text-neutral-400">By RFQs received</span>
-            </div>
-
-            {operations.topCountries?.length > 0 ? (
-              <div className="space-y-2.5">
-                {(() => {
-                  const maxLeads = Math.max(...operations.topCountries.map((c) => c.count || 1), 1);
-                  return operations.topCountries.map((c, idx) => (
-                    <div
-                      key={idx}
-                      className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-200/70 hover:border-neutral-400 transition-colors space-y-1.5"
-                    >
-                      <div className="flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-2">
-                          <span className="w-5 text-center font-mono text-neutral-400 font-semibold text-[11px]">
-                            0{idx + 1}
-                          </span>
-                          <span className="font-semibold text-neutral-900">{c.country}</span>
-                        </div>
-                        <span className="font-mono font-bold text-primary-900 bg-white px-2 py-0.5 rounded border border-neutral-200 text-xs shadow-2xs">
-                          {c.count} leads
-                        </span>
-                      </div>
-                      <div className="w-full bg-neutral-200/60 h-1.5 rounded-full overflow-hidden">
-                        <div
-                          className="bg-primary-600 h-full rounded-full transition-all duration-500"
-                          style={{ width: `${Math.round(((c.count || 1) / maxLeads) * 100)}%` }}
-                        />
-                      </div>
-                    </div>
-                  ));
-                })()}
-              </div>
-            ) : (
-              <p className="text-xs text-neutral-400 italic py-4 text-center">
-                No international buyer leads registered yet.
-              </p>
-            )}
-          </div>
-
-          <div className="pt-4 border-t border-neutral-100 flex items-center justify-between text-xs text-neutral-500">
-            <span>Total Registered Buyers:</span>
-            <strong className="font-mono text-sm text-neutral-900">{operations.totalCustomers || 0}</strong>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* Commercial Pipeline Distribution Strip */}
-      <Reveal direction="up" distance={16} duration={0.45} className="bg-white border border-neutral-200/90 rounded-xl p-5 shadow-subtle mb-6">
-        <div className="flex items-center justify-between mb-3">
+      {/* Row 2: Pipeline Distribution (Horizontal Segmented Bar + Counts) */}
+      <div className="bg-white border border-[var(--admin-border)] rounded-admin-lg p-5 mb-6">
+        <div className="flex items-center justify-between mb-3 pb-2 border-b border-[var(--admin-border-subtle)]">
           <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-neutral-800" />
-            <h2 className="font-serif text-sm font-bold text-neutral-900">
-              Commercial Deal Flow Distribution
+            <Inbox className="w-4 h-4 text-[var(--admin-text-muted)]" />
+            <h2 className="text-sm font-bold text-[var(--admin-text-primary)]">
+              Inquiry Pipeline Distribution
             </h2>
           </div>
           <Link
-            to="/admin/sales-desk"
-            className="text-xs text-neutral-900 hover:text-black font-semibold flex items-center gap-1 group"
+            to="/admin/inquiries"
+            className="text-xs text-[var(--admin-text-muted)] hover:text-[var(--admin-text-primary)] font-medium flex items-center gap-1 group"
           >
-            <span>Open Kanban Sales Desk</span>
+            <span>View Full Pipeline</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 pt-1">
-          {['new', 'in_review', 'quoted', 'sample_sent', 'negotiation', 'won', 'lost', 'spam'].map((statusKey) => {
-            const count = statusCounts[statusKey] || 0;
-            return (
-              <div
-                key={statusKey}
-                className="p-3 rounded-lg border border-neutral-200/80 bg-neutral-50/70 text-center hover:border-neutral-400 transition-colors"
-              >
-                <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 truncate">
-                  {statusKey.replace(/_/g, ' ')}
-                </div>
-                <div className="font-serif text-xl font-bold text-neutral-900 mt-1">
-                  {count}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </Reveal>
+        {/* Proportional Segmented Progress Bar */}
+        {totalInquiries > 0 && (
+          <div className="w-full h-2 rounded-full overflow-hidden flex bg-[var(--admin-surface-subtle)] mb-4">
+            {pipelineStages.map((stage) => {
+              const pct = (stage.count / totalInquiries) * 100;
+              if (pct <= 0) return null;
+              return (
+                <div
+                  key={stage.key}
+                  style={{ width: `${pct}%` }}
+                  className={`${stage.color} h-full transition-all`}
+                  title={`${stage.label}: ${stage.count} (${pct.toFixed(1)}%)`}
+                />
+              );
+            })}
+          </div>
+        )}
 
-      {/* Recent Inquiries High-Density Table */}
-      <Reveal direction="up" distance={20} duration={0.5}>
-        <AdminTableShell
-          title="Recent Inbound RFQ Dossiers"
-          description="Overseas buyer inquiries logged from the public web portal requiring sales qualification"
-          totalCount={inquiries?.recent?.length || 0}
-          actions={
-            <Link
-              to="/admin/inquiries"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-neutral-900 hover:text-black group"
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          {pipelineStages.map((stage) => (
+            <div
+              key={stage.key}
+              className="p-3 rounded-admin-md border border-[var(--admin-border-subtle)] bg-[var(--admin-surface-subtle)] text-center"
             >
-              <span>View Complete Inbox</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-          }
-          empty={!inquiries?.recent || inquiries.recent.length === 0}
-          emptyMessage="No buyer inquiries have arrived yet."
-        >
-          <table className="min-w-full divide-y divide-neutral-200 text-left text-xs">
-            <thead className="bg-neutral-50/90 text-neutral-600 font-semibold border-b border-neutral-200">
-              <tr>
-                <th className="px-5 py-3">Reference No</th>
-                <th className="px-5 py-3">Buyer & Company</th>
-                <th className="px-5 py-3">Destination Country</th>
-                <th className="px-5 py-3">Requested Commodities</th>
-                <th className="px-5 py-3">Priority</th>
-                <th className="px-5 py-3">Trade Status</th>
-                <th className="px-5 py-3">48H SLA Timer</th>
-                <th className="px-5 py-3 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-neutral-100 text-neutral-700 bg-white">
-              {inquiries?.recent?.map((inq) => {
-                const inqId = inq.id || inq._id;
-                return (
-                  <tr key={inqId || inq.referenceNo} className="hover:bg-primary-50/30 transition-colors">
-                    <td className="px-5 py-3.5 font-mono font-bold text-primary-900 whitespace-nowrap">
-                      {inq.referenceNo}
-                    </td>
-                    <td className="px-5 py-3.5">
-                      <div className="font-semibold text-neutral-900">{inq.buyer?.name}</div>
-                      <div className="text-neutral-500 text-[11px]">{inq.buyer?.company}</div>
-                    </td>
-                    <td className="px-5 py-3.5 whitespace-nowrap font-medium text-neutral-800">
-                      {inq.buyer?.country || 'International'}
-                    </td>
-                    <td className="px-5 py-3.5">
-                      {inq.items?.length > 0 ? (
-                        <div className="line-clamp-1 text-neutral-700">
-                          {inq.items.map((i) => `${i.productName} (${i.quantity} ${i.unit})`).join(', ')}
-                        </div>
-                      ) : (
-                        <span className="text-neutral-400 italic">Custom inquiry spec</span>
-                      )}
-                    </td>
-                    <td className="px-5 py-3.5 whitespace-nowrap">
-                      <AdminStatusBadge priority={inq.priority} />
-                    </td>
-                    <td className="px-5 py-3.5 whitespace-nowrap">
-                      <AdminStatusBadge status={inq.status} />
-                    </td>
-                    <td className="px-5 py-3.5 whitespace-nowrap">
-                      <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold ${
-                          inq.slaStatus === 'resolved'
-                            ? 'bg-neutral-100 text-neutral-600 border border-neutral-200'
-                            : inq.slaStatus === 'breached'
-                            ? 'bg-rose-100 text-rose-800 border border-rose-300 font-bold'
-                            : inq.slaStatus === 'critical'
-                            ? 'bg-rose-50 text-rose-700 border border-rose-200 animate-pulse'
-                            : inq.slaStatus === 'warning'
-                            ? 'bg-amber-50 text-amber-800 border border-amber-200'
-                            : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                        }`}
-                      >
-                        <Clock className="w-3 h-3" />
-                        <span>
-                          {inq.slaStatus === 'resolved'
-                            ? 'Resolved'
-                            : inq.slaStatus === 'breached'
-                            ? 'Breached'
-                            : `${inq.slaRemainingHours ?? '--'}h rem`}
+              <div className="flex items-center justify-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--admin-text-muted)] truncate">
+                <span className={`w-1.5 h-1.5 rounded-full ${stage.color}`} />
+                <span>{stage.label}</span>
+              </div>
+              <div className="text-xl font-bold text-[var(--admin-text-primary)] mt-1 tabular-nums">
+                <AnimatedCounter value={stage.count} duration={0.8} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Row 3: Top Destination Markets */}
+      {operations.topCountries?.length > 0 && (
+        <div className="bg-white border border-[var(--admin-border)] rounded-admin-lg p-5 mb-6">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-[var(--admin-border-subtle)]">
+            <h3 className="text-sm font-bold text-[var(--admin-text-primary)] flex items-center gap-2">
+              <Globe className="w-4 h-4 text-[var(--admin-text-muted)]" />
+              <span>Top Export Inbound Destinations</span>
+            </h3>
+            <span className="text-[11px] text-[var(--admin-text-muted)]">By RFQs received</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {operations.topCountries.slice(0, 5).map((c, idx) => (
+              <div
+                key={idx}
+                className="p-3 rounded-admin-md bg-[var(--admin-surface-subtle)] border border-[var(--admin-border-subtle)] flex items-center justify-between"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[var(--admin-text-placeholder)] font-semibold text-xs">
+                    0{idx + 1}
+                  </span>
+                  <span className="font-semibold text-[var(--admin-text-primary)] text-xs">{c.country}</span>
+                </div>
+                <span className="font-mono font-bold text-[var(--admin-text-primary)] bg-white px-2 py-0.5 rounded-admin-sm border border-[var(--admin-border)] text-xs">
+                  {c.count} leads
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Row 4: Recent Inquiries Dossiers */}
+      <div className="bg-white border border-[var(--admin-border)] rounded-admin-lg overflow-hidden">
+        <div className="p-4 sm:p-5 border-b border-[var(--admin-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 className="text-sm font-bold text-[var(--admin-text-primary)]">Recent Inbound RFQ Dossiers</h3>
+            <p className="text-xs text-[var(--admin-text-muted)] mt-0.5">
+              Overseas buyer inquiries logged from the public web portal requiring commercial qualification
+            </p>
+          </div>
+          <Link
+            to="/admin/inquiries"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--admin-text-muted)] hover:text-[var(--admin-text-primary)] group"
+          >
+            <span>View Complete Inbox ({inquiries?.recent?.length || 0})</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+        </div>
+
+        {!inquiries?.recent || inquiries.recent.length === 0 ? (
+          <div className="p-8 text-center text-xs text-[var(--admin-text-muted)] italic">
+            No buyer inquiries have arrived yet.
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-[var(--admin-border-subtle)] text-left text-xs">
+              <thead className="bg-[var(--admin-surface-subtle)] text-[var(--admin-text-muted)] font-semibold border-b border-[var(--admin-border)] uppercase tracking-wider text-[11px]">
+                <tr>
+                  <th className="px-4 py-3">Reference No</th>
+                  <th className="px-4 py-3">Buyer & Company</th>
+                  <th className="px-4 py-3">Destination Country</th>
+                  <th className="px-4 py-3">Requested Commodities</th>
+                  <th className="px-4 py-3">Priority</th>
+                  <th className="px-4 py-3">Trade Status</th>
+                  <th className="px-4 py-3">48H SLA Timer</th>
+                  <th className="px-4 py-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--admin-border-subtle)] text-[var(--admin-text-secondary)] bg-white">
+                {inquiries.recent.map((inq) => {
+                  const inqId = inq.id || inq._id;
+                  return (
+                    <tr
+                      key={inqId || inq.referenceNo}
+                      className="hover:bg-[var(--admin-surface-subtle)] transition-colors"
+                      style={{ transitionDuration: 'var(--admin-duration-micro)' }}
+                    >
+                      <td className="px-4 py-3 font-mono font-bold text-[var(--admin-text-primary)] whitespace-nowrap">
+                        {inq.referenceNo}
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="font-semibold text-[var(--admin-text-primary)]">{inq.buyer?.name}</div>
+                        <div className="text-[var(--admin-text-muted)] text-[11px]">{inq.buyer?.company}</div>
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap font-medium text-[var(--admin-text-secondary)]">
+                        {inq.buyer?.country || 'International'}
+                      </td>
+                      <td className="px-4 py-3">
+                        {inq.items?.length > 0 ? (
+                          <div className="line-clamp-1 text-[var(--admin-text-secondary)]">
+                            {inq.items.map((i) => `${i.productName} (${i.quantity} ${i.unit})`).join(', ')}
+                          </div>
+                        ) : (
+                          <span className="text-[var(--admin-text-placeholder)] italic">Custom inquiry spec</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <AdminStatusBadge priority={inq.priority} />
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <AdminStatusBadge status={inq.status} />
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span
+                          className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-admin-sm text-[11px] font-mono font-medium border ${
+                            inq.slaStatus === 'resolved'
+                              ? 'bg-[#F1F5F9] text-[#334155] border-[#CBD5E140]'
+                              : inq.slaStatus === 'breached'
+                              ? 'bg-[#FEE2E2] text-[#991B1B] border-[#EF444440] font-bold'
+                              : inq.slaStatus === 'critical'
+                              ? 'bg-[#FEE2E2] text-[#991B1B] border-[#EF444440]'
+                              : inq.slaStatus === 'warning'
+                              ? 'bg-[#FEF3C7] text-[#92400E] border-[#F59E0B40]'
+                              : 'bg-[#D1FAE5] text-[#065F46] border-[#10B98140]'
+                          }`}
+                        >
+                          <Clock className="w-3 h-3" />
+                          <span>
+                            {inq.slaStatus === 'resolved'
+                              ? 'Resolved'
+                              : inq.slaStatus === 'breached'
+                              ? 'Breached'
+                              : `${inq.slaRemainingHours ?? '--'}h rem`}
+                          </span>
                         </span>
-                      </span>
-                    </td>
-                    <td className="px-5 py-3.5 text-right whitespace-nowrap">
-                      <Link
-                        to={`/admin/inquiries?id=${inqId}`}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-neutral-100 hover:bg-primary-50 text-neutral-800 hover:text-primary-900 font-semibold border border-neutral-200 text-xs transition-colors"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                        <span>Dossier</span>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </AdminTableShell>
-      </Reveal>
+                      </td>
+                      <td className="px-4 py-3 text-right whitespace-nowrap">
+                        <Link
+                          to={`/admin/inquiries?id=${inqId}`}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-admin-md bg-white hover:bg-[var(--admin-surface-subtle)] text-[var(--admin-text-primary)] font-medium border border-[var(--admin-border)] text-xs transition-colors"
+                          style={{ transitionDuration: 'var(--admin-duration-micro)' }}
+                        >
+                          <Eye className="w-3.5 h-3.5 text-[var(--admin-text-muted)]" />
+                          <span>Dossier</span>
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </>
   );
 };

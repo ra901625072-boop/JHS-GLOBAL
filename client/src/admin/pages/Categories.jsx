@@ -42,6 +42,7 @@ import {
   AdminStatusBadge,
   AdminDrawer,
   AdminSkeleton,
+  AdminPageHeader,
 } from '../components';
 
 const slugify = (text) =>
@@ -126,9 +127,11 @@ export const Categories = () => {
   const createMutation = useMutation({
     mutationFn: (data) => createAdminCategory(data),
     onSuccess: (newCat) => {
-      queryClient.invalidateQueries(['admin-categories']);
-      queryClient.invalidateQueries(['admin-categories-all']);
-      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries({ queryKey: ['admin-categories'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-categories-all'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['category'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       setIsDrawerOpen(false);
       setIsCreatingNew(false);
       setEditingCategory(null);
@@ -143,9 +146,11 @@ export const Categories = () => {
   const updateMutation = useMutation({
     mutationFn: ({ id, data }) => updateAdminCategory(id, data),
     onSuccess: (updated) => {
-      queryClient.invalidateQueries(['admin-categories']);
-      queryClient.invalidateQueries(['admin-categories-all']);
-      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries({ queryKey: ['admin-categories'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-categories-all'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['category'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       setIsDrawerOpen(false);
       setEditingCategory(null);
       setFeedback(`Category "${updated.name}" updated successfully`);
@@ -159,9 +164,11 @@ export const Categories = () => {
   const deleteMutation = useMutation({
     mutationFn: (id) => deleteAdminCategory(id),
     onSuccess: () => {
-      queryClient.invalidateQueries(['admin-categories']);
-      queryClient.invalidateQueries(['admin-categories-all']);
-      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries({ queryKey: ['admin-categories'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-categories-all'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['category'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       setDeleteModalCategory(null);
       if (isDrawerOpen) setIsDrawerOpen(false);
       setFeedback('Category successfully deactivated');
@@ -177,9 +184,11 @@ export const Categories = () => {
   const toggleActiveMutation = useMutation({
     mutationFn: (id) => toggleAdminCategoryActive(id),
     onSuccess: () => {
-      queryClient.invalidateQueries(['admin-categories']);
-      queryClient.invalidateQueries(['admin-categories-all']);
-      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries({ queryKey: ['admin-categories'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-categories-all'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['category'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       setFeedback('Category visibility status toggled');
       setTimeout(() => setFeedback(''), 3000);
     },
@@ -191,9 +200,11 @@ export const Categories = () => {
   const reorderMutation = useMutation({
     mutationFn: (items) => reorderAdminCategories(items),
     onSuccess: () => {
-      queryClient.invalidateQueries(['admin-categories']);
-      queryClient.invalidateQueries(['admin-categories-all']);
-      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries({ queryKey: ['admin-categories'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-categories-all'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['category'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       setFeedback('Category display sequence updated');
       setTimeout(() => setFeedback(''), 3000);
     },
@@ -331,7 +342,6 @@ export const Categories = () => {
 
   // Reorder single step up/down
   const handleShiftOrder = (category, direction) => {
-    // Find siblings (same parent)
     const siblings = allCategories
       .filter((c) => (c.parentId || null) === (category.parentId || null))
       .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
@@ -373,7 +383,6 @@ export const Categories = () => {
 
         return (
           <div className="flex items-center gap-2.5 py-1">
-            {/* Visual Nesting Indentation */}
             {isSub && <div className="w-4 h-4 border-l-2 border-b-2 border-neutral-300 rounded-bl-sm shrink-0 -mt-1 ml-1" />}
             {isMicro && <div className="w-8 h-4 border-l-2 border-b-2 border-neutral-300 rounded-bl-sm shrink-0 -mt-1 ml-3" />}
 
@@ -381,9 +390,9 @@ export const Categories = () => {
               <div
                 className={`p-1.5 rounded-lg shrink-0 ${
                   isDivision
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-[[var(--admin-brand)]] text-white'
                     : isSub
-                    ? 'bg-amber-100/80 text-amber-900 border border-amber-200/80'
+                    ? 'bg-amber-50 text-amber-900 border border-amber-200'
                     : 'bg-neutral-100 text-neutral-700'
                 }`}
               >
@@ -400,14 +409,14 @@ export const Categories = () => {
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <button
                     onClick={() => handleOpenEdit(row)}
-                    className="font-semibold text-xs text-neutral-900 hover:text-primary-800 transition-colors text-left truncate"
+                    className="font-semibold text-xs text-neutral-900 hover:text-[[var(--admin-brand)]] transition-colors text-left truncate"
                   >
                     {row.name}
                   </button>
                   <span
                     className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono font-medium tracking-tight ${
                       isDivision
-                        ? 'bg-neutral-900 text-white'
+                        ? 'bg-[[var(--admin-brand)]] text-white'
                         : isSub
                         ? 'bg-amber-50 text-amber-800 border border-amber-200'
                         : 'bg-neutral-100 text-neutral-600'
@@ -449,7 +458,7 @@ export const Categories = () => {
       label: 'HS Chapter',
       render: (_, row) =>
         row.hsChapter ? (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-medium bg-neutral-100 text-neutral-800 border border-neutral-200/80">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono tabular-nums font-bold bg-neutral-100 text-[[var(--admin-brand)]] border border-[[var(--admin-border)]]">
             Ch. {row.hsChapter}
           </span>
         ) : (
@@ -462,7 +471,7 @@ export const Categories = () => {
       sortable: true,
       render: (_, row) => (
         <div className="flex items-center gap-1">
-          <span className="text-xs font-mono font-semibold text-neutral-700 w-5 text-center">
+          <span className="text-xs font-mono tabular-nums font-semibold text-neutral-700 w-5 text-center">
             {row.order || 0}
           </span>
           <div className="flex flex-col gap-0.5">
@@ -495,8 +504,8 @@ export const Categories = () => {
             to={`/admin/products?category=${row.id}`}
             className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium transition-colors hover:bg-neutral-100 group"
           >
-            <Boxes className="w-3.5 h-3.5 text-neutral-400 group-hover:text-primary-800" />
-            <span className={count > 0 ? 'font-semibold text-neutral-900 group-hover:text-primary-800' : 'text-neutral-400'}>
+            <Boxes className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[[var(--admin-brand)]]" />
+            <span className={count > 0 ? 'font-semibold text-neutral-900 group-hover:text-[[var(--admin-brand)]] font-mono tabular-nums' : 'text-neutral-400 font-mono tabular-nums'}>
               {count} {count === 1 ? 'item' : 'items'}
             </span>
           </Link>
@@ -525,14 +534,14 @@ export const Categories = () => {
           <button
             onClick={() => handleOpenCreate(row)}
             title="Add Subcategory under this"
-            className="p-1.5 text-neutral-500 hover:text-primary-800 hover:bg-neutral-100 rounded-lg transition-colors"
+            className="p-1.5 text-neutral-500 hover:text-[[var(--admin-brand)]] hover:bg-neutral-100 rounded-lg transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => handleOpenEdit(row)}
             title="Edit category details"
-            className="p-1.5 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors"
+            className="p-1.5 text-neutral-500 hover:text-[[var(--admin-brand)]] hover:bg-neutral-100 rounded-lg transition-colors"
           >
             <Edit className="w-3.5 h-3.5" />
           </button>
@@ -551,216 +560,209 @@ export const Categories = () => {
   return (
     <>
       <Helmet>
-        <title>Categories & Divisions Desk | JHS GLOBAL Admin</title>
+        <title>Categories & Divisions Desk — JHS GLOBAL</title>
       </Helmet>
 
-      <div className="space-y-6">
-        {/* Top Header & Quick Action */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-neutral-200/80">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">
-              <Layers className="w-3.5 h-3.5" />
-              <span>Catalogue Governance</span>
-            </div>
-            <h1 className="font-serif text-2xl font-bold text-neutral-900 tracking-tight mt-0.5">
-              Categories & Divisions Desk
-            </h1>
-            <p className="text-xs text-neutral-500 mt-1 max-w-2xl">
-              Hierarchy governance for JHS GLOBAL’s 3 canonical export divisions: Personal Care Raw Materials, Nutraceutical Raw Materials, and Animal Feed.
-            </p>
-          </div>
-
+      {/* Standardized Page Header (Template 2) */}
+      <AdminPageHeader
+        breadcrumb={[
+          { label: 'Commodity Catalogue', href: '/admin/products' },
+          { label: 'Categories & Divisions' },
+        ]}
+        title="Categories & Divisions"
+        description="Catalogue hierarchy governance for JHS GLOBAL’s 3 canonical export divisions: Personal Care Raw Materials, Nutraceutical Raw Materials, and Animal Feed."
+        actions={
           <div className="flex items-center gap-2">
             <Button
-              variant="primary"
+              variant="cta"
               size="sm"
               onClick={() => handleOpenCreate()}
-              className="inline-flex items-center gap-1.5 shadow-sm"
+              className="inline-flex items-center gap-1.5 bg-[[var(--admin-accent)]] text-neutral-900 hover:bg-[#b5924a] font-bold shadow-xs"
             >
               <Plus className="w-4 h-4" />
               <span>New Category / Division</span>
             </Button>
           </div>
+        }
+      />
+
+      {/* Global Feedback Banners */}
+      {feedback && (
+        <div className="mb-5 p-3.5 rounded-admin-lg bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs font-medium text-emerald-800 animate-in fade-in">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>{feedback}</span>
+          </div>
+          <button onClick={() => setFeedback('')} className="p-1 hover:bg-emerald-100 rounded">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
+      {errorMsg && (
+        <div className="mb-5 p-3.5 rounded-admin-lg bg-rose-50 border border-rose-200 flex items-center justify-between text-xs font-medium text-rose-800 animate-in fade-in">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+            <span>{errorMsg}</span>
+          </div>
+          <button onClick={() => setErrorMsg('')} className="p-1 hover:bg-rose-100 rounded">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
+      {/* Operational Metrics Cards (4 Equal Width Symmetrical Cards) */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white elevation-flat">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+            Master Divisions
+          </span>
+          <div className="text-2xl font-bold font-mono tabular-nums text-neutral-900 mt-1">
+            {metrics.totalDivisions}
+          </div>
+          <span className="text-[11px] text-neutral-400 mt-0.5 block">
+            Level 1 Units
+          </span>
         </div>
 
-        {/* Global Feedback Banners */}
-        {feedback && (
-          <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs font-medium text-emerald-800 animate-in fade-in">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>{feedback}</span>
-            </div>
-            <button onClick={() => setFeedback('')} className="p-1 hover:bg-emerald-100 rounded">
-              <X className="w-3.5 h-3.5" />
-            </button>
+        <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white elevation-flat">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+            Subcategories
+          </span>
+          <div className="text-2xl font-bold font-mono tabular-nums text-neutral-900 mt-1">
+            {metrics.totalSubcategories}
           </div>
-        )}
-
-        {errorMsg && (
-          <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between text-xs font-medium text-rose-800 animate-in fade-in">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-              <span>{errorMsg}</span>
-            </div>
-            <button onClick={() => setErrorMsg('')} className="p-1 hover:bg-rose-100 rounded">
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
-
-        {/* Operational Metrics Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="p-4 rounded-xl border border-neutral-200/90 bg-white shadow-2xs">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-              Master Divisions
-            </span>
-            <div className="text-2xl font-bold font-serif text-neutral-900 mt-1">
-              {metrics.totalDivisions}
-            </div>
-            <span className="text-[11px] text-neutral-400 mt-0.5 block">
-              Level 1 Commercial Units
-            </span>
-          </div>
-
-          <div className="p-4 rounded-xl border border-neutral-200/90 bg-white shadow-2xs">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-              Subcategories
-            </span>
-            <div className="text-2xl font-bold font-serif text-neutral-900 mt-1">
-              {metrics.totalSubcategories}
-            </div>
-            <span className="text-[11px] text-neutral-400 mt-0.5 block">
-              Level 2 & 3 Micro-segments
-            </span>
-          </div>
-
-          <div className="p-4 rounded-xl border border-neutral-200/90 bg-white shadow-2xs">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-              Live Visibility
-            </span>
-            <div className="text-2xl font-bold font-serif text-emerald-700 mt-1">
-              {metrics.activeCount}
-            </div>
-            <span className="text-[11px] text-neutral-400 mt-0.5 block">
-              Published on Mega-Menu
-            </span>
-          </div>
-
-          <div className="p-4 rounded-xl border border-neutral-200/90 bg-white shadow-2xs">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-              Assigned Products
-            </span>
-            <div className="text-2xl font-bold font-serif text-neutral-900 mt-1">
-              {metrics.totalAssignedProducts}
-            </div>
-            <span className="text-[11px] text-neutral-400 mt-0.5 block">
-              Active Trade Commodities
-            </span>
-          </div>
+          <span className="text-[11px] text-neutral-400 mt-0.5 block">
+            Level 2 & 3 Segments
+          </span>
         </div>
 
-        {/* FilterBar & Division Tabs */}
-        <div className="bg-white p-4 rounded-xl border border-neutral-200/90 shadow-2xs space-y-3">
-          <FilterBar
-            searchQuery={searchQuery}
-            onSearchChange={(val) => {
-              setSearchQuery(val);
-              setSearchParams((prev) => {
-                if (val) prev.set('q', val);
-                else prev.delete('q');
-                return prev;
-              });
-            }}
-            searchPlaceholder="Search categories by name, slug, or HS chapter..."
-            statusOptions={[
-              { id: 'all', label: 'All Statuses' },
-              { id: 'active', label: 'Active on Mega-Menu' },
-              { id: 'inactive', label: 'Draft / Hidden' },
-            ]}
-            selectedStatus={statusFilter}
-            onStatusChange={(val) => {
-              setStatusFilter(val);
-              setSearchParams((prev) => {
-                if (val && val !== 'all') prev.set('status', val);
-                else prev.delete('status');
-                return prev;
-              });
-            }}
-            onClear={() => {
-              setSearchQuery('');
-              setStatusFilter('all');
+        <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white elevation-flat">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+            Live Visibility
+          </span>
+          <div className="text-2xl font-bold font-mono tabular-nums text-emerald-700 mt-1">
+            {metrics.activeCount}
+          </div>
+          <span className="text-[11px] text-neutral-400 mt-0.5 block">
+            Published on Mega-Menu
+          </span>
+        </div>
+
+        <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white elevation-flat">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+            Assigned Products
+          </span>
+          <div className="text-2xl font-bold font-mono tabular-nums text-neutral-900 mt-1">
+            {metrics.totalAssignedProducts}
+          </div>
+          <span className="text-[11px] text-neutral-400 mt-0.5 block">
+            Active Trade Commodities
+          </span>
+        </div>
+      </div>
+
+      {/* FilterBar & Division Tabs Container */}
+      <div className="bg-white p-4 rounded-admin-lg border border-[[var(--admin-border)]] elevation-flat space-y-3 mb-6">
+        <FilterBar
+          searchQuery={searchQuery}
+          onSearchChange={(val) => {
+            setSearchQuery(val);
+            setSearchParams((prev) => {
+              if (val) prev.set('q', val);
+              else prev.delete('q');
+              return prev;
+            });
+          }}
+          searchPlaceholder="Search categories by name, slug, or HS chapter..."
+          statusOptions={[
+            { id: 'all', label: 'All Statuses' },
+            { id: 'active', label: 'Active on Mega-Menu' },
+            { id: 'inactive', label: 'Draft / Hidden' },
+          ]}
+          selectedStatus={statusFilter}
+          onStatusChange={(val) => {
+            setStatusFilter(val);
+            setSearchParams((prev) => {
+              if (val && val !== 'all') prev.set('status', val);
+              else prev.delete('status');
+              return prev;
+            });
+          }}
+          onClear={() => {
+            setSearchQuery('');
+            setStatusFilter('all');
+            setDivisionFilter('all');
+            setSearchParams({});
+          }}
+        />
+
+        {/* Division Tabs */}
+        <div className="flex items-center gap-2 pt-2 border-t border-neutral-100 overflow-x-auto pb-1 admin-scrollbar">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 shrink-0 mr-1">
+            Division:
+          </span>
+          <button
+            onClick={() => {
               setDivisionFilter('all');
-              setSearchParams({});
+              setSearchParams((prev) => {
+                prev.delete('division');
+                return prev;
+              });
             }}
-          />
+            className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
+              divisionFilter === 'all'
+                ? 'bg-[[var(--admin-brand)]] text-white font-semibold shadow-xs'
+                : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200/70'
+            }`}
+          >
+            All Categories ({allCategories.length})
+          </button>
 
-          {/* Division Tabs */}
-          <div className="flex items-center gap-2 pt-2 border-t border-neutral-100 overflow-x-auto pb-1 admin-scrollbar">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 shrink-0 mr-1">
-              Division:
-            </span>
-            <button
-              onClick={() => {
-                setDivisionFilter('all');
-                setSearchParams((prev) => {
-                  prev.delete('division');
-                  return prev;
-                });
-              }}
-              className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
-                divisionFilter === 'all'
-                  ? 'bg-neutral-900 text-white font-semibold shadow-xs'
-                  : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200/70'
-              }`}
-            >
-              All Categories ({allCategories.length})
-            </button>
+          {CANONICAL_DIVISIONS.map((div) => {
+            const isSelected = divisionFilter === div.slug;
+            const count = allCategories.filter(
+              (c) => c.slug === div.slug || c.parent?.slug === div.slug
+            ).length;
 
-            {CANONICAL_DIVISIONS.map((div) => {
-              const isSelected = divisionFilter === div.slug;
-              const count = allCategories.filter(
-                (c) => c.slug === div.slug || c.parent?.slug === div.slug
-              ).length;
-
-              return (
-                <button
-                  key={div.slug}
-                  onClick={() => {
-                    setDivisionFilter(div.slug);
-                    setSearchParams((prev) => {
-                      prev.set('division', div.slug);
-                      return prev;
-                    });
-                  }}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
-                    isSelected
-                      ? 'bg-neutral-900 text-white font-semibold shadow-xs'
-                      : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200/70'
-                  }`}
-                >
-                  <span>{div.name}</span>
-                  <span className={`text-[10px] px-1.5 rounded-full ${isSelected ? 'bg-white/20 text-white' : 'bg-neutral-200 text-neutral-600'}`}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+            return (
+              <button
+                key={div.slug}
+                onClick={() => {
+                  setDivisionFilter(div.slug);
+                  setSearchParams((prev) => {
+                    prev.set('division', div.slug);
+                    return prev;
+                  });
+                }}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
+                  isSelected
+                    ? 'bg-[[var(--admin-brand)]] text-white font-semibold shadow-xs'
+                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200/70'
+                }`}
+              >
+                <span>{div.name}</span>
+                <span className={`text-[10px] px-1.5 rounded-full font-mono tabular-nums ${isSelected ? 'bg-white/20 text-white' : 'bg-neutral-200 text-neutral-600'}`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Categories Data Table */}
-        <div className="bg-white rounded-xl border border-neutral-200/90 shadow-2xs overflow-hidden">
-          <DataTable
-            columns={columns}
-            data={categories}
-            loading={isLoading}
-            emptyMessage={
-              searchQuery || divisionFilter !== 'all' || statusFilter !== 'all'
-                ? 'No categories match the active filter criteria.'
-                : 'No categories recorded in database.'
-            }
-          />
-        </div>
+      {/* Categories Data Table Card */}
+      <div className="bg-white rounded-admin-lg border border-[[var(--admin-border)]] elevation-flat overflow-hidden">
+        <DataTable
+          columns={columns}
+          data={categories}
+          loading={isLoading}
+          emptyMessage={
+            searchQuery || divisionFilter !== 'all' || statusFilter !== 'all'
+              ? 'No categories match the active filter criteria.'
+              : 'No categories recorded in database.'
+          }
+        />
       </div>
 
       {/* Slide-Over Inspector Drawer */}
@@ -787,37 +789,25 @@ export const Categories = () => {
           )
         }
         tabs={
-          <div className="flex border-b border-neutral-200/80 -mb-4">
-            <button
-              onClick={() => setDrawerTab('details')}
-              className={`px-4 py-2.5 text-xs font-medium border-b-2 transition-colors ${
-                drawerTab === 'details'
-                  ? 'border-neutral-900 text-neutral-900 font-semibold'
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              1. Details & HS Chapter
-            </button>
-            <button
-              onClick={() => setDrawerTab('hierarchy')}
-              className={`px-4 py-2.5 text-xs font-medium border-b-2 transition-colors ${
-                drawerTab === 'hierarchy'
-                  ? 'border-neutral-900 text-neutral-900 font-semibold'
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              2. Hierarchy & Nesting
-            </button>
-            <button
-              onClick={() => setDrawerTab('seo')}
-              className={`px-4 py-2.5 text-xs font-medium border-b-2 transition-colors ${
-                drawerTab === 'seo'
-                  ? 'border-neutral-900 text-neutral-900 font-semibold'
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              3. SEO & Mega-Menu
-            </button>
+          <div className="flex items-center gap-1 p-1 bg-neutral-100 rounded-lg border border-[[var(--admin-border)]] text-xs font-semibold overflow-x-auto admin-scrollbar">
+            {[
+              { id: 'details', label: '1. Details & HS' },
+              { id: 'hierarchy', label: '2. Hierarchy' },
+              { id: 'seo', label: '3. SEO & Mega-Menu' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setDrawerTab(tab.id)}
+                className={`flex-1 py-1.5 px-3 rounded-md transition-all whitespace-nowrap text-center ${
+                  drawerTab === tab.id
+                    ? 'bg-white text-neutral-900  font-bold'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
         }
         footer={
@@ -827,7 +817,7 @@ export const Categories = () => {
                 <button
                   type="button"
                   onClick={() => setDeleteModalCategory(editingCategory)}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-xl transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-admin-lg transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                   <span>Delete Category</span>
@@ -848,11 +838,11 @@ export const Categories = () => {
                 Cancel
               </Button>
               <Button
-                variant="primary"
+                variant="cta"
                 size="sm"
                 onClick={handleFormSubmit}
                 disabled={createMutation.isPending || updateMutation.isPending}
-                className="inline-flex items-center gap-1.5"
+                className="inline-flex items-center gap-1.5 bg-[[var(--admin-accent)]] text-neutral-900 hover:bg-[#b5924a] font-bold"
               >
                 {(createMutation.isPending || updateMutation.isPending) && (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -877,7 +867,7 @@ export const Categories = () => {
                   onChange={(e) => handleNameChange(e.target.value)}
                   placeholder="e.g. Carrier Oils & Specialty Lipids"
                   required
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
                 <p className="text-[11px] text-neutral-400 mt-1">
                   Official commercial title used across catalogue headers and visitor navigation.
@@ -894,7 +884,7 @@ export const Categories = () => {
                     value={formData.slug}
                     onChange={(e) => setFormData((prev) => ({ ...prev, slug: slugify(e.target.value) }))}
                     placeholder="e.g. carrier-oils"
-                    className="w-full px-3.5 py-2 text-xs font-mono border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-xs font-mono bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                   />
                   <p className="text-[11px] text-neutral-400 mt-1">
                     Unique URL path segment: /categories/{formData.slug || 'slug'}
@@ -911,7 +901,7 @@ export const Categories = () => {
                     value={formData.hsChapter}
                     onChange={(e) => setFormData((prev) => ({ ...prev, hsChapter: e.target.value }))}
                     placeholder="e.g. 33 (Cosmetics), 13 (Botanicals), 23 (Feed)"
-                    className="w-full px-3.5 py-2 text-xs font-mono border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-xs font-mono tabular-nums bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                   />
                   <p className="text-[11px] text-neutral-400 mt-1">
                     Harmonized System 2-digit chapter classification for customs tariffs.
@@ -928,7 +918,7 @@ export const Categories = () => {
                   value={formData.description}
                   onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
                   placeholder="Detailed commercial description of the product families, purity standards, and typical industrial applications..."
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
                 <p className="text-[11px] text-neutral-400 mt-1">
                   Displayed on the public category page and indexed for search engines.
@@ -944,7 +934,7 @@ export const Categories = () => {
                   value={formData.icon}
                   onChange={(e) => setFormData((prev) => ({ ...prev, icon: e.target.value }))}
                   placeholder="e.g. Sparkles, Leaf, Wheat, Droplets, Shield"
-                  className="w-full px-3.5 py-2 text-xs font-mono border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs font-mono bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
               </div>
             </div>
@@ -953,9 +943,9 @@ export const Categories = () => {
           {/* TAB 2: HIERARCHY & NESTING */}
           {drawerTab === 'hierarchy' && (
             <div className="space-y-5">
-              <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200/90 space-y-2">
+              <div className="p-4 rounded-admin-lg bg-neutral-50 border border-[[var(--admin-border)]] space-y-2">
                 <div className="flex items-center gap-2 text-xs font-semibold text-neutral-900">
-                  <FolderTree className="w-4 h-4 text-primary-800" />
+                  <FolderTree className="w-4 h-4 text-[[var(--admin-brand)]]" />
                   <span>3-Tier Classification Model</span>
                 </div>
                 <p className="text-xs text-neutral-500 leading-relaxed">
@@ -970,7 +960,7 @@ export const Categories = () => {
                 <select
                   value={formData.parentId}
                   onChange={(e) => handleParentChange(e.target.value)}
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none bg-white"
+                  className="w-full px-3.5 py-2 text-xs border border-[[var(--admin-border)]] rounded-lg focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none bg-white"
                 >
                   <option value="">— None (Master Commercial Division - Level 1) —</option>
                   {candidateParents.map((cat) => (
@@ -990,8 +980,8 @@ export const Categories = () => {
                   <label className="block text-xs font-semibold text-neutral-700 mb-1">
                     Computed Tier Level
                   </label>
-                  <div className="px-3.5 py-2 text-xs font-semibold rounded-xl border border-neutral-200 bg-neutral-100/80 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-primary-800" />
+                  <div className="px-3.5 py-2 text-xs font-semibold rounded-lg border border-[[var(--admin-border)]] bg-neutral-100/80 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[[var(--admin-brand)]]" />
                     <span>
                       {formData.level === 1
                         ? 'Level 1: Master Commercial Division'
@@ -1010,7 +1000,7 @@ export const Categories = () => {
                     type="number"
                     value={formData.order}
                     onChange={(e) => setFormData((prev) => ({ ...prev, order: parseInt(e.target.value, 10) || 0 }))}
-                    className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none font-mono"
+                    className="w-full px-3.5 py-2 text-xs border border-[[var(--admin-border)]] rounded-lg focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none font-mono tabular-nums"
                   />
                   <p className="text-[11px] text-neutral-400 mt-1">
                     Lower sequence numbers appear first on visitor navigation menus.
@@ -1019,7 +1009,7 @@ export const Categories = () => {
               </div>
 
               {/* Hierarchy Tree Visualizer */}
-              <div className="p-4 rounded-xl border border-neutral-200 bg-white space-y-2">
+              <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white space-y-2">
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 block">
                   Preview Hierarchy Breadcrumb
                 </span>
@@ -1046,7 +1036,7 @@ export const Categories = () => {
           {drawerTab === 'seo' && (
             <div className="space-y-5">
               {/* Active Toggle Switch */}
-              <div className="p-4 rounded-xl border border-neutral-200 bg-white flex items-center justify-between">
+              <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white flex items-center justify-between">
                 <div>
                   <span className="text-xs font-semibold text-neutral-900 block">
                     Public Mega-Menu & Catalogue Visibility
@@ -1081,7 +1071,7 @@ export const Categories = () => {
                     }))
                   }
                   placeholder="e.g. Bulk Cosmetic Carrier Oils Exporter | JHS GLOBAL"
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs border border-[[var(--admin-border)]] rounded-lg focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
                 <p className="text-[11px] text-neutral-400 mt-1">
                   Recommended length: 50–60 characters. Format: [Category Name] Exporter | JHS GLOBAL
@@ -1102,7 +1092,7 @@ export const Categories = () => {
                     }))
                   }
                   placeholder="Commercial export of high-purity cosmetic oils and botanical lipids in FCL container shipments with COA and SDS documentation..."
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs border border-[[var(--admin-border)]] rounded-lg focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
                 <p className="text-[11px] text-neutral-400 mt-1">
                   Recommended length: 140–160 characters.
@@ -1112,10 +1102,10 @@ export const Categories = () => {
               {/* Safety Guard Status */}
               {editingCategory && (
                 <div
-                  className={`p-4 rounded-xl border ${
+                  className={`p-4 rounded-admin-lg border ${
                     (editingCategory.productCount || 0) > 0
                       ? 'bg-amber-50/70 border-amber-200 text-amber-900'
-                      : 'bg-neutral-50 border-neutral-200 text-neutral-700'
+                      : 'bg-neutral-50 border-[[var(--admin-border)]] text-neutral-700'
                   }`}
                 >
                   <div className="flex items-start gap-2.5">
@@ -1140,7 +1130,7 @@ export const Categories = () => {
                       {(editingCategory.productCount || 0) > 0 && (
                         <Link
                           to={`/admin/products?category=${editingCategory.id}`}
-                          className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary-800 hover:underline mt-1"
+                          className="inline-flex items-center gap-1 text-[11px] font-semibold text-[[var(--admin-brand)]] hover:underline mt-1"
                         >
                           <span>Review assigned products</span>
                           <ExternalLink className="w-3 h-3" />
@@ -1163,10 +1153,10 @@ export const Categories = () => {
             className="absolute inset-0 bg-neutral-950/40 backdrop-blur-xs animate-in fade-in"
           />
 
-          <div className="relative bg-white rounded-2xl shadow-2xl border border-neutral-200/90 max-w-md w-full p-6 space-y-4 animate-in zoom-in-95">
+          <div className="relative bg-white rounded-2xl shadow-2xl border border-[[var(--admin-border)]] max-w-md w-full p-6 space-y-4 animate-in zoom-in-95">
             <div className="flex items-start gap-3">
               <div
-                className={`p-2.5 rounded-xl shrink-0 ${
+                className={`p-2.5 rounded-admin-lg shrink-0 ${
                   (deleteModalCategory.productCount || 0) > 0
                     ? 'bg-amber-100 text-amber-800'
                     : 'bg-rose-100 text-rose-800'
@@ -1207,7 +1197,7 @@ export const Categories = () => {
 
               {(deleteModalCategory.productCount || 0) > 0 ? (
                 <Link to={`/admin/products?category=${deleteModalCategory.id}`}>
-                  <Button variant="primary" size="sm" className="inline-flex items-center gap-1.5">
+                  <Button variant="primary" size="sm" className="inline-flex items-center gap-1.5 bg-[[var(--admin-brand)]] text-white">
                     <span>Manage Products</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </Button>

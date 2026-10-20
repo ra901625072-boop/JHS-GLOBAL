@@ -18,6 +18,7 @@ import PageHeader from '../../components/layout/PageHeader';
 import Reveal from '../../components/ui/Reveal';
 import WhatsAppIcon from '../../components/common/WhatsAppIcon';
 import UnlistedSourcingBanner from '../../components/common/UnlistedSourcingBanner';
+import { useFeaturedFaqs } from '../../features/trust/hooks';
 
 export const ContactPage = () => {
   const brandName = import.meta.env.VITE_BRAND_NAME || 'JHS GLOBAL';
@@ -28,6 +29,8 @@ export const ContactPage = () => {
   const toggleFaq = (idx) => {
     setOpenFaqIndex(openFaqIndex === idx ? null : idx);
   };
+
+  const { data: dynamicFaqs } = useFeaturedFaqs();
 
   const tradeFaqs = [
     {
@@ -218,7 +221,10 @@ export const ContactPage = () => {
           </Reveal>
 
           <div className="space-y-3 max-w-4xl">
-            {tradeFaqs.map((faq, idx) => (
+            {(Array.isArray(dynamicFaqs) && dynamicFaqs.length > 0
+              ? dynamicFaqs.slice(0, 4).map((f) => ({ q: f.question, a: f.answer }))
+              : tradeFaqs
+            ).map((faq, idx) => (
               <div
                 key={idx}
                 className="rounded-xl border border-surface-border bg-white overflow-hidden transition-all duration-200"

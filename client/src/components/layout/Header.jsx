@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingBag, ShieldCheck, ArrowRight, Clock } from 'lucide-react';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
 import { useSafeQueryClient, prefetchRouteData } from '../../utils/prefetch';
@@ -11,7 +11,6 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [badgeBump, setBadgeBump] = useState(false);
   const { totalItemCount, setIsDrawerOpen } = useQuoteBasket();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const brandName = import.meta.env.VITE_BRAND_NAME || 'JHS GLOBAL';
@@ -100,9 +99,14 @@ export const Header = () => {
             to="/"
             className="flex items-center gap-3 group focus:outline-none shrink-0"
           >
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#0e3b2e] border-2 border-[#c59b27]/80 shadow-xs flex items-center justify-center font-serif font-black text-[#c59b27] text-xs sm:text-sm tracking-widest group-hover:scale-105 transition-all duration-200 transform-gpu shrink-0 relative overflow-hidden">
-              <div className="absolute inset-0.5 rounded-full border border-[#c59b27]/40 pointer-events-none" />
-              <span>JHS</span>
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white border border-neutral-200 shadow-2xs flex items-center justify-center p-0.5 group-hover:scale-105 group-hover:shadow-xs transition-all duration-200 transform-gpu shrink-0 relative overflow-hidden">
+              <img
+                src="/images/logo/logo-mark.png"
+                alt="JHS GLOBAL Logo"
+                className="w-full h-full object-contain"
+                width="44"
+                height="44"
+              />
             </div>
             <div className="flex flex-col min-w-0">
               <span className="font-serif font-bold text-lg sm:text-xl text-neutral-900 tracking-tight leading-none whitespace-nowrap group-hover:text-primary-900 transition-colors duration-150">
@@ -171,7 +175,7 @@ export const Header = () => {
             {/* High-Contrast "Request a Quote →" CTA Button */}
             <button
               type="button"
-              onClick={() => navigate('/contact')}
+              onClick={() => setIsDrawerOpen(true)}
               className="hidden sm:inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#0e3b2e] hover:bg-[#092b21] active:scale-[0.98] transform-gpu text-white text-xs xl:text-sm font-semibold shadow-sm hover:shadow transition-all duration-150 whitespace-nowrap shrink-0 group focus:outline-none focus:ring-2 focus:ring-primary-800 focus:ring-offset-2"
             >
               <span>Request a Quote</span>

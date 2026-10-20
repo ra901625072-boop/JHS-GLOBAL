@@ -150,6 +150,16 @@ export const syncProductEmbedding = async (product) => {
 };
 
 /**
+ * Remove embedding when a product is deleted or deactivated
+ */
+export const deleteProductEmbedding = async (productId) => {
+  if (!productId) return;
+  await Embedding.destroy({
+    where: { sourceType: 'product', sourceId: productId },
+  });
+};
+
+/**
  * Sync embedding for a single FAQ (skips if text unchanged)
  */
 export const syncFaqEmbedding = async (faq) => {
@@ -189,6 +199,16 @@ export const syncFaqEmbedding = async (faq) => {
   }
 
   return { skipped: false, id: record.id };
+};
+
+/**
+ * Remove embedding when a FAQ is deleted or deactivated
+ */
+export const deleteFaqEmbedding = async (faqId) => {
+  if (!faqId) return;
+  await Embedding.destroy({
+    where: { sourceType: 'faq', sourceId: faqId },
+  });
 };
 
 /**
@@ -298,7 +318,9 @@ export default {
   chunkFaq,
   chunkCompanyFact,
   syncProductEmbedding,
+  deleteProductEmbedding,
   syncFaqEmbedding,
+  deleteFaqEmbedding,
   syncCompanyFactEmbedding,
   deleteCompanyFactEmbedding,
   reindexAllCatalogue,

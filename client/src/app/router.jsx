@@ -23,20 +23,14 @@ const ProtectedRoute = lazy(() => import('../admin/components/ProtectedRoute'));
 const AdminLogin = lazy(() => import('../admin/pages/Login'));
 const AdminDashboard = lazy(() => import('../admin/pages/Dashboard'));
 const AdminInquiries = lazy(() => import('../admin/pages/Inquiries'));
-const AdminProducts = lazy(() => import('../admin/pages/Products'));
-const AdminSalesDesk = lazy(() => import('../admin/pages/SalesDesk'));
-const AdminQuotations = lazy(() => import('../admin/pages/Quotations'));
-const AdminCustomers = lazy(() => import('../admin/pages/Customers'));
-const AdminOrders = lazy(() => import('../admin/pages/Orders'));
-const AdminCompanyKnowledge = lazy(() => import('../admin/pages/CompanyKnowledgeBase'));
-const AdminAiInquiries = lazy(() => import('../admin/pages/AiInquiryReview'));
 const AdminSamples = lazy(() => import('../admin/pages/Samples'));
+const AdminProducts = lazy(() => import('../admin/pages/Products'));
 const AdminCategories = lazy(() => import('../admin/pages/Categories'));
 const AdminCertificates = lazy(() => import('../admin/pages/Certificates'));
+const AdminCompanyKnowledge = lazy(() => import('../admin/pages/CompanyKnowledgeBase'));
 const AdminBlogCms = lazy(() => import('../admin/pages/BlogCms'));
 const AdminFaqManager = lazy(() => import('../admin/pages/FaqManager'));
 const AdminUsers = lazy(() => import('../admin/pages/Users'));
-const AdminAuditLogs = lazy(() => import('../admin/pages/AuditLogs'));
 const AdminSettings = lazy(() => import('../admin/pages/Settings'));
 
 const RouteLoader = () => (
@@ -206,16 +200,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'sales-desk',
-        element: (
-          <Suspense fallback={<RouteLoader />}>
-            <ProtectedRoute allowedRoles={['admin', 'sales']}>
-              <AdminSalesDesk />
-            </ProtectedRoute>
-          </Suspense>
-        ),
-      },
-      {
         path: 'inquiries',
         element: (
           <Suspense fallback={<RouteLoader />}>
@@ -226,31 +210,11 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'quotations',
+        path: 'samples',
         element: (
           <Suspense fallback={<RouteLoader />}>
             <ProtectedRoute allowedRoles={['admin', 'sales']}>
-              <AdminQuotations />
-            </ProtectedRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'customers',
-        element: (
-          <Suspense fallback={<RouteLoader />}>
-            <ProtectedRoute allowedRoles={['admin', 'sales']}>
-              <AdminCustomers />
-            </ProtectedRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'orders',
-        element: (
-          <Suspense fallback={<RouteLoader />}>
-            <ProtectedRoute allowedRoles={['admin', 'sales']}>
-              <AdminOrders />
+              <AdminSamples />
             </ProtectedRoute>
           </Suspense>
         ),
@@ -261,36 +225,6 @@ export const router = createBrowserRouter([
           <Suspense fallback={<RouteLoader />}>
             <ProtectedRoute allowedRoles={['admin', 'editor']}>
               <AdminProducts />
-            </ProtectedRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'company-knowledge',
-        element: (
-          <Suspense fallback={<RouteLoader />}>
-            <ProtectedRoute allowedRoles={['admin', 'editor']}>
-              <AdminCompanyKnowledge />
-            </ProtectedRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'ai-inquiries',
-        element: (
-          <Suspense fallback={<RouteLoader />}>
-            <ProtectedRoute allowedRoles={['admin', 'sales', 'editor']}>
-              <AdminAiInquiries />
-            </ProtectedRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'samples',
-        element: (
-          <Suspense fallback={<RouteLoader />}>
-            <ProtectedRoute allowedRoles={['admin', 'sales']}>
-              <AdminSamples />
             </ProtectedRoute>
           </Suspense>
         ),
@@ -311,6 +245,16 @@ export const router = createBrowserRouter([
           <Suspense fallback={<RouteLoader />}>
             <ProtectedRoute allowedRoles={['admin', 'editor']}>
               <AdminCertificates />
+            </ProtectedRoute>
+          </Suspense>
+        ),
+      },
+      {
+        path: 'company-knowledge',
+        element: (
+          <Suspense fallback={<RouteLoader />}>
+            <ProtectedRoute allowedRoles={['admin', 'editor']}>
+              <AdminCompanyKnowledge />
             </ProtectedRoute>
           </Suspense>
         ),
@@ -341,16 +285,6 @@ export const router = createBrowserRouter([
           <Suspense fallback={<RouteLoader />}>
             <ProtectedRoute allowedRoles={['admin']}>
               <AdminUsers />
-            </ProtectedRoute>
-          </Suspense>
-        ),
-      },
-      {
-        path: 'audit-logs',
-        element: (
-          <Suspense fallback={<RouteLoader />}>
-            <ProtectedRoute allowedRoles={['admin']}>
-              <AdminAuditLogs />
             </ProtectedRoute>
           </Suspense>
         ),

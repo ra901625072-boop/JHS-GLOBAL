@@ -161,18 +161,18 @@ export const QualityPage = () => {
     else if (text.includes('spice') || text.includes('cres')) key = 'spices';
     else if (text.includes('msme') || text.includes('udyam')) key = 'msme';
 
-    const fallback = CERT_METADATA_REGISTRY[key];
+    const fallback = CERT_METADATA_REGISTRY[key] || {};
     return {
       _id: c._id || c.id || fallback._id,
-      name: fallback.name,
+      name: c.name || fallback.name,
       fullName: c.fullName || fallback.fullName,
       issuedBy: c.issuedBy || fallback.issuedBy,
-      number: (c.number && !c.number.includes('TODO')) ? c.number : fallback.number,
+      number: (c.number && !c.number.includes('TODO')) ? c.number : (fallback.number || ''),
       form: c.form || fallback.form,
       scope: c.scope || fallback.scope,
-      image: fallback.image,
-      file: fallback.file,
-      code: fallback.code,
+      image: c.image || c.imageUrl || c.image_url || fallback.image,
+      file: c.file || (c.fileUrl || c.file_url ? { url: c.fileUrl || c.file_url } : fallback.file),
+      code: c.code || fallback.code,
     };
   };
 
@@ -182,7 +182,7 @@ export const QualityPage = () => {
 
   const dueDiligenceChecklist = [
     'Government of India registered export credentials with active IEC Code',
-    'Direct statutory registration with APEDA, Spices Board of India, and FSSAI Central Authority',
+    'Direct statutory registration with APEDA, FSSAI Central Authority, and MSME Udyam',
     'Independent third-party inspection (SGS, Bureau Veritas, Intertek) allowed at container stuffing',
     'Transparent batch COA and MSDS provided prior to cargo vessel departure',
     'Container stuffing video and high-resolution photographic log shared with buyer',

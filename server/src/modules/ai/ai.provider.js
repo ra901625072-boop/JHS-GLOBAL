@@ -1709,7 +1709,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
       isSpam: false,
       spamReason: '',
       extracted: {
-        commodities: ['Salem Turmeric Finger', '1121 Steam Basmati Rice'],
+        commodities: ['Standardized Ashwagandha Extract', 'Castor Oil & Derivatives'],
         totalVolume: '20 MT',
         destinationPort: 'Genoa Port',
         destinationCountry: 'Italy',
@@ -1935,10 +1935,10 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
       },
       items: [
         {
-          productName: lowerMsg.includes('turmeric') ? 'Salem Turmeric Finger' : '1121 Basmati Rice',
+          productName: lowerMsg.includes('ashwagandha') ? 'Standardized Ashwagandha Extract' : 'Soybean Meal (DOC 48%)',
           quantity: lowerMsg.includes('20') ? 20 : 2,
           unit: lowerMsg.includes('mt') ? 'MT' : '20ft FCL',
-          packing: lowerMsg.includes('50kg') ? '50kg PP bags' : '25kg PP bags',
+          packing: lowerMsg.includes('50kg') ? '50kg PP bags' : '25kg fiber drums',
         },
       ],
       logistics: {
@@ -1992,41 +1992,41 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
       });
     }
 
-    const isRice = lowerMsg.includes('rice') || lowerMsg.includes('basmati');
-    const productName = isRice ? '1121 Steam Basmati Rice' : 'Salem Turmeric Finger';
-    const hsCode = isRice ? '1006.30' : '0910.30';
+    const isFeed = lowerMsg.includes('feed') || lowerMsg.includes('soybean') || lowerMsg.includes('meal');
+    const productName = isFeed ? 'Soybean Meal (DOC 48%)' : 'Standardized Ashwagandha Extract (Withanolides 2.5–5%)';
+    const hsCode = isFeed ? '2304.00' : '1302.19';
 
     return JSON.stringify({
-      shortDescription: isRice
-        ? 'Premium 1121 Steam Basmati Rice featuring extra-long 8.35mm grains, 100% Sortex optical cleaning, and superior aroma.'
-        : 'Prime grade Salem Turmeric Finger double polished with guaranteed 3.0–5.0% curcumin, processed under international export hygiene standards.',
-      description: isRice
-        ? 'Export-grade long-grain Indian Basmati rice aged to perfection and steam-processed for non-sticky culinary performance. Thoroughly tested for pesticide residues and moisture compliance with APEDA certification.'
-        : 'High curcumin Salem Turmeric Finger sourced directly from agricultural hubs in Tamil Nadu. Double polished and machine cleaned with full NABL laboratory batch testing and zero artificial colorants.',
-      highlights: isRice
-        ? ['Average Grain Length: 8.35mm+', 'Moisture: Max 12.5%', '100% Optical Sortex Cleaned', 'Container: 25 MT per 20ft FCL']
-        : ['Curcumin 3.0–5.0%', 'Moisture <= 10%', 'Machine Double Polished', 'Lead Chromate Free'],
+      shortDescription: isFeed
+        ? 'High-protein de-oiled soybean meal (min 48% crude protein) processed for animal feed, aquafeed, and poultry nutrition.'
+        : 'HPLC standardized Ashwagandha root extract guaranteed at 2.5–5.0% withanolides, processed under cGMP export conditions.',
+      description: isFeed
+        ? 'Export-quality Indian de-oiled soybean cake and meal produced from non-GMO seeds. Thoroughly screened for moisture, urease activity, and sand/silica compliance.'
+        : 'High-potency Withania Somnifera extract standardized by HPLC. Full NABL third-party laboratory analysis for assay, heavy metals, and microbiological criteria.',
+      highlights: isFeed
+        ? ['Crude Protein: Min 48%', 'Moisture: Max 11%', 'Non-GMO Origin', 'Container: 20–22 MT per 20ft FCL']
+        : ['Withanolides: 2.5–5.0% HPLC', 'Heavy Metals <= 10 ppm', 'Aflatoxins: Negative', 'Packaging: 25kg fiber drums'],
       seo: {
-        title: isRice
-          ? '1121 Steam Basmati Rice Exporters India | Bulk Long Grain Container Supply'
-          : 'Salem Turmeric Finger Exporters India | High Curcumin Bulk Supply',
-        description: isRice
-          ? 'Direct mill exporter of 1121 Steam Basmati Rice with APEDA phytosanitary certificates and customized 25kg / 50kg export packing.'
-          : 'Direct bulk container exporter of high curcumin Salem Turmeric Finger with lab COA and APEDA certification.',
-        keywords: isRice
-          ? ['1121 basmati rice', 'steam basmati rice bulk', 'indian rice exporter', 'grain 8.35mm']
-          : ['salem turmeric', 'curcumin powder', 'bulk spice exporter india', 'curcuma longa'],
+        title: isFeed
+          ? 'Soybean Meal Exporters India | High Protein Animal Feed Bulk Supply'
+          : 'Ashwagandha Extract Exporters India | Standardized Withanolides Bulk',
+        description: isFeed
+          ? 'Direct manufacturer-exporter of non-GMO Soybean Meal DOC 48% with phytosanitary certificates and export packaging.'
+          : 'Direct bulk container exporter of HPLC standardized Ashwagandha extract with lab COA and international certification.',
+        keywords: isFeed
+          ? ['soybean meal bulk', 'de oiled cake doc', 'animal feed ingredients exporter india', 'non gmo soybean meal']
+          : ['ashwagandha extract bulk', 'withanolides hplc', 'nutraceutical ingredients india', 'withania somnifera'],
       },
       specSuggestions: {
         suggestedHsCode: hsCode,
-        suggestedMoq: { value: 1, unit: isRice ? '20ft FCL' : 'MT' },
-        suggestedPacking: isRice ? '25kg / 50kg PP bags or BOPP bags' : '25kg PP bags / craft paper bags',
-        shelfLife: '24 months',
+        suggestedMoq: { value: 1, unit: isFeed ? '20ft FCL' : 'MT' },
+        suggestedPacking: isFeed ? '50kg PP bags / 1MT jumbo bags' : '25kg fiber drums with double PE liners',
+        shelfLife: isFeed ? '12 months' : '24 months',
         storage: 'Store in cool, dry hygienic warehouse away from direct sunlight',
       },
       suggestedSpecs: [
-        { key: 'Purity / Grade', value: '100% Sortex Cleaned' },
-        { key: 'Moisture', value: isRice ? '<= 12.5%' : '<= 10.0%', unit: '%' },
+        { key: 'Purity / Assay', value: isFeed ? 'Crude Protein >= 48%' : 'Withanolides >= 2.5%' },
+        { key: 'Moisture', value: isFeed ? '<= 11.0%' : '<= 5.0%', unit: '%' },
       ],
       faqs: [
         {

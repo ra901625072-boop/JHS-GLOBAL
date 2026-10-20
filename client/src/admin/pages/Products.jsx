@@ -51,8 +51,8 @@ import {
   AdminStatusBadge,
   AdminDrawer,
   AdminSkeleton,
+  AdminPageHeader,
 } from '../components';
-import Reveal from '../../components/ui/Reveal';
 
 export const Products = () => {
   const queryClient = useQueryClient();
@@ -211,9 +211,10 @@ export const Products = () => {
   const createMutation = useMutation({
     mutationFn: (data) => createAdminProduct(data),
     onSuccess: (newProduct) => {
-      queryClient.invalidateQueries(['admin-products']);
-      queryClient.invalidateQueries(['products']);
-      queryClient.invalidateQueries(['admin-dashboard']);
+      queryClient.invalidateQueries({ queryKey: ['admin-products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['product'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-dashboard'] });
       setIsDrawerOpen(false);
       setIsCreatingNew(false);
       setSelectedProductId(null);
@@ -228,9 +229,10 @@ export const Products = () => {
   const updateMutation = useMutation({
     mutationFn: ({ id, data }) => updateAdminProduct(id, data),
     onSuccess: (updated) => {
-      queryClient.invalidateQueries(['admin-products']);
-      queryClient.invalidateQueries(['admin-product-detail', selectedProductId]);
-      queryClient.invalidateQueries(['products']);
+      queryClient.invalidateQueries({ queryKey: ['admin-products'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-product-detail', selectedProductId] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['product'] });
       setFeedback(`Product "${updated.name}" updated successfully`);
       setTimeout(() => setFeedback(''), 4000);
     },
@@ -239,32 +241,13 @@ export const Products = () => {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: (id) => deleteAdminProduct(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(['admin-products']);
-      queryClient.invalidateQueries(['products']);
-      setFeedback('Product deactivated from public catalogue');
-      setTimeout(() => setFeedback(''), 4000);
-    },
-  });
-
   const toggleActiveMutation = useMutation({
     mutationFn: (id) => toggleAdminProductActive(id),
     onSuccess: (result) => {
-      queryClient.invalidateQueries(['admin-products']);
-      queryClient.invalidateQueries(['products']);
+      queryClient.invalidateQueries({ queryKey: ['admin-products'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['product'] });
       setFeedback(`Product status updated to ${result.isActive ? 'Published' : 'Draft'}`);
-      setTimeout(() => setFeedback(''), 3000);
-    },
-  });
-
-  const toggleFeaturedMutation = useMutation({
-    mutationFn: (id) => toggleAdminProductFeatured(id),
-    onSuccess: (result) => {
-      queryClient.invalidateQueries(['admin-products']);
-      queryClient.invalidateQueries(['products']);
-      setFeedback(`Showcase status updated: ${result.isFeatured ? 'Featured' : 'Standard'}`);
       setTimeout(() => setFeedback(''), 3000);
     },
   });
@@ -272,15 +255,19 @@ export const Products = () => {
   const verifySpecMutation = useMutation({
     mutationFn: ({ id, specIndex, verified }) => verifyAdminProductSpec(id, { specIndex, verified }),
     onSuccess: () => {
-      queryClient.invalidateQueries(['admin-product-detail', selectedProductId]);
-      queryClient.invalidateQueries(['admin-products']);
+      queryClient.invalidateQueries({ queryKey: ['admin-product-detail', selectedProductId] });
+      queryClient.invalidateQueries({ queryKey: ['admin-products'] });
+      queryClient.invalidateQueries({ queryKey: ['product'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
     },
   });
 
   const attachDocMutation = useMutation({
     mutationFn: ({ id, data }) => attachAdminProductDocument(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries(['admin-product-detail', selectedProductId]);
+      queryClient.invalidateQueries({ queryKey: ['admin-product-detail', selectedProductId] });
+      queryClient.invalidateQueries({ queryKey: ['product'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       setNewDocTitle('');
       setNewDocUrl('');
       setFeedback('Technical document attached');
@@ -294,7 +281,9 @@ export const Products = () => {
   const removeDocMutation = useMutation({
     mutationFn: ({ id, docId }) => removeAdminProductDocument(id, docId),
     onSuccess: () => {
-      queryClient.invalidateQueries(['admin-product-detail', selectedProductId]);
+      queryClient.invalidateQueries({ queryKey: ['admin-product-detail', selectedProductId] });
+      queryClient.invalidateQueries({ queryKey: ['product'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       setFeedback('Document removed');
       setTimeout(() => setFeedback(''), 3000);
     },
@@ -490,7 +479,7 @@ export const Products = () => {
     { id: 'all', label: 'All Commodities', count: meta.total },
     { id: 'active', label: 'Published' },
     { id: 'draft', label: 'Drafts' },
-    { id: 'featured', label: 'Featured Showcase' },
+    { id: 'featured', label: 'Featured' },
   ];
 
   // Table Columns Definition
@@ -503,7 +492,7 @@ export const Products = () => {
         const imgUrl = row.images?.[0]?.url || row.images?.[0] || `/images/products/${row.slug}.webp`;
         return (
           <div className="flex items-center gap-3 py-1">
-            <div className="w-10 h-10 rounded-lg overflow-hidden bg-neutral-100 border border-neutral-200 shrink-0 relative">
+            <div className="w-10 h-10 rounded-lg overflow-hidden bg-neutral-100 border border-[[var(--admin-border)]] shrink-0 relative">
               <img
                 src={imgUrl}
                 alt={row.name}
@@ -515,10 +504,10 @@ export const Products = () => {
               />
             </div>
             <div className="min-w-0">
-              <div className="font-bold text-neutral-900 text-sm truncate flex items-center gap-1.5">
+              <div className="font-bold text-neutral-900 text-xs sm:text-sm truncate flex items-center gap-1.5">
                 <span>{row.name}</span>
                 {row.isFeatured && (
-                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 border border-amber-200 font-medium">
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-50 text-amber-800 border border-amber-200 font-medium">
                     Featured
                   </span>
                 )}
@@ -542,7 +531,7 @@ export const Products = () => {
       label: 'HS Code',
       sortable: true,
       render: (val) => (
-        <span className="font-mono font-bold bg-neutral-100 text-neutral-800 border border-neutral-200 px-2 py-0.5 rounded text-xs">
+        <span className="font-mono tabular-nums font-bold bg-neutral-100 text-[[var(--admin-brand)]] border border-[[var(--admin-border)]] px-2 py-0.5 rounded text-xs">
           {val || 'N/A'}
         </span>
       ),
@@ -566,7 +555,7 @@ export const Products = () => {
       label: 'MOQ & Terms',
       render: (val, row) => (
         <div>
-          <span className="font-mono font-bold text-neutral-900 text-xs block">
+          <span className="font-mono tabular-nums font-bold text-neutral-900 text-xs block">
             {val?.value} {val?.unit || 'MT'}
           </span>
           <span className="text-[10px] text-neutral-500 font-mono block">
@@ -585,7 +574,7 @@ export const Products = () => {
             <span className="text-xs text-neutral-700 font-medium block truncate max-w-[140px]">
               {packText}
             </span>
-            <span className="text-[11px] text-neutral-400 block font-mono">
+            <span className="text-[11px] text-neutral-400 block font-mono tabular-nums">
               Lead: {row.leadTime || '10-15 days'}
             </span>
           </div>
@@ -602,12 +591,12 @@ export const Products = () => {
         return (
           <div className="flex items-center gap-1.5">
             <span
-              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
+              className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono tabular-nums font-semibold border ${
                 isComplete
                   ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
                   : specCount > 0
                     ? 'bg-sky-50 text-sky-800 border-sky-200'
-                    : 'bg-neutral-100 text-neutral-600 border-neutral-200'
+                    : 'bg-neutral-100 text-neutral-600 border-[[var(--admin-border)]]'
               }`}
             >
               {isComplete ? <CheckCheck className="w-3 h-3 text-emerald-600" /> : <ShieldCheck className="w-3 h-3 text-sky-600" />}
@@ -619,7 +608,7 @@ export const Products = () => {
     },
     {
       key: 'status',
-      label: 'Catalogue Status',
+      label: 'Status',
       render: (_, row) => (
         <AdminStatusBadge status={row.isActive !== false ? 'active' : 'draft'} />
       ),
@@ -636,7 +625,7 @@ export const Products = () => {
               e.stopPropagation();
               handleOpenEditDrawer(row);
             }}
-            className="p-1.5 text-neutral-600 hover:text-primary-900 hover:bg-neutral-100 rounded-md transition-colors"
+            className="p-1.5 text-neutral-600 hover:text-[[var(--admin-brand)]] hover:bg-neutral-100 rounded-md transition-colors"
             title="Inspect and edit commodity specs"
           >
             <Edit className="w-4 h-4" />
@@ -647,7 +636,7 @@ export const Products = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="p-1.5 text-neutral-400 hover:text-primary-800 hover:bg-neutral-100 rounded-md transition-colors"
+            className="p-1.5 text-neutral-400 hover:text-[[var(--admin-brand)]] hover:bg-neutral-100 rounded-md transition-colors"
             title="Open live public commodity page"
           >
             <ExternalLink className="w-4 h-4" />
@@ -676,26 +665,19 @@ export const Products = () => {
   return (
     <>
       <Helmet>
-        <title>Products & Technical Specs Desk — JHS GLOBAL Admin Suite</title>
+        <title>Products & Technical Specs Desk — JHS GLOBAL</title>
       </Helmet>
 
-      {/* Header */}
-      <Reveal direction="up" distance={16} duration={0.5} className="mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 text-xs font-semibold mb-2">
-              <Package className="w-3.5 h-3.5 text-neutral-900" />
-              <span>COMMODITY SPECIFICATIONS & HS CODE REPOSITORY</span>
-            </div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight">
-              Products & Technical Specifications Desk
-            </h1>
-            <p className="text-xs sm:text-sm text-neutral-500 mt-1 max-w-2xl">
-              Maintain certified laboratory parameters, export packing standards, container payloads, and international trade compliance across all 3 divisions.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+      {/* Standardized Page Header (Template 2) */}
+      <AdminPageHeader
+        breadcrumb={[
+          { label: 'Commodity Catalogue', href: '/admin/products' },
+          { label: 'Products & Specs' },
+        ]}
+        title="Products & Technical Specifications"
+        description="Maintain certified laboratory parameters, export packing standards, container payloads, and international trade compliance across all 3 divisions."
+        actions={
+          <div className="flex flex-wrap items-center gap-2.5">
             <Button
               type="button"
               onClick={async () => {
@@ -713,12 +695,12 @@ export const Products = () => {
               }}
               variant="outline"
               disabled={isAuditing}
-              className="text-xs py-2 flex items-center gap-1.5 font-semibold"
+              className="text-xs py-2 flex items-center gap-1.5 font-semibold border-[[var(--admin-border)]]"
             >
               {isAuditing ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin text-neutral-700" />
               ) : (
-                <Sparkles className="w-3.5 h-3.5 text-neutral-700" />
+                <Sparkles className="w-3.5 h-3.5 text-[[var(--admin-accent)]]" />
               )}
               <span>{isAuditing ? 'Auditing...' : 'Quality Audit'}</span>
             </Button>
@@ -726,32 +708,32 @@ export const Products = () => {
             <Button
               onClick={handleOpenCreateDrawer}
               variant="cta"
-              className="text-xs py-2 flex items-center gap-1.5 font-bold shadow-subtle"
+              className="text-xs py-2 flex items-center gap-1.5 font-bold shadow-xs bg-[[var(--admin-accent)]] text-neutral-900 hover:bg-[#b5924a]"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Commodity</span>
+              <span>Add Commodity</span>
             </Button>
           </div>
-        </div>
-      </Reveal>
+        }
+      />
 
       {/* User Alerts & Notification Feedback */}
       {feedback && (
-        <div className="mb-5 p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl flex items-center gap-2 animate-in fade-in">
+        <div className="mb-5 p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-admin-lg flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
           <span className="font-medium">{feedback}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="mb-5 p-3.5 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-xl flex items-center gap-2 animate-in fade-in">
+        <div className="mb-5 p-3.5 bg-rose-50 border border-rose-200 text-rose-800 text-xs rounded-admin-lg flex items-center gap-2">
           <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
           <span className="font-medium">{errorMsg}</span>
         </div>
       )}
 
-      {/* FilterBar */}
-      <div className="mb-4">
+      {/* FilterBar Container */}
+      <div className="bg-white border border-[[var(--admin-border)]] rounded-admin-lg p-4 elevation-flat mb-6">
         <FilterBar
           searchQuery={searchQuery}
           onSearchChange={(val) => {
@@ -771,7 +753,7 @@ export const Products = () => {
             setStatusFilter('all');
             setPage(1);
           }}
-          actions={
+          extraFilters={
             <div className="flex items-center gap-2">
               <select
                 value={selectedCategory}
@@ -779,7 +761,7 @@ export const Products = () => {
                   setSelectedCategory(e.target.value);
                   setPage(1);
                 }}
-                className="text-xs px-3 py-1.5 bg-white border border-neutral-200 rounded-lg text-neutral-800 font-medium focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                className="text-xs px-3 py-1.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-neutral-800 font-medium focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
               >
                 <option value="all">All Divisions & Categories</option>
                 {categories.map((c) => (
@@ -793,8 +775,8 @@ export const Products = () => {
         />
       </div>
 
-      {/* Products DataTable */}
-      <Reveal direction="up" distance={20} duration={0.5}>
+      {/* Products DataTable Card */}
+      <div className="bg-white border border-[[var(--admin-border)]] rounded-admin-lg elevation-flat overflow-hidden">
         <DataTable
           columns={columns}
           data={products}
@@ -821,7 +803,7 @@ export const Products = () => {
             }
           }}
         />
-      </Reveal>
+      </div>
 
       {/* 5-Tab Slide-Over AdminDrawer */}
       <AdminDrawer
@@ -839,13 +821,30 @@ export const Products = () => {
           )
         }
         maxWidth="max-w-3xl"
-        tabs={[
-          { id: 'basic', label: '1. Basic Info & HS' },
-          { id: 'specs', label: `2. Lab Specs (${formData.specs.length})` },
-          { id: 'trade', label: '3. Trade & Logistics' },
-          { id: 'docs', label: `4. Documents (${formData.documents.length})` },
-          { id: 'seo', label: '5. SEO & Publishing' },
-        ]}
+        tabs={
+          <div className="flex items-center gap-1 p-1 bg-neutral-100 rounded-lg border border-[[var(--admin-border)]] text-xs font-semibold overflow-x-auto admin-scrollbar">
+            {[
+              { id: 'basic', label: '1. Basic Info' },
+              { id: 'specs', label: `2. Lab Specs (${formData.specs.length})` },
+              { id: 'trade', label: '3. Trade & Logistics' },
+              { id: 'docs', label: `4. Documents (${formData.documents.length})` },
+              { id: 'seo', label: '5. SEO' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setDrawerTab(tab.id)}
+                className={`flex-1 py-1.5 px-3 rounded-md transition-all whitespace-nowrap text-center ${
+                  drawerTab === tab.id
+                    ? 'bg-white text-neutral-900  font-bold'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        }
         footer={
           <div className="flex items-center justify-between w-full">
             <div>
@@ -854,7 +853,7 @@ export const Products = () => {
                   href={`/products/${formData.slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-semibold text-primary-800 hover:text-primary-950 flex items-center gap-1"
+                  className="text-xs font-semibold text-[[var(--admin-brand)]] hover:underline flex items-center gap-1"
                 >
                   <span>Live Preview</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -870,6 +869,7 @@ export const Products = () => {
                 type="button"
                 variant="cta"
                 size="sm"
+                className="bg-[[var(--admin-accent)]] text-neutral-900 hover:bg-[#b5924a] font-bold"
                 loading={createMutation.isPending || updateMutation.isPending}
                 onClick={handleSaveProduct}
               >
@@ -879,37 +879,11 @@ export const Products = () => {
           </div>
         }
       >
-        {/* Navigation Tabs Bar inside Drawer */}
-        <div className="border-b border-neutral-200/80 -mx-6 px-6 -mt-6 mb-6 bg-neutral-50/70">
-          <nav className="flex space-x-4 overflow-x-auto admin-scrollbar py-2 text-xs font-semibold">
-            {[
-              { id: 'basic', label: 'Basic Info & HS' },
-              { id: 'specs', label: `Lab Specs (${formData.specs.length})` },
-              { id: 'trade', label: 'Trade & Logistics' },
-              { id: 'docs', label: `Documents (${formData.documents.length})` },
-              { id: 'seo', label: 'SEO & Publishing' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setDrawerTab(tab.id)}
-                className={`pb-2 px-1 border-b-2 transition-colors whitespace-nowrap ${
-                  drawerTab === tab.id
-                    ? 'border-primary-800 text-primary-950 font-bold'
-                    : 'border-transparent text-neutral-500 hover:text-neutral-900'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* AI Drafting Assistant Card */}
-        <div className="mb-6 bg-gradient-to-br from-[#06180E] via-[#0A2619] to-[#04120A] text-white rounded-xl p-4 border border-primary-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+        {/* AI Drafting Assistant Card - Calm Forest Surface */}
+        <div className="mb-6 bg-[[var(--admin-brand)]] text-white rounded-admin-lg p-4 border border-[#1b3d2b] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 elevation-raised">
           <div>
-            <p className="font-serif text-sm font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-white" />
+            <p className="text-sm font-bold text-white flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[[var(--admin-accent)]]" />
               <span>AI Commodity Specifications Assistant</span>
             </p>
             <p className="text-[11px] text-neutral-300 mt-0.5">
@@ -918,13 +892,13 @@ export const Products = () => {
           </div>
           <Button
             type="button"
-            variant="outline-light"
+            variant="outline"
             size="sm"
             loading={aiGenerating}
             onClick={handleAiGenerate}
             className="shrink-0 text-xs font-semibold py-1.5 px-3 border-white/20 text-white hover:bg-white/10"
           >
-            <Sparkles className="w-3.5 h-3.5 mr-1 text-white" />
+            <Sparkles className="w-3.5 h-3.5 mr-1 text-[[var(--admin-accent)]]" />
             Suggest with AI
           </Button>
         </div>
@@ -950,7 +924,7 @@ export const Products = () => {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Organic Ashwagandha Extract (Withanolides 5%)"
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-primary-800"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]]"
                 />
               </div>
 
@@ -964,7 +938,7 @@ export const Products = () => {
                   value={formData.hsCode}
                   onChange={(e) => setFormData({ ...formData, hsCode: e.target.value })}
                   placeholder="e.g. 1302.19"
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs font-mono focus:bg-white focus:ring-2 focus:ring-primary-800"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs font-mono tabular-nums focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]]"
                 />
               </div>
             </div>
@@ -978,7 +952,7 @@ export const Products = () => {
                   required
                   value={formData.categoryId}
                   onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-primary-800"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]]"
                 >
                   <option value="">Select Category</option>
                   {categories.map((c) => (
@@ -998,7 +972,7 @@ export const Products = () => {
                   value={formData.botanicalName}
                   onChange={(e) => setFormData({ ...formData, botanicalName: e.target.value })}
                   placeholder="e.g. Withania somnifera"
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs italic focus:bg-white"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs italic focus:bg-white"
                 />
               </div>
 
@@ -1010,7 +984,7 @@ export const Products = () => {
                   type="text"
                   value={Array.isArray(formData.origin) ? formData.origin.join(', ') : formData.origin}
                   onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs focus:bg-white"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs focus:bg-white"
                 />
               </div>
             </div>
@@ -1025,7 +999,7 @@ export const Products = () => {
                   value={formData.slug}
                   onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                   placeholder="Auto-generated if left blank"
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs font-mono"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs font-mono"
                 />
               </div>
 
@@ -1038,7 +1012,7 @@ export const Products = () => {
                   value={formData.sku}
                   onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
                   placeholder="e.g. JHS-EXT-ASHW-001"
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs font-mono"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs font-mono"
                 />
               </div>
             </div>
@@ -1052,7 +1026,7 @@ export const Products = () => {
                 value={formData.shortDescription}
                 onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
                 placeholder="Key active constituents, physical appearance, extraction ratio, and certified export compliance..."
-                className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs"
+                className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs"
               />
             </div>
 
@@ -1064,7 +1038,7 @@ export const Products = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, isPrivateLabelAvailable: e.target.checked })
                   }
-                  className="rounded text-primary-800 focus:ring-primary-800"
+                  className="rounded text-[[var(--admin-brand)]] focus:ring-[[var(--admin-brand)]]"
                 />
                 <span className="text-neutral-700 font-medium">OEM & Private Label Packaging Available</span>
               </label>
@@ -1088,15 +1062,15 @@ export const Products = () => {
                 onClick={handleAddSpecRow}
                 variant="outline"
                 size="sm"
-                className="text-xs py-1.5 flex items-center gap-1"
+                className="text-xs py-1.5 flex items-center gap-1 border-[[var(--admin-border)]]"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Spec Row</span>
               </Button>
             </div>
 
-            <div className="border border-neutral-200 rounded-xl overflow-hidden bg-white">
-              <table className="w-full text-left text-xs divide-y divide-neutral-200">
+            <div className="border border-[[var(--admin-border)]] rounded-admin-lg overflow-hidden bg-white elevation-flat">
+              <table className="w-full text-left text-xs divide-y divide-[[var(--admin-border)]]">
                 <thead className="bg-neutral-50 text-neutral-600 font-semibold">
                   <tr>
                     <th className="px-3 py-2.5">Parameter / Assay</th>
@@ -1116,7 +1090,7 @@ export const Products = () => {
                           value={spec.parameter || spec.key || ''}
                           onChange={(e) => handleUpdateSpecRow(idx, 'parameter', e.target.value)}
                           placeholder="e.g. Curcuminoids"
-                          className="w-full p-1.5 border border-neutral-200 rounded text-xs"
+                          className="w-full p-1.5 border border-[[var(--admin-border)]] rounded text-xs"
                         />
                       </td>
                       <td className="p-2">
@@ -1125,7 +1099,7 @@ export const Products = () => {
                           value={spec.testMethod || ''}
                           onChange={(e) => handleUpdateSpecRow(idx, 'testMethod', e.target.value)}
                           placeholder="e.g. HPLC"
-                          className="w-full p-1.5 border border-neutral-200 rounded text-xs font-mono"
+                          className="w-full p-1.5 border border-[[var(--admin-border)]] rounded text-xs font-mono"
                         />
                       </td>
                       <td className="p-2">
@@ -1134,7 +1108,7 @@ export const Products = () => {
                           value={spec.specification || spec.standard || ''}
                           onChange={(e) => handleUpdateSpecRow(idx, 'specification', e.target.value)}
                           placeholder="Min 95.0%"
-                          className="w-full p-1.5 border border-neutral-200 rounded text-xs font-mono"
+                          className="w-full p-1.5 border border-[[var(--admin-border)]] rounded text-xs font-mono tabular-nums"
                         />
                       </td>
                       <td className="p-2">
@@ -1143,7 +1117,7 @@ export const Products = () => {
                           value={spec.typicalValue || spec.value || ''}
                           onChange={(e) => handleUpdateSpecRow(idx, 'typicalValue', e.target.value)}
                           placeholder="95.4%"
-                          className="w-full p-1.5 border border-neutral-200 rounded text-xs font-mono"
+                          className="w-full p-1.5 border border-[[var(--admin-border)]] rounded text-xs font-mono tabular-nums"
                         />
                       </td>
                       <td className="p-2 text-center">
@@ -1203,7 +1177,7 @@ export const Products = () => {
                         moq: { ...formData.moq, value: Number(e.target.value) },
                       })
                     }
-                    className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs font-mono"
+                    className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs font-mono tabular-nums"
                   />
                   <select
                     value={formData.moq.unit}
@@ -1213,7 +1187,7 @@ export const Products = () => {
                         moq: { ...formData.moq, unit: e.target.value },
                       })
                     }
-                    className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs"
+                    className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs"
                   >
                     <option value="MT">Metric Ton (MT)</option>
                     <option value="kg">Kilograms (kg)</option>
@@ -1232,7 +1206,7 @@ export const Products = () => {
                   value={formData.leadTime}
                   onChange={(e) => setFormData({ ...formData, leadTime: e.target.value })}
                   placeholder="e.g. 10–15 business days"
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs tabular-nums"
                 />
               </div>
             </div>
@@ -1247,7 +1221,7 @@ export const Products = () => {
                   value={formData.shelfLife}
                   onChange={(e) => setFormData({ ...formData, shelfLife: e.target.value })}
                   placeholder="24 months"
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs tabular-nums"
                 />
               </div>
 
@@ -1260,13 +1234,13 @@ export const Products = () => {
                   value={formData.storage}
                   onChange={(e) => setFormData({ ...formData, storage: e.target.value })}
                   placeholder="Cool, dry, dark environment"
-                  className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs"
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs"
                 />
               </div>
             </div>
 
             {/* Container Load Capacity */}
-            <div className="border border-neutral-200 rounded-xl p-4 bg-neutral-50/50 space-y-3">
+            <div className="border border-[[var(--admin-border)]] rounded-admin-lg p-4 bg-neutral-50/50 space-y-3">
               <h5 className="font-bold text-neutral-900 text-xs flex items-center gap-1.5">
                 <Truck className="w-4 h-4 text-neutral-700" />
                 <span>Container Payload Capacity (FCL / LCL)</span>
@@ -1285,7 +1259,7 @@ export const Products = () => {
                       })
                     }
                     placeholder="e.g. 18 MT (Palletized)"
-                    className="w-full p-2 bg-white border border-neutral-200 rounded-lg text-xs font-mono"
+                    className="w-full p-2 bg-white border border-[[var(--admin-border)]] rounded-lg text-xs font-mono tabular-nums"
                   />
                 </div>
 
@@ -1301,7 +1275,7 @@ export const Products = () => {
                       })
                     }
                     placeholder="e.g. 26 MT (Palletized)"
-                    className="w-full p-2 bg-white border border-neutral-200 rounded-lg text-xs font-mono"
+                    className="w-full p-2 bg-white border border-[[var(--admin-border)]] rounded-lg text-xs font-mono tabular-nums"
                   />
                 </div>
 
@@ -1317,7 +1291,7 @@ export const Products = () => {
                       })
                     }
                     placeholder="e.g. 500 kg / pallet min"
-                    className="w-full p-2 bg-white border border-neutral-200 rounded-lg text-xs font-mono"
+                    className="w-full p-2 bg-white border border-[[var(--admin-border)]] rounded-lg text-xs font-mono tabular-nums"
                   />
                 </div>
               </div>
@@ -1341,7 +1315,7 @@ export const Products = () => {
                             : formData.ports.filter((p) => p !== port);
                           setFormData({ ...formData, ports: next });
                         }}
-                        className="rounded text-primary-800"
+                        className="rounded text-[[var(--admin-brand)]]"
                       />
                       <span className="text-neutral-700">{port}</span>
                     </label>
@@ -1365,7 +1339,7 @@ export const Products = () => {
                             : formData.incoterms.filter((t) => t !== term);
                           setFormData({ ...formData, incoterms: next });
                         }}
-                        className="rounded text-primary-800"
+                        className="rounded text-[[var(--admin-brand)]]"
                       />
                       <span className="text-neutral-700 font-mono font-medium">{term}</span>
                     </label>
@@ -1380,7 +1354,7 @@ export const Products = () => {
         {drawerTab === 'docs' && (
           <div className="space-y-6 text-xs">
             {/* Document Uploader / Link Form */}
-            <div className="border border-neutral-200 rounded-xl p-4 bg-neutral-50/60 space-y-3">
+            <div className="border border-[[var(--admin-border)]] rounded-admin-lg p-4 bg-neutral-50/60 space-y-3">
               <h5 className="font-bold text-neutral-900 text-xs flex items-center gap-1.5">
                 <FileText className="w-4 h-4 text-neutral-700" />
                 <span>Attach Technical Document (TDS / SDS / COA)</span>
@@ -1392,7 +1366,7 @@ export const Products = () => {
                   <select
                     value={newDocType}
                     onChange={(e) => setNewDocType(e.target.value)}
-                    className="w-full p-2 bg-white border border-neutral-200 rounded-lg text-xs"
+                    className="w-full p-2 bg-white border border-[[var(--admin-border)]] rounded-lg text-xs"
                   >
                     <option value="tds">TDS (Technical Data Sheet)</option>
                     <option value="sds">SDS (Safety Data Sheet)</option>
@@ -1410,7 +1384,7 @@ export const Products = () => {
                     value={newDocTitle}
                     onChange={(e) => setNewDocTitle(e.target.value)}
                     placeholder="e.g. TDS-Ashwagandha-2026.pdf"
-                    className="w-full p-2 bg-white border border-neutral-200 rounded-lg text-xs"
+                    className="w-full p-2 bg-white border border-[[var(--admin-border)]] rounded-lg text-xs"
                   />
                 </div>
 
@@ -1423,9 +1397,9 @@ export const Products = () => {
                       value={newDocUrl}
                       onChange={(e) => setNewDocUrl(e.target.value)}
                       placeholder="/documents/tds/... or https://"
-                      className="w-full p-2 bg-white border border-neutral-200 rounded-lg text-xs font-mono"
+                      className="w-full p-2 bg-white border border-[[var(--admin-border)]] rounded-lg text-xs font-mono"
                     />
-                    <Button type="submit" variant="cta" size="sm" className="shrink-0 py-2">
+                    <Button type="submit" variant="cta" size="sm" className="shrink-0 py-2 bg-[[var(--admin-accent)]] text-neutral-900 hover:bg-[#b5924a] font-bold">
                       Attach
                     </Button>
                   </div>
@@ -1437,11 +1411,11 @@ export const Products = () => {
             <div className="space-y-2">
               <h5 className="font-bold text-neutral-900 text-xs">Attached Technical Dossiers</h5>
               {formData.documents && formData.documents.length > 0 ? (
-                <div className="divide-y divide-neutral-100 border border-neutral-200 rounded-xl overflow-hidden bg-white">
+                <div className="divide-y divide-neutral-100 border border-[[var(--admin-border)]] rounded-admin-lg overflow-hidden bg-white">
                   {formData.documents.map((doc, idx) => (
                     <div key={doc.id || idx} className="p-3 flex items-center justify-between hover:bg-neutral-50">
                       <div className="flex items-center gap-2.5">
-                        <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-800 border border-neutral-200 font-mono text-[10px] font-bold uppercase">
+                        <span className="px-2 py-0.5 rounded bg-neutral-100 text-neutral-800 border border-[[var(--admin-border)]] font-mono text-[10px] font-bold uppercase">
                           {doc.type || 'DOC'}
                         </span>
                         <div>
@@ -1496,9 +1470,9 @@ export const Products = () => {
                 High-resolution photographs for catalog showcase. Alt text is mandatory for SEO and accessibility.
               </p>
 
-              <div className="p-4 border border-dashed border-neutral-300 rounded-xl bg-neutral-50/50 text-center">
+              <div className="p-4 border border-dashed border-[[var(--admin-border)]] rounded-admin-lg bg-neutral-50/50 text-center">
                 <p className="text-xs text-neutral-600 font-medium">Standard Catalogue Asset Path:</p>
-                <code className="text-[11px] font-mono text-neutral-800 bg-white px-2 py-0.5 rounded border border-neutral-200 mt-1 inline-block">
+                <code className="text-[11px] font-mono text-neutral-800 bg-white px-2 py-0.5 rounded border border-[[var(--admin-border)]] mt-1 inline-block">
                   /images/products/{formData.slug || 'commodity-slug'}.webp
                 </code>
               </div>
@@ -1523,7 +1497,7 @@ export const Products = () => {
                   })
                 }
                 placeholder={`${formData.name || 'Commodity'} Exporter India | JHS GLOBAL`}
-                className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs"
+                className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs"
               />
             </div>
 
@@ -1541,15 +1515,15 @@ export const Products = () => {
                   })
                 }
                 placeholder="Direct manufacturer & exporter of certified export quality commodities from Gujarat, India. Batch COA, container FCL/LCL dispatch."
-                className="w-full p-2.5 bg-neutral-50 border border-neutral-200 rounded-lg text-xs"
+                className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs"
               />
             </div>
 
             {/* Publishing Toggles */}
-            <div className="border border-neutral-200 rounded-xl p-4 bg-neutral-50/50 space-y-3 pt-4">
+            <div className="border border-[[var(--admin-border)]] rounded-admin-lg p-4 bg-neutral-50/50 space-y-3 pt-4">
               <h5 className="font-bold text-neutral-900 text-xs">Publication & Showcase Flags</h5>
 
-              <label className="flex items-center justify-between p-3 bg-white rounded-lg border border-neutral-200 cursor-pointer">
+              <label className="flex items-center justify-between p-3 bg-white rounded-lg border border-[[var(--admin-border)]] cursor-pointer">
                 <div>
                   <span className="font-bold text-neutral-900 text-xs block">Published to Public Catalogue</span>
                   <span className="text-neutral-500 text-[11px] block">
@@ -1560,11 +1534,11 @@ export const Products = () => {
                   type="checkbox"
                   checked={formData.isActive}
                   onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                  className="rounded text-primary-800 w-4 h-4"
+                  className="rounded text-[[var(--admin-brand)]] w-4 h-4"
                 />
               </label>
 
-              <label className="flex items-center justify-between p-3 bg-white rounded-lg border border-neutral-200 cursor-pointer">
+              <label className="flex items-center justify-between p-3 bg-white rounded-lg border border-[[var(--admin-border)]] cursor-pointer">
                 <div>
                   <span className="font-bold text-neutral-900 text-xs block">Featured in Homepage Showcase</span>
                   <span className="text-neutral-500 text-[11px] block">
@@ -1575,7 +1549,7 @@ export const Products = () => {
                   type="checkbox"
                   checked={formData.isFeatured}
                   onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                  className="rounded text-primary-800 w-4 h-4"
+                  className="rounded text-[[var(--admin-brand)]] w-4 h-4"
                 />
               </label>
             </div>
@@ -1586,16 +1560,16 @@ export const Products = () => {
       {/* Catalogue Quality Audit Modal */}
       {auditModalOpen && auditData && (
         <div className="fixed inset-0 z-50 bg-neutral-950/40 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-neutral-200">
-            <div className="p-6 border-b border-neutral-200 flex items-center justify-between sticky top-0 bg-white z-10">
+          <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-[[var(--admin-border)]]">
+            <div className="p-6 border-b border-[[var(--admin-border)]] flex items-center justify-between sticky top-0 bg-white z-10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-neutral-900 text-white flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-admin-lg bg-[[var(--admin-brand)]] text-white flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg font-bold text-neutral-900 flex items-center gap-2">
+                  <h3 className="font-sans text-lg font-bold text-neutral-900 flex items-center gap-2">
                     <span>Export Quality & HS Compliance Audit</span>
-                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary-50 text-primary-800 border border-primary-200 font-mono">
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 font-mono tabular-nums">
                       Score: {auditData.catalogueHealthScore}%
                     </span>
                   </h3>
@@ -1613,17 +1587,17 @@ export const Products = () => {
 
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="p-3 bg-neutral-50 rounded-xl border border-neutral-200">
+                <div className="p-3 bg-neutral-50 rounded-admin-lg border border-[[var(--admin-border)]]">
                   <span className="text-[11px] text-neutral-400 uppercase font-semibold block">Total</span>
-                  <span className="font-serif text-xl font-bold text-neutral-900">{auditData.totalAudited}</span>
+                  <span className="font-sans text-xl font-bold text-neutral-900 tabular-nums">{auditData.totalAudited}</span>
                 </div>
-                <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+                <div className="p-3 bg-emerald-50 rounded-admin-lg border border-emerald-200">
                   <span className="text-[11px] text-emerald-700 uppercase font-semibold block">Compliant</span>
-                  <span className="font-serif text-xl font-bold text-emerald-800">{auditData.healthyCount}</span>
+                  <span className="font-sans text-xl font-bold text-emerald-800 tabular-nums">{auditData.healthyCount}</span>
                 </div>
-                <div className="p-3 bg-amber-50 rounded-xl border border-amber-200">
+                <div className="p-3 bg-amber-50 rounded-admin-lg border border-amber-200">
                   <span className="text-[11px] text-amber-700 uppercase font-semibold block">Need Attention</span>
-                  <span className="font-serif text-xl font-bold text-amber-800">{auditData.flawedCount}</span>
+                  <span className="font-sans text-xl font-bold text-amber-800 tabular-nums">{auditData.flawedCount}</span>
                 </div>
               </div>
 
@@ -1634,7 +1608,7 @@ export const Products = () => {
                   </h4>
                   <div className="space-y-2 max-h-72 overflow-y-auto pr-1 text-xs">
                     {auditData.issues.map((item, idx) => (
-                      <div key={idx} className="p-3 rounded-lg border border-neutral-200 bg-neutral-50/50">
+                      <div key={idx} className="p-3 rounded-lg border border-[[var(--admin-border)]] bg-neutral-50/50">
                         <div className="flex items-center justify-between font-bold text-neutral-900">
                           <span>{item.productName} ({item.category})</span>
                           <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-amber-100 text-amber-800">
@@ -1651,7 +1625,7 @@ export const Products = () => {
               )}
             </div>
 
-            <div className="p-4 border-t border-neutral-200 bg-neutral-50/70 flex justify-end">
+            <div className="p-4 border-t border-[[var(--admin-border)]] bg-neutral-50/70 flex justify-end">
               <Button variant="outline" size="sm" onClick={() => setAuditModalOpen(false)}>
                 Close Audit Dossier
               </Button>

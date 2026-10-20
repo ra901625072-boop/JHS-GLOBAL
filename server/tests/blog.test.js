@@ -70,4 +70,15 @@ describe('Blog & Dynamic SEO Engine Suite', () => {
     expect(res.text).toContain('Disallow: /admin/');
     expect(res.text).toContain('Sitemap:');
   });
+
+  it('cacheService.invalidateBlog() should flush cached blog queries and slug endpoints', async () => {
+    const { cacheService } = await import('../src/services/cache.service.js');
+    await cacheService.set('http:/api/v1/blog', { test: true }, 60);
+    await cacheService.set('http:/api/v1/blog/test-slug', { test: true }, 60);
+
+    expect(await cacheService.get('http:/api/v1/blog')).not.toBeNull();
+    cacheService.invalidateBlog('test-slug');
+    expect(await cacheService.get('http:/api/v1/blog')).toBeNull();
+    expect(await cacheService.get('http:/api/v1/blog/test-slug')).toBeNull();
+  });
 });

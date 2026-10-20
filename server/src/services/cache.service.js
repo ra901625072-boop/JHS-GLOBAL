@@ -71,6 +71,37 @@ export const cacheService = {
   async flush() {
     memoryStore.flush();
   },
+
+  invalidateProducts(slug = null) {
+    this.del('http:/api/v1/products*');
+    this.del('http:/api/v1/search*');
+    this.del('admin:dashboard_metrics');
+    if (slug) {
+      this.del(`http:/api/v1/products/${slug}*`);
+    }
+  },
+
+  invalidateCategories() {
+    this.del('http:/api/v1/categories*');
+    this.del('http:/api/v1/products*');
+    this.del('http:/api/v1/search*');
+    this.del('admin:dashboard_metrics');
+  },
+
+  invalidateFaqs() {
+    this.del('http:/api/v1/faqs*');
+  },
+
+  invalidateBlog(slug = null) {
+    this.del('http:/api/v1/blog*');
+    if (slug) {
+      this.del(`http:/api/v1/blog/${slug}*`);
+    }
+  },
+
+  invalidateCertificates() {
+    this.del('http:/api/v1/certificates*');
+  },
 };
 
 export default cacheService;

@@ -102,6 +102,22 @@ describe('Admin Component Kit Suite', () => {
       fireEvent.click(rowCheckboxes[2]); // second row (id: 2)
       expect(handleSelectRow).toHaveBeenCalledWith(2);
     });
+
+    it('renders Export CSV button and invokes onExportCsv when clicked', () => {
+      const handleExportCsv = vi.fn();
+      render(
+        <DataTable
+          columns={sampleColumns}
+          data={sampleData}
+          onExportCsv={handleExportCsv}
+        />
+      );
+
+      const exportBtn = screen.getByRole('button', { name: /export csv/i });
+      expect(exportBtn).toBeInTheDocument();
+      fireEvent.click(exportBtn);
+      expect(handleExportCsv).toHaveBeenCalledWith(sampleData);
+    });
   });
 
   describe('FilterBar Component', () => {

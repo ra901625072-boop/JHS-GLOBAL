@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import {
   X,
   ArrowRight,
@@ -25,7 +25,6 @@ import { useQuoteBasket } from '../../features/quoteBasket/context';
 import { openAiAssistant } from '../ai/chatEvents';
 
 export const MobileMenuDrawer = ({ isOpen, onClose }) => {
-  const navigate = useNavigate();
   const { totalItemCount, setIsDrawerOpen } = useQuoteBasket();
 
   const brandName = import.meta.env.VITE_BRAND_NAME || 'JHS GLOBAL';
@@ -156,9 +155,14 @@ export const MobileMenuDrawer = ({ isOpen, onClose }) => {
               className="flex items-center gap-3 min-w-0 group focus:outline-none"
             >
               {/* Authentic Circular JHS Emblem */}
-              <div className="w-10 h-10 rounded-full bg-[#0e3b2e] border-2 border-[#c59b27] shadow-sm flex items-center justify-center font-serif font-black text-[#c59b27] text-xs tracking-widest shrink-0 relative overflow-hidden group-hover:scale-105 transition-transform duration-200">
-                <div className="absolute inset-0.5 rounded-full border border-[#c59b27]/40 pointer-events-none" />
-                <span>JHS</span>
+              <div className="w-10 h-10 rounded-full bg-white border border-[#c59b27]/60 shadow-sm flex items-center justify-center p-0.5 shrink-0 relative overflow-hidden group-hover:scale-105 transition-transform duration-200">
+                <img
+                  src="/images/logo/logo-mark.png"
+                  alt="JHS GLOBAL Logo"
+                  className="w-full h-full object-contain"
+                  width="40"
+                  height="40"
+                />
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="font-serif font-bold text-base text-white tracking-tight leading-none truncate">
@@ -326,7 +330,7 @@ export const MobileMenuDrawer = ({ isOpen, onClose }) => {
             type="button"
             onClick={() => {
               onClose();
-              navigate('/contact');
+              setIsDrawerOpen(true);
             }}
             className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-bold text-white bg-[#0e3b2e] hover:bg-[#092b21] border border-[#c59b27]/40 rounded-xl transition-all shadow-xs active:scale-[0.98]"
           >

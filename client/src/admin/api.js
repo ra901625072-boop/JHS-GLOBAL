@@ -290,131 +290,6 @@ export const reorderAdminFaqs = async (items) => {
   return response.data;
 };
 
-// Quotations Management
-export const fetchAdminQuotations = async (params = {}) => {
-  const response = await apiClient.get('/quotations', { params });
-  return {
-    quotations: response.data || [],
-    meta: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
-  };
-};
-
-export const fetchAdminQuotationById = async (id) => {
-  const response = await apiClient.get(`/quotations/${id}`);
-  return response.data;
-};
-
-export const createAdminQuotation = async (data) => {
-  const response = await apiClient.post('/quotations', data);
-  return response.data;
-};
-
-export const updateAdminQuotationStatus = async (id, data) => {
-  const response = await apiClient.patch(`/quotations/${id}/status`, data);
-  return response.data;
-};
-
-export const getQuotationPdfDownloadUrl = (id) => {
-  const baseURL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
-  return `${baseURL}/quotations/${id}/pdf`;
-};
-
-// Customer / Buyer CRM Management
-export const fetchAdminCustomers = async (params = {}) => {
-  const response = await apiClient.get('/customers', { params });
-  return {
-    customers: response.data || [],
-    meta: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
-  };
-};
-
-export const fetchAdminCustomerById = async (id) => {
-  const response = await apiClient.get(`/customers/${id}`);
-  return response.data;
-};
-
-export const createAdminCustomer = async (data) => {
-  const response = await apiClient.post('/customers', data);
-  return response.data;
-};
-
-export const updateAdminCustomer = async (id, data) => {
-  const response = await apiClient.put(`/customers/${id}`, data);
-  return response.data;
-};
-
-export const addAdminCustomerNote = async (id, note) => {
-  const response = await apiClient.post(`/customers/${id}/notes`, { note });
-  return response.data;
-};
-
-// Orders & Shipments Management
-export const fetchAdminOrders = async (params = {}) => {
-  const response = await apiClient.get('/orders', { params });
-  return {
-    orders: response.data || [],
-    meta: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
-  };
-};
-
-export const fetchAdminOrderById = async (id) => {
-  const response = await apiClient.get(`/orders/${id}`);
-  return response.data;
-};
-
-export const createAdminOrder = async (data) => {
-  const response = await apiClient.post('/orders', data);
-  return response.data;
-};
-
-export const updateAdminOrderStatus = async (id, data) => {
-  const response = await apiClient.patch(`/orders/${id}/status`, data);
-  return response.data;
-};
-
-export const updateAdminShipmentDetails = async (id, data) => {
-  const response = await apiClient.patch(`/orders/${id}/shipment`, data);
-  return response.data;
-};
-
-export const addAdminOrderDocument = async (id, data) => {
-  const response = await apiClient.post(`/orders/${id}/documents`, data);
-  return response.data;
-};
-
-export const removeAdminOrderDocument = async (id, docId) => {
-  const response = await apiClient.delete(`/orders/${id}/documents/${docId}`);
-  return response.data;
-};
-
-// Tasks & Follow-ups Queue
-export const fetchAdminTasks = async (params = {}) => {
-  const response = await apiClient.get('/tasks', { params });
-  return {
-    tasks: response.data || [],
-    meta: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
-  };
-};
-
-export const fetchAdminTodayTasks = async () => {
-  const response = await apiClient.get('/tasks/today');
-  return response.data || [];
-};
-
-export const createAdminTask = async (data) => {
-  const response = await apiClient.post('/tasks', data);
-  return response.data;
-};
-
-export const updateAdminTaskStatus = async (id, data) => {
-  const response = await apiClient.patch(`/tasks/${id}/status`, data);
-  return response.data;
-};
-
-export const deleteAdminTask = async (id) => {
-  const response = await apiClient.delete(`/tasks/${id}`);
-  return response.data;
-};
 
 // AI Intelligence Tools
 export const runInquiryAiSummarize = async (id) => {
@@ -427,23 +302,8 @@ export const generateInquiryAiReplyDraft = async (id, options = {}) => {
   return response.data;
 };
 
-export const generateAiFollowUpDraft = async (params) => {
-  const response = await apiClient.post('/ai/admin/follow-up-draft', params);
-  return response.data;
-};
-
 export const generateAiProductContent = async (params) => {
   const response = await apiClient.post('/ai/admin/product-content', params);
-  return response.data;
-};
-
-export const checkAiDuplicates = async (params) => {
-  const response = await apiClient.get('/ai/admin/duplicates', { params });
-  return response.data;
-};
-
-export const fetchAiSalesInsights = async (question) => {
-  const response = await apiClient.post('/ai/admin/sales-insights', { question });
   return response.data;
 };
 
@@ -455,11 +315,6 @@ export const fetchAiCatalogueAudit = async () => {
 // Company Knowledge Base Management
 export const fetchAdminCompanyFacts = async (params = {}) => {
   const response = await apiClient.get('/company-facts/admin', { params });
-  return response.data;
-};
-
-export const fetchPublicCompanyFacts = async () => {
-  const response = await apiClient.get('/company-facts');
   return response.data;
 };
 
@@ -475,22 +330,6 @@ export const updateAdminCompanyFact = async (id, data) => {
 
 export const deleteAdminCompanyFact = async (id) => {
   const response = await apiClient.delete(`/company-facts/admin/${id}`);
-  return response.data;
-};
-
-// AI Chat Audit Logs & Knowledge Gap Review
-export const fetchAiChatAuditLogs = async (params = {}) => {
-  const response = await apiClient.get('/ai/admin/audit-logs', { params });
-  return response.data;
-};
-
-export const fetchRepeatedUnknowns = async () => {
-  const response = await apiClient.get('/ai/admin/repeated-unknowns');
-  return response.data;
-};
-
-export const resolveAiChatAuditLog = async (id, data = {}) => {
-  const response = await apiClient.patch(`/ai/admin/audit-logs/${id}/resolve`, data);
   return response.data;
 };
 
@@ -537,15 +376,6 @@ export const toggleAdminUserActive = async (id) => {
 export const resetAdminUserPassword = async (id, data) => {
   const response = await apiClient.post(`/admin/users/${id}/reset-password`, data);
   return response.data;
-};
-
-// ─── Compliance & Security Audit Logs ───────────────────────
-export const fetchAdminAuditLogs = async (params = {}) => {
-  const response = await apiClient.get('/audit-logs', { params });
-  return {
-    logs: response.data || [],
-    pagination: response.meta || { total: 0, page: 1, limit: 20, pages: 1 },
-  };
 };
 
 // ─── Company Profile, Founders & System Settings ────────────

@@ -41,7 +41,7 @@ export const SampleRequestPage = () => {
   });
 
   const [sampleProducts, setSampleProducts] = useState([
-    { productName: 'Salem Turmeric Finger (Curcumin 3–5%)', qty: '250g' },
+    { productName: 'Standardized Ashwagandha Extract (Withanolides 2.5–5%)', qty: '250g' },
   ]);
   const [newProductName, setNewProductName] = useState('');
 

@@ -3,19 +3,18 @@ import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 
 /**
- * AdminStatCard
+ * AdminStatCard — Phase 2
  *
- * Executive KPI Metric Card:
- * - Playfair Display hero typography for prestige numbers
- * - JetBrains Mono for currency & technical metric precision
- * - Soft 1px border with delicate hover elevation
- * - Subtle status / delta indicators
- * - Smooth Quartic rolling telemetry via AnimatedCounter
+ * Flat border card with clear type hierarchy.
+ * No hover lift. No gradient variants. No shadow on default.
+ * Uses CSS custom properties from .admin-root.
  */
 export const AdminStatCard = ({
   title,
+  label,
   value,
   subtitle,
+  sublabel,
   icon: Icon,
   trend,
   badge,
@@ -23,50 +22,53 @@ export const AdminStatCard = ({
   onClick,
   className = '',
 }) => {
+  const displayTitle = title || label;
+  const displaySubtitle = subtitle || sublabel;
   const isDark = variant === 'dark';
   const isPrimary = variant === 'primary';
+
+  const badgeText = typeof badge === 'object' && badge !== null ? badge.text : badge;
 
   return (
     <div
       onClick={onClick}
-      className={`relative rounded-xl border p-5 transition-all duration-200 group hover:-translate-y-0.5 ${
+      className={`relative rounded-admin-lg p-5 transition-colors ${
         onClick ? 'cursor-pointer' : ''
       } ${
-        isDark
-          ? 'bg-gradient-to-br from-[#06180E] to-[#0A2619] border-primary-800 text-white shadow-card hover:border-primary-700'
-          : isPrimary
-          ? 'bg-primary-900 border-primary-800 text-white shadow-card hover:border-primary-700'
-          : 'bg-white border-neutral-200/90 text-neutral-900 shadow-subtle hover:shadow-card hover:border-neutral-400'
+        isDark || isPrimary
+          ? 'bg-[#06180E] border border-[#0A2619] text-white'
+          : 'bg-white border border-[var(--admin-border)] text-[var(--admin-text-primary)]'
       } ${className}`}
+      style={{ transitionDuration: 'var(--admin-duration-micro)' }}
     >
       <div className="flex items-start justify-between gap-3">
-        <div className="space-y-1">
+        <div className="space-y-1 min-w-0">
           <p
-            className={`text-xs font-semibold tracking-wider uppercase ${
-              isDark || isPrimary ? 'text-neutral-300' : 'text-neutral-500'
+            className={`text-[11px] font-semibold tracking-wider uppercase truncate ${
+              isDark || isPrimary ? 'text-neutral-400' : 'text-[var(--admin-text-muted)]'
             }`}
           >
-            {title}
+            {displayTitle}
           </p>
 
-          <div className="flex items-baseline gap-2 pt-1">
+          <div className="flex items-baseline gap-2 pt-0.5 flex-wrap">
             <h3
-              className={`font-serif text-2xl sm:text-3xl font-bold tracking-tight ${
-                isDark || isPrimary ? 'text-white' : 'text-neutral-900'
+              className={`text-2xl font-bold tracking-tight tabular-nums ${
+                isDark || isPrimary ? 'text-white' : 'text-[var(--admin-text-primary)]'
               }`}
             >
-              <AnimatedCounter value={value} duration={1.2} />
+              <AnimatedCounter value={value} duration={1.0} />
             </h3>
 
-            {badge && (
+            {badgeText && (
               <span
-                className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${
+                className={`text-[10px] font-medium px-1.5 py-0.5 rounded-admin-sm border uppercase tracking-wider ${
                   isDark || isPrimary
-                    ? 'bg-white/10 text-white border-white/20'
-                    : 'bg-neutral-100 text-neutral-800 border-neutral-200'
+                    ? 'bg-white/10 text-white/70 border-white/15'
+                    : 'bg-[var(--admin-surface-subtle)] text-[var(--admin-text-muted)] border-[var(--admin-border)]'
                 }`}
               >
-                {badge}
+                {badgeText}
               </span>
             )}
           </div>
@@ -74,39 +76,42 @@ export const AdminStatCard = ({
 
         {Icon && (
           <div
-            className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 border ${
+            className={`w-8 h-8 rounded-admin-md flex items-center justify-center shrink-0 ${
               isDark || isPrimary
-                ? 'bg-white/10 border-white/15 text-white'
-                : 'bg-neutral-100 border-neutral-200 text-neutral-900'
+                ? 'bg-white/[0.08] text-white/60'
+                : 'bg-[var(--admin-surface-subtle)] text-[var(--admin-text-muted)]'
             }`}
           >
-            <Icon className="w-5 h-5" />
+            <Icon className="w-4 h-4" />
           </div>
         )}
       </div>
 
-      {(subtitle || trend) && (
-        <div className="mt-3 pt-3 border-t border-neutral-100/80 flex items-center justify-between text-xs">
-          {subtitle && (
-            <p className={`${isDark || isPrimary ? 'text-neutral-300' : 'text-neutral-500'} truncate`}>
-              {subtitle}
+      {(displaySubtitle || trend) && (
+        <div
+          className="mt-3 pt-3 flex items-center justify-between text-[12px] gap-2"
+          style={{ borderTop: '1px solid var(--admin-border-subtle)' }}
+        >
+          {displaySubtitle && (
+            <p className={`${isDark || isPrimary ? 'text-neutral-400' : 'text-[var(--admin-text-muted)]'} truncate`}>
+              {displaySubtitle}
             </p>
           )}
 
           {trend && (
             <span
-              className={`inline-flex items-center gap-0.5 font-semibold text-[11px] ${
-                trend.isPositive ? 'text-emerald-600' : 'text-rose-600'
+              className={`inline-flex items-center gap-0.5 font-medium text-[11px] tabular-nums shrink-0 ${
+                trend.isPositive ? 'text-emerald-700' : 'text-rose-700'
               }`}
             >
               {trend.isPositive ? (
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-emerald-600" />
               ) : (
-                <ArrowDownRight className="w-3.5 h-3.5" />
+                <ArrowDownRight className="w-3.5 h-3.5 text-rose-600" />
               )}
               <span>{trend.value}</span>
               {trend.label && (
-                <span className="text-neutral-400 font-normal ml-0.5">({trend.label})</span>
+                <span className="text-[var(--admin-text-placeholder)] font-normal ml-0.5">({trend.label})</span>
               )}
             </span>
           )}

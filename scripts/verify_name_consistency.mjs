@@ -9,7 +9,9 @@ import path from 'path';
  * 2. Founder Names: Must be exactly "Jay Prajapati", "Suraj Prajapati", "Henil Prajapati"
  */
 
-const CLIENT_SRC_DIR = path.resolve('client', 'src');
+const CLIENT_SRC_DIR = fs.existsSync(path.resolve('src'))
+  ? path.resolve('src')
+  : path.resolve('client', 'src');
 const EXCLUDE_EXT = ['.png', '.jpg', '.jpeg', '.webp', '.avif', '.svg', '.ico', '.woff2'];
 
 function getFiles(dir) {

@@ -2,19 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
-  TrendingUp,
   Inbox,
-  FileText,
-  Users,
-  Ship,
   Package,
   LogOut,
   ExternalLink,
   Menu,
   X,
   ShieldCheck,
-  Building,
-  Clock,
   Plus,
   ChevronRight,
   FlaskConical,
@@ -23,12 +17,10 @@ import {
   BookOpen,
   HelpCircle,
   UserCheck,
-  History,
   Settings,
-  Sparkles,
   Search,
   Globe2,
-  Anchor,
+  Building,
 } from 'lucide-react';
 import { useAdminAuth } from '../context/AuthContext';
 import AdminCommandPalette from './AdminCommandPalette';
@@ -39,9 +31,7 @@ export const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-  const [showPortDetails, setShowPortDetails] = useState(false);
 
   const brandName = 'JHS GLOBAL';
 
@@ -57,26 +47,6 @@ export const AdminLayout = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Live clocks for international trade operations
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatPortTime = (timeZone) => {
-    try {
-      return new Intl.DateTimeFormat('en-GB', {
-        timeZone,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-      }).format(currentTime);
-    } catch {
-      return currentTime.toLocaleTimeString();
-    }
-  };
-
   const handleLogout = async () => {
     await logout();
     navigate('/admin/login');
@@ -84,56 +54,33 @@ export const AdminLayout = () => {
 
   const navGroups = [
     {
-      group: 'Commercial Sales',
+      group: 'Overview',
       items: [
         {
           to: '/admin',
-          label: 'Operations Overview',
+          label: 'Dashboard',
           shortLabel: 'Dashboard',
           icon: LayoutDashboard,
           end: true,
           roles: ['admin', 'sales', 'editor'],
         },
-        {
-          to: '/admin/sales-desk',
-          label: 'Sales Desk & Pipeline',
-          shortLabel: 'Sales Desk',
-          icon: TrendingUp,
-          roles: ['admin', 'sales'],
-        },
+      ],
+    },
+    {
+      group: 'Leads & Inquiries',
+      items: [
         {
           to: '/admin/inquiries',
-          label: 'Inquiries & RFQ Leads',
+          label: 'Inquiries',
           shortLabel: 'Inquiries',
           icon: Inbox,
           roles: ['admin', 'sales'],
         },
         {
           to: '/admin/samples',
-          label: 'Sample Dispatch Desk',
+          label: 'Samples',
           shortLabel: 'Samples',
           icon: FlaskConical,
-          roles: ['admin', 'sales'],
-        },
-        {
-          to: '/admin/quotations',
-          label: 'Quotations & Proformas',
-          shortLabel: 'Quotations',
-          icon: FileText,
-          roles: ['admin', 'sales'],
-        },
-        {
-          to: '/admin/customers',
-          label: 'Buyer Accounts (CRM)',
-          shortLabel: 'Buyers',
-          icon: Users,
-          roles: ['admin', 'sales'],
-        },
-        {
-          to: '/admin/orders',
-          label: 'Orders & Shipments',
-          shortLabel: 'Shipments',
-          icon: Ship,
           roles: ['admin', 'sales'],
         },
       ],
@@ -143,26 +90,21 @@ export const AdminLayout = () => {
       items: [
         {
           to: '/admin/products',
-          label: 'Products & Specifications',
+          label: 'Products',
           shortLabel: 'Products',
           icon: Package,
           roles: ['admin', 'editor'],
         },
         {
           to: '/admin/categories',
-          label: 'Categories & Divisions',
+          label: 'Categories',
           shortLabel: 'Categories',
           icon: Layers,
           roles: ['admin', 'editor'],
         },
-      ],
-    },
-    {
-      group: 'Compliance & Trust',
-      items: [
         {
           to: '/admin/certificates',
-          label: 'Statutory Certificates',
+          label: 'Certificates',
           shortLabel: 'Certificates',
           icon: Award,
           roles: ['admin', 'editor'],
@@ -173,15 +115,22 @@ export const AdminLayout = () => {
       group: 'Content CMS',
       items: [
         {
+          to: '/admin/company-knowledge',
+          label: 'Company Facts',
+          shortLabel: 'Company Facts',
+          icon: Building,
+          roles: ['admin', 'editor'],
+        },
+        {
           to: '/admin/blog',
-          label: 'Trade Intelligence & Blog',
+          label: 'Blog',
           shortLabel: 'Blog CMS',
           icon: BookOpen,
           roles: ['admin', 'editor'],
         },
         {
           to: '/admin/faqs',
-          label: 'Export FAQ Manager',
+          label: 'FAQs',
           shortLabel: 'FAQs',
           icon: HelpCircle,
           roles: ['admin', 'editor'],
@@ -189,44 +138,18 @@ export const AdminLayout = () => {
       ],
     },
     {
-      group: 'AI Desk',
-      items: [
-        {
-          to: '/admin/company-knowledge',
-          label: 'Company Knowledge Base',
-          shortLabel: 'Company Facts',
-          icon: Building,
-          roles: ['admin', 'editor'],
-        },
-        {
-          to: '/admin/ai-inquiries',
-          label: 'AI Chat Review & Gaps',
-          shortLabel: 'AI Review',
-          icon: Sparkles,
-          roles: ['admin', 'sales', 'editor'],
-        },
-      ],
-    },
-    {
-      group: 'Governance & Settings',
+      group: 'Admin & Settings',
       items: [
         {
           to: '/admin/users',
-          label: 'Team Users & Roles',
+          label: 'Users',
           shortLabel: 'Users',
           icon: UserCheck,
           roles: ['admin'],
         },
         {
-          to: '/admin/audit-logs',
-          label: 'Audit Activity Logs',
-          shortLabel: 'Audit Logs',
-          icon: History,
-          roles: ['admin'],
-        },
-        {
           to: '/admin/settings',
-          label: 'Company Profile & Settings',
+          label: 'Settings',
           shortLabel: 'Settings',
           icon: Settings,
           roles: ['admin'],
@@ -252,16 +175,22 @@ export const AdminLayout = () => {
     : 'SO';
 
   return (
-    <div className="min-h-screen bg-[#FBFBF9] flex flex-col md:flex-row font-sans text-neutral-800 antialiased selection:bg-primary-100 selection:text-primary-900">
+    <div className="min-h-screen flex flex-col md:flex-row font-sans antialiased">
       {/* Mobile Topbar */}
-      <header className="md:hidden bg-primary-950 text-white p-4 flex items-center justify-between border-b border-primary-800/80 z-40 sticky top-0 shadow-sm">
+      <header className="md:hidden bg-[#06180E] text-white px-4 py-3 flex items-center justify-between border-b border-[#0A2619] sticky top-0 shadow-admin-raised" style={{ zIndex: 'var(--admin-z-overlay)' }}>
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-white">
-            <ShieldCheck className="w-4 h-4" />
+          <div className="w-8 h-8 rounded-admin-md bg-white border border-white/20 flex items-center justify-center p-0.5 shrink-0 overflow-hidden">
+            <img
+              src="/images/logo/logo-mark.png"
+              alt="JHS GLOBAL Logo"
+              className="w-full h-full object-contain"
+              width="32"
+              height="32"
+            />
           </div>
           <div>
-            <span className="font-serif font-bold text-sm tracking-wide block">{brandName}</span>
-            <span className="text-[10px] text-neutral-300 uppercase tracking-widest block font-medium">
+            <span className="font-bold text-sm tracking-wide block">{brandName}</span>
+            <span className="text-[10px] text-neutral-400 uppercase tracking-widest block font-medium">
               Operations Desk
             </span>
           </div>
@@ -269,14 +198,16 @@ export const AdminLayout = () => {
         <div className="flex items-center gap-1">
           <button
             onClick={() => setCommandPaletteOpen(true)}
-            className="p-2 text-neutral-300 hover:text-white rounded-lg hover:bg-primary-900 focus:outline-none"
+            className="p-2 text-neutral-400 hover:text-white rounded-admin-md hover:bg-white/10 transition-colors"
+            style={{ transitionDuration: 'var(--admin-duration-micro)' }}
             aria-label="Search and Quick Actions"
           >
             <Search className="w-5 h-5" />
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-neutral-300 hover:text-white rounded-lg hover:bg-primary-900 focus:outline-none"
+            className="p-2 text-neutral-400 hover:text-white rounded-admin-md hover:bg-white/10 transition-colors cursor-pointer"
+            style={{ transitionDuration: 'var(--admin-duration-micro)' }}
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -288,37 +219,53 @@ export const AdminLayout = () => {
       {mobileMenuOpen && (
         <div
           onClick={() => setMobileMenuOpen(false)}
-          className="fixed inset-0 bg-neutral-950/60 backdrop-blur-xs z-40 md:hidden transition-opacity"
+          className="fixed inset-0 bg-neutral-950/60 md:hidden"
+          style={{
+            zIndex: 'var(--admin-z-backdrop)',
+            backdropFilter: 'blur(2px)',
+            transition: `opacity var(--admin-duration-base) var(--admin-ease-out)`,
+          }}
           aria-hidden="true"
         />
       )}
 
       {/* Sidebar Navigation */}
       <aside
-        className={`fixed md:sticky top-0 h-[100dvh] h-screen w-64 lg:w-72 bg-gradient-to-b from-[#05140B] via-[#0A2619] to-[#04120A] text-neutral-200 flex flex-col justify-between border-r border-primary-800/80 z-50 transition-transform duration-200 ease-in-out ${
+        className={`fixed md:sticky top-0 h-dvh w-60 lg:w-[272px] bg-[#06180E] text-neutral-300 flex flex-col justify-between border-r border-[#0A2619] transition-transform ${
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
+        style={{
+          zIndex: 'var(--admin-z-overlay)',
+          transitionDuration: 'var(--admin-duration-base)',
+          transitionTimingFunction: 'var(--admin-ease-out)',
+        }}
       >
         <div className="flex flex-col flex-1 overflow-y-auto admin-scrollbar">
-          {/* Logo & Export Accreditation Header */}
-          <div className="p-5 lg:p-6 border-b border-primary-800/70">
+          {/* Logo Header */}
+          <div className="px-5 py-4 lg:px-6 lg:py-5 border-b border-white/[0.08]">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-xs shrink-0">
-                <ShieldCheck className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-admin-lg bg-white flex items-center justify-center p-0.5 shrink-0 overflow-hidden">
+                <img
+                  src="/images/logo/logo-mark.png"
+                  alt="JHS GLOBAL Logo"
+                  className="w-full h-full object-contain"
+                  width="36"
+                  height="36"
+                />
               </div>
               <div className="min-w-0">
-                <h1 className="font-serif text-sm lg:text-base font-bold text-white tracking-wide truncate">
+                <h1 className="text-[13px] font-bold text-white tracking-wide truncate" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   {brandName}
                 </h1>
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/5 border border-white/15 text-neutral-300 text-[10px] font-semibold tracking-wider mt-1">
-                  <span>APEDA & FSSAI RECOGNIZED</span>
-                </div>
+                <span className="text-[10px] text-neutral-500 uppercase tracking-wider font-medium block mt-0.5">
+                  Operations Desk
+                </span>
               </div>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <nav className="p-3.5 space-y-4">
+          <nav className="px-3 py-3 space-y-5 flex-1">
             {navGroups.map((group) => {
               const accessibleItems = group.items.filter(
                 (item) => !item.roles || item.roles.includes(user?.role)
@@ -326,8 +273,8 @@ export const AdminLayout = () => {
               if (accessibleItems.length === 0) return null;
 
               return (
-                <div key={group.group} className="space-y-1">
-                  <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+                <div key={group.group} className="space-y-0.5">
+                  <div className="px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-neutral-500">
                     {group.group}
                   </div>
                   {accessibleItems.map((item) => {
@@ -339,21 +286,25 @@ export const AdminLayout = () => {
                         end={item.end}
                         onClick={() => setMobileMenuOpen(false)}
                         className={({ isActive }) =>
-                          `group relative flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium transition-all duration-150 transform-gpu active:scale-[0.98] ${
+                          `group relative flex items-center gap-3 px-3 py-[7px] rounded-admin-md text-[13px] font-medium transition-colors ${
                             isActive
-                              ? 'bg-white/10 text-white border border-white/20 font-semibold shadow-xs'
-                              : 'text-neutral-300 hover:bg-primary-800/50 hover:text-white'
+                              ? 'bg-white/[0.08] text-white'
+                              : 'text-neutral-400 hover:bg-white/[0.04] hover:text-neutral-200'
                           }`
                         }
+                        style={{ transitionDuration: 'var(--admin-duration-micro)' }}
                       >
                         {({ isActive }) => (
                           <>
                             {isActive && (
-                              <span className="absolute left-1 w-1 h-3.5 bg-primary-300 rounded-full transition-all duration-200" />
+                              <span
+                                className="absolute left-0 w-[2px] h-4 rounded-full"
+                                style={{ backgroundColor: 'var(--admin-accent)' }}
+                              />
                             )}
                             <Icon
-                              className={`w-4 h-4 shrink-0 transition-colors ${
-                                isActive ? 'text-white' : 'text-neutral-400 group-hover:text-white'
+                              className={`w-[15px] h-[15px] shrink-0 ${
+                                isActive ? 'text-white' : 'text-neutral-500 group-hover:text-neutral-300'
                               }`}
                             />
                             <span className="truncate">{item.label}</span>
@@ -366,169 +317,140 @@ export const AdminLayout = () => {
               );
             })}
 
-            <div className="pt-2 border-t border-primary-800/40">
-              <div className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
-                External Buyer Portal
+            <div className="pt-2 border-t border-white/[0.06]">
+              <div className="px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-neutral-500">
+                External
               </div>
               <a
                 href="/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between px-3.5 py-2 rounded-xl text-xs text-neutral-300 hover:bg-primary-800/50 hover:text-white transition-colors group mt-1"
+                className="flex items-center justify-between px-3 py-[7px] rounded-admin-md text-[13px] text-neutral-400 hover:bg-white/[0.04] hover:text-neutral-200 transition-colors group"
+                style={{ transitionDuration: 'var(--admin-duration-micro)' }}
               >
                 <div className="flex items-center gap-3">
-                  <Globe2 className="w-4 h-4 shrink-0 text-neutral-400 group-hover:text-white transition-transform" />
-                  <span>Open Buyer Website</span>
+                  <Globe2 className="w-[15px] h-[15px] shrink-0 text-neutral-500 group-hover:text-neutral-300" />
+                  <span>View Website</span>
                 </div>
-                <ExternalLink className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white" />
+                <ExternalLink className="w-3 h-3 text-neutral-500 group-hover:text-neutral-300" />
               </a>
             </div>
           </nav>
         </div>
 
         {/* User Profile & Sign Out Footer */}
-        <div className="p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] md:pb-4 border-t border-primary-800/70 bg-primary-950/60">
-          <div className="flex items-center justify-between mb-3.5">
+        <div className="px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] md:pb-3 border-t border-white/[0.08]">
+          <div className="flex items-center justify-between mb-2.5">
             <div className="flex items-center gap-2.5 min-w-0 pr-2">
-              <div className="w-8 h-8 rounded-full bg-primary-900 border border-primary-700 flex items-center justify-center text-white text-xs font-bold font-mono shrink-0">
+              <div className="w-7 h-7 rounded-full bg-primary-900 border border-primary-700 flex items-center justify-center text-white text-[11px] font-bold font-mono shrink-0">
                 {userInitials}
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-semibold text-white truncate">{user?.name || 'Staff Officer'}</p>
-                <p className="text-[10px] text-neutral-400 truncate">{user?.email}</p>
+                <p className="text-[12px] font-semibold text-white truncate">{user?.name || 'Staff Officer'}</p>
+                <p className="text-[10px] text-neutral-500 truncate">{user?.email}</p>
               </div>
             </div>
-            <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border bg-primary-900/80 text-primary-200 border-primary-700 capitalize shrink-0">
+            <span className="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded-admin-sm border bg-white/[0.06] text-neutral-400 border-white/[0.1] capitalize shrink-0">
               {user?.role}
             </span>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-medium text-neutral-300 hover:text-white bg-primary-900/60 hover:bg-rose-950/60 border border-primary-800 hover:border-rose-800 rounded-lg transition-colors"
+            className="w-full flex items-center justify-center gap-2 px-3 py-1.5 text-[12px] font-medium text-neutral-400 hover:text-white bg-white/[0.04] hover:bg-rose-950/40 border border-white/[0.08] hover:border-rose-800/40 rounded-admin-md transition-colors"
+            style={{ transitionDuration: 'var(--admin-duration-micro)' }}
           >
             <LogOut className="w-3.5 h-3.5" />
-            <span>Sign Out Session</span>
+            <span>Sign Out</span>
           </button>
         </div>
       </aside>
 
       {/* Main Content Area */}
       <div className="flex-1 min-w-0 flex flex-col">
-        {/* Executive Desktop Topbar */}
-        <header className="hidden md:flex sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-neutral-200/80 px-6 py-3 items-center justify-between gap-4 shadow-2xs">
+        {/* Desktop Topbar */}
+        <header
+          className="hidden md:flex sticky top-0 bg-white border-b px-6 py-2.5 items-center justify-between gap-4"
+          style={{
+            zIndex: 'var(--admin-z-topbar)',
+            borderColor: 'var(--admin-border)',
+          }}
+        >
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-xs">
+          <div className="flex items-center gap-1.5 text-[12px]">
             <button
               onClick={() => navigate('/admin')}
-              className="text-neutral-400 hover:text-primary-900 font-medium transition-colors flex items-center gap-1.5"
+              className="text-[var(--admin-text-muted)] hover:text-[var(--admin-text-primary)] font-medium transition-colors flex items-center gap-1.5"
+              style={{ transitionDuration: 'var(--admin-duration-micro)' }}
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-neutral-700" />
-              <span>Export Bridge</span>
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Admin</span>
             </button>
-            <ChevronRight className="w-3.5 h-3.5 text-neutral-300" />
-            <span className="font-semibold text-neutral-900 bg-neutral-100/80 px-2 py-0.5 rounded-md">
-              {currentNavItem?.shortLabel || 'Command Center'}
+            <ChevronRight className="w-3 h-3 text-[var(--admin-border-strong)]" />
+            <span className="font-semibold text-[var(--admin-text-primary)]">
+              {currentNavItem?.shortLabel || 'Dashboard'}
             </span>
           </div>
 
           {/* Center Quick Search / Command Palette Trigger */}
           <button
             onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-neutral-50 hover:bg-neutral-100/90 border border-neutral-200/90 text-xs text-neutral-500 hover:text-neutral-800 transition-all shadow-2xs group focus:outline-none focus:ring-2 focus:ring-primary-800/20"
+            className="flex items-center gap-2.5 px-3 py-1.5 rounded-admin-md border text-[12px] transition-colors group admin-focus-ring"
+            style={{
+              borderColor: 'var(--admin-border)',
+              backgroundColor: 'var(--admin-surface-subtle)',
+              color: 'var(--admin-text-muted)',
+              transitionDuration: 'var(--admin-duration-micro)',
+            }}
             title="Press ⌘K or Ctrl+K to search anything"
           >
-            <Search className="w-3.5 h-3.5 text-neutral-400 group-hover:text-primary-900 transition-colors" />
-            <span className="font-medium">Search RFQs, HS codes, buyers & commands...</span>
-            <div className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 text-[10px] bg-white border border-neutral-200 rounded font-mono text-neutral-500 shadow-2xs">
-                ⌘K
-              </kbd>
-            </div>
+            <Search className="w-3.5 h-3.5 text-[var(--admin-text-placeholder)] group-hover:text-[var(--admin-text-muted)]" />
+            <span className="font-medium">Search RFQs, products, HS codes…</span>
+            <kbd
+              className="px-1.5 py-0.5 text-[10px] border rounded font-mono ml-2"
+              style={{
+                backgroundColor: 'var(--admin-surface)',
+                borderColor: 'var(--admin-border)',
+                color: 'var(--admin-text-placeholder)',
+              }}
+            >
+              ⌘K
+            </kbd>
           </button>
 
-          {/* Right Controls: World Port Timezones & Quick Actions */}
-          <div className="flex items-center gap-3">
-            {/* World Port Clocks with interactive status popup */}
-            <div className="relative">
-              <button
-                onClick={() => setShowPortDetails(!showPortDetails)}
-                onMouseEnter={() => setShowPortDetails(true)}
-                className="hidden lg:flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-neutral-100/90 hover:bg-neutral-200/80 border border-neutral-200 text-[11px] font-mono text-neutral-700 transition-all duration-150 transform-gpu active:scale-[0.98] cursor-pointer shadow-2xs"
-                aria-label="Toggle Port Operations Status"
-              >
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <Anchor className="w-3.5 h-3.5 text-neutral-800" />
-                  <span>Mundra: <strong className="text-neutral-900">{formatPortTime('Asia/Kolkata')}</strong></span>
-                </div>
-                <span className="text-neutral-300">|</span>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-neutral-500" />
-                  <Clock className="w-3.5 h-3.5 text-neutral-700" />
-                  <span>Rotterdam: <strong className="text-neutral-900">{formatPortTime('UTC')}</strong></span>
-                </div>
-              </button>
-
-              {/* Port Operational Status Hover / Click Popover */}
-              {showPortDetails && (
-                <div
-                  onMouseLeave={() => setShowPortDetails(false)}
-                  className="absolute right-0 top-full mt-2 w-80 bg-white rounded-2xl shadow-xl border border-neutral-200/90 p-4 z-40 text-xs transform-gpu origin-top-right transition-all duration-200 animate-in fade-in zoom-in-95"
-                >
-                  <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-neutral-100">
-                    <span className="font-serif font-bold text-neutral-900 flex items-center gap-1.5">
-                      <Anchor className="w-3.5 h-3.5 text-neutral-800" />
-                      <span>International Maritime Status</span>
-                    </span>
-                    <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold border border-emerald-200">
-                      Live Gate Sync
-                    </span>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-100 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-neutral-900">Port of Mundra (INMUN1)</span>
-                        <span className="font-mono text-emerald-700 font-bold">IST (UTC+5:30)</span>
-                      </div>
-                      <p className="text-[11px] text-neutral-500">
-                        APM Terminals Mundra & MICT • 24/7 Gate In / Stuffing Active
-                      </p>
-                      <div className="text-[10px] text-neutral-400 font-mono">
-                        Local Date: {currentTime.toLocaleDateString('en-GB', { timeZone: 'Asia/Kolkata', dateStyle: 'medium' })}
-                      </div>
-                    </div>
-
-                    <div className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-100 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-neutral-900">Port of Rotterdam (NLRTM)</span>
-                        <span className="font-mono text-neutral-700 font-bold">UTC / CET</span>
-                      </div>
-                      <p className="text-[11px] text-neutral-500">
-                        Maasvlakte ECT Delta & Euromax • European Inbound Clearing
-                      </p>
-                      <div className="text-[10px] text-neutral-400 font-mono">
-                        Local Date: {currentTime.toLocaleDateString('en-GB', { timeZone: 'UTC', dateStyle: 'medium' })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Quick Action Buttons */}
-            <button
-              onClick={() => navigate('/admin/quotations')}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-primary-900 hover:bg-primary-950 text-white shadow-xs hover:shadow-subtle transition-all duration-150 transform-gpu active:scale-[0.97]"
+          {/* Right Controls */}
+          <div className="flex items-center gap-2">
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-admin-md text-[12px] font-medium transition-colors"
+              style={{
+                color: 'var(--admin-text-muted)',
+                transitionDuration: 'var(--admin-duration-micro)',
+              }}
             >
-              <Plus className="w-3.5 h-3.5" />
-              <span>New Proforma</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Website</span>
+            </a>
+
+            <button
+              onClick={() => navigate('/admin/products')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-admin-md text-[12px] font-semibold border transition-colors active:scale-[0.98] transform-gpu admin-focus-ring"
+              style={{
+                backgroundColor: 'var(--admin-surface)',
+                borderColor: 'var(--admin-border)',
+                color: 'var(--admin-text-primary)',
+                transitionDuration: 'var(--admin-duration-micro)',
+              }}
+            >
+              <Plus className="w-3.5 h-3.5 text-[var(--admin-text-muted)]" />
+              <span>Add Product</span>
             </button>
           </div>
         </header>
 
         {/* Page Content Body */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto w-full">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-admin-content mx-auto w-full">
           <RouteTransition>
             <Outlet />
           </RouteTransition>

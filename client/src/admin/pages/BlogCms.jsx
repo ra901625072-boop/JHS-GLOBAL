@@ -43,6 +43,7 @@ import {
   AdminStatusBadge,
   AdminDrawer,
   AdminSkeleton,
+  AdminPageHeader,
 } from '../components';
 
 const slugify = (text) =>
@@ -145,9 +146,10 @@ export const BlogCms = () => {
   const createMutation = useMutation({
     mutationFn: (data) => createAdminBlogPost(data),
     onSuccess: (newPost) => {
-      queryClient.invalidateQueries(['admin-blog-posts']);
-      queryClient.invalidateQueries(['admin-blog-posts-all']);
-      queryClient.invalidateQueries(['blog-posts']);
+      queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-blog-posts-all'] });
+      queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['blog-post'] });
       setIsDrawerOpen(false);
       setIsCreatingNew(false);
       setEditingPost(null);
@@ -162,9 +164,10 @@ export const BlogCms = () => {
   const updateMutation = useMutation({
     mutationFn: ({ id, data }) => updateAdminBlogPost(id, data),
     onSuccess: (updated) => {
-      queryClient.invalidateQueries(['admin-blog-posts']);
-      queryClient.invalidateQueries(['admin-blog-posts-all']);
-      queryClient.invalidateQueries(['blog-posts']);
+      queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-blog-posts-all'] });
+      queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['blog-post'] });
       setIsDrawerOpen(false);
       setEditingPost(null);
       setFeedback(`Article "${updated.title}" updated successfully`);
@@ -178,9 +181,10 @@ export const BlogCms = () => {
   const deleteMutation = useMutation({
     mutationFn: (id) => deleteAdminBlogPost(id),
     onSuccess: () => {
-      queryClient.invalidateQueries(['admin-blog-posts']);
-      queryClient.invalidateQueries(['admin-blog-posts-all']);
-      queryClient.invalidateQueries(['blog-posts']);
+      queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-blog-posts-all'] });
+      queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['blog-post'] });
       setDeleteModalPost(null);
       if (isDrawerOpen) setIsDrawerOpen(false);
       setFeedback('Article archived successfully');
@@ -195,9 +199,10 @@ export const BlogCms = () => {
   const toggleStatusMutation = useMutation({
     mutationFn: ({ id, status }) => updateAdminBlogPostStatus(id, { status }),
     onSuccess: (updated) => {
-      queryClient.invalidateQueries(['admin-blog-posts']);
-      queryClient.invalidateQueries(['admin-blog-posts-all']);
-      queryClient.invalidateQueries(['blog-posts']);
+      queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-blog-posts-all'] });
+      queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['blog-post'] });
       setFeedback(`Article status changed to ${updated.status}`);
       setTimeout(() => setFeedback(''), 3000);
     },
@@ -342,7 +347,7 @@ export const BlogCms = () => {
       sortable: true,
       render: (_, row) => (
         <div className="flex items-center gap-3 py-1">
-          <div className="w-12 h-10 rounded-lg border border-neutral-200 bg-neutral-100 flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
+          <div className="w-12 h-10 rounded-lg border border-[[var(--admin-border)]] bg-neutral-100 flex items-center justify-center shrink-0 overflow-hidden ">
             {row.coverImage?.url ? (
               <img
                 src={row.coverImage.url}
@@ -350,11 +355,11 @@ export const BlogCms = () => {
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
-                  e.currentTarget.parentElement.innerHTML = '<span class="text-neutral-400 font-serif font-bold text-[10px]">JHS</span>';
+                  e.currentTarget.parentElement.innerHTML = '<span class="text-neutral-400 font-sans font-bold text-[10px]">JHS</span>';
                 }}
               />
             ) : (
-              <BookOpen className="w-4 h-4 text-primary-800" />
+              <BookOpen className="w-4 h-4 text-[[var(--admin-brand)]]" />
             )}
           </div>
 
@@ -362,7 +367,7 @@ export const BlogCms = () => {
             <div className="flex items-center gap-1.5 flex-wrap">
               <button
                 onClick={() => handleOpenEdit(row)}
-                className="font-semibold text-xs text-neutral-900 hover:text-primary-800 transition-colors text-left truncate block"
+                className="font-semibold text-xs text-neutral-900 hover:text-[[var(--admin-brand)]] transition-colors text-left truncate block"
               >
                 {row.title}
               </button>
@@ -371,7 +376,7 @@ export const BlogCms = () => {
                   href={`/blog/${row.slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-neutral-400 hover:text-primary-800 transition-colors"
+                  className="text-neutral-400 hover:text-[[var(--admin-brand)]] transition-colors"
                   title="View live article on public site"
                 >
                   <ExternalLink className="w-3 h-3" />
@@ -389,7 +394,7 @@ export const BlogCms = () => {
       key: 'category',
       label: 'Division Category',
       render: (_, row) => (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-neutral-100 text-neutral-800 border border-neutral-200">
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-neutral-100 text-neutral-800 border border-[[var(--admin-border)]]">
           <Layers className="w-3 h-3 text-neutral-400" />
           <span>{row.category}</span>
         </span>
@@ -426,7 +431,7 @@ export const BlogCms = () => {
       key: 'readMinutes',
       label: 'Read Time',
       render: (_, row) => (
-        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-600">
+        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-600 font-mono tabular-nums">
           <Clock className="w-3 h-3 text-neutral-400" />
           <span>{row.readMinutes || 5} min</span>
         </span>
@@ -437,7 +442,7 @@ export const BlogCms = () => {
       label: 'Publish Date',
       sortable: true,
       render: (_, row) => (
-        <span className="text-[11px] font-mono text-neutral-500">
+        <span className="text-[11px] font-mono tabular-nums text-neutral-500">
           {row.publishedAt ? new Date(row.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}
         </span>
       ),
@@ -453,7 +458,7 @@ export const BlogCms = () => {
               href={`/blog/${row.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 text-neutral-500 hover:text-primary-800 hover:bg-neutral-100 rounded-lg transition-colors"
+              className="p-1.5 text-neutral-500 hover:text-[[var(--admin-brand)]] hover:bg-neutral-100 rounded-lg transition-colors"
               title="Preview on Public Site"
             >
               <Eye className="w-3.5 h-3.5" />
@@ -462,7 +467,7 @@ export const BlogCms = () => {
           <button
             onClick={() => handleOpenEdit(row)}
             title="Edit Article"
-            className="p-1.5 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-colors"
+            className="p-1.5 text-neutral-500 hover:text-[[var(--admin-brand)]] hover:bg-neutral-100 rounded-lg transition-colors"
           >
             <Edit className="w-3.5 h-3.5" />
           </button>
@@ -481,197 +486,190 @@ export const BlogCms = () => {
   return (
     <>
       <Helmet>
-        <title>Blog & Trade Intelligence CMS Desk | JHS GLOBAL Admin</title>
+        <title>Blog & Trade Intelligence CMS Desk — JHS GLOBAL</title>
       </Helmet>
 
-      <div className="space-y-6">
-        {/* Top Header & Action */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-neutral-200/80">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Editorial & Market Intelligence</span>
-            </div>
-            <h1 className="font-serif text-2xl font-bold text-neutral-900 tracking-tight mt-0.5">
-              Blog & Trade Intelligence CMS
-            </h1>
-            <p className="text-xs text-neutral-500 mt-1 max-w-2xl">
-              Publish technical market monographs, regulatory guidance (EU/US FDA MRLs), and crop harvest intelligence across JHS GLOBAL’s 3 commercial export divisions.
-            </p>
-          </div>
-
+      {/* Standardized Page Header (Template 2) */}
+      <AdminPageHeader
+        breadcrumb={[
+          { label: 'Trust & Content CMS', href: '/admin/blog' },
+          { label: 'Trade Blog CMS' },
+        ]}
+        title="Blog & Trade Intelligence CMS"
+        description="Publish technical market monographs, regulatory guidance (EU/US FDA MRLs), and crop harvest intelligence across JHS GLOBAL’s 3 commercial export divisions."
+        actions={
           <div className="flex items-center gap-2">
             <Button
-              variant="primary"
+              variant="cta"
               size="sm"
               onClick={handleOpenCreate}
-              className="inline-flex items-center gap-1.5 shadow-sm"
+              className="inline-flex items-center gap-1.5 bg-[[var(--admin-accent)]] text-neutral-900 hover:bg-[#b5924a] font-bold shadow-xs"
             >
               <Plus className="w-4 h-4" />
               <span>Compose Article</span>
             </Button>
           </div>
+        }
+      />
+
+      {/* Global Feedback Banners */}
+      {feedback && (
+        <div className="mb-5 p-3.5 rounded-admin-lg bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs font-medium text-emerald-800 animate-in fade-in">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>{feedback}</span>
+          </div>
+          <button onClick={() => setFeedback('')} className="p-1 hover:bg-emerald-100 rounded">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
+      {errorMsg && (
+        <div className="mb-5 p-3.5 rounded-admin-lg bg-rose-50 border border-rose-200 flex items-center justify-between text-xs font-medium text-rose-800 animate-in fade-in">
+          <div className="flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+            <span>{errorMsg}</span>
+          </div>
+          <button onClick={() => setErrorMsg('')} className="p-1 hover:bg-rose-100 rounded">
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+
+      {/* Operational Metrics Cards (4 Equal Width Symmetrical Cards) */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white elevation-flat">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+            Total Articles
+          </span>
+          <div className="text-2xl font-bold font-mono tabular-nums text-neutral-900 mt-1">
+            {metrics.total}
+          </div>
+          <span className="text-[11px] text-neutral-400 mt-0.5 block">
+            Knowledge Base Entries
+          </span>
         </div>
 
-        {/* Global Feedback Banners */}
-        {feedback && (
-          <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs font-medium text-emerald-800 animate-in fade-in">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>{feedback}</span>
-            </div>
-            <button onClick={() => setFeedback('')} className="p-1 hover:bg-emerald-100 rounded">
-              <X className="w-3.5 h-3.5" />
-            </button>
+        <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white elevation-flat">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+            Published on Site
+          </span>
+          <div className="text-2xl font-bold font-mono tabular-nums text-emerald-700 mt-1">
+            {metrics.publishedCount}
           </div>
-        )}
-
-        {errorMsg && (
-          <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between text-xs font-medium text-rose-800 animate-in fade-in">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
-              <span>{errorMsg}</span>
-            </div>
-            <button onClick={() => setErrorMsg('')} className="p-1 hover:bg-rose-100 rounded">
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
-
-        {/* Operational Metrics Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="p-4 rounded-xl border border-neutral-200/90 bg-white shadow-2xs">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-              Total Articles
-            </span>
-            <div className="text-2xl font-bold font-serif text-neutral-900 mt-1">
-              {metrics.total}
-            </div>
-            <span className="text-[11px] text-neutral-400 mt-0.5 block">
-              Knowledge Base Entries
-            </span>
-          </div>
-
-          <div className="p-4 rounded-xl border border-neutral-200/90 bg-white shadow-2xs">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-              Published on Site
-            </span>
-            <div className="text-2xl font-bold font-serif text-emerald-700 mt-1">
-              {metrics.publishedCount}
-            </div>
-            <span className="text-[11px] text-neutral-400 mt-0.5 block">
-              Live on /blog Index
-            </span>
-          </div>
-
-          <div className="p-4 rounded-xl border border-neutral-200/90 bg-white shadow-2xs">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-              Drafts in Progress
-            </span>
-            <div className="text-2xl font-bold font-serif text-neutral-800 mt-1">
-              {metrics.draftCount}
-            </div>
-            <span className="text-[11px] text-neutral-400 mt-0.5 block">
-              Unpublished Manuscripts
-            </span>
-          </div>
-
-          <div className="p-4 rounded-xl border border-neutral-200/90 bg-white shadow-2xs">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-              Scheduled Releases
-            </span>
-            <div className="text-2xl font-bold font-serif text-amber-700 mt-1">
-              {metrics.scheduledCount}
-            </div>
-            <span className="text-[11px] text-neutral-400 mt-0.5 block">
-              Automated Publishing
-            </span>
-          </div>
+          <span className="text-[11px] text-neutral-400 mt-0.5 block">
+            Live on /blog Index
+          </span>
         </div>
 
-        {/* FilterBar */}
-        <div className="bg-white p-4 rounded-xl border border-neutral-200/90 shadow-2xs space-y-3">
-          <FilterBar
-            searchQuery={searchQuery}
-            onSearchChange={(val) => {
-              setSearchQuery(val);
-              setPage(1);
-              setSearchParams((prev) => {
-                if (val) prev.set('q', val);
-                else prev.delete('q');
-                return prev;
-              });
-            }}
-            searchPlaceholder="Search articles by title, keywords, excerpt, or author..."
-            statusOptions={[
-              { id: 'all', label: 'All Articles' },
-              { id: 'published', label: 'Published' },
-              { id: 'draft', label: 'Drafts' },
-              { id: 'scheduled', label: 'Scheduled' },
-              { id: 'archived', label: 'Archived' },
-            ]}
-            selectedStatus={statusFilter}
-            onStatusChange={(val) => {
-              setStatusFilter(val);
-              setPage(1);
-              setSearchParams((prev) => {
-                if (val && val !== 'all') prev.set('status', val);
-                else prev.delete('status');
-                return prev;
-              });
-            }}
-            extraFilters={
-              <div className="flex items-center gap-1.5">
-                <select
-                  value={categoryFilter}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setCategoryFilter(val);
-                    setPage(1);
-                    setSearchParams((prev) => {
-                      if (val && val !== 'all') prev.set('category', val);
-                      else prev.delete('category');
-                      return prev;
-                    });
-                  }}
-                  className="px-3 py-1.5 text-xs bg-neutral-50 border border-neutral-200/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-800/30 text-neutral-800"
-                >
-                  <option value="all">All Divisions / Topics</option>
-                  {BLOG_CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            }
-            onClear={() => {
-              setSearchQuery('');
-              setStatusFilter('all');
-              setCategoryFilter('all');
-              setPage(1);
-              setSearchParams({});
-            }}
-          />
+        <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white elevation-flat">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+            Drafts in Progress
+          </span>
+          <div className="text-2xl font-bold font-mono tabular-nums text-neutral-800 mt-1">
+            {metrics.draftCount}
+          </div>
+          <span className="text-[11px] text-neutral-400 mt-0.5 block">
+            Unpublished Manuscripts
+          </span>
         </div>
 
-        {/* Articles Data Table */}
-        <div className="bg-white rounded-xl border border-neutral-200/90 shadow-2xs overflow-hidden">
-          <DataTable
-            columns={columns}
-            data={posts}
-            loading={isLoading}
-            page={meta.page}
-            totalPages={meta.pages}
-            totalCount={meta.total}
-            onPageChange={(p) => setPage(p)}
-            emptyMessage={
-              searchQuery || statusFilter !== 'all' || categoryFilter !== 'all'
-                ? 'No trade intelligence articles match the active filter criteria.'
-                : 'No blog articles recorded in database.'
-            }
-          />
+        <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white elevation-flat">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+            Scheduled Releases
+          </span>
+          <div className="text-2xl font-bold font-mono tabular-nums text-amber-700 mt-1">
+            {metrics.scheduledCount}
+          </div>
+          <span className="text-[11px] text-neutral-400 mt-0.5 block">
+            Automated Publishing
+          </span>
         </div>
+      </div>
+
+      {/* FilterBar Container */}
+      <div className="bg-white p-4 rounded-admin-lg border border-[[var(--admin-border)]] elevation-flat space-y-3 mb-6">
+        <FilterBar
+          searchQuery={searchQuery}
+          onSearchChange={(val) => {
+            setSearchQuery(val);
+            setPage(1);
+            setSearchParams((prev) => {
+              if (val) prev.set('q', val);
+              else prev.delete('q');
+              return prev;
+            });
+          }}
+          searchPlaceholder="Search articles by title, keywords, excerpt, or author..."
+          statusOptions={[
+            { id: 'all', label: 'All Articles' },
+            { id: 'published', label: 'Published' },
+            { id: 'draft', label: 'Drafts' },
+            { id: 'scheduled', label: 'Scheduled' },
+            { id: 'archived', label: 'Archived' },
+          ]}
+          selectedStatus={statusFilter}
+          onStatusChange={(val) => {
+            setStatusFilter(val);
+            setPage(1);
+            setSearchParams((prev) => {
+              if (val && val !== 'all') prev.set('status', val);
+              else prev.delete('status');
+              return prev;
+            });
+          }}
+          extraFilters={
+            <div className="flex items-center gap-1.5">
+              <select
+                value={categoryFilter}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setCategoryFilter(val);
+                  setPage(1);
+                  setSearchParams((prev) => {
+                    if (val && val !== 'all') prev.set('category', val);
+                    else prev.delete('category');
+                    return prev;
+                  });
+                }}
+                className="px-3 py-1.5 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:outline-none focus:ring-2 focus:ring-[[var(--admin-brand)]] text-neutral-800"
+              >
+                <option value="all">All Divisions / Topics</option>
+                {BLOG_CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+          }
+          onClear={() => {
+            setSearchQuery('');
+            setStatusFilter('all');
+            setCategoryFilter('all');
+            setPage(1);
+            setSearchParams({});
+          }}
+        />
+      </div>
+
+      {/* Articles Data Table Card */}
+      <div className="bg-white rounded-admin-lg border border-[[var(--admin-border)]] elevation-flat overflow-hidden">
+        <DataTable
+          columns={columns}
+          data={posts}
+          loading={isLoading}
+          page={meta.page}
+          totalPages={meta.pages}
+          totalCount={meta.total}
+          onPageChange={(p) => setPage(p)}
+          emptyMessage={
+            searchQuery || statusFilter !== 'all' || categoryFilter !== 'all'
+              ? 'No trade intelligence articles match the active filter criteria.'
+              : 'No blog articles recorded in database.'
+          }
+        />
       </div>
 
       {/* Slide-Over Inspector & Editor Drawer */}
@@ -698,47 +696,26 @@ export const BlogCms = () => {
           )
         }
         tabs={
-          <div className="flex border-b border-neutral-200/80 -mb-4">
-            <button
-              onClick={() => setDrawerTab('core')}
-              className={`px-4 py-2.5 text-xs font-medium border-b-2 transition-colors ${
-                drawerTab === 'core'
-                  ? 'border-neutral-900 text-neutral-900 font-semibold'
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              1. Core & Content
-            </button>
-            <button
-              onClick={() => setDrawerTab('taxonomy')}
-              className={`px-4 py-2.5 text-xs font-medium border-b-2 transition-colors ${
-                drawerTab === 'taxonomy'
-                  ? 'border-neutral-900 text-neutral-900 font-semibold'
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              2. Author & Taxonomy
-            </button>
-            <button
-              onClick={() => setDrawerTab('media')}
-              className={`px-4 py-2.5 text-xs font-medium border-b-2 transition-colors ${
-                drawerTab === 'media'
-                  ? 'border-neutral-900 text-neutral-900 font-semibold'
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              3. Media & Cover Image
-            </button>
-            <button
-              onClick={() => setDrawerTab('seo')}
-              className={`px-4 py-2.5 text-xs font-medium border-b-2 transition-colors ${
-                drawerTab === 'seo'
-                  ? 'border-neutral-900 text-neutral-900 font-semibold'
-                  : 'border-transparent text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              4. SEO & Publishing
-            </button>
+          <div className="flex items-center gap-1 p-1 bg-neutral-100 rounded-lg border border-[[var(--admin-border)]] text-xs font-semibold overflow-x-auto admin-scrollbar">
+            {[
+              { id: 'core', label: '1. Core & Content' },
+              { id: 'taxonomy', label: '2. Taxonomy & Author' },
+              { id: 'media', label: '3. Media & Cover' },
+              { id: 'seo', label: '4. SEO & Publishing' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setDrawerTab(tab.id)}
+                className={`flex-1 py-1.5 px-3 rounded-md transition-all whitespace-nowrap text-center ${
+                  drawerTab === tab.id
+                    ? 'bg-white text-neutral-900  font-bold'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
           </div>
         }
         footer={
@@ -748,7 +725,7 @@ export const BlogCms = () => {
                 <button
                   type="button"
                   onClick={() => setDeleteModalPost(editingPost)}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-xl transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-rose-700 hover:text-rose-800 hover:bg-rose-50 rounded-admin-lg transition-colors"
                 >
                   <Archive className="w-4 h-4" />
                   <span>Archive Article</span>
@@ -769,11 +746,11 @@ export const BlogCms = () => {
                 Cancel
               </Button>
               <Button
-                variant="primary"
+                variant="cta"
                 size="sm"
                 onClick={handleFormSubmit}
                 disabled={createMutation.isPending || updateMutation.isPending}
-                className="inline-flex items-center gap-1.5"
+                className="inline-flex items-center gap-1.5 bg-[[var(--admin-accent)]] text-neutral-900 hover:bg-[#b5924a] font-bold"
               >
                 {(createMutation.isPending || updateMutation.isPending) && (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -798,7 +775,7 @@ export const BlogCms = () => {
                   onChange={(e) => handleTitleChange(e.target.value)}
                   placeholder="e.g. Curcumin Biomarker Chemistry: HPLC Standardization Guide for Importers"
                   required
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
               </div>
 
@@ -811,7 +788,7 @@ export const BlogCms = () => {
                   value={formData.slug}
                   onChange={(e) => setFormData((prev) => ({ ...prev, slug: slugify(e.target.value) }))}
                   placeholder="curcumin-biomarker-chemistry-hplc-guide"
-                  className="w-full px-3.5 py-2 text-xs font-mono border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs font-mono bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
                 <p className="text-[11px] text-neutral-400 mt-1">
                   Public site URL: /blog/{formData.slug || 'slug'}
@@ -828,7 +805,7 @@ export const BlogCms = () => {
                   onChange={(e) => setFormData((prev) => ({ ...prev, excerpt: e.target.value }))}
                   placeholder="Concise 2–3 sentence executive summary of the technical procurement insights..."
                   required
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
               </div>
 
@@ -837,7 +814,7 @@ export const BlogCms = () => {
                   <label className="text-xs font-semibold text-neutral-700">
                     Article Body Content (Markdown Supported) <span className="text-rose-500">*</span>
                   </label>
-                  <span className="text-[11px] font-mono text-neutral-400">
+                  <span className="text-[11px] font-mono tabular-nums text-neutral-400">
                     {formData.content.split(/\s+/).filter(Boolean).length} words • ~
                     {Math.max(1, Math.ceil(formData.content.split(/\s+/).filter(Boolean).length / 200))} min read
                   </span>
@@ -848,7 +825,7 @@ export const BlogCms = () => {
                   onChange={(e) => setFormData((prev) => ({ ...prev, content: e.target.value }))}
                   placeholder="## 1. Introduction...&#10;&#10;Write comprehensive technical specifications, tables, analytical thresholds, and procurement advice..."
                   required
-                  className="w-full px-3.5 py-2.5 text-xs font-mono border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none leading-relaxed"
+                  className="w-full px-3.5 py-2.5 text-xs font-mono bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none leading-relaxed"
                 />
               </div>
             </div>
@@ -857,7 +834,7 @@ export const BlogCms = () => {
           {/* TAB 2: AUTHOR & TAXONOMY */}
           {drawerTab === 'taxonomy' && (
             <div className="space-y-4">
-              <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200/90 space-y-1">
+              <div className="p-4 rounded-admin-lg bg-neutral-50 border border-[[var(--admin-border)]] space-y-1">
                 <span className="text-xs font-bold text-neutral-900 block">
                   Commercial Division Categorization
                 </span>
@@ -873,7 +850,7 @@ export const BlogCms = () => {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData((prev) => ({ ...prev, category: e.target.value }))}
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none bg-white"
+                  className="w-full px-3.5 py-2 text-xs border border-[[var(--admin-border)]] rounded-lg focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none bg-white"
                 >
                   {BLOG_CATEGORIES.map((cat) => (
                     <option key={cat} value={cat}>
@@ -892,11 +869,11 @@ export const BlogCms = () => {
                   value={formData.tagsInput}
                   onChange={(e) => setFormData((prev) => ({ ...prev, tagsInput: e.target.value }))}
                   placeholder="e.g. HPLC, Curcumin, USP 467, Analytical Methods"
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
               </div>
 
-              <div className="pt-2 border-t border-neutral-200/80 space-y-4">
+              <div className="pt-2 border-t border-neutral-100 space-y-4">
                 <span className="text-xs font-bold text-neutral-900 block">
                   Author Profile Attribution
                 </span>
@@ -916,7 +893,7 @@ export const BlogCms = () => {
                         }))
                       }
                       placeholder="e.g. Dr. R. Natarajan"
-                      className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                      className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                     />
                   </div>
 
@@ -934,7 +911,7 @@ export const BlogCms = () => {
                         }))
                       }
                       placeholder="e.g. Head of QA & Phytochemistry"
-                      className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                      className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -953,7 +930,7 @@ export const BlogCms = () => {
                       }))
                     }
                     placeholder="/images/placeholders/avatar-default.jpg"
-                    className="w-full px-3.5 py-2 text-xs font-mono border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-xs font-mono bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                   />
                 </div>
               </div>
@@ -977,7 +954,7 @@ export const BlogCms = () => {
                     }))
                   }
                   placeholder="/images/products/turmeric-curcumin-extract.webp"
-                  className="w-full px-3.5 py-2 text-xs font-mono border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs font-mono bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
               </div>
 
@@ -995,17 +972,17 @@ export const BlogCms = () => {
                     }))
                   }
                   placeholder="Curcumin 95% HPLC testing and extraction analytical guide"
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
               </div>
 
               {/* Cover Image Preview Card */}
               {formData.coverImage.url && (
-                <div className="p-4 rounded-xl border border-neutral-200 bg-neutral-50/70 space-y-2">
+                <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-neutral-50/70 space-y-2">
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 block">
                     Cover Preview
                   </span>
-                  <div className="w-full h-48 rounded-xl overflow-hidden border border-neutral-200 bg-white">
+                  <div className="w-full h-48 rounded-admin-lg overflow-hidden border border-[[var(--admin-border)]] bg-white">
                     <img
                       src={formData.coverImage.url}
                       alt={formData.coverImage.alt}
@@ -1032,7 +1009,7 @@ export const BlogCms = () => {
                   <select
                     value={formData.status}
                     onChange={(e) => setFormData((prev) => ({ ...prev, status: e.target.value }))}
-                    className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none bg-white font-medium"
+                    className="w-full px-3.5 py-2 text-xs border border-[[var(--admin-border)]] rounded-lg focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none bg-white font-medium"
                   >
                     <option value="published">Published (Live on Public Site)</option>
                     <option value="draft">Draft (Private in CMS)</option>
@@ -1049,7 +1026,7 @@ export const BlogCms = () => {
                     type="date"
                     value={formData.publishedAt}
                     onChange={(e) => setFormData((prev) => ({ ...prev, publishedAt: e.target.value }))}
-                    className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                    className="w-full px-3.5 py-2 text-xs border border-[[var(--admin-border)]] rounded-lg focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                   />
                 </div>
               </div>
@@ -1068,7 +1045,7 @@ export const BlogCms = () => {
                     }))
                   }
                   placeholder="e.g. Curcumin 95% HPLC Purity & Standards | JHS GLOBAL"
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
               </div>
 
@@ -1086,12 +1063,12 @@ export const BlogCms = () => {
                     }))
                   }
                   placeholder="Learn HPLC biomarker standards, residual solvent limits, and purity criteria for importing Curcumin..."
-                  className="w-full px-3.5 py-2 text-xs border border-neutral-300 rounded-xl focus:ring-2 focus:ring-primary-800 focus:outline-none"
+                  className="w-full px-3.5 py-2 text-xs bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]] focus:outline-none"
                 />
               </div>
 
               {/* Public Live Preview Link */}
-              <div className="p-4 rounded-xl border border-neutral-200 bg-white space-y-2">
+              <div className="p-4 rounded-admin-lg border border-[[var(--admin-border)]] bg-white space-y-2">
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400 block">
                   Public Article Link Preview
                 </span>
@@ -1103,7 +1080,7 @@ export const BlogCms = () => {
                     href={`/blog/${formData.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-800 hover:underline"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[[var(--admin-brand)]] hover:underline"
                   >
                     <span>Inspect Public Page</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -1123,9 +1100,9 @@ export const BlogCms = () => {
             className="absolute inset-0 bg-neutral-950/40 backdrop-blur-xs animate-in fade-in"
           />
 
-          <div className="relative bg-white rounded-2xl shadow-2xl border border-neutral-200/90 max-w-md w-full p-6 space-y-4 animate-in zoom-in-95">
+          <div className="relative bg-white rounded-2xl shadow-2xl border border-[[var(--admin-border)]] max-w-md w-full p-6 space-y-4 animate-in zoom-in-95">
             <div className="flex items-start gap-3">
-              <div className="p-2.5 rounded-xl bg-rose-100 text-rose-800 shrink-0">
+              <div className="p-2.5 rounded-admin-lg bg-rose-100 text-rose-800 shrink-0">
                 <Archive className="w-5 h-5" />
               </div>
 

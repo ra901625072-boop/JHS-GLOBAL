@@ -413,3 +413,143 @@
   }
 }
 
+/* ==========================================================================
+   SCOPED ADMIN DESIGN SYSTEM (.admin-root)
+   Phase 2 — Calm-authority token system. Scoped to admin area only.
+   No public-site CSS is affected by anything below this line.
+   ========================================================================== */
+.admin-root {
+  /* --- Colour Tokens --- */
+  --admin-canvas: #F8F9FA;
+  --admin-surface: #FFFFFF;
+  --admin-surface-subtle: #F1F3F5;
+  --admin-border: #E2E5E9;
+  --admin-border-subtle: #EEF0F2;
+  --admin-border-strong: #CBD5E1;
+  --admin-brand: #0D2818;
+  --admin-brand-hover: #1D4D31;
+  --admin-accent: #C5A059;
+  --admin-accent-hover: #9E7D3B;
+  --admin-text-primary: #0A0F14;
+  --admin-text-secondary: #3B4654;
+  --admin-text-muted: #64748B;
+  --admin-text-placeholder: #94A3B8;
+
+  /* --- Semantic Status (soft-tint badges) --- */
+  --admin-status-new-bg: #FEF3C7;
+  --admin-status-new-text: #92400E;
+  --admin-status-new-border: rgba(245, 158, 11, 0.25);
+  --admin-status-progress-bg: #E0F2FE;
+  --admin-status-progress-text: #075985;
+  --admin-status-progress-border: rgba(14, 165, 233, 0.25);
+  --admin-status-success-bg: #D1FAE5;
+  --admin-status-success-text: #065F46;
+  --admin-status-success-border: rgba(16, 185, 129, 0.25);
+  --admin-status-danger-bg: #FEE2E2;
+  --admin-status-danger-text: #991B1B;
+  --admin-status-danger-border: rgba(239, 68, 68, 0.25);
+  --admin-status-neutral-bg: #F1F5F9;
+  --admin-status-neutral-text: #334155;
+  --admin-status-neutral-border: rgba(203, 213, 225, 0.25);
+
+  /* --- Motion Tokens (admin-scoped) --- */
+  --admin-duration-instant: 0ms;
+  --admin-duration-micro: 120ms;
+  --admin-duration-base: 200ms;
+  --admin-duration-slow: 320ms;
+  --admin-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --admin-ease-in-out: cubic-bezier(0.2, 0, 0, 1);
+
+  /* --- Radius Tokens --- */
+  --admin-radius-sm: 4px;
+  --admin-radius-md: 6px;
+  --admin-radius-lg: 8px;
+  --admin-radius-xl: 12px;
+  --admin-radius-full: 9999px;
+
+  /* --- Focus Ring --- */
+  --admin-focus-ring: 0 0 0 2px var(--admin-canvas), 0 0 0 4px color-mix(in srgb, var(--admin-brand) 25%, transparent);
+
+  /* --- Z-Index Scale --- */
+  --admin-z-base: 0;
+  --admin-z-sticky: 10;
+  --admin-z-topbar: 30;
+  --admin-z-sidebar: 40;
+  --admin-z-backdrop: 45;
+  --admin-z-overlay: 50;
+  --admin-z-toast: 60;
+
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--admin-text-secondary);
+  background-color: var(--admin-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Override: admin headings use sans-serif, not serif */
+.admin-root h1,
+.admin-root h2,
+.admin-root h3,
+.admin-root h4 {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--admin-text-primary);
+}
+
+/* Tabular numerals for all numbers in admin */
+.admin-root .tabular-nums,
+.admin-root [data-tabular] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* 3 Unified Elevation Recipes — Phase 2 */
+.admin-root .elevation-flat {
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  box-shadow: none;
+}
+
+.admin-root .elevation-raised {
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.admin-root .elevation-overlay {
+  background-color: var(--admin-surface);
+  border: 1px solid var(--admin-border-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Admin Focus Ring Utility */
+.admin-root .admin-focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--admin-focus-ring);
+}
+
+/* Sleek Admin Scrollbars */
+.admin-root .admin-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.admin-root .admin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-root .admin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--admin-border-strong);
+  border-radius: var(--admin-radius-full);
+}
+.admin-root .admin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--admin-text-placeholder);
+}
+
+/* Admin-scoped reduced-motion override */
+@media (prefers-reduced-motion: reduce) {
+  .admin-root *,
+  .admin-root *::before,
+  .admin-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

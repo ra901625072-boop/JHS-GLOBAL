@@ -91,4 +91,17 @@ describe('Product API Endpoints', () => {
     expect(res.body.success).toBe(false);
     expect(res.body.error.code).toBe('NOT_FOUND');
   });
+
+  it('cacheService.invalidateProducts should purge products, slug PDP, and search suggestions cache', async () => {
+    const { cacheService } = await import('../src/services/cache.service.js');
+    await cacheService.set('http:/api/v1/products', { data: [1, 2] });
+    await cacheService.set('http:/api/v1/products/ashwagandha-extract', { data: { name: 'Ashwagandha' } });
+    await cacheService.set('http:/api/v1/search/suggest?q=ash', { data: ['suggest'] });
+
+    cacheService.invalidateProducts('ashwagandha-extract');
+
+    expect(await cacheService.get('http:/api/v1/products')).toBeNull();
+    expect(await cacheService.get('http:/api/v1/products/ashwagandha-extract')).toBeNull();
+    expect(await cacheService.get('http:/api/v1/search/suggest?q=ash')).toBeNull();
+  });
 });

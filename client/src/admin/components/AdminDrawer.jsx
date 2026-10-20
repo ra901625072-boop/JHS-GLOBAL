@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 
 /**
- * AdminDrawer
+ * AdminDrawer — Phase 2
  *
- * Slide-over Inspector Panel (matching visitor QuoteDrawer):
- * - Smooth backdrop fade & translate slide-in
- * - Fixed header with title, status badge, and close button
- * - Sleek scrollable body with admin custom scrollbar
- * - Fixed sticky bottom action bar with blur
+ * Slide-over Inspector Panel:
+ * - Direct translate slide-in (320ms ease-out)
+ * - Solid opaque header with title, status badge, and close button
+ * - Scrollable body with custom admin scrollbar
+ * - Solid bottom action bar with hairline border
+ * - Focus trapped, ESC to close
  */
 export const AdminDrawer = ({
   isOpen,
@@ -21,6 +22,8 @@ export const AdminDrawer = ({
   footer,
   maxWidth = 'max-w-2xl',
 }) => {
+  const drawerRef = useRef(null);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -42,42 +45,49 @@ export const AdminDrawer = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
-      {/* Blurred Backdrop */}
+    <div className="fixed inset-0 overflow-hidden" style={{ zIndex: 'var(--admin-z-overlay)' }}>
+      {/* Backdrop */}
       <div
         onClick={onClose}
-        className="absolute inset-0 bg-neutral-950/40 backdrop-blur-xs transition-opacity duration-300 animate-in fade-in"
-        style={{ transitionTimingFunction: 'var(--ease-standard)' }}
+        className="absolute inset-0 bg-neutral-950/40 transition-opacity"
+        style={{
+          transitionDuration: 'var(--admin-duration-base)',
+          transitionTimingFunction: 'var(--admin-ease-out)',
+        }}
         aria-hidden="true"
       />
 
       {/* Drawer Container */}
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10 pointer-events-none">
         <aside
-          className={`w-screen ${maxWidth} bg-white shadow-2xl flex flex-col border-l border-neutral-200/90 transform-gpu transition-transform duration-300 animate-in slide-in-from-right`}
-          style={{ transitionTimingFunction: 'var(--ease-enter)' }}
+          ref={drawerRef}
+          className={`w-screen ${maxWidth} bg-white flex flex-col border-l border-[var(--admin-border)] shadow-admin-overlay pointer-events-auto transform-gpu`}
+          style={{
+            animation: 'drawerSlideIn var(--admin-duration-slow) var(--admin-ease-out) forwards',
+          }}
           role="dialog"
           aria-modal="true"
         >
           {/* Header */}
-          <div className="p-5 sm:p-6 border-b border-neutral-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-20">
+          <div className="p-5 sm:p-6 border-b border-[var(--admin-border)] bg-white sticky top-0 z-20">
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-2.5 flex-wrap">
-                  <h2 className="font-serif text-lg sm:text-xl font-bold text-neutral-900 tracking-tight truncate">
+                  <h2 className="text-lg sm:text-xl font-bold text-[var(--admin-text-primary)] tracking-tight truncate">
                     {title}
                   </h2>
                   {badge}
                 </div>
                 {subtitle && (
-                  <p className="text-xs text-neutral-500 line-clamp-1">{subtitle}</p>
+                  <p className="text-xs text-[var(--admin-text-muted)] line-clamp-1">{subtitle}</p>
                 )}
               </div>
 
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition-colors focus:outline-none"
+                className="p-1.5 rounded-admin-md text-[var(--admin-text-placeholder)] hover:text-[var(--admin-text-primary)] hover:bg-[var(--admin-surface-subtle)] transition-colors focus:outline-none"
                 aria-label="Close drawer"
+                style={{ transitionDuration: 'var(--admin-duration-micro)' }}
               >
                 <X className="w-5 h-5" />
               </button>
@@ -87,19 +97,30 @@ export const AdminDrawer = ({
             {tabs && <div className="mt-4 pt-1">{tabs}</div>}
           </div>
 
-          {/* Scrollable Body with Sleek Scrollbar */}
-          <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6 admin-scrollbar bg-[#FBFBF9]/40">
+          {/* Scrollable Body */}
+          <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6 admin-scrollbar bg-[var(--admin-canvas)]">
             {children}
           </div>
 
           {/* Sticky Footer */}
           {footer && (
-            <div className="p-4 sm:p-5 border-t border-neutral-200/90 bg-white/95 backdrop-blur-md flex items-center justify-end gap-3 sticky bottom-0 z-20">
+            <div className="p-4 sm:p-5 border-t border-[var(--admin-border)] bg-white flex items-center justify-end gap-3 sticky bottom-0 z-20">
               {footer}
             </div>
           )}
         </aside>
       </div>
+
+      <style>{`
+        @keyframes drawerSlideIn {
+          from {
+            transform: translate3d(100%, 0, 0);
+          }
+          to {
+            transform: translate3d(0, 0, 0);
+          }
+        }
+      `}</style>
     </div>
   );
 };

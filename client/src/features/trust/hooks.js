@@ -11,7 +11,8 @@ export const useCertificates = () => {
   return useQuery({
     queryKey: ['certificates'],
     queryFn: fetchCertificates,
-    staleTime: 60 * 60 * 1000,
+    staleTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 };
 
@@ -35,7 +36,8 @@ export const useFaqs = (group) => {
   return useQuery({
     queryKey: ['faqs', group],
     queryFn: () => fetchFaqs(group),
-    staleTime: 60 * 60 * 1000,
+    staleTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 };
 
@@ -43,6 +45,7 @@ export const useFeaturedFaqs = () => {
   return useQuery({
     queryKey: ['faqs', 'featured'],
     queryFn: fetchFeaturedFaqs,
-    staleTime: 60 * 60 * 1000,
+    staleTime: 10 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 };

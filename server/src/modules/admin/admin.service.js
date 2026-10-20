@@ -16,7 +16,13 @@ import Faq from '../faq/faq.model.js';
 import CompanyFact from '../companyFact/companyFact.model.js';
 import Embedding from '../ai/embedding.model.js';
 import AiChatAuditLog from '../ai/aiChatAuditLog.model.js';
-import { reindexAllCatalogue } from '../ai/rag/embedding.service.js';
+import {
+  reindexAllCatalogue,
+  syncProductEmbedding,
+  deleteProductEmbedding,
+  syncFaqEmbedding,
+  deleteFaqEmbedding,
+} from '../ai/rag/embedding.service.js';
 import emailService from '../../services/email.service.js';
 import cacheService from '../../services/cache.service.js';
 import logger from '../../utils/logger.js';
@@ -680,8 +686,12 @@ export const createAdminProduct = async (productData, user = null, req = null) =
     metadata: { name: product.name, slug: product.slug, hsCode: product.hsCode },
   });
 
-  cacheService.del('http:/api/v1/products*');
-  cacheService.del('admin:dashboard_metrics');
+  cacheService.invalidateProducts(product.slug);
+  if (product.isActive) {
+    syncProductEmbedding(product.toJSON()).catch((err) =>
+      logger.warn(`Failed to sync product embedding for ${product.slug}: ${err.message}`)
+    );
+  }
   logger.info(`Product created by ${user?.name || 'admin'}: ${product.name} [${product.slug}]`);
 
   const plain = product.toJSON();
@@ -723,8 +733,19 @@ export const updateAdminProduct = async (id, productData, user = null, req = nul
     metadata: { name: product.name, slug: product.slug },
   });
 
-  cacheService.del('http:/api/v1/products*');
-  cacheService.del('admin:dashboard_metrics');
+  cacheService.invalidateProducts(product.slug);
+  if (beforeSnapshot.slug && beforeSnapshot.slug !== product.slug) {
+    cacheService.invalidateProducts(beforeSnapshot.slug);
+  }
+  if (product.isActive) {
+    syncProductEmbedding(product.toJSON()).catch((err) =>
+      logger.warn(`Failed to sync product embedding for ${product.slug}: ${err.message}`)
+    );
+  } else {
+    deleteProductEmbedding(product.id).catch((err) =>
+      logger.warn(`Failed to delete product embedding for ${product.id}: ${err.message}`)
+    );
+  }
   logger.info(`Product updated by ${user?.name || 'admin'}: ${product.name} [${product.slug}]`);
 
   const plain = product.toJSON();
@@ -754,8 +775,10 @@ export const softDeleteAdminProduct = async (id, user = null, req = null) => {
     metadata: { name: product.name },
   });
 
-  cacheService.del('http:/api/v1/products*');
-  cacheService.del('admin:dashboard_metrics');
+  cacheService.invalidateProducts(product.slug);
+  deleteProductEmbedding(product.id).catch((err) =>
+    logger.warn(`Failed to delete product embedding for ${product.id}: ${err.message}`)
+  );
   logger.info(`Product soft-deleted by ${user?.name || 'admin'}: ${product.name}`);
 
   const plain = product.toJSON();
@@ -786,8 +809,16 @@ export const toggleProductActive = async (id, user = null, req = null) => {
     metadata: { name: product.name, isActive: newActive },
   });
 
-  cacheService.del('http:/api/v1/products*');
-  cacheService.del('admin:dashboard_metrics');
+  cacheService.invalidateProducts(product.slug);
+  if (newActive) {
+    syncProductEmbedding(product.toJSON()).catch((err) =>
+      logger.warn(`Failed to sync product embedding for ${product.slug}: ${err.message}`)
+    );
+  } else {
+    deleteProductEmbedding(product.id).catch((err) =>
+      logger.warn(`Failed to delete product embedding for ${product.id}: ${err.message}`)
+    );
+  }
   logger.info(`Product ${product.name} isActive toggled to ${newActive}`);
   return { id: product.id, _id: product.id, isActive: product.isActive };
 };
@@ -815,8 +846,7 @@ export const toggleProductFeatured = async (id, user = null, req = null) => {
     metadata: { name: product.name, isFeatured: newFeatured },
   });
 
-  cacheService.del('http:/api/v1/products*');
-  cacheService.del('admin:dashboard_metrics');
+  cacheService.invalidateProducts(product.slug);
   logger.info(`Product ${product.name} isFeatured toggled to ${newFeatured}`);
   return { id: product.id, _id: product.id, isFeatured: product.isFeatured };
 };
@@ -865,7 +895,7 @@ export const verifyProductSpec = async (id, { specIndex, specKey, verified = tru
     metadata: { specIndex, specKey, verified },
   });
 
-  cacheService.del('http:/api/v1/products*');
+  cacheService.invalidateProducts(product.slug);
   logger.info(`Product spec verified for ${product.name} [spec: ${specKey || specIndex}]`);
   const plain = product.toJSON();
   plain._id = product.id;
@@ -907,7 +937,7 @@ export const attachProductDocument = async (id, docData, user = null, req = null
     metadata: { docTitle: newDoc.title, docType: newDoc.type },
   });
 
-  cacheService.del('http:/api/v1/products*');
+  cacheService.invalidateProducts(product.slug);
   logger.info(`Document attached to product ${product.name}: [${newDoc.type.toUpperCase()}] ${newDoc.title}`);
   return { documents, product: { ...product.toJSON(), _id: product.id } };
 };
@@ -943,7 +973,7 @@ export const removeProductDocument = async (id, docIdOrIndex, user = null, req =
     metadata: { removedDocId: docIdOrIndex },
   });
 
-  cacheService.del('http:/api/v1/products*');
+  cacheService.invalidateProducts(product.slug);
   logger.info(`Document removed from product ${product.name}`);
   return { documents, product: { ...product.toJSON(), _id: product.id } };
 };
@@ -1089,7 +1119,7 @@ export const createAdminCategory = async (data, user = null, req = null) => {
     metadata: { name: category.name, slug: category.slug, level: category.level },
   });
 
-  cacheService.del('http:/api/v1/categories*');
+  cacheService.invalidateCategories();
   logger.info(`Category created by ${user?.name || 'admin'}: ${category.name} [${category.slug}]`);
 
   const plain = category.toJSON();
@@ -1140,7 +1170,7 @@ export const updateAdminCategory = async (id, data, user = null, req = null) => 
     metadata: { name: category.name },
   });
 
-  cacheService.del('http:/api/v1/categories*');
+  cacheService.invalidateCategories();
   logger.info(`Category updated by ${user?.name || 'admin'}: ${category.name}`);
 
   const plain = category.toJSON();
@@ -1171,7 +1201,7 @@ export const toggleCategoryActive = async (id, user = null, req = null) => {
     metadata: { name: category.name, isActive: newActive },
   });
 
-  cacheService.del('http:/api/v1/categories*');
+  cacheService.invalidateCategories();
   logger.info(`Category ${category.name} isActive toggled to ${newActive}`);
   return { id: category.id, _id: category.id, isActive: category.isActive };
 };
@@ -1197,7 +1227,7 @@ export const reorderCategories = async (items, user = null, req = null) => {
     metadata: { count: items.length },
   });
 
-  cacheService.del('http:/api/v1/categories*');
+  cacheService.invalidateCategories();
   logger.info(`Reordered ${items.length} categories`);
   return { success: true, count: items.length };
 };
@@ -1253,7 +1283,7 @@ export const deleteAdminCategory = async (id, user = null, req = null) => {
     metadata: { name: category.name },
   });
 
-  cacheService.del('http:/api/v1/categories*');
+  cacheService.invalidateCategories();
   logger.info(`Category soft-deleted by ${user?.name || 'admin'}: ${category.name}`);
   return { id: category.id, _id: category.id, isActive: false };
 };
@@ -1586,7 +1616,7 @@ export const createAdminBlogPost = async (data, user = null, req = null) => {
     metadata: { title: post.title, slug: post.slug, status: post.status },
   });
 
-  cacheService.del('http:/api/v1/blog*');
+  cacheService.invalidateBlog(post.slug);
   logger.info(`Article created by ${user?.name || 'admin'}: ${post.title} [${post.slug}]`);
 
   const plain = post.toJSON();
@@ -1632,7 +1662,10 @@ export const updateAdminBlogPost = async (id, data, user = null, req = null) => 
     metadata: { title: post.title, slug: post.slug, status: post.status },
   });
 
-  cacheService.del('http:/api/v1/blog*');
+  cacheService.invalidateBlog(post.slug);
+  if (beforeSnapshot.slug && beforeSnapshot.slug !== post.slug) {
+    cacheService.invalidateBlog(beforeSnapshot.slug);
+  }
   logger.info(`Article updated by ${user?.name || 'admin'}: ${post.title}`);
 
   const plain = post.toJSON();
@@ -1662,7 +1695,7 @@ export const deleteAdminBlogPost = async (id, user = null, req = null) => {
     metadata: { title: post.title, slug: post.slug, status: 'archived' },
   });
 
-  cacheService.del('http:/api/v1/blog*');
+  cacheService.invalidateBlog(post.slug);
   logger.info(`Article archived by ${user?.name || 'admin'}: ${post.title}`);
   return { id: post.id, _id: post.id, status: 'archived' };
 };
@@ -1698,7 +1731,7 @@ export const updateAdminBlogPostStatus = async (id, { status, publishedAt }, use
     metadata: { title: post.title, status, publishedAt: updatePayload.publishedAt },
   });
 
-  cacheService.del('http:/api/v1/blog*');
+  cacheService.invalidateBlog(post.slug);
   logger.info(`Article ${post.title} status changed to ${status}`);
 
   const plain = post.toJSON();
@@ -1861,7 +1894,7 @@ export const createAdminFaq = async (faqData, user = null, req = null) => {
     metadata: { question: faq.question, group: faq.group, slug: faq.slug },
   });
 
-  cacheService.del('http:/api/v1/faqs*');
+  cacheService.invalidateFaqs();
   logger.info(`FAQ created by ${user?.name || 'Staff'}: "${faq.question.slice(0, 40)}..."`);
 
   const plain = faq.toJSON();
@@ -1891,8 +1924,12 @@ export const updateAdminFaq = async (id, updateData, user = null, req = null) =>
   await faq.update(updateData);
 
   try {
-    const { syncFaqEmbedding } = await import('../ai/rag/embedding.service.js');
-    await syncFaqEmbedding(faq);
+    const { syncFaqEmbedding, deleteFaqEmbedding } = await import('../ai/rag/embedding.service.js');
+    if (faq.isActive) {
+      await syncFaqEmbedding(faq);
+    } else {
+      await deleteFaqEmbedding(faq.id);
+    }
   } catch {
     // Non-blocking
   }
@@ -1908,7 +1945,7 @@ export const updateAdminFaq = async (id, updateData, user = null, req = null) =>
     metadata: { question: faq.question, group: faq.group },
   });
 
-  cacheService.del('http:/api/v1/faqs*');
+  cacheService.invalidateFaqs();
   logger.info(`FAQ updated by ${user?.name || 'Staff'}: "${faq.question.slice(0, 40)}..."`);
 
   const plain = faq.toJSON();
@@ -1928,8 +1965,8 @@ export const deleteAdminFaq = async (id, user = null, req = null) => {
   await faq.update({ isActive: false });
 
   try {
-    const { syncFaqEmbedding } = await import('../ai/rag/embedding.service.js');
-    await syncFaqEmbedding(faq);
+    const { deleteFaqEmbedding } = await import('../ai/rag/embedding.service.js');
+    await deleteFaqEmbedding(faq.id);
   } catch {
     // Non-blocking
   }
@@ -1945,7 +1982,7 @@ export const deleteAdminFaq = async (id, user = null, req = null) => {
     metadata: { question: faq.question, slug: faq.slug },
   });
 
-  cacheService.del('http:/api/v1/faqs*');
+  cacheService.invalidateFaqs();
   logger.info(`FAQ archived by ${user?.name || 'Staff'}: "${faq.question.slice(0, 40)}..."`);
 
   return { success: true, id: faq.id, isActive: false };
@@ -1984,7 +2021,7 @@ export const toggleAdminFaqHome = async (id, user = null, req = null) => {
     metadata: { question: faq.question, showOnHome: nextVal, homeOrder: nextHomeOrder },
   });
 
-  cacheService.del('http:/api/v1/faqs*');
+  cacheService.invalidateFaqs();
   const plain = faq.toJSON();
   plain._id = faq.id;
   return plain;
@@ -2004,8 +2041,12 @@ export const toggleAdminFaqActive = async (id, user = null, req = null) => {
   await faq.update({ isActive: nextVal });
 
   try {
-    const { syncFaqEmbedding } = await import('../ai/rag/embedding.service.js');
-    await syncFaqEmbedding(faq);
+    const { syncFaqEmbedding, deleteFaqEmbedding } = await import('../ai/rag/embedding.service.js');
+    if (nextVal) {
+      await syncFaqEmbedding(faq);
+    } else {
+      await deleteFaqEmbedding(faq.id);
+    }
   } catch {
     // Non-blocking
   }
@@ -2021,7 +2062,7 @@ export const toggleAdminFaqActive = async (id, user = null, req = null) => {
     metadata: { question: faq.question, isActive: nextVal },
   });
 
-  cacheService.del('http:/api/v1/faqs*');
+  cacheService.invalidateFaqs();
   const plain = faq.toJSON();
   plain._id = faq.id;
   return plain;
@@ -2054,7 +2095,7 @@ export const reorderAdminFaqs = async (items = [], user = null, req = null) => {
       metadata: { count: items.length },
     });
 
-    cacheService.del('http:/api/v1/faqs*');
+    cacheService.invalidateFaqs();
     logger.info(`Reordered ${items.length} FAQs by ${user?.name || 'Staff'}`);
     return { success: true, count: items.length };
   } catch (err) {
@@ -2478,11 +2519,21 @@ export const getAdminCompanyProfile = async () => {
 };
 
 export const updateAdminCompanyProfile = async (data, currentUser = null, req = null) => {
-  if (data.registeredAddress) {
-    const fact = await CompanyFact.findOne({ where: { factKey: 'registered_address' } });
-    if (fact) {
-      fact.factValue = data.registeredAddress;
-      await fact.save();
+  const fields = [
+    { key: 'registered_address', val: data.registeredAddress },
+    { key: 'trade_name', val: data.tradeName },
+    { key: 'official_email', val: data.officialEmail },
+    { key: 'trade_phone', val: data.tradePhone },
+    { key: 'trade_whatsapp', val: data.tradeWhatsApp },
+  ];
+
+  for (const item of fields) {
+    if (item.val) {
+      const fact = await CompanyFact.findOne({ where: { factKey: item.key } });
+      if (fact) {
+        fact.factValue = item.val;
+        await fact.save();
+      }
     }
   }
 

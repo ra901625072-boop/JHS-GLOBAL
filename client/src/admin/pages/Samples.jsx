@@ -32,6 +32,7 @@ import {
 } from '../api';
 import Button from '../../components/ui/Button';
 import {
+  AdminPageHeader,
   DataTable,
   FilterBar,
   AdminStatusBadge,
@@ -347,27 +348,20 @@ export const Samples = () => {
         <title>Sample Dispatch Desk — JHS GLOBAL</title>
       </Helmet>
 
-      {/* Page Header */}
-      <Reveal direction="up" distance={16} duration={0.5} className="mb-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-neutral-800 text-xs font-semibold mb-2">
-              <FlaskConical className="w-3.5 h-3.5 text-neutral-900" />
-              <span>LABORATORY EVALUATION • GLOBAL COURIER LOGISTICS</span>
-            </div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight">
-              Sample Dispatch & Quality Testing Desk
-            </h1>
-            <p className="text-xs sm:text-sm text-neutral-500 mt-1 max-w-2xl">
-              Commercial management of trial evaluation samples, recipient shipping address verification, courier AWB tracking links, and COA/SDS compliance documents.
-            </p>
-          </div>
-        </div>
-      </Reveal>
+      {/* Symmetrical Page Header */}
+      <AdminPageHeader
+        breadcrumb={[
+          { label: 'JHS GLOBAL Desk', to: '/admin' },
+          { label: 'Sample Dispatch', to: '/admin/samples' },
+        ]}
+        title="Sample Dispatch & Quality Testing Desk"
+        badge="COURIER LOGISTICS"
+        description="Commercial management of trial evaluation samples, recipient shipping address verification, courier AWB tracking links, and COA/SDS compliance documents."
+      />
 
       {/* FilterBar with Status Pills & Search */}
       <Reveal direction="up" distance={12} duration={0.4} className="mb-5">
-        <div className="bg-white border border-neutral-200/90 rounded-xl p-4 shadow-2xs">
+        <div className="bg-white border border-neutral-200/90 rounded-admin-lg p-4 ">
           <FilterBar
             searchQuery={searchQuery}
             onSearchChange={(q) => {
@@ -392,7 +386,7 @@ export const Samples = () => {
 
       {/* Main DataTable */}
       <Reveal direction="up" distance={20} duration={0.5}>
-        <div className="bg-white border border-neutral-200/90 rounded-xl shadow-subtle overflow-hidden">
+        <div className="bg-white border border-neutral-200/90 rounded-admin-lg shadow-subtle overflow-hidden">
           {isLoading ? (
             <AdminSkeleton variant="table" rows={6} className="p-4" />
           ) : (
@@ -425,13 +419,13 @@ export const Samples = () => {
         badge={activeSample && <AdminStatusBadge status={activeSample.status} />}
         tabs={
           activeSample && (
-            <div className="flex items-center gap-1 p-1 bg-neutral-100 rounded-xl border border-neutral-200/80 text-xs font-semibold">
+            <div className="flex items-center gap-1 p-1 bg-neutral-100 rounded-admin-lg border border-neutral-200/80 text-xs font-semibold">
               <button
                 type="button"
                 onClick={() => setDrawerTab('overview')}
                 className={`flex-1 py-1.5 px-3 rounded-lg transition-all ${
                   drawerTab === 'overview'
-                    ? 'bg-white text-neutral-900 shadow-2xs font-bold'
+                    ? 'bg-white text-neutral-900  font-bold'
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
@@ -442,7 +436,7 @@ export const Samples = () => {
                 onClick={() => setDrawerTab('dispatch')}
                 className={`flex-1 py-1.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                   drawerTab === 'dispatch'
-                    ? 'bg-white text-neutral-900 shadow-2xs font-bold'
+                    ? 'bg-white text-neutral-900  font-bold'
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
@@ -454,7 +448,7 @@ export const Samples = () => {
                 onClick={() => setDrawerTab('documents')}
                 className={`flex-1 py-1.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                   drawerTab === 'documents'
-                    ? 'bg-white text-neutral-900 shadow-2xs font-bold'
+                    ? 'bg-white text-neutral-900  font-bold'
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
@@ -466,7 +460,7 @@ export const Samples = () => {
                 onClick={() => setDrawerTab('pipeline')}
                 className={`flex-1 py-1.5 px-3 rounded-lg transition-all ${
                   drawerTab === 'pipeline'
-                    ? 'bg-white text-neutral-900 shadow-2xs font-bold'
+                    ? 'bg-white text-neutral-900  font-bold'
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
               >
@@ -485,12 +479,12 @@ export const Samples = () => {
         ) : (
           <div className="space-y-6">
             {/* Quick Action Pill Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-neutral-50 border border-neutral-200 rounded-xl">
+            <div className="flex flex-wrap items-center justify-between gap-2 p-3 bg-neutral-50 border border-neutral-200 rounded-admin-lg">
               <div className="flex items-center gap-2">
                 {activeSample.buyer?.email && (
                   <a
                     href={`mailto:${activeSample.buyer.email}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-800 hover:bg-primary-900 text-white text-xs font-semibold shadow-2xs transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-800 hover:bg-primary-900 text-white text-xs font-semibold  transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5" />
                     <span>Email Buyer</span>
@@ -501,7 +495,7 @@ export const Samples = () => {
                     href={activeSample.trackingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-black text-white text-xs font-semibold shadow-2xs transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-black text-white text-xs font-semibold  transition-colors"
                   >
                     <Truck className="w-3.5 h-3.5" />
                     <span>Live Tracking</span>
@@ -522,8 +516,8 @@ export const Samples = () => {
             {drawerTab === 'overview' && (
               <div className="space-y-5 animate-in fade-in duration-150">
                 {/* Requested Commodities */}
-                <div className="bg-white border border-neutral-200/90 rounded-xl p-5 shadow-2xs space-y-3">
-                  <h3 className="font-serif text-sm font-bold text-neutral-900 flex items-center gap-2">
+                <div className="bg-white border border-neutral-200/90 rounded-admin-lg p-5  space-y-3">
+                  <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
                     <Tag className="w-4 h-4 text-primary-800" />
                     <span>Requested Sample Products</span>
                   </h3>
@@ -561,8 +555,8 @@ export const Samples = () => {
                 </div>
 
                 {/* Shipping Destination Address */}
-                <div className="bg-white border border-neutral-200/90 rounded-xl p-5 shadow-2xs space-y-4">
-                  <h3 className="font-serif text-sm font-bold text-neutral-900 flex items-center gap-2">
+                <div className="bg-white border border-neutral-200/90 rounded-admin-lg p-5  space-y-4">
+                  <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
                     <MapPin className="w-4 h-4 text-primary-800" />
                     <span>Laboratory Shipping Address</span>
                   </h3>
@@ -621,9 +615,9 @@ export const Samples = () => {
             {/* TAB 2: Dispatch & AWB Tracker */}
             {drawerTab === 'dispatch' && (
               <div className="space-y-5 animate-in fade-in duration-150">
-                <div className="bg-white border border-neutral-200/90 rounded-xl p-5 shadow-2xs space-y-4">
+                <div className="bg-white border border-neutral-200/90 rounded-admin-lg p-5  space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-serif text-sm font-bold text-neutral-900 flex items-center gap-2">
+                    <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
                       <Truck className="w-4 h-4 text-primary-800" />
                       <span>Courier Dispatch & Live AWB Tracking</span>
                     </h3>
@@ -730,8 +724,8 @@ export const Samples = () => {
             {/* TAB 3: Technical Compliance Documents (COA & SDS) */}
             {drawerTab === 'documents' && (
               <div className="space-y-5 animate-in fade-in duration-150">
-                <div className="bg-white border border-neutral-200/90 rounded-xl p-5 shadow-2xs space-y-4">
-                  <h3 className="font-serif text-sm font-bold text-neutral-900 flex items-center gap-2">
+                <div className="bg-white border border-neutral-200/90 rounded-admin-lg p-5  space-y-4">
+                  <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
                     <FileCheck className="w-4 h-4 text-primary-800" />
                     <span>Technical Compliance Documents (COA / SDS)</span>
                   </h3>
@@ -846,7 +840,7 @@ export const Samples = () => {
             {/* TAB 4: Status & Notes */}
             {drawerTab === 'pipeline' && (
               <div className="space-y-5 animate-in fade-in duration-150">
-                <div className="bg-white border border-neutral-200/90 rounded-xl p-5 shadow-2xs">
+                <div className="bg-white border border-neutral-200/90 rounded-admin-lg p-5 ">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-900 mb-3 flex items-center gap-2">
                     <Clock className="w-4 h-4 text-primary-800" />
                     <span>Sample Pipeline Lifecycle Stage</span>
@@ -904,8 +898,8 @@ export const Samples = () => {
                 </div>
 
                 {/* Audit Trail of Notes */}
-                <div className="bg-white border border-neutral-200/90 rounded-xl p-5 shadow-2xs space-y-3">
-                  <h3 className="font-serif text-sm font-bold text-neutral-900 flex items-center gap-2">
+                <div className="bg-white border border-neutral-200/90 rounded-admin-lg p-5  space-y-3">
+                  <h3 className="text-sm font-bold text-neutral-900 flex items-center gap-2">
                     <MessageSquare className="w-4 h-4 text-primary-800" />
                     <span>Sample Dispatch Notes & Audit Trail</span>
                   </h3>

@@ -27,7 +27,7 @@ export const inquiryLimiter = rateLimit({
 
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 mins
-  max: 5,
+  max: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? 500 : 5,
   standardHeaders: true,
   legacyHeaders: false,
   handler: rateLimitHandler('Too many login attempts. Account temporarily locked for 15 minutes.'),

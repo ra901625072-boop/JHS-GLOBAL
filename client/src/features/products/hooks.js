@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useSafeQueryClient } from '../../utils/prefetch';
 import {
   fetchCategories,
   fetchCategoryBySlug,
@@ -13,8 +14,9 @@ export const useCategories = () => {
   return useQuery({
     queryKey: ['categories'],
     queryFn: fetchCategories,
-    staleTime: 60 * 60 * 1000, // 1 hour
+    staleTime: 10 * 60 * 1000, // 10 minutes
     gcTime: 2 * 60 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 };
 
@@ -23,8 +25,9 @@ export const useCategory = (slug) => {
     queryKey: ['category', slug],
     queryFn: () => fetchCategoryBySlug(slug),
     enabled: Boolean(slug),
-    staleTime: 30 * 60 * 1000, // 30 minutes
+    staleTime: 10 * 60 * 1000, // 10 minutes
     gcTime: 60 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 };
 
@@ -32,17 +35,24 @@ export const useProducts = (params = {}) => {
   return useQuery({
     queryKey: ['products', params],
     queryFn: () => fetchProducts(params),
-    staleTime: 15 * 60 * 1000, // 15 minutes
+    staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 60 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 };
 
-export const useFeaturedProducts = () => {
+export const useFeaturedProducts = (options = {}) => {
+  const client = useSafeQueryClient();
+  if (!client) {
+    return { data: undefined, isLoading: false, isError: false };
+  }
   return useQuery({
     queryKey: ['products', 'featured'],
     queryFn: fetchFeaturedProducts,
-    staleTime: 30 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
     gcTime: 60 * 60 * 1000,
+    refetchOnWindowFocus: true,
+    ...options,
   });
 };
 
@@ -51,8 +61,9 @@ export const useProduct = (slug) => {
     queryKey: ['product', slug],
     queryFn: () => fetchProductBySlug(slug),
     enabled: Boolean(slug),
-    staleTime: 30 * 60 * 1000, // 30 minutes
+    staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 60 * 60 * 1000,
+    refetchOnWindowFocus: true,
   });
 };
 
@@ -61,7 +72,7 @@ export const useRelatedProducts = (slug) => {
     queryKey: ['products', 'related', slug],
     queryFn: () => fetchRelatedProducts(slug),
     enabled: Boolean(slug),
-    staleTime: 30 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
     gcTime: 60 * 60 * 1000,
   });
 };

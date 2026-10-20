@@ -102,10 +102,17 @@ async function run() {
       await page.waitForTimeout(500);
 
       // Screenshot loaded state
-      await page.screenshot({
-        path: `${vpDir}/${route.name}-loaded.png`,
-        fullPage: true,
-      });
+      try {
+        await page.screenshot({
+          path: `${vpDir}/${route.name}-loaded.png`,
+          fullPage: true,
+        });
+      } catch {
+        await page.screenshot({
+          path: `${vpDir}/${route.name}-loaded.png`,
+          fullPage: false,
+        });
+      }
 
       // Capture DOM and A11y structure once per route (at 1440px)
       if (vp.name === '1440') {

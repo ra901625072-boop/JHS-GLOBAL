@@ -1,5 +1,16 @@
-import React from 'react';
-import { ChevronUp, ChevronDown, ChevronsUpDown, ChevronLeft, ChevronRight, Inbox, Loader2 } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  ChevronUp,
+  ChevronDown,
+  ChevronsUpDown,
+  ChevronLeft,
+  ChevronRight,
+  Inbox,
+  Loader2,
+  AlignJustify,
+  ListFilter,
+  Download,
+} from 'lucide-react';
 
 export const DataTable = ({
   columns = [],
@@ -19,8 +30,13 @@ export const DataTable = ({
   loading = false,
   emptyMessage = 'No matching records found in database.',
   onRowClick,
+  density: initialDensity = 'default', // 'compact' | 'default'
+  enableExportCsv = true,
+  filename = 'export-data',
+  onExportCsv,
   className = '',
 }) => {
+  const [density, setDensity] = useState(initialDensity);
   const allSelected = data.length > 0 && selectedRows.length === data.length;
   const someSelected = selectedRows.length > 0 && !allSelected;
 
@@ -29,20 +45,100 @@ export const DataTable = ({
     onSort(col.key || col.accessor);
   };
 
+  const handleExportCsv = () => {
+    if (onExportCsv) {
+      onExportCsv(data);
+      return;
+    }
+    if (!data || data.length === 0) return;
+
+    const exportCols = columns.filter(
+      (c) => c.key !== 'actions' && c.key !== 'action' && (c.key || c.accessor)
+    );
+
+    const headers = exportCols.map((c) => `"${(c.label || c.title || c.key || '').replace(/"/g, '""')}"`);
+    const rows = data.map((row) =>
+      exportCols
+        .map((c) => {
+          const val = row[c.key || c.accessor];
+          if (val === null || val === undefined) return '""';
+          if (typeof val === 'object') {
+            if (val.name) return `"${String(val.name).replace(/"/g, '""')}"`;
+            return `"${JSON.stringify(val).replace(/"/g, '""')}"`;
+          }
+          return `"${String(val).replace(/"/g, '""')}"`;
+        })
+        .join(',')
+    );
+
+    const csvContent = [headers.join(','), ...rows].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${filename}-${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const isCompact = density === 'compact';
+  const cellPadding = isCompact ? 'px-3 py-2 text-[12px]' : 'px-4 py-3 text-[13px]';
+  const headerPadding = isCompact ? 'px-3 py-2 text-[11px]' : 'px-4 py-2.5 text-[11px]';
+
   return (
-    <div className={`w-full overflow-hidden flex flex-col bg-white ${className}`}>
+    <div
+      className={`w-full overflow-hidden flex flex-col bg-white border border-[var(--admin-border)] rounded-admin-lg ${className}`}
+    >
+      {/* Table toolbar / Density toggle & Export CSV (shown if data exists) */}
+      <div className="flex items-center justify-between px-4 py-2 border-b border-[var(--admin-border-subtle)] bg-[var(--admin-surface-subtle)] text-[11px] text-[var(--admin-text-muted)]">
+        <div className="flex items-center gap-2">
+          {totalCount !== undefined ? (
+            <span>
+              Showing <strong className="font-semibold text-[var(--admin-text-primary)]">{data.length}</strong> of{' '}
+              <strong className="font-semibold text-[var(--admin-text-primary)]">{totalCount}</strong> records
+            </span>
+          ) : (
+            <span><strong className="font-semibold text-[var(--admin-text-primary)]">{data.length}</strong> items</span>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          {enableExportCsv && data.length > 0 && (
+            <button
+              type="button"
+              onClick={handleExportCsv}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-admin-sm hover:bg-white text-[var(--admin-text-muted)] hover:text-[var(--admin-text-primary)] border border-transparent hover:border-[var(--admin-border)] transition-colors"
+              title="Export visible records to CSV"
+            >
+              <Download className="w-3 h-3" />
+              <span className="text-[10px]">Export CSV</span>
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => setDensity(isCompact ? 'default' : 'compact')}
+            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-admin-sm hover:bg-white text-[var(--admin-text-muted)] hover:text-[var(--admin-text-primary)] border border-transparent hover:border-[var(--admin-border)] transition-colors"
+            title={`Toggle table density (current: ${density})`}
+          >
+            <AlignJustify className="w-3 h-3" />
+            <span className="capitalize text-[10px]">{isCompact ? 'Compact' : 'Comfortable'}</span>
+          </button>
+        </div>
+      </div>
+
       <div className="overflow-x-auto min-w-full">
-        <table className="w-full text-left border-collapse text-xs">
+        <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-neutral-200 bg-neutral-50/80 text-[11px] font-semibold text-neutral-600 uppercase tracking-wider">
+            <tr className="border-b border-[var(--admin-border)] bg-[var(--admin-surface-subtle)] font-semibold text-[var(--admin-text-muted)] uppercase tracking-wider sticky top-0 z-10">
               {selectable && (
-                <th className="p-3 w-10 text-center">
+                <th className={`w-10 text-center ${headerPadding}`}>
                   <input
                     type="checkbox"
                     checked={allSelected}
                     ref={(el) => el && (el.indeterminate = someSelected)}
                     onChange={onSelectAll}
-                    className="rounded border-neutral-300 text-primary-900 focus:ring-primary-800"
+                    className="rounded border-[var(--admin-border-strong)] text-[var(--admin-brand)] focus:ring-[var(--admin-brand)] cursor-pointer"
                     aria-label="Select all rows"
                   />
                 </th>
@@ -57,23 +153,23 @@ export const DataTable = ({
                     key={colKey}
                     scope="col"
                     onClick={() => handleHeaderSort(col)}
-                    className={`p-3.5 ${col.headerClassName || ''} ${
-                      col.sortable ? 'cursor-pointer hover:bg-neutral-100/80 select-none' : ''
+                    className={`${headerPadding} ${col.headerClassName || ''} ${
+                      col.sortable ? 'cursor-pointer hover:bg-[var(--admin-border-subtle)] select-none' : ''
                     }`}
                     style={col.width ? { width: col.width } : undefined}
                   >
                     <div className="inline-flex items-center gap-1.5">
                       <span>{headerText}</span>
                       {col.sortable && (
-                        <span className="text-neutral-400">
+                        <span className="text-[var(--admin-text-placeholder)]">
                           {isSorted ? (
                             sortDirection === 'asc' ? (
-                              <ChevronUp className="w-3.5 h-3.5 text-primary-900" />
+                              <ChevronUp className="w-3.5 h-3.5 text-[var(--admin-text-primary)]" />
                             ) : (
-                              <ChevronDown className="w-3.5 h-3.5 text-primary-900" />
+                              <ChevronDown className="w-3.5 h-3.5 text-[var(--admin-text-primary)]" />
                             )
                           ) : (
-                            <ChevronsUpDown className="w-3 h-3 text-neutral-300" />
+                            <ChevronsUpDown className="w-3 h-3 text-[var(--admin-border-strong)]" />
                           )}
                         </span>
                       )}
@@ -83,16 +179,16 @@ export const DataTable = ({
               })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-neutral-100 text-neutral-800">
+          <tbody className="divide-y divide-[var(--admin-border-subtle)] text-[var(--admin-text-secondary)]">
             {loading ? (
               <tr>
                 <td
                   colSpan={columns.length + (selectable ? 1 : 0)}
-                  className="py-16 text-center text-neutral-400"
+                  className="py-16 text-center"
                 >
                   <div className="flex flex-col items-center justify-center gap-2">
-                    <Loader2 className="w-6 h-6 animate-spin text-primary-900" />
-                    <span className="text-xs font-medium text-neutral-500">Loading records...</span>
+                    <Loader2 className="w-5 h-5 animate-spin text-[var(--admin-brand)]" />
+                    <span className="text-xs text-[var(--admin-text-muted)] font-medium">Loading records...</span>
                   </div>
                 </td>
               </tr>
@@ -100,14 +196,14 @@ export const DataTable = ({
               <tr>
                 <td
                   colSpan={columns.length + (selectable ? 1 : 0)}
-                  className="py-16 text-center text-neutral-400"
+                  className="py-16 text-center"
                 >
                   <div className="flex flex-col items-center justify-center max-w-sm mx-auto space-y-2">
-                    <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-400">
+                    <div className="w-10 h-10 rounded-admin-md bg-[var(--admin-surface-subtle)] border border-[var(--admin-border)] flex items-center justify-center text-[var(--admin-text-placeholder)]">
                       <Inbox className="w-5 h-5" />
                     </div>
-                    <p className="text-sm font-semibold text-neutral-700">No records found</p>
-                    <p className="text-xs text-neutral-500">{emptyMessage}</p>
+                    <p className="text-sm font-semibold text-[var(--admin-text-primary)]">No records found</p>
+                    <p className="text-xs text-[var(--admin-text-muted)]">{emptyMessage}</p>
                   </div>
                 </td>
               </tr>
@@ -121,19 +217,22 @@ export const DataTable = ({
                     key={id}
                     onClick={() => onRowClick && onRowClick(row)}
                     className={`transition-colors ${
-                      isSelected ? 'bg-primary-50/50' : 'hover:bg-neutral-50/70'
+                      isSelected
+                        ? 'bg-[var(--admin-surface-subtle)]'
+                        : 'hover:bg-[#F9FAFB]'
                     } ${onRowClick ? 'cursor-pointer' : ''}`}
+                    style={{ transitionDuration: 'var(--admin-duration-micro)' }}
                   >
                     {selectable && (
                       <td
-                        className="p-3 w-10 text-center"
+                        className={`w-10 text-center ${cellPadding}`}
                         onClick={(e) => e.stopPropagation()}
                       >
                         <input
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => onSelectRow && onSelectRow(id)}
-                          className="rounded border-neutral-300 text-primary-900 focus:ring-primary-800"
+                          className="rounded border-[var(--admin-border-strong)] text-[var(--admin-brand)] focus:ring-[var(--admin-brand)] cursor-pointer"
                           aria-label={`Select row ${id}`}
                         />
                       </td>
@@ -153,7 +252,7 @@ export const DataTable = ({
                       }
 
                       return (
-                        <td key={colKey} className={`p-3.5 ${col.className || ''}`}>
+                        <td key={colKey} className={`${cellPadding} ${col.className || ''}`}>
                           {cellContent}
                         </td>
                       );
@@ -168,12 +267,12 @@ export const DataTable = ({
 
       {/* Pagination Bar */}
       {totalPages > 1 && onPageChange && (
-        <div className="p-3 sm:px-4 border-t border-neutral-200/80 bg-neutral-50/60 flex items-center justify-between text-xs text-neutral-500">
+        <div className="px-4 py-3 border-t border-[var(--admin-border)] bg-[var(--admin-surface-subtle)] flex items-center justify-between text-xs text-[var(--admin-text-muted)]">
           <div>
             {totalCount !== undefined && (
               <span>
-                Page <strong className="text-neutral-800">{page}</strong> of{' '}
-                <strong className="text-neutral-800">{totalPages}</strong> ({totalCount} total)
+                Page <strong className="text-[var(--admin-text-primary)]">{page}</strong> of{' '}
+                <strong className="text-[var(--admin-text-primary)]">{totalPages}</strong> ({totalCount} total)
               </span>
             )}
           </div>
@@ -181,19 +280,21 @@ export const DataTable = ({
             <button
               onClick={() => onPageChange(page - 1)}
               disabled={page <= 1}
-              className="p-1.5 rounded-lg border border-neutral-200 bg-white hover:bg-neutral-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="p-1.5 rounded-admin-md border border-[var(--admin-border)] bg-white hover:bg-[var(--admin-surface-subtle)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-[var(--admin-text-secondary)]"
               aria-label="Previous page"
+              style={{ transitionDuration: 'var(--admin-duration-micro)' }}
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="px-2 font-mono text-xs font-semibold text-neutral-700">
+            <span className="px-2 font-mono text-xs font-semibold text-[var(--admin-text-primary)]">
               {page}
             </span>
             <button
               onClick={() => onPageChange(page + 1)}
               disabled={page >= totalPages}
-              className="p-1.5 rounded-lg border border-neutral-200 bg-white hover:bg-neutral-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              className="p-1.5 rounded-admin-md border border-[var(--admin-border)] bg-white hover:bg-[var(--admin-surface-subtle)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-[var(--admin-text-secondary)]"
               aria-label="Next page"
+              style={{ transitionDuration: 'var(--admin-duration-micro)' }}
             >
               <ChevronRight className="w-4 h-4" />
             </button>
