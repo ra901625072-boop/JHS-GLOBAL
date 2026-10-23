@@ -39,7 +39,7 @@
         "All subcategories linked via parentId with correct order and paths",
         "Re-running npm run seed produces zero duplicate rows"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-004",

@@ -13,4 +13,6 @@ Target: 4-Category Expansion, 96 New Catalogue Products, Messaging Alignment, FI
 - Additive migrations: Never drop existing tables or delete existing 20 products. Take pg_dump backup before database operations.
 
 ## Iteration Progress Log
-- US-001: Excel normalized to products.normalized.csv (96 products parsed, typos corrected, duplicate merged, slugs differentiated, 115 total active catalogue commodities). Staged for approval.
+- US-001: Excel normalized to products.normalized.csv (96 products parsed, typos corrected, duplicate merged, slugs differentiated, 115 total active catalogue commodities). Verified and committed.
+- US-002: Additive database migration executed and verified. Products table supports nullable hs_code and availability column. Full DB backup secured.
+- US-003: Idempotent seed for categories and sub-categories executed. 4 master commercial divisions and 18 sub-groups verified in PostgreSQL with zero duplication on re-run.

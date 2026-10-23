@@ -41,6 +41,7 @@ export const categoriesData = [
     subCategories: [
       { name: 'Standardized Botanical Extracts', order: 1 },
       { name: 'Plant Proteins & Hydrocolloids', order: 2 },
+      { name: 'Herbal & Botanical Powders', order: 3 },
     ],
   },
   {
@@ -59,12 +60,35 @@ export const categoriesData = [
     subCategories: [
       { name: 'Protein Oilseed Meals', order: 1 },
       { name: 'Nutritional Premixes & Additives', order: 2 },
+      { name: 'Feed Grains & Raw Materials', order: 3 },
+    ],
+  },
+  {
+    name: 'Food & Food Ingredients',
+    slug: 'food-food-ingredients',
+    description:
+      'Export-grade whole and ground spices, seasonings, nutrient-dense superfood seeds, pulses, grains, flours, fresh produce, dehydrated fruits and vegetables, and specialty food ingredients for international culinary, snack, and food manufacturers.',
+    hsChapter: '09',
+    level: 1,
+    order: 4,
+    seo: {
+      title: 'Food & Food Ingredients Exporter | JHS GLOBAL',
+      description:
+        'Bulk container export of Indian spices, Basmati rice, pulses, superfood seeds, dehydrated vegetables, fresh produce, and specialty food ingredients.',
+    },
+    subCategories: [
+      { name: 'Spices & Seasoning', order: 1 },
+      { name: 'Superfoods', order: 2 },
+      { name: 'Pulses, Grains & Agri Commodities', order: 3 },
+      { name: 'Fresh Fruits & Vegetables', order: 4 },
+      { name: 'Dehydrated Fruits & Vegetables', order: 5 },
+      { name: 'Specialty Food Ingredients', order: 6 },
     ],
   },
 ];
 
 export const seedCategories = async () => {
-  logger.info('Seeding 3 master commercial divisions for JHS GLOBAL...');
+  logger.info('Seeding 4 master commercial divisions for JHS GLOBAL...');
 
   const categoryMap = new Map();
 
@@ -128,7 +152,7 @@ export const seedCategories = async () => {
     }
   }
 
-  logger.info('Categories seeded successfully (3 master divisions, 10 sub-groups)');
+  logger.info('Categories seeded successfully (4 master divisions, 18 sub-groups)');
   return categoryMap;
 };
 
