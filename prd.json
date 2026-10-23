@@ -1,65 +1,157 @@
 {
-  "project": "JHS GLOBAL Admin Suite - Step 10: Company Profile, Founders & System Settings",
-  "branchName": "feat/admin-step10-settings-users",
-  "created_at": "2026-10-17T09:45:00.000Z",
+  "project": "JHS GLOBAL B2B Export Platform",
+  "branch": "main",
+  "generatedAt": "2026-10-23T04:30:00.000Z",
+  "description": "Enterprise expansion of JHS GLOBAL B2B export platform: 4-category taxonomy, 96 new catalogue products, complete supply-chain messaging overhaul, FIEO accreditation, and AI assistant synchronization.",
   "userStories": [
     {
-      "id": "US-SET-001",
-      "title": "Team Users, Roles (RBAC) & Security Administration API & UI",
-      "description": "Implement administrative staff user management API and Desk UI with role-based access control, active status toggles, and session security",
+      "id": "US-001",
+      "title": "Normalise the Excel and produce the CSV and reconciliation report",
+      "description": "Parse client Products_website.xlsx, fix typos, handle duplicate/seasonal items, and output products.normalized.csv reconciling to 96 new items and 20 existing products (115 total active catalogue commodities).",
       "acceptanceCriteria": [
-        "GET /api/v1/admin/users returns paginated list of staff users with role badges, active status, and last login timestamps",
-        "POST /api/v1/admin/users creates new staff user with bcrypt-hashed password and assigned role (admin, sales, editor, viewer)",
-        "PUT /api/v1/admin/users/:id updates user details and role with audit trail logging",
-        "PATCH /api/v1/admin/users/:id/toggle-active toggles user status with self-lockout prevention",
-        "POST /api/v1/admin/users/:id/reset-password securely resets password and invalidates session token",
-        "Users.jsx renders full enterprise Desk with DataTable, FilterBar, user avatar badges, and slide-over AdminDrawer for user provisioning",
-        "RBAC strictly enforces admin-only access; sales and editor receive 403 Forbidden"
+        "products.normalized.csv generated with 11 required columns",
+        "Exact count matches: 96 items from Excel, 0 Types rows as products",
+        "Duplicate overlap 'Herbal Extracts' flagged and merged with existing 'herbal-botanical-extracts'",
+        "Seasonal flag applied to fresh mango and pomegranate",
+        "Fresh vs dehydrated slugs strictly differentiated (e.g., onion-fresh vs dehydrated-onion)"
       ],
-      "priority": 1,
       "passes": true
     },
     {
-      "id": "US-SET-002",
-      "title": "Compliance & Security Audit Trail Desk UI",
-      "description": "Build comprehensive Compliance & Security Audit Trail desk UI connected to immutable backend audit log repository",
+      "id": "US-002",
+      "title": "Category model and migration (additive, reversible), with backup step",
+      "description": "Prepare safe, additive database migration for categories and products supporting up to 3 hierarchy levels, forms array, availability/seasonal attributes, with verified pg_dump backup procedure.",
       "acceptanceCriteria": [
-        "GET /api/v1/audit-logs returns chronological administrative mutations with pagination and filters (entityType, action, userId, date range)",
-        "Audit snapshot data sanitizes sensitive keys (password, token, secret, auth) with [REDACTED]",
-        "AuditLogs.jsx renders enterprise activity ledger with DataTable, FilterBar, staff badge, action pills, entity badges, and IP/browser metadata",
-        "Slide-over detail drawer or modal shows formatted before/after JSON diff with visual change highlights",
-        "Access restricted to admin role only"
+        "Database backup command verified before schema modification",
+        "Category hierarchy supports level 1, 2, and 3",
+        "Product schema accommodates forms, seasonal availability, and nullable specs without crashing",
+        "All migrations are reversible and strictly additive"
       ],
-      "priority": 2,
-      "passes": true
+      "passes": false
     },
     {
-      "id": "US-SET-003",
-      "title": "Company Profile, Founders & System Health Desk UI & API",
-      "description": "Deliver single source of truth Company Profile, Founders dossiers, masked trade finance, and live system health diagnostics API and UI",
+      "id": "US-003",
+      "title": "Idempotent seed for categories and sub-categories",
+      "description": "Seed 4 top-level master divisions (Personal Care, Nutraceutical, Animal Feed, Food & Food Ingredients) and subcategories idempotently using upsert by slug.",
       "acceptanceCriteria": [
-        "GET /api/v1/admin/settings/company-profile returns canonical corporate identity (JHS GLOBAL, Surat, founders, ports, statutory licenses, contact channels)",
-        "PUT /api/v1/admin/settings/company-profile updates company profile with audit log and cache invalidation",
-        "GET /api/v1/admin/settings/system-health returns PostgreSQL connection pool health, pgvector extension status, table counts, uptime, and memory usage",
-        "POST /api/v1/admin/settings/cache-flush flushes server memory cache with audit log",
-        "Settings.jsx renders 4-tab enterprise desk: Corporate Profile & Legal Identity, Founders & Leadership Dossiers, Bank & Trade Finance (masked), and System Health & Database Diagnostics",
-        "Official brand JHS GLOBAL and founder Jay Sureshbhai Prajapati strictly enforced; unverified facts marked TODO(client)"
+        "Seed script runs cleanly without duplicating categories on re-run",
+        "Food & Food Ingredients seeded as 4th master division",
+        "All subcategories linked via parentId with correct order and paths",
+        "Re-running npm run seed produces zero duplicate rows"
       ],
-      "priority": 3,
-      "passes": true
+      "passes": false
     },
     {
-      "id": "US-SET-004",
-      "title": "Automated Step 10 Test Coverage & Zero Public Regression Gate",
-      "description": "Verify Step 10 implementation with automated backend test coverage and proof-of-no-change visual regression testing across all 5 viewports",
+      "id": "US-004",
+      "title": "Idempotent seed for all new products (names, slugs, categories, forms, availability only)",
+      "description": "Seed all 95 net-new products and merge 1 existing product with verified forms, clean names, and availability, leaving unverified specs empty without public placeholders.",
       "acceptanceCriteria": [
-        "Admin API client in client/src/admin/api.js provides fetchAdminUsers, createAdminUser, updateAdminUser, toggleAdminUserActive, resetAdminUserPassword, fetchAdminAuditLogs, fetchCompanyProfileSettings, updateCompanyProfileSettings, fetchSystemHealth, and flushServerCache",
-        "Automated integration tests in server/tests/settings-admin.test.js cover user management, audit logs, company profile settings, system health diagnostics, and RBAC rejection",
-        "Full backend test suite (9 test suites) passes 100% with no-file-parallelism",
-        "Zero visual and DOM regression across all 5 viewports (360px, 390px, 768px, 1024px, 1440px) confirmed via verify:no-change"
+        "Total active products count in database equals 115",
+        "No invented facts (no fake specs, fake HS codes, fake origins)",
+        "Herbal powders distinct from standardized extracts",
+        "Seed is strictly idempotent (upsert by slug)",
+        "Re-running seed results in zero changes"
       ],
-      "priority": 4,
-      "passes": true
+      "passes": false
+    },
+    {
+      "id": "US-005",
+      "title": "Admin shows and edits the new categories and products; verify sync both ways",
+      "description": "Verify Admin Operations Desk allows viewing, filtering, creating, editing, and soft-deleting new categories and products, syncing instantaneously with public portal.",
+      "acceptanceCriteria": [
+        "Admin category manager displays all 4 divisions and subcategories",
+        "Admin product table lists all 115 products with search and category filters",
+        "Editing a product in admin immediately invalidates cache and updates public PDP",
+        "Creating and deactivating a test product works end-to-end"
+      ],
+      "passes": false
+    },
+    {
+      "id": "US-006",
+      "title": "Public UI: 4-category home grid, navigation, filters, listing pagination, product pages that hide empty fields",
+      "description": "Update public frontend to display 4 balanced category cards, updated navigation, dynamic catalogue counts, paginated product listings, and PDPs that conditionally hide unpopulated specs.",
+      "acceptanceCriteria": [
+        "Home page category grid renders 4 symmetrical cards without layout overflow",
+        "Desktop and mobile navigation displays 4 core divisions",
+        "Products catalogue lists items with 24-item pagination and category pills",
+        "Product detail page cleanly hides empty specs, packing, and ports without displaying 'TODO(client)' or broken blocks",
+        "Responsive across 1440px desktop and 390px mobile viewports"
+      ],
+      "passes": false
+    },
+    {
+      "id": "US-007",
+      "title": "FIEO added as a certificate record and shown in the top banner, Quality page, footer, and the home certification strip",
+      "description": "Add FIEO (Federation of Indian Export Organisations) as an official certificate record with text badge representation across header, marquee, quality page, and footer.",
+      "acceptanceCriteria": [
+        "FIEO seeded into certificates table with TODO(client) placeholder notes in admin only",
+        "Top utility bar in Header displays FIEO",
+        "Certification marquee and Quality page render FIEO text badge cleanly without invented logos",
+        "Footer credentials display FIEO alongside FSSAI, APEDA, and DGFT",
+        "Admin certificates manager can edit FIEO details"
+      ],
+      "passes": false
+    },
+    {
+      "id": "US-008",
+      "title": "Copy changes from the approved Change Log across the site, SEO and AI prompts",
+      "description": "Execute approved copy modifications across public pages, components, SEO metadata, seeds, and email templates, replacing port/lab/Surat-centric copy with complete supply chain and product flexibility messaging.",
+      "acceptanceCriteria": [
+        "Zero hits for Mundra, Hazira, Pipavav, JNPT, SGS, NABL, Sortex in marketing copy",
+        "Export Process 8 steps rewritten in buyer-outcome terms",
+        "Legal registered office address in Surat, Gujarat preserved on Contact page and Footer only",
+        "SEO titles, meta descriptions, and JSON-LD schemas updated",
+        "Automated grep scan verifies compliance"
+      ],
+      "passes": false
+    },
+    {
+      "id": "US-009",
+      "title": "Re-index AI retrieval and update the fact ledger and prompts",
+      "description": "Synchronize server-side LLM knowledge base: update company facts, product embeddings, system prompt guardrails against health claims, and port-agreed-per-order answers.",
+      "acceptanceCriteria": [
+        "RAG embeddings rebuilt for all 115 products and updated company facts",
+        "AI system prompt updated with 4 export divisions and FIEO registration",
+        "Assistant correctly answers commodity queries (cumin, ginger forms, port policy)",
+        "Assistant strictly refuses health/medicinal claims for Ashwagandha and herbs"
+      ],
+      "passes": false
+    },
+    {
+      "id": "US-010",
+      "title": "Product images, batch 1 (approval gate), then the rest",
+      "description": "Establish illustrative WebP product imagery in batches of 10 or fewer, in consistent studio style without text or branding, gated by client approval.",
+      "acceptanceCriteria": [
+        "Batch 1 (10 representative products) generated/prepared in consistent studio style",
+        "Metadata marked 'Illustrative' with alt text, width, and height",
+        "Client approval gate verified before generating subsequent batches",
+        "Images lazy-loaded in WebP format with zero layout shift"
+      ],
+      "passes": false
+    },
+    {
+      "id": "US-011",
+      "title": "Update the docs, sitemap and project notes",
+      "description": "Update agent.md, database-design.md, system-design.md, project.md, sitemap.xml, and progress.txt to reflect 4 divisions, 115 products, FIEO accreditation, and supply chain messaging.",
+      "acceptanceCriteria": [
+        "agent.md, database-design.md, and system-design.md updated to reflect 4 divisions and 115 products",
+        "Sitemap generation includes all new category and product URLs",
+        "Documentation maintains 100% truth against actual code implementation"
+      ],
+      "passes": false
+    },
+    {
+      "id": "US-012",
+      "title": "Full verification and delivery report",
+      "description": "Run full test suite (lint, server vitest, client vitest, build), Playwright visual screenshots, automated copy search audit, AI verification tests, and produce final report.",
+      "acceptanceCriteria": [
+        "npm run lint passes with 0 errors",
+        "npm test and npm run test:client pass cleanly",
+        "npm run build completes with zero errors",
+        "Automated search confirms zero forbidden copy terms on public site",
+        "Playwright desktop and mobile screenshots captured across key pages"
+      ],
+      "passes": false
     }
   ]
 }

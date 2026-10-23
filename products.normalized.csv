@@ -1,0 +1,97 @@
+original_column,original_name,clean_name,slug,proposed_category,proposed_subcategory,forms,seasonal,duplicate_of,existing_site_match,notes
+Harbal Powder,Ashwagandha,Ashwagandha Powder,ashwagandha-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,ashwagandha-extract,Distinct from existing Ashwagandha extract (whole herb/powder vs standardized extract)
+Harbal Powder,Moringa,Moringa Powder,moringa-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,moringa-oleifera-extract,Distinct from existing Moringa extract
+Harbal Powder,Amla,Amla Powder,amla-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,amla-extract,Distinct from existing Amla extract
+Harbal Powder,Aloevera,Aloe Vera Powder,aloe-vera-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,Typo fixed: Aloevera -> Aloe Vera Powder
+Harbal Powder,Wheatgress,Wheatgrass Powder,wheatgrass-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,Typo fixed: Wheatgress -> Wheatgrass Powder
+Harbal Powder,Alfalfa,Alfalfa Powder,alfalfa-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,
+Harbal Powder,Tulsi (Holy Basil),Tulsi (Holy Basil) Powder,tulsi-holy-basil-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,
+Harbal Powder,Neem,Neem Powder,neem-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,
+Harbal Powder,Rose petal,Rose Petal Powder,rose-petal-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,
+Harbal Powder,Indigo/ henna powder,Indigo / Henna Powder,indigo-henna-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,Dual herbal powder item kept as single catalogue entry
+Harbal Powder,Hibiscus,Hibiscus Powder,hibiscus-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,
+Harbal Powder,Chamomile,Chamomile Powder,chamomile-powder,Nutraceutical Raw Materials,Herbal & Botanical Powders,"Whole, Cut/sifted (C/S), Powdered, Tea-bag Cut (TBC)",No,,,
+Spices and seasoning,Chilli,Red Chilli,red-chilli,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Turmeric,Turmeric (Whole / Ground),turmeric-whole-ground,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,turmeric-curcumin-extract,Distinct from existing Turmeric / Curcumin extract
+Spices and seasoning,Clove,Clove,clove,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Green Cardamom,Green Cardamom,green-cardamom,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Oragano,Oregano,oregano,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,Typo fixed: Oragano -> Oregano
+Spices and seasoning,Chilli flakes,Chilli Flakes,chilli-flakes,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Cumin,Cumin Seeds,cumin-seeds,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Coriander,Coriander Seeds,coriander-seeds,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Fennel,Fennel Seeds,fennel-seeds,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Mustrad,Mustard Seeds,mustard-seeds,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,Typo fixed: Mustrad -> Mustard Seeds
+Spices and seasoning,Ajwain,Ajwain (Carom Seeds),ajwain-carom-seeds,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Sesame seeds,Sesame Seeds,sesame-seeds,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Cinnamon/ Cassia,Cinnamon / Cassia,cinnamon-cassia,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,Single entry for Cinnamon/Cassia export bark
+Spices and seasoning,Black Pepper,Black Pepper,black-pepper,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Curry powder,Curry Powder,curry-powder,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Fenugreek,Fenugreek Seeds,fenugreek-seeds,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Himalayan pink Salt,Himalayan Pink Salt,himalayan-pink-salt,Food & Food Ingredients,Spices & Seasoning,"Granules, fine powder, coarse rocks",No,,,
+Spices and seasoning,Star anise,Star Anise,star-anise,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Bay leaf,Bay Leaf,bay-leaf,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Spices and seasoning,Celery seed,Celery Seeds,celery-seeds,Food & Food Ingredients,Spices & Seasoning,"Whole, ground, blends, seeds",No,,,
+Superfoods,Pysillum husk,Psyllium Husk & Powder,psyllium-husk-powder,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,Typo fixed: Pysillum -> Psyllium Husk & Powder
+Superfoods,Flax seeds,Flax Seeds,flax-seeds,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,
+Superfoods,Chia seeds,Chia Seeds,chia-seeds,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,
+Superfoods,Watermelon seeds,Watermelon Seeds,watermelon-seeds,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,
+Superfoods,Makhana (Fox nuts),Makhana (Fox Nuts),makhana-fox-nuts,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,
+Superfoods,Dill seeds,Dill Seeds,dill-seeds,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,
+Superfoods,Quinoa,Quinoa,quinoa,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,
+Superfoods,Sunflower seeds,Sunflower Seeds,sunflower-seeds,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,
+Superfoods,Black seed ( Nigella seeds),Black Seed (Nigella Seeds),black-seed-nigella,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,Cleaned spacing in Nigella seeds
+Superfoods,Basil seeds,Basil Seeds,basil-seeds,Food & Food Ingredients,Superfoods,"Whole seeds, kernels, flakes, powder",No,,,
+Personal care raw materials,Vegetable oils,Vegetable Oils (Cosmetic Grade),vegetable-oils-cosmetic,Personal Care Raw Materials,Carrier Oils & Specialty Lipids,,No,,,
+Personal care raw materials,Essential oils,Essential Oils (Cosmetic Grade),essential-oils-cosmetic,Personal Care Raw Materials,Cosmetic Active Extracts,,No,,,
+Personal care raw materials,Herbal Extracts,Herbal / Botanical Extracts,herbal-botanical-extracts,Personal Care Raw Materials,Cosmetic Active Extracts,,No,herbal-botanical-extracts,herbal-botanical-extracts,OVERLAP: Merged with existing catalogue entry (herbal-botanical-extracts); do not duplicate
+Personal care raw materials,Chemical raw material,Chemical Raw Materials (Cosmetic Grade),chemical-raw-materials-cosmetic,Personal Care Raw Materials,Surfactants & Cleansing Agents,,No,,,
+Personal care raw materials,Isopropyle alcohol,Isopropyl Alcohol (IPA),isopropyl-alcohol,Personal Care Raw Materials,Surfactants & Cleansing Agents,,No,,,Typo fixed: Isopropyle -> Isopropyl Alcohol
+Personal care raw materials,Guargum,Guar Gum (Cosmetic / Technical Grade),guar-gum,Personal Care Raw Materials,Carrier Oils & Specialty Lipids,,No,,,Typo fixed: Guargum -> Guar Gum
+"Pulses, Rice & Agriculture commodities",peanut,Peanuts (Groundnuts),peanuts-groundnuts,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Chickpeas/ Split chickpeas,Chickpeas / Split Chickpeas (Chana Dal),chickpeas-split-chickpeas,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,Single entry for whole chickpeas and split chickpeas (Chana Dal)
+"Pulses, Rice & Agriculture commodities",Husked Coconut/ Desiccated coconut,Husked Coconut / Desiccated Coconut,coconut-husked-desiccated,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,Single entry for fresh husked coconut and desiccated coconut
+"Pulses, Rice & Agriculture commodities",Wheat flour,Wheat Flour (Atta),wheat-flour-atta,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",gram flour,Gram Flour (Besan),gram-flour-besan,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Rice flour,Rice Flour,rice-flour,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Mung bean,Mung Bean (Green Gram),mung-bean,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Jaggery,Jaggery (Cane Sugar / Blocks / Powder),jaggery,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Kidney beans,Kidney Beans (Rajma),kidney-beans,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Red lentil,Red Lentils (Masoor Dal),red-lentils,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities","Millets (Sorghum, Ragi, Pearl millet)","Millets (Sorghum, Ragi, Pearl Millet)",millets-sorghum-ragi-pearl,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,Single composite entry for export millets
+"Pulses, Rice & Agriculture commodities",Pigeon pea,Pigeon Pea (Toor Dal),pigeon-pea-toor-dal,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Black lentil,Black Lentils (Urad Dal),black-lentils-urad,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",1121 Golden sella/ Raw Basmati Rice,1121 Golden Sella / Raw Basmati Rice,1121-golden-sella-raw-basmati-rice,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",1509 Basmati rice,1509 Basmati Rice,1509-basmati-rice,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Pusa Basmati Rice,Pusa Basmati Rice,pusa-basmati-rice,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Non-Basmati rice,Non-Basmati Rice,non-basmati-rice,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",IR64 Non-basmati rice,IR64 Non-Basmati Rice,ir64-non-basmati-rice,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+"Pulses, Rice & Agriculture commodities",Refined wheat flour (maida),Refined Wheat Flour (Maida),refined-wheat-flour-maida,Food & Food Ingredients,"Pulses, Grains & Agri Commodities",,No,,,
+Fresh Fruit & Vegetables,Onion,Fresh Onion,onion-fresh,Food & Food Ingredients,Fresh Fruits & Vegetables,"Fresh whole, sorted, graded",No,,,Distinct slug from Dehydrated Onion
+Fresh Fruit & Vegetables,Ginger,Fresh Ginger,ginger-fresh,Food & Food Ingredients,Fresh Fruits & Vegetables,"Fresh whole, sorted, graded",No,,,Distinct slug from Dehydrated Ginger
+Fresh Fruit & Vegetables,Mango (Seasonal),Fresh Mango,mango-fresh,Food & Food Ingredients,Fresh Fruits & Vegetables,"Fresh whole, sorted, graded",Seasonal,,,Marked seasonal; distinct slug from Dehydrated Mango
+Fresh Fruit & Vegetables,Banana,Fresh Banana,banana-fresh,Food & Food Ingredients,Fresh Fruits & Vegetables,"Fresh whole, sorted, graded",No,,,Distinct slug from Dehydrated Banana
+Fresh Fruit & Vegetables,Pomegranete,Fresh Pomegranate,pomegranate-fresh,Food & Food Ingredients,Fresh Fruits & Vegetables,"Fresh whole, sorted, graded",Seasonal,,,Typo fixed: Pomegranete -> Pomegranate
+Fresh Fruit & Vegetables,Drumstick,Fresh Drumstick (Moringa Pods),drumstick-fresh,Food & Food Ingredients,Fresh Fruits & Vegetables,"Fresh whole, sorted, graded",No,,,
+Fresh Fruit & Vegetables,Green chilli,Fresh Green Chilli,green-chilli-fresh,Food & Food Ingredients,Fresh Fruits & Vegetables,"Fresh whole, sorted, graded",No,,,
+Animal Feed,Yellow corn,Yellow Corn (Feed Maize),yellow-corn-feed,Animal Feed,Feed Grains & Raw Materials,,No,,,
+Animal Feed,Corn grits,Corn Grits (Animal Feed),corn-grits-feed,Animal Feed,Feed Grains & Raw Materials,,No,,,
+Animal Feed,Green millet,Green Millet (Feed Bajra),green-millet-feed,Animal Feed,Feed Grains & Raw Materials,,No,,,
+Animal Feed,Animal millet,Animal Feed Millet,animal-feed-millet,Animal Feed,Feed Grains & Raw Materials,,No,,,
+Animal Feed,Soya,Soya (Feed Grain / Meal),soya-feed-grain,Animal Feed,Feed Grains & Raw Materials,,No,,soybean-meal,Complementary feed commodity to existing Soybean meal
+Animal Feed,Safflower,Safflower Meal / Seeds,safflower-feed,Animal Feed,Feed Grains & Raw Materials,,No,,,
+Dehydrated Vegetables & fruit,Onion,Dehydrated Onion,dehydrated-onion,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,Distinct slug from Fresh Onion
+Dehydrated Vegetables & fruit,Garlic,Dehydrated Garlic,dehydrated-garlic,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Dehydrated Vegetables & fruit,Ginger,Dehydrated Ginger,dehydrated-ginger,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,Distinct slug from Fresh Ginger
+Dehydrated Vegetables & fruit,Potato,Dehydrated Potato,dehydrated-potato,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Dehydrated Vegetables & fruit,Carrot,Dehydrated Carrot,dehydrated-carrot,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Dehydrated Vegetables & fruit,Beetroot,Dehydrated Beetroot,dehydrated-beetroot,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Dehydrated Vegetables & fruit,Fried onion,Fried Crispy Onion,fried-crispy-onion,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Flakes, crispy kibbled",No,,,
+Dehydrated Vegetables & fruit,Tomato,Dehydrated Tomato,dehydrated-tomato,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Dehydrated Vegetables & fruit,Spinach,Dehydrated Spinach,dehydrated-spinach,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Dehydrated Vegetables & fruit,Mango,Dehydrated Mango,dehydrated-mango,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,Distinct slug from Fresh Mango
+Dehydrated Vegetables & fruit,Banana,Dehydrated Banana,dehydrated-banana,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,Distinct slug from Fresh Banana
+Dehydrated Vegetables & fruit,Strawberry,Dehydrated Strawberry,dehydrated-strawberry,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Dehydrated Vegetables & fruit,Pineapple,Dehydrated Pineapple,dehydrated-pineapple,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Dehydrated Vegetables & fruit,Lemon,Dehydrated Lemon,dehydrated-lemon,Food & Food Ingredients,Dehydrated Fruits & Vegetables,"Minced, Chopped, flakes, kibbled, granules, powdered",No,,,
+Others,Honey,Pure Natural Honey,pure-natural-honey,Food & Food Ingredients,Specialty Food Ingredients,"Liquid, creamed, bulk drums",No,,,
+Others,Fruit pulp,Aseptic Fruit Pulp,aseptic-fruit-pulp,Food & Food Ingredients,Specialty Food Ingredients,Aseptic bag in drum (215 kg),No,,,"Tropical fruit pulp (Mango, Guava, Papaya)"
