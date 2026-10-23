@@ -61,6 +61,8 @@ export const connectDB = async () => {
 
         ALTER TABLE products ADD COLUMN IF NOT EXISTS container_load JSONB DEFAULT '{"fcl20":"","fcl40":"","lcl":""}'::jsonb;
         ALTER TABLE products ADD COLUMN IF NOT EXISTS documents JSONB DEFAULT '[]'::jsonb;
+        ALTER TABLE products ADD COLUMN IF NOT EXISTS availability VARCHAR(50) DEFAULT 'Year-round';
+        ALTER TABLE products ALTER COLUMN hs_code DROP NOT NULL;
       `);
     } catch (extErr) {
       logger.debug(`PostgreSQL extension/migration check notice: ${extErr.message}`);

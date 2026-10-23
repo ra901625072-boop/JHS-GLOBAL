@@ -57,8 +57,14 @@ export const Product = sequelize.define(
     },
     hsCode: {
       type: DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
+      defaultValue: '',
       field: 'hs_code',
+    },
+    availability: {
+      type: DataTypes.STRING(50),
+      defaultValue: 'Year-round',
+      field: 'availability',
     },
     botanicalName: {
       type: DataTypes.STRING(150),

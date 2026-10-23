@@ -27,7 +27,7 @@
         "Product schema accommodates forms, seasonal availability, and nullable specs without crashing",
         "All migrations are reversible and strictly additive"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-003",

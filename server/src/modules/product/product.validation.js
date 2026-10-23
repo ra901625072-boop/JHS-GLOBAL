@@ -46,7 +46,8 @@ export const createProductSchema = {
       )
       .optional()
       .default([]),
-    hsCode: z.string().min(2, 'HS Code is required'),
+    hsCode: z.string().optional().default(''),
+    availability: z.string().optional().default('Year-round'),
     botanicalName: z.string().optional().default(''),
     origin: z.array(z.string()).optional().default(['India']),
     forms: z.array(z.string()).optional().default([]),
