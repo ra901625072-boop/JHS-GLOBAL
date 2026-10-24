@@ -52,7 +52,7 @@
         "Seed is strictly idempotent (upsert by slug)",
         "Re-running seed results in zero changes"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-005",

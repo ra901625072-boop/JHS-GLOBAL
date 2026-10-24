@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import Product from '../modules/product/product.model.js';
 import createSlug from '../utils/slugify.js';
 import logger from '../utils/logger.js';
@@ -50,7 +52,7 @@ export const productsRawData = [
     shelfLife: '24 months in unopened original packaging — TODO(client)',
     storage: 'Store in tightly sealed containers in a cool, dry warehouse protected from direct sunlight.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)', 'Hazira (INHZR)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–15 business days following LC/deposit confirmation — TODO(client)',
     isFeatured: true,
   },
@@ -95,7 +97,7 @@ export const productsRawData = [
     shelfLife: '24 months stored below 25°C — TODO(client)',
     storage: 'Store in tightly closed original containers in a cool, ventilated, dark area.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '12–18 business days — TODO(client)',
     isFeatured: false,
   },
@@ -139,7 +141,7 @@ export const productsRawData = [
     shelfLife: '12 months stored between 15°C and 40°C — TODO(client)',
     storage: 'Store above 15°C to prevent crystallization or gel precipitation. Avoid direct exposure to freezing or extreme heat.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)', 'Hazira (INHZR)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '7–12 business days — TODO(client)',
     isFeatured: true,
   },
@@ -184,7 +186,7 @@ export const productsRawData = [
     shelfLife: '36 months in intact packaging — TODO(client)',
     storage: 'Keep in tightly closed containers in a dry, well-ventilated warehouse away from incompatible oxidizing agents.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–14 business days — TODO(client)',
     isFeatured: true,
   },
@@ -229,7 +231,7 @@ export const productsRawData = [
     shelfLife: '24 months stored between 10°C and 30°C — TODO(client)',
     storage: 'Store in corrosion-resistant HDPE or lined containers away from strong bases and oxidizing agents.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–15 business days — TODO(client)',
     isFeatured: false,
   },
@@ -272,7 +274,7 @@ export const productsRawData = [
     shelfLife: '36 months in unopened containers protected from light and heat — TODO(client)',
     storage: 'Store in tight, light-resistant containers under nitrogen blanket below 25°C.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '7–12 business days — TODO(client)',
     isFeatured: true,
   },
@@ -316,7 +318,7 @@ export const productsRawData = [
     shelfLife: '60 months stored dry and sealed — TODO(client)',
     storage: 'Store in dry warehouse pallets elevated from floor. Prevent moisture contamination.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Pipavav (INPAV1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '7–10 business days — TODO(client)',
     isFeatured: false,
   },
@@ -365,7 +367,7 @@ export const productsRawData = [
     shelfLife: '36 months stored sealed in original container — TODO(client)',
     storage: 'Store in a cool, dry area below 25°C away from moisture, heat, and direct light.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)', 'Air Cargo Mumbai (BOM)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–14 business days — TODO(client)',
     isFeatured: true,
   },
@@ -410,7 +412,7 @@ export const productsRawData = [
     shelfLife: '36 months stored protected from sunlight — TODO(client)',
     storage: 'Store in airtight containers in a cool, dark room. Curcuminoids degrade upon prolonged UV exposure.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)', 'Air Cargo Mumbai (BOM)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '7–12 business days — TODO(client)',
     isFeatured: true,
   },
@@ -454,7 +456,7 @@ export const productsRawData = [
     shelfLife: '36 months stored sealed in cool environment — TODO(client)',
     storage: 'Store in a cool, dry place away from heat and light.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–14 business days — TODO(client)',
     isFeatured: false,
   },
@@ -498,7 +500,7 @@ export const productsRawData = [
     shelfLife: '36 months in intact container — TODO(client)',
     storage: 'Store in tightly sealed containers in a cool, dry place protected from ambient humidity.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–14 business days — TODO(client)',
     isFeatured: false,
   },
@@ -542,7 +544,7 @@ export const productsRawData = [
     shelfLife: '24 months in sealed original packaging — TODO(client)',
     storage: 'Store in a cool, dark, dry warehouse to maintain chlorophyll stability and avoid photo-oxidation.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)', 'Tuticorin (INTUT1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '7–12 business days — TODO(client)',
     isFeatured: false,
   },
@@ -586,7 +588,7 @@ export const productsRawData = [
     shelfLife: '36 months in unopened container — TODO(client)',
     storage: 'Store in cool, dry conditions protected from ambient humidity.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–14 business days — TODO(client)',
     isFeatured: false,
   },
@@ -629,7 +631,7 @@ export const productsRawData = [
     shelfLife: '36 months stored sealed — TODO(client)',
     storage: 'Store in a cool, dark, dry warehouse away from heat and direct sunlight.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)', 'Kochi (INCOK1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–14 business days — TODO(client)',
     isFeatured: true,
   },
@@ -673,7 +675,7 @@ export const productsRawData = [
     shelfLife: '24 months in unopened packaging — TODO(client)',
     storage: 'Store in dry warehouse elevated from floor away from aromatic chemicals or moisture.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–15 business days — TODO(client)',
     isFeatured: true,
   },
@@ -716,7 +718,7 @@ export const productsRawData = [
     shelfLife: '24 months in tightly closed original packaging — TODO(client)',
     storage: 'Store in cool, dry warehouse protected from ambient humidity to prevent caking.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '7–12 business days — TODO(client)',
     isFeatured: false,
   },
@@ -766,7 +768,7 @@ export const productsRawData = [
     shelfLife: '6–9 months stored in ventilated, cool, pest-controlled silo/warehouse — TODO(client)',
     storage: 'Store in clean, cool, well-ventilated grain warehouses on wooden pallets. Avoid direct humidity and condensation.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Kandla (INIXY1)', 'Pipavav (INPAV1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–15 business days — TODO(client)',
     isFeatured: true,
   },
@@ -808,7 +810,7 @@ export const productsRawData = [
     shelfLife: '6 months stored under ventilated conditions — TODO(client)',
     storage: 'Store in dry, pest-controlled facilities protected from floor dampness and atmospheric moisture.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Kandla (INIXY1)', 'Pipavav (INPAV1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–14 business days — TODO(client)',
     isFeatured: false,
   },
@@ -850,7 +852,7 @@ export const productsRawData = [
     shelfLife: '6 months stored dry and cool — TODO(client)',
     storage: 'Store in well-ventilated, dry storage areas protected from rodent ingress and moisture.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Pipavav (INPAV1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–14 business days — TODO(client)',
     isFeatured: false,
   },
@@ -894,19 +896,163 @@ export const productsRawData = [
     shelfLife: '12–18 months stored cool and dark — TODO(client)',
     storage: 'Store in a cool, dry place below 25°C away from heat, moisture, and direct sunlight to prevent vitamin degradation.',
     incoterms: ['FOB', 'CIF', 'CFR'],
-    ports: ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
+    ports: ['Port of loading agreed per order'],
     leadTime: '10–15 business days — TODO(client)',
     isFeatured: true,
   },
 ];
 
+function parseCSVLine(line) {
+  const result = [];
+  let cur = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (c === ',' && !inQuotes) {
+      result.push(cur.trim());
+      cur = '';
+    } else {
+      cur += c;
+    }
+  }
+  result.push(cur.trim());
+  return result;
+}
+
+const generateProductDescriptions = (item) => {
+  const name = item.clean_name;
+  let shortDescription = '';
+  let description = '';
+
+  if (item.proposed_category === 'Nutraceutical Raw Materials') {
+    shortDescription = `Bulk export supply of ${name} processed under controlled standards for botanical formulations, dietary supplements, and herbal blends.`;
+    description = `${name} is supplied in commercial bulk container volumes for nutraceutical formulators, herbal blend processors, and dietary supplement manufacturers. Sourced through JHS GLOBAL's direct supply chain network and packaged in accordance with destination market requirements. Available in custom export packaging with complete commercial documentation on request.`;
+  } else if (item.proposed_category === 'Food & Food Ingredients') {
+    if (item.proposed_subcategory === 'Spices & Seasoning') {
+      shortDescription = `Bulk export-grade ${name} sourced for international culinary, seasoning blends, and commercial food manufacturing.`;
+      description = `${name} is cleaned, sorted, and packed to international food safety and commercial quality standards. Suitable for bulk food processors, culinary packaging, and spice blenders. Export packaging options available to buyer specifications with full supply chain traceability.`;
+    } else if (item.proposed_subcategory === 'Superfoods') {
+      shortDescription = `Wholesome export-grade ${name} prepared for dietary, bakery, and health food formulation manufacturers.`;
+      description = `High-purity ${name} selected and packed for industrial food formulators, retail re-packers, and commercial bakers. Managed end-to-end through JHS GLOBAL's integrated supply chain with custom packaging options available.`;
+    } else if (item.proposed_subcategory === 'Pulses, Grains & Agri Commodities') {
+      shortDescription = `Premium quality ${name} cleaned and graded for commercial bulk grain and food distribution.`;
+      description = `Export-grade ${name} sourced directly from primary agricultural growing belts and machine-cleaned for international commercial grain markets. Available in containerized bulk or palletized export bags tailored to buyer specifications.`;
+    } else if (item.proposed_subcategory === 'Fresh Fruits & Vegetables') {
+      shortDescription = `Export-quality fresh ${name} carefully graded and packed under controlled temperature for international delivery.`;
+      description = `Freshly harvested ${name} selected for international export markets, graded for size and maturity, and packed under temperature-controlled post-harvest protocols. Containerized reefer shipping coordinated to agreed destination ports.`;
+    } else if (item.proposed_subcategory === 'Dehydrated Fruits & Vegetables') {
+      shortDescription = `Commercial dehydrated ${name} processed to preserve aroma and culinary quality for food processing and ready-to-eat formulations.`;
+      description = `Dehydrated ${name} processed under strict moisture and microbiological controls for food seasoning manufacturers, instant soup blenders, and snack producers. Available in multiple cuts and mesh sizes with moisture-barrier export packaging.`;
+    } else {
+      shortDescription = `Export-grade ${name} packed under international food safety standards for food processors and ingredient blenders.`;
+      description = `${name} supplied in commercial volumes for commercial food processors, beverage manufacturers, and institutional buyers. Handled through complete supply chain oversight with custom packaging options.`;
+    }
+  } else if (item.proposed_category === 'Animal Feed') {
+    shortDescription = `Commercial feed-grade ${name} formulated for livestock, poultry, and animal nutrition manufacturing.`;
+    description = `Export-quality ${name} supplied in bulk container volumes for animal feed mills, aquaculture feed manufacturers, and livestock nutritional formulators. Guaranteed nutritional consistency and verified export packaging.`;
+  } else {
+    shortDescription = `Manufacturer-grade ${name} for cosmetic, personal care, and topical formulation applications.`;
+    description = `High-purity ${name} supplied for cosmetic formulators, personal care manufacturers, and specialty compounders. Delivered with technical batch documentation on formal request.`;
+  }
+
+  return { shortDescription, description };
+};
+
+export const loadNewProductsFromCSV = () => {
+  const csvPath = path.resolve(process.cwd(), 'products.normalized.csv');
+  if (!fs.existsSync(csvPath)) {
+    logger.warn(`products.normalized.csv not found at ${csvPath}`);
+    return [];
+  }
+  const content = fs.readFileSync(csvPath, 'utf8');
+  const lines = content.split(/\r?\n/).filter((line) => line.trim().length > 0);
+  if (lines.length <= 1) return [];
+
+  const headers = parseCSVLine(lines[0]);
+  const rows = lines.slice(1).map(parseCSVLine);
+
+  const parsed = rows.map((r) => {
+    const obj = {};
+    headers.forEach((h, idx) => {
+      obj[h] = r[idx] || '';
+    });
+    return obj;
+  });
+
+  const netNew = parsed.filter((p) => !p.duplicate_of || p.duplicate_of.trim() === '');
+
+  return netNew.map((item) => {
+    const formsArray = item.forms
+      ? item.forms.split(',').map((f) => f.trim()).filter(Boolean)
+      : [];
+    const isSeasonal = item.seasonal?.toLowerCase() === 'seasonal';
+    const { shortDescription, description } = generateProductDescriptions(item);
+
+    return {
+      name: item.clean_name,
+      slug: item.slug,
+      category: item.proposed_category,
+      subCategory: item.proposed_subcategory,
+      availability: isSeasonal ? 'Seasonal' : 'Year-round',
+      forms: formsArray,
+      grades: ['Export Grade'],
+      hsCode: null,
+      botanicalName: null,
+      origin: [],
+      shortDescription,
+      description,
+      specs: [],
+      attributes: {
+        verified: false,
+        clientInputSource: 'Products_website.xlsx',
+        originalColumn: item.original_column,
+        originalName: item.original_name,
+      },
+      packing: [],
+      moq: { value: 1, unit: '20ft FCL' },
+      shelfLife: '',
+      storage: 'Store in a cool, dry place away from direct sunlight.',
+      incoterms: ['FOB', 'CIF', 'CFR'],
+      ports: ['Port of loading agreed per order'],
+      leadTime: 'Agreed upon order confirmation',
+      containerLoad: { fcl20: '', fcl40: '', lcl: '' },
+      documents: [],
+      certificateIds: [],
+      images: [],
+      isFeatured: false,
+      isActive: true,
+      isPrivateLabelAvailable: true,
+      seo: {
+        title: `${item.clean_name} Bulk Exporter | JHS GLOBAL`,
+        description: `Bulk export of ${item.clean_name} by JHS GLOBAL. End-to-end supply chain management, custom packaging options, and export quotation within 48 hours.`,
+        keywords: [
+          item.clean_name.toLowerCase(),
+          `${item.clean_name.toLowerCase()} exporter`,
+          'b2b raw materials india',
+          `${item.clean_name.toLowerCase()} bulk export`,
+        ].filter(Boolean),
+      },
+    };
+  });
+};
+
 export const seedProducts = async (categoryMap) => {
-  logger.info('Seeding 20 new raw material products for JHS GLOBAL...');
+  logger.info('Seeding commercial raw material products for JHS GLOBAL (20 existing + 95 new)...');
+
+  const newProducts = loadNewProductsFromCSV();
+  const allProducts = [...productsRawData, ...newProducts];
 
   let createdCount = 0;
   let updatedCount = 0;
 
-  for (const item of productsRawData) {
+  for (const item of allProducts) {
     const parentCat =
       categoryMap.get(item.category) ||
       (await Product.sequelize.models.Category.findOne({ where: { name: item.category } }));
@@ -919,8 +1065,8 @@ export const seedProducts = async (categoryMap) => {
 
     const slug = item.slug || createSlug(item.name);
 
-    // Initial illustrative image payload with clear AI / TODO disclaimer
-    const imagePayload = [
+    // Initial illustrative image payload for items without custom images
+    const defaultImagePayload = [
       {
         url: `/images/products/${slug}.webp`,
         alt: `${item.name} commercial export grade - JHS GLOBAL`,
@@ -932,14 +1078,17 @@ export const seedProducts = async (categoryMap) => {
       },
     ];
 
+    const imagePayload = item.images !== undefined ? item.images : defaultImagePayload;
+
     const productPayload = {
       name: item.name,
       slug,
       categoryId: parentCat?.id || null,
       subCategoryId: subCat?.id || null,
-      hsCode: item.hsCode || '',
+      hsCode: item.hsCode || null,
+      availability: item.availability || 'Year-round',
       botanicalName: item.botanicalName || null,
-      origin: item.origin || ['India — TODO(client)'],
+      origin: item.origin || [],
       forms: item.forms || [],
       grades: item.grades || ['Export Grade'],
       shortDescription: item.shortDescription || '',
@@ -947,30 +1096,32 @@ export const seedProducts = async (categoryMap) => {
       images: imagePayload,
       specs: item.specs || [],
       attributes: item.attributes || { verified: false },
-      packing: item.packing || [{ type: 'Standard Export Bag', size: '25 kg', notes: 'Export standard' }],
+      packing: item.packing || [],
       moq: item.moq || { value: 1, unit: '20ft FCL' },
-      shelfLife: item.shelfLife || '24 months — TODO(client)',
+      shelfLife: item.shelfLife || '',
       storage: item.storage || 'Store in a cool, dry place away from direct sunlight.',
       incoterms: item.incoterms || ['FOB', 'CIF', 'CFR'],
-      ports: item.ports || ['Mundra (INMUN1)', 'Nhava Sheva (INNSA1)'],
-      leadTime: item.leadTime || '10–15 business days — TODO(client)',
-      tags: [
+      ports: item.ports || ['Port of loading agreed per order'],
+      leadTime: item.leadTime || 'Agreed upon order confirmation',
+      containerLoad: item.containerLoad || { fcl20: '', fcl40: '', lcl: '' },
+      documents: item.documents || [],
+      certificateIds: item.certificateIds || [],
+      tags: item.tags || [
         item.name.toLowerCase(),
         ...(item.forms || []).map((f) => f.toLowerCase()),
         item.category.toLowerCase(),
         (item.subCategory || '').toLowerCase(),
-      ],
+      ].filter(Boolean),
       isFeatured: Boolean(item.isFeatured),
       isActive: true,
       isPrivateLabelAvailable: true,
-      seo: {
-        title: `${item.name} Bulk Exporter India | JHS GLOBAL`,
-        description: `${item.shortDescription || item.name} exported from India with verified laboratory specifications and compliant documentation.`,
+      seo: item.seo || {
+        title: `${item.name} Bulk Exporter | JHS GLOBAL`,
+        description: `Bulk export of ${item.name} by JHS GLOBAL. Reliable supply chain management and export packaging.`,
         keywords: [
           item.name.toLowerCase(),
           `${item.name.toLowerCase()} exporter`,
           'b2b raw materials india',
-          item.hsCode ? `hs ${item.hsCode}` : '',
         ].filter(Boolean),
       },
     };
@@ -988,7 +1139,7 @@ export const seedProducts = async (categoryMap) => {
   }
 
   logger.info(
-    `Products seeding completed: ${createdCount} created, ${updatedCount} updated (Total: ${productsRawData.length} products)`
+    `Products seeding completed: ${createdCount} created, ${updatedCount} updated (Total: ${allProducts.length} products)`
   );
 };
 
