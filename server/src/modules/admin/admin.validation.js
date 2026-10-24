@@ -28,7 +28,8 @@ export const adminProductSchema = z.object({
   subCategoryId: z.union([z.string(), z.number()]).optional().nullable().transform((val) => (val ? String(val) : null)),
   shortDescription: z.string().max(1000).optional().default(''),
   description: z.string().optional().default(''),
-  hsCode: z.string({ required_error: 'HS Code is required' }).trim(),
+  hsCode: z.string().optional().default(''),
+  availability: z.string().optional().default('Year-round'),
   botanicalName: z.string().optional().default(''),
   origin: z.union([z.string(), z.array(z.string())]).default('India'),
   forms: z.array(z.string()).default([]),
@@ -52,7 +53,7 @@ export const adminProductSchema = z.object({
   shelfLife: z.string().optional(),
   storage: z.string().optional().default('Store in a cool, dry place away from direct sunlight'),
   leadTime: z.string().optional().default('10–15 business days'),
-  ports: z.array(z.string()).optional().default(['Mundra', 'Nhava Sheva (JNPT)']),
+  ports: z.array(z.string()).optional().default(['Port of loading agreed per order']),
   incoterms: z.array(z.string()).optional().default(['FOB', 'CIF', 'CFR']),
   containerLoad: z
     .object({

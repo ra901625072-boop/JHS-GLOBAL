@@ -64,7 +64,7 @@
         "Editing a product in admin immediately invalidates cache and updates public PDP",
         "Creating and deactivating a test product works end-to-end"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-006",

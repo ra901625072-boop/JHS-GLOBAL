@@ -95,6 +95,7 @@ export const Products = () => {
     categoryId: '',
     subCategoryId: '',
     hsCode: '',
+    availability: 'Year-round',
     botanicalName: '',
     origin: 'India',
     shortDescription: '',
@@ -106,7 +107,7 @@ export const Products = () => {
     shelfLife: '24 months',
     storage: 'Store in a cool, dry place away from direct sunlight',
     leadTime: '10–15 business days',
-    ports: ['Mundra', 'Nhava Sheva (JNPT)'],
+    ports: ['Port of loading agreed per order'],
     incoterms: ['FOB', 'CIF', 'CFR'],
     containerLoad: { fcl20: '', fcl40: '', lcl: '' },
     isFeatured: false,
@@ -179,6 +180,7 @@ export const Products = () => {
         categoryId: String(activeProductDetails.categoryId || activeProductDetails.category?.id || ''),
         subCategoryId: activeProductDetails.subCategoryId ? String(activeProductDetails.subCategoryId) : '',
         hsCode: activeProductDetails.hsCode || '',
+        availability: activeProductDetails.availability || 'Year-round',
         botanicalName: activeProductDetails.botanicalName || '',
         origin: activeProductDetails.origin || 'India',
         shortDescription: activeProductDetails.shortDescription || '',
@@ -192,7 +194,7 @@ export const Products = () => {
         shelfLife: activeProductDetails.shelfLife || '24 months',
         storage: activeProductDetails.storage || 'Store in a cool, dry place away from direct sunlight',
         leadTime: activeProductDetails.leadTime || '10–15 business days',
-        ports: Array.isArray(activeProductDetails.ports) ? activeProductDetails.ports : ['Mundra', 'Nhava Sheva (JNPT)'],
+        ports: Array.isArray(activeProductDetails.ports) ? activeProductDetails.ports : ['Port of loading agreed per order'],
         incoterms: Array.isArray(activeProductDetails.incoterms) ? activeProductDetails.incoterms : ['FOB', 'CIF', 'CFR'],
         containerLoad: activeProductDetails.containerLoad || { fcl20: '', fcl40: '', lcl: '' },
         isFeatured: Boolean(activeProductDetails.isFeatured),
@@ -446,10 +448,6 @@ export const Products = () => {
 
     if (!formData.name.trim()) {
       setErrorMsg('Product name is required');
-      return;
-    }
-    if (!formData.hsCode.trim()) {
-      setErrorMsg('HS Code is required');
       return;
     }
     if (!formData.categoryId) {
@@ -934,16 +932,15 @@ export const Products = () => {
                 </label>
                 <input
                   type="text"
-                  required
                   value={formData.hsCode}
                   onChange={(e) => setFormData({ ...formData, hsCode: e.target.value })}
-                  placeholder="e.g. 1302.19"
+                  placeholder="e.g. 1302.19 (Optional)"
                   className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs font-mono tabular-nums focus:bg-white focus:ring-2 focus:ring-[[var(--admin-brand)]]"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
                 <label className="block font-semibold uppercase tracking-wider text-neutral-700 mb-1">
                   Division & Category *
@@ -986,6 +983,20 @@ export const Products = () => {
                   onChange={(e) => setFormData({ ...formData, origin: e.target.value })}
                   className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs focus:bg-white"
                 />
+              </div>
+
+              <div>
+                <label className="block font-semibold uppercase tracking-wider text-neutral-700 mb-1">
+                  Seasonal Availability
+                </label>
+                <select
+                  value={formData.availability || 'Year-round'}
+                  onChange={(e) => setFormData({ ...formData, availability: e.target.value })}
+                  className="w-full p-2.5 bg-neutral-50 border border-[[var(--admin-border)]] rounded-lg text-xs focus:bg-white"
+                >
+                  <option value="Year-round">Year-round</option>
+                  <option value="Seasonal">Seasonal</option>
+                </select>
               </div>
             </div>
 
@@ -1304,7 +1315,7 @@ export const Products = () => {
                   Ports of Dispatch
                 </label>
                 <div className="space-y-1.5">
-                  {['Mundra', 'Nhava Sheva (JNPT)', 'Hazira'].map((port) => (
+                  {['Port of loading agreed per order', 'FOB ocean container terminal', 'Air freight cargo terminal'].map((port) => (
                     <label key={port} className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"

@@ -57,6 +57,7 @@ const CANONICAL_DIVISIONS = [
   { slug: 'personal-care-raw-materials', name: 'Personal Care Raw Materials', hs: '33' },
   { slug: 'nutraceutical-raw-materials', name: 'Nutraceutical Raw Materials', hs: '13' },
   { slug: 'animal-feed', name: 'Animal Feed', hs: '23' },
+  { slug: 'food-food-ingredients', name: 'Food & Food Ingredients', hs: '09' },
 ];
 
 export const Categories = () => {
