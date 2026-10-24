@@ -929,11 +929,11 @@ export const Inquiries = () => {
 Thank you for reaching out to JHS GLOBAL regarding our export commodities.
 
 To ensure our Commercial Operations Desk calculates the most precise freight, insurance, and packaging terms, could you please confirm:
-1. Preferred Incoterm (e.g., CIF, CFR, or FOB Nhava Sheva/Mundra)?
+1. Preferred Incoterm (e.g., CIF, CFR, or FOB Indian Gateway Port)?
 2. Designated discharge port and country?
 3. Target packaging specifications (e.g., ISO Tanks, 200kg HDPE Drums, or 25kg Palletised Bags)?
 
-Upon confirmation, our team will dispatch the formal pro-forma quotation alongside our statutory Certificate of Analysis (CoA).
+Upon confirmation, our team will dispatch the formal pro-forma quotation alongside our statutory specification dossier.
 
 Best regards,
 Commercial Operations Desk
@@ -956,8 +956,8 @@ JHS GLOBAL`
 We have reviewed your RFQ for ${activeInquiry.items?.[0]?.product?.name || activeInquiry.product_name || 'our export commodities'} (${activeInquiry.items?.[0]?.quantity || ''} ${activeInquiry.items?.[0]?.unit || 'MT'}).
 
 Our Commercial Export Desk has prepared the formal quotation tailored to your requested shipment timeline:
-- Port of Dispatch: Port of Nhava Sheva (JNPT) / Port of Mundra, India
-- Export Standards: ISO 9001:2015, GMP+ and statutory phytosanitary certification
+- Port of Dispatch: Indian Gateway Port (agreed per order)
+- Export Standards: Verified statutory credentials (FSSAI, APEDA, FIEO, Spices Board) and phytosanitary certification
 - Payment Terms: Standard Irrevocable LC at Sight or 30% T/T Advance
 
 Please review our preliminary commercial offer. Let us know if you wish to adjust the order lot size or container configuration.

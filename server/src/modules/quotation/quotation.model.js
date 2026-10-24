@@ -81,7 +81,7 @@ export const Quotation = sequelize.define(
     },
     portOfLoading: {
       type: DataTypes.STRING(150),
-      defaultValue: 'Mundra Port / JNPT, India',
+      defaultValue: 'Port of loading agreed per order (India)',
       field: 'port_of_loading',
     },
     portOfDischarge: {

@@ -47,7 +47,7 @@ export const ContactPage = () => {
     },
     {
       q: 'Which ports of loading are utilized for container stuffing?',
-      a: 'Our primary maritime export gate is Hazira Deep-Water Port (Surat, 25km from our logistics yard) and Mundra Port (Gujarat), providing direct container liner services to GCC, Europe, and the Americas.',
+      a: 'Port of loading is agreed per order based on commodity origin, cargo volume, and optimal ocean liner routing across Indian container gateway terminals.',
     },
   ];
 
@@ -57,7 +57,7 @@ export const ContactPage = () => {
         <title>Request a Formal Quote (RFQ) & Contact Trade Desk — {brandName}</title>
         <meta
           name="description"
-          content="Submit formal B2B request for quotation for Personal Care Raw Materials, Nutraceutical Ingredients, and Animal Feed. Binding proforma quotation issued within 48 business hours by JHS GLOBAL."
+          content="Submit formal B2B request for quotation for Food & Food Ingredients, Personal Care Raw Materials, Nutraceutical Ingredients, and Animal Feed. Binding proforma quotation issued within 48 business hours by JHS GLOBAL."
         />
       </Helmet>
 
@@ -70,7 +70,7 @@ export const ContactPage = () => {
           </div>
         }
         title="Request a Binding Commercial Quotation"
-        description="Provide your target commodity tonnage (MT / FCL), packaging specifications, and destination discharge port. Our international trade desk prepares your customized proforma offer and laboratory COA pack."
+        description="Provide your target commodity tonnage (MT / FCL), packaging specifications, and destination discharge port. Our international trade desk prepares your customized proforma offer and complete technical specifications."
       />
 
       <div className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
@@ -110,7 +110,7 @@ export const ContactPage = () => {
                       </p>
                       <div className="mt-1.5 inline-flex items-center gap-1.5 text-[11px] text-neutral-600 font-mono bg-neutral-100/80 px-2 py-0.5 rounded border border-neutral-200/60">
                         <Anchor className="w-3 h-3 text-accent-600 shrink-0" />
-                        <span>Hazira (25km) & Mundra Ports</span>
+                        <span>Port of Loading: Agreed per order</span>
                       </div>
                     </div>
                   </div>

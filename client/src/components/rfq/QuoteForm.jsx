@@ -845,9 +845,9 @@ export const QuoteForm = () => {
               className="w-full px-3 py-2.5 text-xs sm:text-sm rounded-lg border border-surface-border bg-surface-canvas focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-800"
             >
               <option value="CIF">CIF (Cost, Insurance & Freight)</option>
-              <option value="FOB">FOB (Free On Board Mundra/JNPT)</option>
+              <option value="FOB">FOB (Free On Board - Indian Gateway Port)</option>
               <option value="CFR">CFR (Cost & Freight)</option>
-              <option value="EXW">EXW (Ex Works Processing Mill)</option>
+              <option value="EXW">EXW (Ex Works Facility)</option>
               <option value="CIP">CIP (Carriage and Insurance Paid)</option>
             </select>
           </div>

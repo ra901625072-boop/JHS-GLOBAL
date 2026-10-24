@@ -679,7 +679,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const certId = getFactCitation('fssai', 'brand', 'identity', 'legal');
     const citeText = certId ? ` [FACT-ID: ${certId}]` : '';
     return JSON.stringify({
-      answer: `JHS Global operates under verified government export credentials including FSSAI Central License (No. 10725997001058)${citeText}, APEDA, Spices Board of India, and DGFT IEC. We provide full batch traceability and third-party pre-shipment inspections (such as SGS) upon request, but we do not provide comparative performance or pricing claims against third-party manufacturers.`,
+      answer: `JHS Global operates under verified government export credentials including FSSAI Central License (No. 10725997001058)${citeText}, APEDA, FIEO, Spices Board of India, and DGFT IEC. We provide full batch traceability and independent pre-shipment inspections upon request, but we do not provide comparative performance or pricing claims against third-party manufacturers.`,
       intent: 'company_about',
       used_fact_ids: certId ? [certId] : [],
       confidence: 0.92,
@@ -898,7 +898,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const portId = getFactCitation('ports', 'loading', 'policy');
     const citeText = portId ? ` [FACT-ID: ${portId}]` : '';
     return JSON.stringify({
-      answer: `Nos principaux ports de chargement maritimes en Inde sont le port de Mundra (INMUN1, Gujarat) et le port de Nhava Sheva / JNPT (INNSA1, Maharashtra). Tous les conteneurs sont empotés sous supervision avec certificats phytosanitaires officiels${citeText}.`,
+      answer: `Nos terminaux de chargement maritimes en Inde sont convenus par commande selon la provenance des marchandises. Tous les conteneurs sont empotés sous supervision avec certificats phytosanitaires officiels${citeText}.`,
       intent: 'shipping_logistics',
       used_fact_ids: portId ? [portId] : [],
       confidence: 0.98,
@@ -1055,16 +1055,16 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const spicesId = getFactCitation('spices');
     const dgftId = getFactCitation('dgft', 'iec');
 
-    if (lowerMsg.includes('sgs') || lowerMsg.includes('bureau veritas') || lowerMsg.includes('inspection')) {
+    if (lowerMsg.includes('inspection') || lowerMsg.includes('pre-shipment')) {
       return JSON.stringify({
-        answer: `JHS Global welcomes independent pre-shipment inspections by accredited agencies such as SGS or Bureau Veritas at the loading port (Mundra / Nhava Sheva). Inspection parameters, sampling, and third-party testing can be incorporated into the formal export contract.`,
+        answer: `JHS Global welcomes independent pre-shipment inspections by accredited agencies at the agreed port of loading. Inspection parameters, sampling, and verification protocols can be incorporated into the formal export contract.`,
         intent: 'certifications',
         used_fact_ids: [negId],
         confidence: 0.98,
         needs_human: false,
         suggested_action: 'open_rfq',
-        follow_up_question: 'Do you require SGS pre-shipment sealing and COA verification for your container consignment?',
-        source_chips: [{ label: 'Third-Party Inspection', type: 'company' }],
+        follow_up_question: 'Do you require independent pre-shipment sealing and quality verification for your container consignment?',
+        source_chips: [{ label: 'Independent Inspection', type: 'company' }],
       });
     }
 
@@ -1083,13 +1083,13 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const dgftCite = dgftId && factIdMatches.includes(dgftId) ? ` [FACT-ID: ${dgftId}]` : '';
 
     return JSON.stringify({
-      answer: `JHS Global does NOT hold ISO (ISO 9001/22000), Halal, Kosher, Wakanda Standard, or US FDA facility registrations [FACT-ID: ${negId}]. Our verified government export accreditations include FSSAI Central License (No. 10725997001058)${fssaiCite}, APEDA Registration${apedaCite}, Spices Board of India Registration${spicesCite}, and DGFT IEC${dgftCite}. We do not hold unverified certifications. We can arrange pre-shipment inspections by third-party testing agencies (such as SGS) upon request.`,
+      answer: `JHS Global does NOT hold ISO (ISO 9001/22000), Halal, Kosher, Wakanda Standard, or US FDA facility registrations [FACT-ID: ${negId}]. Our verified government export accreditations include FSSAI Central License (No. 10725997001058)${fssaiCite}, APEDA Registration${apedaCite}, Spices Board of India Registration${spicesCite}, and DGFT IEC${dgftCite}. We do not hold unverified certifications. We can arrange independent pre-shipment inspections upon request.`,
       intent: 'certifications',
       used_fact_ids: usedIds.length > 0 ? usedIds : [negId],
       confidence: 0.98,
       needs_human: false,
       suggested_action: 'open_rfq',
-      follow_up_question: 'Do your customs regulations require a specific third-party inspection agency (e.g., SGS or Intertek)?',
+      follow_up_question: 'Do your customs regulations require specific pre-shipment inspection documentation?',
       source_chips: [{ label: 'Verified Certifications', type: 'company' }],
     });
   }
@@ -1154,7 +1154,7 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const incotermFactId = getFactCitation('ports', 'loading', 'policy');
     const citeText = incotermFactId ? ` [FACT-ID: ${incotermFactId}]` : '';
     return JSON.stringify({
-      answer: `We export under standard Incoterms 2020: our primary Indian ocean container ports of loading are Mundra Port (INMUN1, Gujarat) and Nhava Sheva / JNPT (INNSA1, Maharashtra). We ship FOB (Mundra or Nhava Sheva ports in India), CIF, and CFR to overseas container ports${citeText}.`,
+      answer: `We export under standard Incoterms 2020: our Indian container ports of loading are agreed per order based on commodity origin and optimal vessel routing. We ship FOB (Indian gateway port agreed per order), CIF, and CFR to overseas container ports${citeText}.`,
       intent: 'shipping_logistics',
       used_fact_ids: incotermFactId ? [incotermFactId] : [],
       confidence: 0.98,
@@ -1551,11 +1551,11 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
 
     // 2c. German / French language detection
     if (lowerMsg.includes('liefern sie') || lowerMsg.includes('säcken')) {
-      return `Ja, wir liefern erstklassige Salem Kurkuma-Finger und 1121 Basmati-Reis in 25kg PP-Säcken oder Big Bags direkt nach Hamburg (CIF). Alle Lieferungen verfügen über vollständige APEDA-Pflanzengesundheitszeugnisse und NABL-Laborzertifikate. Bitte nutzen Sie unser Anfrageformular für ein verbindliches Proforma-Angebot.`;
+      return `Ja, wir liefern erstklassige Salem Kurkuma-Finger und 1121 Basmati-Reis in 25kg PP-Säcken oder Big Bags direkt nach Hamburg (CIF). Alle Lieferungen verfügen über vollständige APEDA-Pflanzengesundheitszeugnisse und Spezifikationszertifikate. Bitte nutzen Sie unser Anfrageformular für ein verbindliches Proforma-Angebot.`;
     }
 
     if (lowerMsg.includes('port de chargement') || lowerMsg.includes('chargement')) {
-      return `Nos principaux ports de chargement maritimes en Inde sont le port de Mundra (INMUN1, Gujarat) et le port de Nhava Sheva / JNPT (INNSA1, Maharashtra). Tous les conteneurs sont empotés sous supervision avec certificats phytosanitaires officiels.`;
+      return `Nos terminaux de chargement maritimes en Inde sont convenus par commande selon la provenance des marchandises. Tous les conteneurs sont empotés sous supervision avec certificats phytosanitaires officiels.`;
     }
 
     // 3. Pricing inquiries
@@ -1579,10 +1579,10 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
     // 4. Commodity specific answers using context
     if (lowerMsg.includes('ashwagandha') || lowerMsg.includes('withanolid')) {
       if (lowerMsg.includes('especificaciones') || lowerMsg.includes('calidad') || lowerMsg.includes('extracto')) {
-        return `Nuestro **Extracto de Ashwagandha** (*Withania somnifera*, HS 1302.19) está estandarizado al 2.5%–5.0% de withanólidos mediante ensayo analítico HPLC. Parámetros de pureza: humedad máx. 5%, metales pesados < 10 ppm, empaque en tambores de fibra de 25 kg con Certificado de Análisis (COA) por lote.`;
+        return `Nuestro **Extracto de Ashwagandha** (*Withania somnifera*, HS 1302.19) está estandarizado al 2.5%–5.0% de withanólidos mediante ensayo analítico HPLC. Parámetros de pureza: humedad máx. 5%, metales pesados < 10 ppm, empaque en tambores de fibra de 25 kg con ficha técnica por lote.`;
       }
       if (lowerMsg.includes('trommeln') || lowerMsg.includes('hamburg') || lowerMsg.includes('extrakt')) {
-        return `Wir exportieren standardisierten **Ashwagandha Extrakt** (Withanolide 2.5%–5.0% HPLC, HS-Code 1302.19) in 25kg Fasertrommeln (drums) per Seefracht nach Hamburg. Batch-spezifische Analysezertifikate (COA) liegen jeder Sendung bei.`;
+        return `Wir exportieren standardisierten **Ashwagandha Extrakt** (Withanolide 2.5%–5.0% HPLC, HS-Code 1302.19) in 25kg Fasertrommeln (drums) per Seefracht nach Hamburg. Batch-spezifische Analysezertifikate liegen jeder Sendung bei.`;
       }
       return `Based on our export inventory, we supply standardized **Ashwagandha extract** (Withanolides 2.5%–5.0% by HPLC, Moisture ≤ 5%, 80 mesh fine powder) under HS Code **1302.19**. Standard export packing is in 25 kg fiber drums with double food-grade polyethylene liners. Minimum order quantity (MOQ) is 25 kg or 1 Metric Tonne for container consolidation, backed by lot-specific HPLC Certificate of Analysis (COA).`;
     }
@@ -1591,7 +1591,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
       if (lowerMsg.includes('valencia') || lowerMsg.includes('harina') || lowerMsg.includes('empaque') || lowerMsg.includes('tienen')) {
         return `Suministramos **Harina de Soja Desgrasada (Soybean Meal DOC)** (Proteína cruda 46%–48%, humedad máx. 11%, libre de aflatoxinas) bajo código arancelario **HS 2304.00**. Exportamos en contenedores FCL (20 TM) en sacos de 50 kg o granel con liner hacia el Puerto de Valencia y principales puertos mundiales con certificación fitosanitaria oficial.`;
       }
-      return `We export prime **Soybean Meal (DOC 46%–48% Crude Protein)** under HS Code **2304.00**. Solvent extracted with low moisture (max 11%) and minimal fiber, packed in 50 kg PP bags or bulk container liners. Container capacity is 20 to 22 MT per 20ft FCL from Mundra Port with full phytosanitary and non-GMO certification.`;
+      return `We export prime **Soybean Meal (DOC 46%–48% Crude Protein)** under HS Code **2304.00**. Solvent extracted with low moisture (max 11%) and minimal fiber, packed in 50 kg PP bags or bulk container liners. Container capacity is 20 to 22 MT per 20ft FCL from Indian gateway ports with full phytosanitary and non-GMO certification.`;
     }
 
     if (lowerMsg.includes('sles') || lowerMsg.includes('sodium lauryl')) {
@@ -1599,7 +1599,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
     }
 
     if (lowerMsg.includes('arroz') && (lowerMsg.includes('basmati') || lowerMsg.includes('especificaciones'))) {
-      return `Exportamos arroz premium **1121 Steam Basmati** (Longitud de grano: 8.35mm+, selección óptica Sortex al 100%) bajo código arancelario **HS 1006.30**. Empaque en sacos de 25 kg y certificación fitosanitaria emitida por APEDA. Capacidad de 25 TM por contenedor FCL de 20 pies desde el puerto de Mundra.`;
+      return `Exportamos arroz premium **1121 Steam Basmati** (Longitud de grano: 8.35mm+, clasificación y limpieza óptica al 100%) bajo código arancelario **HS 1006.30**. Empaque en sacos de 25 kg y certificación fitosanitaria emitida por APEDA. Capacidad de 25 TM por contenedor FCL de 20 pies desde puertos de embarque en India.`;
     }
 
     if (lowerMsg.includes('turmeric') || lowerMsg.includes('curcumin')) {
@@ -1607,7 +1607,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
     }
 
     if (lowerMsg.includes('rice') || lowerMsg.includes('basmati')) {
-      return `We export premium **1121 Steam Basmati Rice** (Average Grain Length: 8.35mm+, Elongation ratio ~2.4x, Sortex 100% optical cleaned) under HS Code **1006.30**. Packing options include 10 kg, 20 kg, and 25 kg non-woven BOPP retail bags or 50 kg PP bulk bags. Container capacity is 25 MT per 20ft FCL from Mundra Port with APEDA phytosanitary certificates.`;
+      return `We export premium **1121 Steam Basmati Rice** (Average Grain Length: 8.35mm+, Elongation ratio ~2.4x, 100% optical cleaned and graded) under HS Code **1006.30**. Packing options include 10 kg, 20 kg, and 25 kg non-woven BOPP retail bags or 50 kg PP bulk bags. Container capacity is 25 MT per 20ft FCL from Indian gateway ports with APEDA phytosanitary certificates.`;
     }
 
     if (lowerMsg.includes('moq') || lowerMsg.includes('minimum')) {
@@ -1625,18 +1625,17 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
       lowerMsg.includes('certified') ||
       lowerMsg.includes('fssai') ||
       lowerMsg.includes('apeda') ||
-      lowerMsg.includes('sgs') ||
       lowerMsg.includes('inspection') ||
       lowerMsg.includes('heavy metal')
     ) {
-      return `All our commodities comply with destination country standards, including pesticide MRL and heavy metal benchmarks. We operate under valid FSSAI Central License (No. 10725997001058), APEDA, Spices Board of India, DGFT IEC, and GST registrations. We do NOT hold ISO, Halal, Kosher, or FDA facility registrations. Third-party pre-shipment inspections by SGS or Bureau Veritas are readily accommodated upon buyer request.`;
+      return `All our commodities comply with destination country standards, including pesticide MRL and heavy metal benchmarks. We operate under valid FSSAI Central License (No. 10725997001058), APEDA, FIEO, Spices Board of India, DGFT IEC, and GST registrations. We do NOT hold ISO, Halal, Kosher, or FDA facility registrations. Independent pre-shipment inspections are accommodated upon buyer request.`;
     }
 
     if (lowerMsg.includes('incoterm') || lowerMsg.includes('shipping') || lowerMsg.includes('port')) {
-      return `We ship under ICC Incoterms 2020 rules — primarily CIF (Destination Port), CFR, and FOB (Mundra INMUN1 / Nhava Sheva INNSA1). Transit times and vessel schedules depend on the destination port and container liner routing. Our export desk will provide exact transit details with your formal proforma invoice.`;
+      return `We ship under ICC Incoterms 2020 rules — primarily CIF (Destination Port), CFR, and FOB (Indian gateway port agreed per order). Transit times and vessel schedules depend on the destination port and container liner routing. Our export desk will provide exact transit details with your formal proforma invoice.`;
     }
 
-    return `Thank you for contacting our commercial export desk at JHS Global. We supply export-grade personal care raw materials, nutraceutical botanicals, and animal feed ingredients directly from India under verified government licenses. Please browse our catalogue or submit an RFQ to receive an official proforma invoice within 48 business hours.`;
+    return `Thank you for contacting our commercial export desk at JHS Global. We supply export-grade food ingredients, personal care raw materials, nutraceutical botanicals, and animal feed directly from India under verified government licenses. Please browse our catalogue or submit an RFQ to receive an official proforma invoice within 48 business hours.`;
   }
 
   if (feature === 'inquiry_summary') {
@@ -1734,7 +1733,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
       const spanishSubject = 'Cotización Comercial y Especificaciones [Ref: RFQ-2026] — Jhs Global';
       const spanishGreeting = 'Estimado Equipo de Compras,';
       const spanishBody =
-        'Acusamos recibo con agradecimiento de su solicitud de cotización para productos agroalimentarios de exportación desde la India. Nuestras partidas cuentan con selección óptica Sortex al 100%, especificaciones de calidad certificadas por laboratorios NABL y cumplimiento fitosanitario internacional APEDA.\n\nNuestro departamento de logística comercial se encuentra calculando la cotización marítima en contenedor hacia su puerto de destino. Le entregaremos la Factura Proforma vinculante dentro de las próximas 48 horas hábiles.\n\nAsimismo, disponemos de muestras analíticas de 250g–500g para despacho inmediato por mensajería internacional (DHL/FedEx).';
+        'Acusamos recibo con agradecimiento de su solicitud de cotización para productos agroalimentarios de exportación desde la India. Nuestras partidas cuentan con selección y clasificación óptica al 100%, especificaciones de calidad verificadas y cumplimiento fitosanitario internacional APEDA.\n\nNuestro departamento de logística comercial se encuentra calculando la cotización marítima en contenedor hacia su puerto de destino. Le entregaremos la Factura Proforma vinculante dentro de las próximas 48 horas hábiles.\n\nAsimismo, disponemos de muestras analíticas de 250g–500g para despacho inmediato por mensajería internacional (DHL/FedEx).';
       const spanishCta = '¿Podría confirmarnos su puerto de descarga preferido y requisitos particulares de paletizado?';
       const spanishFull = `${spanishGreeting}\n\n${spanishBody}\n\n${spanishCta}\n\nAtentamente,\nDepartamento de Comercio Internacional\nJhs Global Exports | India`;
 
@@ -1755,7 +1754,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
     const enSubject = 'Commercial Quotation & Specifications Dossier — Jhs Global Exports';
     const enGreeting = 'Dear Procurement Team,';
     const enBody =
-      'Thank you for your commercial quotation inquiry regarding containerized agricultural commodities from India.\n\nWe have reviewed your commodity requirements, destination discharge port parameters, and requested packaging format. All consignments undergo 100% Sortex optical color cleaning, batch laboratory testing with Certificate of Analysis (COA), and strict APEDA / FSSAI export compliance.\n\nOur logistics team is computing binding container ocean freight to your destination. You will receive our formal Proforma Invoice with complete commercial specifications within 48 business hours.\n\nWe are also pleased to dispatch 250g–500g analytical laboratory samples via express courier (DHL / FedEx) upon confirmation of your international courier account.';
+      'Thank you for your commercial quotation inquiry regarding containerized commodities from India.\n\nWe have reviewed your commodity requirements, destination discharge port parameters, and requested packaging format. All consignments undergo 100% optical cleaning and grading, batch specification testing, and strict APEDA / FSSAI export compliance.\n\nOur logistics team is computing binding container ocean freight to your destination. You will receive our formal Proforma Invoice with complete commercial specifications within 48 business hours.\n\nWe are also pleased to dispatch 250g–500g analytical laboratory samples via express courier (DHL / FedEx) upon confirmation of your international courier account.';
     const enCta = 'Please confirm if your team requires palletized container stuffing or marine transit insurance inclusion.';
     const enFull = `${enGreeting}\n\n${enBody}\n\n${enCta}\n\nBest regards,\nInternational Trade & Commercial Export Desk\nJhs Global Exports | India`;
 
@@ -2002,7 +2001,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
         : 'HPLC standardized Ashwagandha root extract guaranteed at 2.5–5.0% withanolides, processed under cGMP export conditions.',
       description: isFeed
         ? 'Export-quality Indian de-oiled soybean cake and meal produced from non-GMO seeds. Thoroughly screened for moisture, urease activity, and sand/silica compliance.'
-        : 'High-potency Withania Somnifera extract standardized by HPLC. Full NABL third-party laboratory analysis for assay, heavy metals, and microbiological criteria.',
+        : 'High-potency Withania Somnifera extract standardized by HPLC. Comprehensive laboratory analysis for assay, heavy metals, and microbiological criteria.',
       highlights: isFeed
         ? ['Crude Protein: Min 48%', 'Moisture: Max 11%', 'Non-GMO Origin', 'Container: 20–22 MT per 20ft FCL']
         : ['Withanolides: 2.5–5.0% HPLC', 'Heavy Metals <= 10 ppm', 'Aflatoxins: Negative', 'Packaging: 25kg fiber drums'],

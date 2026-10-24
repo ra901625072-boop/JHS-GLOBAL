@@ -121,7 +121,7 @@ export function sanitizeAssistantFallback({ sanitized, violations = [], factLedg
 
   // Handle fake cert violation
   if (violations.some((v) => v.includes('unheld accreditation'))) {
-    safe.answer = `JHS Global operates under verified Indian statutory authorities: FSSAI Central License (No. 10725997001058), APEDA, Spices Board of India, DGFT IEC, and GST [FACT-ID: FACT-COMP-fssai_central_license]. We do NOT hold ISO, Halal, Kosher, or US FDA facility registrations. We can arrange third-party pre-shipment inspections (e.g. SGS) upon buyer request.`;
+    safe.answer = `JHS Global operates under verified Indian statutory authorities: FSSAI Central License (No. 10725997001058), APEDA, FIEO, Spices Board of India, DGFT IEC, and GST [FACT-ID: FACT-COMP-fssai_central_license]. We do NOT hold ISO, Halal, Kosher, or US FDA facility registrations. We can arrange independent pre-shipment quality verification upon buyer request.`;
     safe.used_fact_ids = ['NEG-CERT-UNHELD', 'FACT-COMP-fssai_central_license'];
     return safe;
   }

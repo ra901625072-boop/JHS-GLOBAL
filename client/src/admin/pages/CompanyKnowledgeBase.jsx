@@ -722,7 +722,7 @@ export const CompanyKnowledgeBase = () => {
                     rows={4}
                     value={formData.factValue}
                     onChange={(e) => handleFormChange('factValue', e.target.value)}
-                    placeholder="e.g. Mundra Port (INMUN1) and Nhava Sheva (INNSA1) for FCL containerized shipments."
+                    placeholder="e.g. Indian container gateway ports agreed per order for FCL shipments."
                     className="w-full px-3 py-2 text-sm font-mono border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-900/20 focus:border-primary-900 leading-relaxed"
                     required
                   />

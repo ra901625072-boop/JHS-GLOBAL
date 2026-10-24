@@ -10,8 +10,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 export const WorldTradeMap = () => {
   const [activePort, setActivePort] = useState(null);
 
-  // Origin Coordinates: Western India (Mundra Port & Nhava Sheva / JNPT Gateway)
-  const origin = { x: 686, y: 395, name: 'India Hub (Mundra & JNPT)' };
+  // Origin Coordinates: India Gateway Hub
+  const origin = { x: 686, y: 395, name: 'India Gateway Hub' };
 
   // Key Global Discharge Ports accurately mapped to 1010 x 666 coordinates
   const destinationPorts = [
@@ -658,7 +658,7 @@ export const WorldTradeMap = () => {
             })}
           </g>
 
-          {/* CENTRAL ORIGIN BEACON: INDIA (Mundra & JNPT Gateways) */}
+          {/* CENTRAL ORIGIN BEACON: INDIA (Gateway Ports) */}
           <g className="origin-hub-layer select-none">
             {/* Concentric Radiating Radar Waves */}
             <circle

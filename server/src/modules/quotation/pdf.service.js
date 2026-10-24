@@ -91,7 +91,7 @@ export const generateQuotationPdf = (quotation) => {
         .font('Helvetica')
         .fontSize(8.5)
         .fillColor(darkColor)
-        .text(quotation.portOfLoading || 'Hazira / Mundra, Gujarat', 50, y + 23, { width: 120 })
+        .text(quotation.portOfLoading || 'Port of loading agreed per order (India)', 50, y + 23, { width: 120 })
         .text(quotation.portOfDischarge || 'Destination Port', 180, y + 23, { width: 120 })
         .text(quotation.paymentTerms || 'TT / LC', 310, y + 23, { width: 110 })
         .text(quotation.deliveryTime || '15-20 Days', 430, y + 23, { width: 110 });

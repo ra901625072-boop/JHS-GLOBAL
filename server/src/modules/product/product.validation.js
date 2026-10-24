@@ -81,7 +81,7 @@ export const createProductSchema = {
     shelfLife: z.string().optional().default('24 months'),
     storage: z.string().optional(),
     incoterms: z.array(z.string()).optional().default(['FOB', 'CIF', 'CFR']),
-    ports: z.array(z.string()).optional().default(['Mundra', 'Nhava Sheva']),
+    ports: z.array(z.string()).optional().default(['Port of loading agreed per order']),
     leadTime: z.string().optional().default('10–15 days'),
     tags: z.array(z.string()).optional().default([]),
     isFeatured: z.boolean().optional().default(false),

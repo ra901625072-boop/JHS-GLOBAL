@@ -167,12 +167,12 @@ Indian oilseed meals are derived from **Non-GMO crop varieties**, providing a si
       title: 'Incoterms 2020 Demystified for Containerized Cargo: FOB vs CIF vs CFR',
       slug: 'incoterms-2020-demystified-for-containerized-agro-cargo-fob-cif-cfr',
       excerpt:
-        'A practical procurement guide on ICC Incoterms 2020 for raw material container shipping from Mundra and Nhava Sheva (JNPT) ports. Cost allocation, marine insurance, and transfer of risk explained.',
+        'A practical procurement guide on ICC Incoterms 2020 for raw material container shipping from Indian gateway ports. Cost allocation, marine insurance, and transfer of risk explained.',
       content: `## 1. Introduction to Incoterms 2020 in Bulk Trade
 
-When negotiating bulk raw material contracts (botanical extracts, chemical ingredients, animal feed meals), the chosen International Commercial Term (Incoterm) governs the precise allocation of freight costs, marine cargo risk, export customs documentation, and delivery obligations between buyer and seller.
+When negotiating bulk raw material contracts (food ingredients, personal care materials, botanical extracts, animal feed meals), the chosen International Commercial Term (Incoterm) governs the precise allocation of freight costs, marine cargo risk, export customs documentation, and delivery obligations between buyer and seller.
 
-The International Chamber of Commerce (ICC) Incoterms 2020 rules provide 11 terms. In maritime container trade from Indian ports (Mundra, JNPT, Hazira, Pipavav), three terms represent over 90% of all commercial contracts: **FOB**, **CFR**, and **CIF**.
+The International Chamber of Commerce (ICC) Incoterms 2020 rules provide 11 terms. In maritime container trade from Indian gateway ports, three terms represent over 90% of all commercial contracts: **FOB**, **CFR**, and **CIF**.
 
 ---
 
@@ -196,7 +196,7 @@ The International Chamber of Commerce (ICC) Incoterms 2020 rules provide 11 term
 Choosing **CIF (Destination Port)** provides predictable landing cost accounting. Because we maintain high-volume contracts with major container carriers (Maersk, MSC, CMA CGM, Hapag-Lloyd), our ocean freight slot allocations and Institute Cargo Clauses (A) marine transit insurance policies are typically more cost-effective than spot bookings made from abroad.
 
 ### When to Select FOB
-Choose **FOB (Mundra or JNPT)** if your company has global enterprise contracts with sea freight carriers or dedicated maritime freight forwarding agents who coordinate multi-port container consolidations.`,
+Choose **FOB (Agreed Indian Port)** if your company has global enterprise contracts with sea freight carriers or dedicated maritime freight forwarding agents who coordinate multi-port container consolidations.`,
       coverImage: {
         url: '/images/placeholders/blog-logistics.jpg',
         alt: 'Container Maritime Shipping Incoterms Logistics',

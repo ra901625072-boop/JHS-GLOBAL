@@ -103,7 +103,7 @@ export const Order = sequelize.define(
       defaultValue: {
         containerNumber: '',
         shippingLine: '',
-        portOfLoading: 'Mundra Port / JNPT',
+        portOfLoading: 'Port of loading agreed per order (India)',
         portOfDischarge: '',
         etd: null,
         eta: null,

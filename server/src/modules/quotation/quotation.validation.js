@@ -30,7 +30,7 @@ export const createQuotationSchema = z.object({
   otherCharges: z.number().min(0).default(0),
   totalAmount: z.number().min(0),
   incoterm: z.enum(['EXW', 'FOB', 'CFR', 'CIF', 'DAP', 'DDP', 'CIP']).default('CIF'),
-  portOfLoading: z.string().default('Mundra Port / JNPT, India'),
+  portOfLoading: z.string().default('Port of loading agreed per order (India)'),
   portOfDischarge: z.string().default(''),
   paymentTerms: z.string().default('30% Advance TT, 70% against Bill of Lading copy'),
   validityDate: z.string().or(z.date()),

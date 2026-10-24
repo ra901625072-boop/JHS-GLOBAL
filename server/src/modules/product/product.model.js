@@ -114,7 +114,7 @@ export const Product = sequelize.define(
     },
     ports: {
       type: DataTypes.JSONB,
-      defaultValue: ['Mundra', 'Nhava Sheva (JNPT)'],
+      defaultValue: ['Port of loading agreed per order'],
     },
     leadTime: {
       type: DataTypes.STRING(100),

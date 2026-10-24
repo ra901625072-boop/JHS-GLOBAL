@@ -26,7 +26,7 @@ export const claimsConfig = {
 
 export const ABOUT_CONTENT = {
   hero: {
-    badge: 'REGISTERED INDIAN EXPORT HOUSE · SURAT, GUJARAT',
+    badge: 'REGISTERED INDIAN EXPORT HOUSE · MULTI-COMMODITY SUPPLY CHAIN',
     headline: 'An export house built on trust, transparency and Indian abundance.',
     subheadline: 'India is our origin. The world is our destination.',
     leadParagraph:
@@ -60,7 +60,7 @@ export const ABOUT_CONTENT = {
     story: {
       subheadline: 'Merchants of the Everyday Extraordinary.',
       paragraph1:
-        'We supply personal care raw materials, standardized nutraceutical extracts, and animal feed ingredients to importers, wholesalers, manufacturers, distributors and private-label brands worldwide.',
+        'We supply food and food ingredients, personal care raw materials, standardized botanical extracts, and animal feed to importers, wholesalers, manufacturers, distributors and private-label brands worldwide.',
       paragraph2:
         "Our business is built on direct sourcing relationships, clear specifications and accountable execution. We work closely with sourcing partners across India's growing regions, maintaining control over product requirements, quality checks and documentation.",
     },

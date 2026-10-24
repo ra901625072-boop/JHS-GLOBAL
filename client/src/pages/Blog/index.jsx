@@ -155,7 +155,7 @@ export const BlogPage = () => {
                         Verified Export Quality
                       </span>
                       <p className="text-xs text-neutral-200 mt-2 font-mono">
-                        HPLC • GC-MS • NABL Accredited Testing Protocols
+                        Standardized Assay & Certified Specification Compliance
                       </p>
                     </div>
                   </div>

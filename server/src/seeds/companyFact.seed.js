@@ -214,6 +214,17 @@ export const companyFactsData = [
     isPublic: true,
     notes: 'Statutory registration with Spices Board, Head Office Cochin.',
   },
+  {
+    category: 'certifications',
+    factKey: 'fieo_registration',
+    label: 'FIEO Registration (Federation of Indian Export Organisations)',
+    factValue: 'Federation of Indian Export Organisations (Set up by Ministry of Commerce, Govt. of India). Formal membership/registration dossier available upon request.',
+    source: 'client_document',
+    sourceDocument: 'client requirement',
+    isVerified: true,
+    isPublic: true,
+    notes: 'Apex trade facilitation organisation set up by Ministry of Commerce, Govt. of India. Exact certificate number TODO(client).',
+  },
 
   // =========================================================================
   // 3. COMMERCIAL OPERATIONS & SOURCING PROMISES (VERIFIED)
@@ -244,7 +255,7 @@ export const companyFactsData = [
     category: 'operations',
     factKey: 'catalogue_divisions',
     label: 'Commercial Catalogue Divisions',
-    factValue: '3 Core Export Divisions: (1) Personal Care Raw Materials, (2) Nutraceutical Raw Materials, and (3) Animal Feed.',
+    factValue: '4 Core Export Divisions: (1) Food & Food Ingredients, (2) Personal Care Raw Materials, (3) Nutraceutical Raw Materials, and (4) Animal Feed.',
     source: 'client_document',
     sourceDocument: 'client massage.txt & Products_website.xlsx',
     isVerified: true,
@@ -255,7 +266,7 @@ export const companyFactsData = [
     category: 'quality',
     factKey: 'quality_testing_assurance',
     label: 'Quality Process & Testing Assurance',
-    factValue: 'Batch-specific laboratory Certificate of Analysis (COA) confirming physical parameters, active marker assay (HPLC), moisture levels, and microbiological screening. Pre-shipment independent inspection by SGS, Bureau Veritas, or Intertek available upon buyer request.',
+    factValue: 'Batch-specific specification dossier confirming physical parameters, active marker assay, moisture levels, and microbiological screening. Pre-shipment independent inspection and verification accommodated upon buyer request.',
     source: 'client_document',
     sourceDocument: 'Home Page-website.docx & Export Catalogue',
     isVerified: true,
@@ -266,12 +277,12 @@ export const companyFactsData = [
     category: 'operations',
     factKey: 'export_loading_ports',
     label: 'Primary Export Departure Sea Ports',
-    factValue: 'Hazira Port (Surat, Gujarat - INHZR1) and Mundra Port (Kutch, Gujarat - INMUN1); Nhava Sheva / JNPT (Mumbai, Maharashtra - INNSA1).',
+    factValue: 'Port of loading agreed per order across primary Indian gateway container ports based on commodity origin and optimal vessel routing.',
     source: 'client_document',
     sourceDocument: 'Home Page-website.docx',
     isVerified: true,
     isPublic: true,
-    notes: 'Primary maritime container loading terminals.',
+    notes: 'Primary maritime container loading terminals agreed per order.',
   },
 
   // =========================================================================

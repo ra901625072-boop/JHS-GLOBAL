@@ -54,7 +54,7 @@ export const seedTrustData = async () => {
   const regions = [
     {
       region: 'Middle East & GCC',
-      description: 'Major transit hub with direct weekly vessel sailings from Mundra and Nhava Sheva (JNPT).',
+      description: 'Major transit hub with direct weekly vessel sailings from Indian gateway container ports.',
       transitDays: '4–7 Days',
       order: 1,
       countries: [
@@ -164,8 +164,8 @@ export const seedTrustData = async () => {
 
     // Group 2: Product Quality & Technical Specifications
     {
-      question: 'Do you provide lot-specific Certificate of Analysis (COA) prior to container loading?',
-      answer: 'Yes. Every commercial production batch undergoes mandatory analytical laboratory testing prior to stuffing. We provide pre-shipment COAs certifying moisture levels, active marker assays (e.g., Curcumin % or Withanolides % via HPLC), mesh particle size, microbial counts, and heavy metal limits. Independent inspection reports (SGS, Bureau Veritas, or Intertek) can be arranged at the port of loading upon buyer request.',
+      question: 'Do you provide lot-specific specification and analysis documentation prior to dispatch?',
+      answer: 'Yes. Every commercial production batch undergoes strict quality verification prior to container stuffing. We provide technical specifications certifying moisture levels, active marker assays, mesh particle size, microbial limits, and physical grade benchmarks. Independent inspection and verification can be accommodated at the port of loading upon buyer request.',
       group: 'Product Quality & Technical Specifications',
       slug: 'lab-certificate-of-analysis-coa',
       showOnHome: true,
@@ -183,7 +183,7 @@ export const seedTrustData = async () => {
     },
     {
       question: 'What grades and specifications are available for Castor Oil derivatives?',
-      answer: 'We supply First Special Grade (FSG), Commercial Grade, Pale Pressed Grade (PPG), and technical derivatives including 12-Hydroxystearic Acid (12-HSA) and Ricinoleic Acid, packaged in standard 200L epoxy-coated steel drums or ISO tanks. Lot-specific acid value, iodine value, and viscosity specifications are detailed on each batch COA.',
+      answer: 'We supply First Special Grade (FSG), Commercial Grade, Pale Pressed Grade (PPG), and technical derivatives including 12-Hydroxystearic Acid (12-HSA) and Ricinoleic Acid, packaged in standard 200L epoxy-coated steel drums or ISO tanks. Lot-specific acid value, iodine value, and viscosity specifications are detailed on each batch specification sheet.',
       group: 'Product Quality & Technical Specifications',
       slug: 'castor-oil-grades-and-specifications',
       showOnHome: false,
@@ -203,7 +203,7 @@ export const seedTrustData = async () => {
     // Group 3: Packaging & Maritime Shipping
     {
       question: 'Which loading ports in India do you dispatch from?',
-      answer: 'Consignments are dispatched through Western India\'s primary deep-water container ports: Hazira Port (Surat, located within 25 km of our export center), Mundra Port (Kutch, Gujarat), and Nhava Sheva / JNPT (Navi Mumbai). This multi-port connectivity ensures container slot availability and competitive ocean freight routing.',
+      answer: 'Port of loading is agreed per order based on commodity origin, container availability, and optimal ocean liner routing across Indian gateway container ports. This multi-gateway flexibility ensures reliable scheduling and competitive ocean freight routing.',
       group: 'Packaging & Maritime Shipping',
       slug: 'loading-ports-and-gateways',
       showOnHome: false,
@@ -250,7 +250,7 @@ export const seedTrustData = async () => {
     },
     {
       question: 'Which Incoterms 2020 do you quote under?',
-      answer: 'We provide binding quotations under ICC Incoterms 2020 rules. Our standard quoting terms are FOB (Free on Board at Hazira, Mundra, or JNPT ports), CIF (Cost, Insurance, and Freight to your designated discharge port), and CFR (Cost and Freight). On specific request, Ex-Works (EXW) pricing from our Gujarat processing facilities can be provided.',
+      answer: 'We provide binding quotations under ICC Incoterms 2020 rules. Our standard quoting terms are FOB (Free on Board at designated Indian gateway port), CIF (Cost, Insurance, and Freight to your designated discharge port), and CFR (Cost and Freight). On specific request, Ex-Works (EXW) pricing from our processing facilities can be provided.',
       group: 'Commercial Banking & Payment Terms',
       slug: 'incoterms-2020-quoting-options',
       showOnHome: true,
@@ -299,7 +299,7 @@ export const seedTrustData = async () => {
     // Group 6: Export Documentation & Regulatory Compliance
     {
       question: 'What statutory export licenses and government registrations does JHS GLOBAL hold?',
-      answer: 'JHS GLOBAL is fully accredited by Indian statutory export authorities: Directorate General of Foreign Trade (DGFT) Importer-Exporter Code (EZHPP3437C), FSSAI Central Food Safety License (10725997001058), APEDA Registration-Cum-Membership (RCMC/APEDA/15765/2024-2025), Spices Board of India Exporter CRES (CRES/SBCB/26585/2025-2026), and MSME Udyam Registration (UDYAM-GJ-22-0460260).',
+      answer: 'JHS GLOBAL is fully accredited by Indian statutory export authorities: Directorate General of Foreign Trade (DGFT) Importer-Exporter Code (EZHPP3437C), FSSAI Central Food Safety License (10725997001058), APEDA Registration-Cum-Membership, Federation of Indian Export Organisations (FIEO), Spices Board of India Exporter CRES, and MSME Udyam Registration (UDYAM-GJ-22-0460260).',
       group: 'Export Documentation & Regulatory Compliance',
       slug: 'statutory-export-licenses-and-registrations',
       showOnHome: false,
@@ -308,7 +308,7 @@ export const seedTrustData = async () => {
     },
     {
       question: 'What mandatory shipping and customs documents accompany each export bill?',
-      answer: 'Every standard container export consignment includes: (1) Clean on Board Ocean Bill of Lading (3 original + 3 non-negotiable copies), (2) Commercial Invoice and Detailed Packing List, (3) Certificate of Origin issued by authorized Chamber of Commerce, (4) Official Phytosanitary Certificate issued by Plant Quarantine authority, (5) Certificate of Fumigation (Methyl Bromide / Phosphine), and (6) Lot-specific manufacturer Certificate of Analysis (COA).',
+      answer: 'Every standard container export consignment includes: (1) Clean on Board Ocean Bill of Lading (3 original + 3 non-negotiable copies), (2) Commercial Invoice and Detailed Packing List, (3) Certificate of Origin issued by authorized Chamber of Commerce, (4) Official Phytosanitary Certificate issued by Plant Quarantine authority, (5) Certificate of Fumigation, and (6) Lot-specific manufacturer specification dossier and analysis sheet.',
       group: 'Export Documentation & Regulatory Compliance',
       slug: 'standard-export-shipping-documents',
       showOnHome: false,
@@ -316,8 +316,8 @@ export const seedTrustData = async () => {
       order: 20,
     },
     {
-      question: 'Can you arrange third-party pre-shipment inspections like SGS or Bureau Veritas?',
-      answer: 'Yes. Buyers may nominate international third-party inspection agencies (SGS, Bureau Veritas, Intertek, or Cotecna) to conduct independent sampling, moisture verification, weight verification, and container stuffing supervision at the port of loading prior to vessel departure. Inspection costs are billed according to mutual sales contract terms.',
+      question: 'Can you arrange independent pre-shipment inspections?',
+      answer: 'Yes. Buyers may nominate international independent inspection agencies to conduct pre-shipment sampling, moisture verification, weight verification, and container stuffing supervision at the port of loading prior to vessel departure. Inspection parameters are coordinated according to mutual sales contract terms.',
       group: 'Export Documentation & Regulatory Compliance',
       slug: 'third-party-pre-shipment-inspection',
       showOnHome: false,

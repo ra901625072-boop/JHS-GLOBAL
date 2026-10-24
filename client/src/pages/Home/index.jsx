@@ -515,7 +515,7 @@ export const HomePage = () => {
               Why Partner with JHS GLOBAL?
             </h2>
             <p className="mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed font-sans">
-              Direct manufacturer linkages, lot-by-lot NABL lab testing, and dedicated maritime container logistics designed to give institutional buyers uncompromising consistency and peace of mind.
+              Direct producer linkages, comprehensive specification compliance, and complete end-to-end supply chain management designed to give institutional buyers uncompromising consistency and peace of mind.
             </p>
           </Reveal>
 

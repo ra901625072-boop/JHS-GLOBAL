@@ -53,17 +53,17 @@ export const ExportProcessPage = () => {
     },
     {
       step: '03',
-      title: 'Free Sample Dispatch with COA',
-      headline: 'Lot-Specific Laboratory Verification',
+      title: 'Evaluation Sample Dispatch',
+      headline: 'Physical & Specification Verification',
       detail:
-        'We dispatch 250g–500g lot-specific pre-shipment samples via express international courier (DHL / FedEx) accompanied by a comprehensive NABL-accredited Certificate of Analysis (COA) for sensory and chemical laboratory approval.',
+        'We dispatch 250g–500g lot-specific evaluation samples via express international courier (DHL / FedEx) accompanied by full technical specifications and batch analysis for buyer approval.',
       turnaround: '2–4 Days Transit',
-      documents: ['DHL/FedEx Air Waybill (AWB)', 'Batch Certificate of Analysis (COA)', 'Safety Data Sheet (MSDS)'],
+      documents: ['Air Express Tracking Dossier', 'Batch Specification Certificate', 'Safety Data Sheet (MSDS)'],
     },
     {
       step: '04',
       title: 'Buyer Confirms & Pays Advance',
-      headline: 'Contract Execution & Bank Security',
+      headline: 'Contract Execution & Secure Terms',
       detail:
         'Upon sample approval, the bilateral International Sales Contract is signed under ICC Incoterms 2020. Payment security is established via Irrevocable Letter of Credit (LC at Sight) or standard TT commercial terms (advance + balance against BL copy).',
       turnaround: 'Milestone Governed',
@@ -71,30 +71,30 @@ export const ExportProcessPage = () => {
     },
     {
       step: '05',
-      title: 'Production, Sortex Cleaning & Branding',
-      headline: 'Precision Milling, Destoning & Packaging',
+      title: 'Processing, Cleaning & Custom Packaging',
+      headline: 'Standardized Processing & Export Packing',
       detail:
-        'Harvest raw materials undergo triple-stage optical Sortex color sorting, pneumatic destoning, gravity separation, and metal detection. Packaging is executed in 25kg multi-wall paper bags, 50kg PP sacks, or private-label retail packaging with buyer branding.',
+        'Raw materials undergo mechanical cleaning, graded sizing, and foreign-matter removal. Packaging is executed in 25kg multi-wall paper bags, 50kg PP sacks, bulk totes, or private-label retail packaging customized to buyer requirements.',
       turnaround: '5–10 Days',
-      documents: ['Internal Batch Quality Log', 'Packaging & Palletizing Inspection', 'Label Artwork Compliance Sheet'],
+      documents: ['Production Quality Assurance Log', 'Export Standard Packaging Dossier', 'Buyer Private Label Verification'],
     },
     {
       step: '06',
-      title: 'Pre-Shipment Inspection & Approval',
-      headline: 'Third-Party Audits & Visual Stuffing Log',
+      title: 'Final Quality Verification & Container Sealing',
+      headline: 'Pre-Dispatch Quality Audit & Photographic Record',
       detail:
-        'Prior to container sealing, we provide high-resolution photos and video documentation of goods and palletization. Independent inspection agencies (SGS, Bureau Veritas, Intertek) are accommodated for sampling and weight verification.',
-      turnaround: 'Pre-Seal Inspection',
-      documents: ['SGS / Bureau Veritas Certificate (Optional)', 'Container Stuffing Photographic Audit', 'Seal Verification Log'],
+        'Prior to container sealing, we provide high-resolution photos and video documentation of goods and palletization. Container stuffing is supervised and verified to ensure transit protection and tamper-evident sealing.',
+      turnaround: 'Pre-Seal Verification',
+      documents: ['Container Stuffing Photographic Audit', 'Export Documentation on Request', 'Tamper-Evident Seal Verification Log'],
     },
     {
       step: '07',
-      title: 'Port Clearance & Vessel Sailing',
-      headline: 'Customs Gating at Hazira or Mundra',
+      title: 'Port Clearance & Ocean Transit',
+      headline: 'Customs Clearance & Scheduled Vessel Dispatch',
       detail:
-        'Containers are trucked to Hazira Deep-Water Port (Surat, 25km) or Mundra Port. Export customs filing is completed via ICEGATE, container is loaded on scheduled ocean liner, and Clean on Board Ocean Bill of Lading is generated.',
-      turnaround: 'Scheduled Liner',
-      documents: ['Ocean Bill of Lading (Clean on Board)', 'Export Shipping Bill (ICEGATE)', 'Phytosanitary Certificate', 'Fumigation Certificate'],
+        'Export customs processing is completed through designated Indian gateway container terminals. Containers are loaded onto scheduled ocean liners, and the Clean on Board Ocean Bill of Lading is issued.',
+      turnaround: 'Scheduled Ocean Liner',
+      documents: ['Ocean Bill of Lading (Clean on Board)', 'Export Customs Shipping Bill', 'Phytosanitary Certificate', 'Fumigation Certificate'],
     },
     {
       step: '08',
@@ -112,8 +112,8 @@ export const ExportProcessPage = () => {
     {
       code: 'EXW',
       name: 'Ex Works',
-      location: 'Manufacturing Mill (Gujarat)',
-      summary: 'Buyer arranges all transport, customs, and ocean freight from our processing facility in Gujarat.',
+      location: 'Designated Processing Facility (India)',
+      summary: 'Buyer arranges all transport, export customs, and ocean freight from our designated processing facility in India.',
       responsibilities: {
         packaging: 'JHS GLOBAL',
         inlandTransport: 'Buyer',
@@ -126,7 +126,7 @@ export const ExportProcessPage = () => {
     {
       code: 'FCA',
       name: 'Free Carrier',
-      location: 'Inland Container Depot (ICD / Hazira)',
+      location: 'Inland Container Terminal (Agreed Hub)',
       summary: 'JHS GLOBAL handles export packaging and customs clearance; buyer manages international freight.',
       responsibilities: {
         packaging: 'JHS GLOBAL',
@@ -140,7 +140,7 @@ export const ExportProcessPage = () => {
     {
       code: 'FOB',
       name: 'Free on Board',
-      location: 'Hazira Port (Surat) / Mundra Port',
+      location: 'Indian Port of Loading (Agreed per order)',
       summary: 'Most popular for container buyers. We handle all Indian trucking, terminal THC, customs, and loading on board.',
       popular: true,
       responsibilities: {
@@ -193,7 +193,7 @@ export const ExportProcessPage = () => {
     },
     {
       name: 'Commercial Invoice & Packing List',
-      issuer: 'JHS GLOBAL (Surat Office)',
+      issuer: 'JHS GLOBAL',
       purpose: 'Itemized commodity value, HS codes, gross/net weight, and container packaging marks.',
       mandatory: true,
     },
@@ -216,9 +216,9 @@ export const ExportProcessPage = () => {
       mandatory: true,
     },
     {
-      name: 'Certificate of Analysis (COA)',
-      issuer: 'NABL Accredited Quality Laboratory',
-      purpose: 'Lot-specific chemical purity, moisture %, pesticide residues, and active biomarkers.',
+      name: 'Specification Compliance & Analysis Dossier',
+      issuer: 'Authorized Quality Assurance Laboratory',
+      purpose: 'Lot-specific chemical purity, moisture %, active biomarkers, and physical grade verification.',
       mandatory: true,
     },
     {
@@ -243,7 +243,7 @@ export const ExportProcessPage = () => {
         <title>8-Step Export Process & Incoterms 2020 Guide — JHS GLOBAL</title>
         <meta
           name="description"
-          content="Explore the 8-step international export workflow of JHS GLOBAL, shipping documentation checklist, and Incoterms 2020 rules for containerized cargo from Hazira & Mundra ports."
+          content="Explore the 8-step international export workflow of JHS GLOBAL, shipping documentation checklist, and Incoterms 2020 rules for containerized cargo from Indian gateway ports."
         />
       </Helmet>
 
@@ -377,7 +377,7 @@ export const ExportProcessPage = () => {
 
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-primary-50 border border-primary-200 text-xs font-semibold text-primary-900">
                   <Ship className="w-4 h-4 text-primary-800" />
-                  <span>Hazira / Mundra Sea Port Gateway</span>
+                  <span>Indian Gateway Port (Agreed per order)</span>
                 </div>
               </div>
 
@@ -486,7 +486,7 @@ export const ExportProcessPage = () => {
             to="/quality"
             className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-primary-900 hover:text-accent-600 uppercase tracking-widest transition-colors duration-150 group"
           >
-            <span>REVIEW OUR QUALITY AUDITING STANDARDS & NABL LAB TESTING</span>
+            <span>REVIEW OUR QUALITY GOVERNANCE & STATUTORY SPECIFICATIONS</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </Reveal>

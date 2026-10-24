@@ -292,9 +292,9 @@ Buyer Message: "${inqData.message || 'No additional note'}"
       fallback: {
         subject: `Commercial Quotation & Export Response [Ref: ${inqData.referenceNo}] — Jhs Global`,
         greeting: `Dear ${inqData.buyer?.name || 'Procurement Team'},`,
-        body: `Thank you for your commercial quotation inquiry regarding containerized agricultural commodities from India. All consignments undergo 100% Sortex optical color cleaning, batch laboratory testing with Certificate of Analysis (COA), and strict APEDA / FSSAI export compliance. Our logistics team is computing binding container ocean freight to your destination. You will receive our formal Proforma Invoice with complete commercial specifications within 48 business hours.`,
+        body: `Thank you for your commercial quotation inquiry regarding containerized commodities from India. All consignments undergo 100% optical cleaning and grading, batch specification verification, and strict statutory export compliance. Our logistics team is computing binding container ocean freight to your destination. You will receive our formal Proforma Invoice with complete commercial specifications within 48 business hours.`,
         callToAction: `Please confirm if your team requires palletized container stuffing or marine transit insurance inclusion.`,
-        fullEmail: `Dear ${inqData.buyer?.name || 'Procurement Team'},\n\nThank you for your commercial quotation inquiry. All consignments undergo 100% Sortex optical color cleaning, batch testing with COA, and APEDA compliance. You will receive our formal Proforma Invoice within 48 business hours.\n\nPlease confirm if palletized stuffing is required.\n\nBest regards,\nJhs Global Exports`,
+        fullEmail: `Dear ${inqData.buyer?.name || 'Procurement Team'},\n\nThank you for your commercial quotation inquiry. All consignments undergo 100% optical cleaning and grading, batch specification verification, and statutory export compliance. You will receive our formal Proforma Invoice within 48 business hours.\n\nPlease confirm if palletized stuffing is required.\n\nBest regards,\nJHS GLOBAL`,
         language: parsedSummary.language || 'en',
         tone: 'formal_b2b',
       },
@@ -406,9 +406,9 @@ Language: ${targetLang}${customInstructions}
     fallback: {
       subject: `Commercial Quotation & Export Response [Ref: ${inqData.referenceNo}] — Jhs Global`,
       greeting: `Dear ${inqData.buyer?.name || 'Procurement Team'},`,
-      body: `Thank you for your commercial quotation inquiry regarding containerized agricultural commodities from India. All consignments undergo 100% Sortex optical color cleaning, batch laboratory testing with Certificate of Analysis (COA), and strict APEDA / FSSAI export compliance. Our logistics team is computing binding container ocean freight to your destination. You will receive our formal Proforma Invoice with complete commercial specifications within 48 business hours.`,
+      body: `Thank you for your commercial quotation inquiry regarding containerized commodities from India. All consignments undergo 100% optical cleaning and grading, batch specification verification, and strict statutory export compliance. Our logistics team is computing binding container ocean freight to your destination. You will receive our formal Proforma Invoice with complete commercial specifications within 48 business hours.`,
       callToAction: `Please confirm if your team requires palletized container stuffing or marine transit insurance inclusion.`,
-      fullEmail: `Dear ${inqData.buyer?.name || 'Procurement Team'},\n\nThank you for your commercial quotation inquiry. All consignments undergo 100% Sortex optical color cleaning, batch testing with COA, and APEDA compliance. You will receive our formal Proforma Invoice within 48 business hours.\n\nPlease confirm if palletized stuffing is required.\n\nBest regards,\nJhs Global Exports`,
+      fullEmail: `Dear ${inqData.buyer?.name || 'Procurement Team'},\n\nThank you for your commercial quotation inquiry. All consignments undergo 100% optical cleaning and grading, batch specification verification, and statutory export compliance. You will receive our formal Proforma Invoice within 48 business hours.\n\nPlease confirm if palletized stuffing is required.\n\nBest regards,\nJHS GLOBAL`,
       language: targetLang,
       tone: 'formal_b2b',
     },

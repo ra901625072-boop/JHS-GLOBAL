@@ -2491,12 +2491,11 @@ export const getAdminCompanyProfile = async () => {
       fssaiCentralLicense: factsMap['fssai_central_license']?.factValue || '10725997001058',
       apedaRcmc: factsMap['apeda_rcmc']?.factValue || 'RCMC/APEDA/15765/2024-2025',
       spicesBoardCres: factsMap['spices_board_cres']?.factValue || 'CRES/SBCB/26585/2025-2026',
+      fieoRegistration: factsMap['fieo_registration']?.factValue || 'Federation of Indian Export Organisations (Set up by Ministry of Commerce)',
     },
     logistics: {
       primaryDeparturePorts: [
-        { code: 'INHZR1', name: 'Hazira Port', city: 'Surat', state: 'Gujarat', distanceKm: '~25 km', type: 'Primary Maritime Container Terminal' },
-        { code: 'INMUN1', name: 'Mundra Port', city: 'Kutch', state: 'Gujarat', distanceKm: '~450 km', type: 'Deep-Water Gateway' },
-        { code: 'INNSA1', name: 'Nhava Sheva / JNPT', city: 'Navi Mumbai', state: 'Maharashtra', distanceKm: '~350 km', type: 'Major Container Terminal' },
+        { code: 'INGTW1', name: 'Indian Gateway Ports (Agreed per order)', city: 'Various Gateways', state: 'India', distanceKm: 'Optimal routing', type: 'Primary Container Gateway' },
       ],
       turnaroundCommitment: '48 business hours quotation turnaround & 48-hour unlisted sourcing guarantee',
     },

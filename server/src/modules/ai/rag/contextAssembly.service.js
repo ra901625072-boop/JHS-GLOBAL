@@ -527,7 +527,7 @@ export const assembleContext = async ({ message, history = [], pageContext = nul
       key: 'Non-Held / Unconfirmed Accreditations',
       value: 'We do NOT hold ISO 9001, ISO 22000, HACCP, Halal, Kosher, or foreign US FDA registrations unless specifically present in the verified credentials above. Do NOT confirm any unlisted certificate.',
       status: 'RESTRICTED',
-      constraint: 'HARD RULE: Deny unconfirmed certification accreditations politely. Mention that lot-specific third party inspection (SGS/Bureau Veritas) is arranged on request.',
+      constraint: 'HARD RULE: Deny unconfirmed certification accreditations politely. Mention that lot-specific independent inspection and container audit is arranged on request.',
     });
     factLedger.push({
       id: 'FACT-COMP-CERT-BOUNDARIES',
