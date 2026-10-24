@@ -89,10 +89,10 @@ export const ProductsPage = () => {
   return (
     <>
       <Helmet>
-        <title>Export Raw Materials, Active Ingredients & Animal Feed — B2B Catalogue</title>
+        <title>Export Catalogue — Food Ingredients, Personal Care, Botanicals & Feed | JHS GLOBAL</title>
         <meta
           name="description"
-          content="Browse export-grade Indian personal care raw materials, HPLC-standardized nutraceutical extracts, and animal feed ingredients with HS codes and lab specifications."
+          content="Browse JHS GLOBAL's export catalogue: Indian spices, pulses, superfoods, dehydrated ingredients, botanical extracts, cosmetic raw materials, and animal feed in bulk container shipments."
         />
       </Helmet>
 

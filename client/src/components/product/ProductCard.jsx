@@ -79,9 +79,11 @@ export const ProductCard = ({ product }) => {
 
           {/* Top Badges */}
           <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-            <span className="font-mono text-[11px] font-semibold bg-primary-800 text-white px-2 py-0.5 rounded shadow-sm">
-              HS {product.hsCode}
-            </span>
+            {product.hsCode ? (
+              <span className="font-mono text-[11px] font-semibold bg-primary-800 text-white px-2 py-0.5 rounded shadow-sm">
+                HS {product.hsCode}
+              </span>
+            ) : null}
             {product.isFeatured && (
               <span className="text-[10px] font-semibold bg-accent-500 text-white px-2 py-0.5 rounded shadow-sm">
                 Export Grade

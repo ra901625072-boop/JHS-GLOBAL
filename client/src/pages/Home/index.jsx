@@ -25,6 +25,7 @@ import Button from '../../components/ui/Button';
 import Reveal from '../../components/ui/Reveal';
 import JsonLd, { createOrganizationSchema } from '../../components/seo/JsonLd';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
+import { useCategories, useProducts } from '../../features/products/hooks';
 import WorldTradeMap from '../../components/home/WorldTradeMap';
 import CertificationMarquee from '../../components/home/CertificationMarquee';
 import ProductShowcaseMarquee from '../../components/home/ProductShowcaseMarquee';
@@ -37,6 +38,11 @@ const HomeFaqSection = React.lazy(() => import('../../components/home/HomeFaqSec
 export const HomePage = () => {
   const navigate = useNavigate();
   const { setIsDrawerOpen } = useQuoteBasket();
+  const { data: categories = [] } = useCategories();
+  const { data: productsData } = useProducts({ limit: 1 });
+  const totalProductsCount = productsData?.meta?.total || 115;
+  const totalDivisionsCount = categories.length > 0 ? categories.length : 4;
+
   const brandName = import.meta.env.VITE_BRAND_NAME || 'JHS GLOBAL';
   const heroRef = useRef(null);
 
@@ -114,46 +120,46 @@ export const HomePage = () => {
     {
       num: '01',
       title: 'Formal RFQ & 48h Binding Quote',
-      desc: 'Submit your commodity specifications, tonnage (MT/FCL), target month, and destination port.',
+      desc: 'Submit your commodity specifications, tonnage (MT/FCL), target month, and destination delivery requirements.',
     },
     {
       num: '02',
-      title: 'Sample Dispatch & Lab COA',
-      desc: 'Air courier dispatch (DHL/FedEx) of 250g–500g lab-certified samples with complete HPLC/GC-MS testing reports.',
+      title: 'Sample Dispatch & Documentation',
+      desc: 'Air courier dispatch (DHL/FedEx) of evaluation samples accompanied by comprehensive technical specification sheets.',
     },
     {
       num: '03',
-      title: 'Contract & Banking (LC / TT)',
-      desc: 'Proforma invoice issuance, international sales agreement, and secure banking under ICC Incoterms 2020.',
+      title: 'Contract & Commercial Terms (LC / TT)',
+      desc: 'Proforma invoice issuance, international sales agreement, and secure trade terms under ICC Incoterms 2020.',
     },
     {
       num: '04',
-      title: 'Processing, Sorting & Container Packing',
-      desc: 'Optical Sortex cleaning, mechanical grading, vacuum or nitrogen-flush barrier packaging in clean-room facilities.',
+      title: 'Processing, Grading & Custom Packaging',
+      desc: 'Mechanical cleaning, grading, optical sorting, and moisture-barrier packaging tailored to buyer requirements.',
     },
     {
       num: '05',
-      title: 'Port Loading & Customs Discharge',
-      desc: 'Pre-shipment phytosanitary inspection, container stuffing at Mundra/JNPT, and swift Bill of Lading documentation.',
+      title: 'Container Loading & Customs Dispatch',
+      desc: 'Export clearance, secure container stuffing, and swift Bill of Lading documentation dispatched to your destination port.',
     },
   ];
 
   const qaSteps = [
     {
       title: 'Direct Origin Sourcing',
-      desc: 'Procurement directly from verified manufacturing facilities and certified chemical/extraction plants across India.',
+      desc: 'Procurement directly from verified processing mills, agricultural cooperatives, and manufacturing facilities across India.',
     },
     {
-      title: 'In-Process Assay Screening',
-      desc: 'Multi-stage extraction verification, micronization sizing, and assay benchmarking for international purity standards.',
+      title: 'In-Process Quality Screening',
+      desc: 'Multi-stage extraction verification, mechanical cleaning, and assay benchmarking for international purity standards.',
     },
     {
-      title: 'NABL Accredited Lab Testing',
-      desc: 'HPLC, GC-MS, and microbiological screening certifying active markers, absence of contaminants, and heavy metal compliance.',
+      title: 'Technical Quality Verification',
+      desc: 'Screening certifying active markers, absence of foreign matter, and adherence to international ingredient standards.',
     },
     {
-      title: 'Container Stuffing Inspection',
-      desc: 'Pre-dispatch third-party inspection (SGS/Bureau Veritas on buyer request) with moisture-barrier liners and container desiccants.',
+      title: 'Container Stuffing & Dispatch Controls',
+      desc: 'Pre-dispatch container inspection with moisture-barrier liners, desiccants, and secure stuffing for maritime transit.',
     },
   ];
 
@@ -165,31 +171,31 @@ export const HomePage = () => {
     },
     {
       title: 'Certified & Compliant',
-      desc: 'Fully licensed under FSSAI Central Authority, APEDA, and DGFT IEC with zero statutory bottlenecks.',
+      desc: 'Fully licensed under FSSAI Central Authority, APEDA, FIEO, and DGFT IEC with complete regulatory compliance.',
       icon: ShieldCheck,
     },
     {
-      title: 'Premium Quality',
-      desc: 'Batch-standardized assays, microbiological screening, and lot-by-lot NABL accredited lab certificates of analysis.',
+      title: 'Standardized Quality Assays',
+      desc: 'Batch-standardized assays, microbiological screening, and lot-by-lot technical compliance reports.',
       icon: Award,
     },
     {
-      title: 'Global Export Experience',
+      title: 'Global Export Distribution',
       desc: 'Routine container shipments to the Middle East, Europe, North America, and Southeast Asia with compliant cross-border documentation.',
       icon: Anchor,
     },
     {
-      title: 'Competitive Pricing',
-      desc: 'Direct-from-manufacturer sourcing eliminates intermediate trader markups, delivering transparent competitive CIF/FOB pricing.',
+      title: 'Competitive Direct Pricing',
+      desc: 'Direct-from-source procurement eliminates intermediate trader markups, delivering transparent competitive CIF/FOB pricing.',
       icon: TrendingDown,
     },
     {
-      title: 'Timely Delivery',
-      desc: 'Strict shipment schedules with preferred liner contracts from Hazira, Mundra, and Pipavav ports to eliminate demurrage delays.',
+      title: 'Dependable Shipping Schedules',
+      desc: 'Managed supply chain coordination and ocean carrier contracts to ensure on-time vessel loading and predictable arrival timelines.',
       icon: Truck,
     },
     {
-      title: 'Customized Packaging',
+      title: 'Customized Export Packaging',
       desc: 'Tailored packaging from 25kg PP moisture-barrier bags and paper sacks to retail pouches and private label OEM branding.',
       icon: Package,
     },
@@ -205,7 +211,7 @@ export const HomePage = () => {
     },
     {
       title: 'Honesty and Integrity',
-      desc: 'Built for buyers who cannot afford surprises: what is committed in the lab COA and contract is exactly what arrives in your container.',
+      desc: 'Built for buyers who cannot afford surprises: what is committed in the technical specification and proforma is exactly what arrives in your container.',
       icon: HeartHandshake,
     },
   ];
@@ -215,16 +221,25 @@ export const HomePage = () => {
       name: 'Personal Care & Cosmetic Formulators',
       desc: 'High-purity castor oleochemicals, SLES 70% surfactant base, salicylic acid, glycolic acid, pure Vitamin E acetate, and micronized kaolin clay for skincare, haircare, and toiletry manufacturers.',
       icon: Sparkles,
+      slug: 'personal-care-raw-materials',
     },
     {
       name: 'Nutraceuticals & Dietary Supplements',
       desc: 'HPLC-standardized botanical extracts (Ashwagandha, Curcumin 95%, Boswellia, Bacopa, Moringa, Amla), non-GMO pea protein isolate, and functional xanthan gum for capsules and functional blends.',
       icon: Pill,
+      slug: 'nutraceutical-raw-materials',
     },
     {
       name: 'Feed Mills & Commercial Animal Nutrition',
       desc: 'High-protein solvent-extracted soybean meal (DOC 46–48%), rapeseed/mustard meal, cottonseed meal, and custom feed-grade vitamin/mineral premixes for poultry, cattle, swine, and aquafeed.',
       icon: Layers,
+      slug: 'animal-feed',
+    },
+    {
+      name: 'Food, Spice & Beverage Manufacturers',
+      desc: 'Export-grade Indian spices, Basmati and non-Basmati rice, protein pulses, superfood seeds, dehydrated vegetables, and tropical fruit purees for culinary brands and commercial processors.',
+      icon: Apple,
+      slug: 'food-food-ingredients',
     },
   ];
 
@@ -290,7 +305,7 @@ export const HomePage = () => {
               {/* Eyebrow Badge */}
               <div className="hero-eyebrow self-start inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-primary-950/85 border border-accent-500/40 text-accent-400 text-[10px] sm:text-[11px] xl:text-xs font-semibold shadow-xs backdrop-blur-xs">
                 <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
-                <span className="tracking-wide sm:tracking-wider whitespace-nowrap">GLOBAL B2B EXPORT HOUSE • PERSONAL CARE, NUTRACEUTICAL & FEED</span>
+                <span className="tracking-wide sm:tracking-wider whitespace-nowrap">GLOBAL B2B EXPORT HOUSE • FOOD, PERSONAL CARE, NUTRACEUTICAL & FEED</span>
               </div>
 
               {/* Masked Line-by-Line Headline */}
@@ -335,19 +350,21 @@ export const HomePage = () => {
                 <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-y-3 gap-x-2 sm:gap-x-0 w-full sm:divide-x sm:divide-white/15">
                   <div className="hero-trust-item flex items-center gap-1.5 sm:gap-2 sm:pr-2.5 lg:pr-2 xl:pr-3 shrink-0">
                     <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
-                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">48h Quote Promise</span>
+                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">48h Quote Turnaround</span>
                   </div>
                   <div className="hero-trust-item flex items-center gap-1.5 sm:gap-2 sm:px-2.5 lg:px-2 xl:px-3 shrink-0">
                     <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
-                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">Lab COA per Lot</span>
+                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">Verified Quality Assays</span>
                   </div>
                   <div className="hero-trust-item flex items-center gap-1.5 sm:gap-2 sm:px-2.5 lg:px-2 xl:px-3 shrink-0">
                     <Anchor className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
-                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">Hazira & Mundra Ports</span>
+                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">Agreed Destination Delivery</span>
                   </div>
                   <div className="hero-trust-item flex items-center gap-1.5 sm:gap-2 sm:pl-2.5 lg:pl-2 xl:pl-3 shrink-0">
                     <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-accent-400 shrink-0" />
-                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">3 Divisions / 20 Lines</span>
+                    <span className="text-[11px] xl:text-xs font-medium text-neutral-200 whitespace-nowrap">
+                      {totalDivisionsCount} Divisions / {totalProductsCount}+ Lines
+                    </span>
                   </div>
                 </div>
               </div>
@@ -367,7 +384,7 @@ export const HomePage = () => {
           <Reveal direction="up" cascade stagger={0.06} className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="space-y-1 sm:border-r border-neutral-200">
               <span className="font-serif text-2xl sm:text-3xl font-bold text-neutral-900 block tracking-tight">
-                <AnimatedCounter value="3" duration={1.5} delay={0.2} />
+                <AnimatedCounter value={totalDivisionsCount.toString()} duration={1.5} delay={0.2} />
               </span>
               <span className="text-[11px] sm:text-xs text-neutral-600 font-semibold uppercase tracking-wider block">
                 Master Export Divisions
@@ -375,10 +392,10 @@ export const HomePage = () => {
             </div>
             <div className="space-y-1 md:border-r border-neutral-200">
               <span className="font-serif text-2xl sm:text-3xl font-bold text-neutral-900 block tracking-tight">
-                <AnimatedCounter value="20" duration={1.5} delay={0.25} />
+                <AnimatedCounter value={`${totalProductsCount}+`} duration={1.5} delay={0.25} />
               </span>
               <span className="text-[11px] sm:text-xs text-neutral-600 font-semibold uppercase tracking-wider block">
-                Specialized Raw Materials
+                Active Catalogue Commodities
               </span>
             </div>
             <div className="space-y-1 sm:border-r border-neutral-200">
@@ -386,7 +403,7 @@ export const HomePage = () => {
                 <AnimatedCounter value="100%" duration={1.5} delay={0.3} />
               </span>
               <span className="text-[11px] sm:text-xs text-neutral-600 font-semibold uppercase tracking-wider block">
-                Lot-by-Lot COA Testing
+                Supply Chain Traceability
               </span>
             </div>
             <div className="space-y-1">
@@ -408,80 +425,80 @@ export const HomePage = () => {
       <section className="py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-surface-canvas border-b border-surface-border">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-center">
-          {/* Left Column: Corridor Details & Port Badges */}
-          <div className="lg:col-span-7 space-y-6">
-            <Reveal direction="up">
-              <span className="text-xs font-semibold uppercase tracking-widest text-accent-600 block mb-2 font-mono">
-                ORIGIN & MARITIME INFRASTRUCTURE
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.6rem] font-bold text-neutral-900 leading-[1.18] tracking-tight">
-                Rooted in India’s Premier Maritime Export Corridor
-              </h2>
-            </Reveal>
-
-            <Reveal direction="up" delay={0.1} className="space-y-4 text-sm sm:text-base text-neutral-600 leading-relaxed font-sans">
-              <p>
-                Headquartered in <strong className="text-neutral-900 font-semibold">Surat, Gujarat</strong> — historically recognized as one of India's most vibrant merchant trading gateways — <strong className="text-neutral-900 font-semibold">{brandName}</strong> was founded to bridge the gap between Indian agricultural harvest belts and discerning international buyers who require uncompromising quality, transparent pricing, and predictable sea transit.
-              </p>
-              <p>
-                We eliminate the traditional multi-tier broker chain by managing direct linkages with Agricultural Produce Market Committees (APMC mandis), farmer producer organizations (FPOs), and certified processing mills across Gujarat, Rajasthan, Madhya Pradesh, and South India.
-              </p>
-              <p>
-                Our strategic geographic position places us within <strong className="text-neutral-900 font-semibold">25 km of Hazira Deep-Water Port (Surat)</strong> and in direct rail-road connectivity with <strong className="text-neutral-900 font-semibold">Mundra Port</strong> and <strong className="text-neutral-900 font-semibold">JNPT (Nhava Sheva)</strong>, ensuring priority vessel berthing and rapid container dispatch to international destinations.
-              </p>
-            </Reveal>
-
-            {/* 3 Strategic Port Outlets */}
-            <Reveal direction="up" delay={0.15} className="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-              <div className="p-4 rounded-xl bg-surface-subtle border border-surface-border">
-                <span className="font-mono text-xs text-accent-700 font-bold block mb-1">HAZIRA PORT</span>
-                <span className="text-xs text-neutral-600 font-medium block leading-snug">
-                  25 km transit distance from export dispatch yard
+            {/* Left Column: Integrated Infrastructure Details */}
+            <div className="lg:col-span-7 space-y-6">
+              <Reveal direction="up">
+                <span className="text-xs font-semibold uppercase tracking-widest text-accent-600 block mb-2 font-mono">
+                  INTEGRATED EXPORT INFRASTRUCTURE
                 </span>
-              </div>
-              <div className="p-4 rounded-xl bg-surface-subtle border border-surface-border">
-                <span className="font-mono text-xs text-accent-700 font-bold block mb-1">MUNDRA PORT</span>
-                <span className="text-xs text-neutral-600 font-medium block leading-snug">
-                  Premier deep-water container terminal for global lines
-                </span>
-              </div>
-              <div className="p-4 rounded-xl bg-surface-subtle border border-surface-border">
-                <span className="font-mono text-xs text-accent-700 font-bold block mb-1">JNPT / NHAVA SHEVA</span>
-                <span className="text-xs text-neutral-600 font-medium block leading-snug">
-                  Direct access to regular Gulf & European sailings
-                </span>
-              </div>
-            </Reveal>
-          </div>
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.6rem] font-bold text-neutral-900 leading-[1.18] tracking-tight">
+                  End-to-End Supply Chain Management for Global Buyers
+                </h2>
+              </Reveal>
 
-          {/* Right Column: The Sourcing Pledge Dark Hero Card */}
-          <div className="lg:col-span-5">
-            <Reveal direction="up" delay={0.15}>
-              <div className="p-8 sm:p-10 rounded-3xl bg-[#091b13] text-white shadow-xl border border-primary-800/80 relative overflow-hidden flex flex-col justify-between">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-accent-500/10 rounded-full blur-3xl pointer-events-none" />
-                <div>
-                  <span className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#c59b27] font-bold block mb-6">
-                    THE SOURCING PLEDGE
+              <Reveal direction="up" delay={0.1} className="space-y-4 text-sm sm:text-base text-neutral-600 leading-relaxed font-sans">
+                <p>
+                  <strong className="text-neutral-900 font-semibold">{brandName}</strong> manages the complete export lifecycle from agricultural growing belts and processing facilities to international container delivery. We bridge the gap between primary Indian production centers and discerning global buyers who require verified specifications, transparent communication, and reliable sea freight execution.
+                </p>
+                <p>
+                  We eliminate multi-tier broker chains by establishing direct linkages with primary processing mills, agricultural cooperatives, and certified manufacturers across India. Every consignment is handled with unified documentation and single-point accountability.
+                </p>
+                <p>
+                  Whether you require specialized ingredient cuts, customized mesh sizes, or consolidated multi-category containers — our export team coordinates product handling, export-grade packaging, container stuffing, and customs clearance to your agreed destination port.
+                </p>
+              </Reveal>
+
+              {/* 3 Strategic Supply Chain Pillars */}
+              <Reveal direction="up" delay={0.15} className="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                <div className="p-4 rounded-xl bg-surface-subtle border border-surface-border">
+                  <span className="font-mono text-xs text-accent-700 font-bold block mb-1">MULTI-CATEGORY CONSOLIDATION</span>
+                  <span className="text-xs text-neutral-600 font-medium block leading-snug">
+                    Consolidate food ingredients, botanical powders, and raw materials into a single container
                   </span>
-                  <blockquote className="font-serif text-lg sm:text-xl xl:text-2xl text-neutral-100 font-normal italic leading-relaxed">
-                    "Importing from a new partner is a risk calculation. Everything about how we work is designed to give you the confidence to source smarter, the consistency to grow stronger, and the reliability to build a business that lasts — because the right sourcing partner doesn't add uncertainty. They eliminate it."
-                  </blockquote>
                 </div>
-                <div className="mt-8 pt-6 border-t border-primary-800/70 flex items-center justify-between">
+                <div className="p-4 rounded-xl bg-surface-subtle border border-surface-border">
+                  <span className="font-mono text-xs text-accent-700 font-bold block mb-1">PROCESSING & FORM FLEXIBILITY</span>
+                  <span className="text-xs text-neutral-600 font-medium block leading-snug">
+                    Whole, cut/sifted, powdered, tea-bag cut, flakes, and tailored packaging options
+                  </span>
+                </div>
+                <div className="p-4 rounded-xl bg-surface-subtle border border-surface-border">
+                  <span className="font-mono text-xs text-accent-700 font-bold block mb-1">AGREED DESTINATION DISCHARGE</span>
+                  <span className="text-xs text-neutral-600 font-medium block leading-snug">
+                    Container stuffing and ocean freight coordinated to agreed global ports
+                  </span>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Right Column: The Sourcing Pledge Dark Hero Card */}
+            <div className="lg:col-span-5">
+              <Reveal direction="up" delay={0.15}>
+                <div className="p-8 sm:p-10 rounded-3xl bg-[#091b13] text-white shadow-xl border border-primary-800/80 relative overflow-hidden flex flex-col justify-between">
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-accent-500/10 rounded-full blur-3xl pointer-events-none" />
                   <div>
-                    <span className="text-xs font-semibold text-white block">International Trade Desk</span>
-                    <span className="text-[11px] text-neutral-400 block font-mono mt-0.5">{brandName} · Surat, Gujarat</span>
+                    <span className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#c59b27] font-bold block mb-6">
+                      THE SOURCING PLEDGE
+                    </span>
+                    <blockquote className="font-serif text-lg sm:text-xl xl:text-2xl text-neutral-100 font-normal italic leading-relaxed">
+                      "Importing from a new partner is a risk calculation. Everything about how we work is designed to give you the confidence to source smarter, the consistency to grow stronger, and the reliability to build a business that lasts — because the right sourcing partner doesn't add uncertainty. They eliminate it."
+                    </blockquote>
                   </div>
-                  <div className="w-9 h-9 rounded-xl bg-primary-900 border border-[#c59b27]/30 flex items-center justify-center text-[#c59b27] shrink-0">
-                    <ShieldCheck className="w-5 h-5" />
+                  <div className="mt-8 pt-6 border-t border-primary-800/70 flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-semibold text-white block">International Trade Desk</span>
+                      <span className="text-[11px] text-neutral-400 block font-mono mt-0.5">{brandName} · Export Platform</span>
+                    </div>
+                    <div className="w-9 h-9 rounded-xl bg-primary-900 border border-[#c59b27]/30 flex items-center justify-center text-[#c59b27] shrink-0">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Product Highlights Marquee (Circular Images, Names & Right-to-Left Continuous Animation) */}
       <ProductShowcaseMarquee />
@@ -546,26 +563,31 @@ export const HomePage = () => {
             </p>
           </Reveal>
 
-          <Reveal direction="up" cascade stagger={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Reveal direction="up" cascade stagger={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {applicationSectors.map((sector, idx) => {
               const SectorIcon = sector.icon;
               return (
-                <div
+                <Link
                   key={idx}
-                  className="p-6 rounded-xl border border-surface-border bg-white shadow-subtle hover:shadow-card hover:border-accent-500/40 transition-all duration-200 flex items-start gap-4 group"
+                  to={`/products?category=${sector.slug}`}
+                  className="p-6 rounded-xl border border-surface-border bg-white shadow-subtle hover:shadow-card hover:border-accent-500/40 transition-all duration-200 flex flex-col justify-between group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center shrink-0 group-hover:bg-primary-900 group-hover:text-accent-400 transition-colors duration-200">
-                    <SectorIcon className="w-6 h-6" />
-                  </div>
                   <div>
+                    <div className="w-12 h-12 rounded-xl bg-primary-100 text-primary-800 flex items-center justify-center mb-4 group-hover:bg-primary-900 group-hover:text-accent-400 transition-colors duration-200">
+                      <SectorIcon className="w-6 h-6" />
+                    </div>
                     <h3 className="font-serif text-base font-bold text-neutral-900 group-hover:text-primary-800 transition-colors duration-150">
                       {sector.name}
                     </h3>
-                    <p className="mt-1.5 text-xs text-neutral-600 leading-relaxed">
+                    <p className="mt-2 text-xs text-neutral-600 leading-relaxed">
                       {sector.desc}
                     </p>
                   </div>
-                </div>
+                  <div className="mt-4 pt-3 border-t border-surface-border flex items-center gap-1.5 text-xs font-semibold text-primary-800 group-hover:text-accent-600 transition-colors">
+                    <span>Explore Division</span>
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                </Link>
               );
             })}
           </Reveal>
@@ -575,7 +597,7 @@ export const HomePage = () => {
               to="/products"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary-900 hover:bg-primary-950 text-white font-bold text-xs sm:text-sm shadow-card hover:shadow-hover transition-all duration-150 group"
             >
-              <span>Explore Complete Export Catalogue (20 Products)</span>
+              <span>Explore Complete Export Catalogue ({totalProductsCount}+ Commodities)</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Reveal>

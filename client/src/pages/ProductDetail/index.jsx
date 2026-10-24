@@ -153,11 +153,11 @@ export const ProductDetailPage = () => {
               {/* Quality Seals */}
               <div className="p-4 rounded-xl border border-surface-border bg-surface-subtle flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-600">
                 <span className="flex items-center gap-1.5 font-medium text-neutral-900">
-                  <ShieldCheck className="w-4 h-4 text-primary-800" /> Export Quality Assurance:
+                  <ShieldCheck className="w-4 h-4 text-primary-800" /> Export Supply Assurance:
                 </span>
-                <span>NABL Lab Tested COA</span>
-                <span>Phytosanitary Certified</span>
-                <span>Fumigation Included</span>
+                <span>Commercial Purity Guarantee</span>
+                <span>Batch Traceability</span>
+                <span>Export Standard Packaging</span>
               </div>
             </div>
           </div>
@@ -166,14 +166,16 @@ export const ProductDetailPage = () => {
           <div className="lg:col-span-6 space-y-6">
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-2.5">
-                <span className="font-mono text-xs font-semibold bg-primary-800 text-white px-2.5 py-0.5 rounded shadow-sm">
-                  HS Code: {product.hsCode}
-                </span>
-                {product.botanicalName && (
+                {product.hsCode ? (
+                  <span className="font-mono text-xs font-semibold bg-primary-800 text-white px-2.5 py-0.5 rounded shadow-sm">
+                    HS Code: {product.hsCode}
+                  </span>
+                ) : null}
+                {product.botanicalName ? (
                   <span className="italic text-xs text-neutral-500 font-serif">
                     Botanical: {product.botanicalName}
                   </span>
-                )}
+                ) : null}
               </div>
 
               <h1 className="font-serif text-3xl sm:text-4xl font-bold text-neutral-900 leading-tight">
@@ -190,21 +192,31 @@ export const ProductDetailPage = () => {
               <div>
                 <span className="text-neutral-400 block text-[11px]">Origin:</span>
                 <span className="font-semibold text-neutral-900">
-                  {Array.isArray(product.origin) ? product.origin.join(', ') : 'India'}
+                  {Array.isArray(product.origin) && product.origin.length > 0
+                    ? product.origin.join(', ')
+                    : 'India'}
                 </span>
               </div>
               <div>
-                <span className="text-neutral-400 block text-[11px]">Shelf Life:</span>
-                <span className="font-semibold text-neutral-900">{product.shelfLife || '24 months'}</span>
+                <span className="text-neutral-400 block text-[11px]">Availability:</span>
+                <span className="font-semibold text-neutral-900">{product.availability || 'Year-round'}</span>
               </div>
+              {product.shelfLife ? (
+                <div>
+                  <span className="text-neutral-400 block text-[11px]">Shelf Life:</span>
+                  <span className="font-semibold text-neutral-900">{product.shelfLife}</span>
+                </div>
+              ) : null}
+              {product.leadTime ? (
+                <div>
+                  <span className="text-neutral-400 block text-[11px]">Lead Time:</span>
+                  <span className="font-semibold text-neutral-900">{product.leadTime}</span>
+                </div>
+              ) : null}
               <div>
-                <span className="text-neutral-400 block text-[11px]">Lead Time:</span>
-                <span className="font-semibold text-neutral-900">{product.leadTime || '10–14 days'}</span>
-              </div>
-              <div>
-                <span className="text-neutral-400 block text-[11px]">Primary Loading Port:</span>
+                <span className="text-neutral-400 block text-[11px]">Port of Loading:</span>
                 <span className="font-semibold text-neutral-900">
-                  {product.ports?.[0] || 'Hazira (Surat) / Mundra'}
+                  {product.ports?.[0] || 'Agreed per order'}
                 </span>
               </div>
               <div>
@@ -382,17 +394,23 @@ export const ProductDetailPage = () => {
                 <Package className="w-5 h-5 text-primary-800" />
                 <span>Export Packaging Options</span>
               </h3>
-              <ul className="space-y-3 text-xs sm:text-sm text-neutral-600">
-                {product.packing?.map((p, idx) => (
-                  <li key={idx} className="flex items-start gap-2 border-b border-surface-border pb-2 last:border-0">
-                    <CheckCircle2 className="w-4 h-4 text-status-success shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-neutral-900">{p.type} — {p.size}:</span>{' '}
-                      <span>{p.notes || 'Export standard moisture-barrier packaging'}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              {product.packing && product.packing.length > 0 ? (
+                <ul className="space-y-3 text-xs sm:text-sm text-neutral-600">
+                  {product.packing.map((p, idx) => (
+                    <li key={idx} className="flex items-start gap-2 border-b border-surface-border pb-2 last:border-0">
+                      <CheckCircle2 className="w-4 h-4 text-status-success shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-neutral-900">{p.type} — {p.size}:</span>{' '}
+                        <span>{p.notes || 'Export standard moisture-barrier packaging'}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                  Custom export packaging available upon request — multi-wall paper bags, PP woven sacks, fiber drums, bulk totes, or customized private-label specifications.
+                </p>
+              )}
             </div>
 
             <div className="p-6 rounded-xl border border-surface-border bg-surface-card shadow-subtle space-y-4">
@@ -402,20 +420,20 @@ export const ProductDetailPage = () => {
               </h3>
               <div className="space-y-3 text-xs sm:text-sm text-neutral-600">
                 <div className="flex justify-between border-b border-surface-border pb-2">
-                  <span className="text-neutral-500">Port of Departure:</span>
-                  <span className="font-semibold text-neutral-900">Mundra Port (INMUN1) / JNPT (INNSA1)</span>
+                  <span className="text-neutral-500">Port of Loading:</span>
+                  <span className="font-semibold text-neutral-900">Agreed per order (India gateway ports)</span>
                 </div>
                 <div className="flex justify-between border-b border-surface-border pb-2">
-                  <span className="text-neutral-500">Typical FCL Load:</span>
-                  <span className="font-semibold text-neutral-900">18–24 MT per 20ft container</span>
+                  <span className="text-neutral-500">Consignment Mode:</span>
+                  <span className="font-semibold text-neutral-900">20ft / 40ft FCL or Consolidated LCL</span>
                 </div>
                 <div className="flex justify-between border-b border-surface-border pb-2">
-                  <span className="text-neutral-500">Fumigation Standard:</span>
-                  <span className="font-semibold text-neutral-900">Methyl Bromide / Phosphine Certified</span>
+                  <span className="text-neutral-500">Supply Chain Control:</span>
+                  <span className="font-semibold text-neutral-900">End-to-end container tracking & dispatch</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-neutral-500">Inspection Agency:</span>
-                  <span className="font-semibold text-neutral-900">SGS / Bureau Veritas on buyer request</span>
+                  <span className="text-neutral-500">Documentation:</span>
+                  <span className="font-semibold text-neutral-900">Commercial Invoice, Packing List, B/L, Certificate of Origin</span>
                 </div>
               </div>
             </div>
