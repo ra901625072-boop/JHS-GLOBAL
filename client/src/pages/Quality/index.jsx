@@ -149,6 +149,19 @@ export const QualityPage = () => {
       webpSrcSet: '/images/certifications/msme-udyam-480w.webp 480w, /images/certifications/msme-udyam-768w.webp 768w, /images/certifications/msme-udyam-1024w.webp 1024w',
       code: 'MSME Udyam',
     },
+    fieo: {
+      _id: 'cert-fieo',
+      name: 'Federation of Indian Export Organisations',
+      fullName: 'FIEO Registration (Federation of Indian Export Organisations)',
+      issuedBy: 'Ministry of Commerce & Industry, Government of India',
+      number: 'Verified on Request',
+      form: 'FIEO Recognized Exporter',
+      scope: 'Apex trade facilitation organisation representing Indian multi-commodity exporters globally.',
+      file: { url: '' },
+      image: '',
+      code: 'FIEO',
+      isTextBadge: true,
+    },
   };
 
   const resolveCert = (c) => {
@@ -160,6 +173,7 @@ export const QualityPage = () => {
     else if (text.includes('fssai') || text.includes('10725997001058')) key = 'fssai';
     else if (text.includes('spice') || text.includes('cres')) key = 'spices';
     else if (text.includes('msme') || text.includes('udyam')) key = 'msme';
+    else if (text.includes('fieo') || text.includes('federation')) key = 'fieo';
 
     const fallback = CERT_METADATA_REGISTRY[key] || {};
     return {
@@ -173,6 +187,7 @@ export const QualityPage = () => {
       image: c.image || c.imageUrl || c.image_url || fallback.image,
       file: c.file || (c.fileUrl || c.file_url ? { url: c.fileUrl || c.file_url } : fallback.file),
       code: c.code || fallback.code,
+      isTextBadge: c.isTextBadge || fallback.isTextBadge || !c.image,
     };
   };
 
@@ -182,19 +197,19 @@ export const QualityPage = () => {
 
   const dueDiligenceChecklist = [
     'Government of India registered export credentials with active IEC Code',
-    'Direct statutory registration with APEDA, FSSAI Central Authority, and MSME Udyam',
-    'Independent third-party inspection (SGS, Bureau Veritas, Intertek) allowed at container stuffing',
-    'Transparent batch COA and MSDS provided prior to cargo vessel departure',
-    'Container stuffing video and high-resolution photographic log shared with buyer',
+    'Direct statutory registration with APEDA, FSSAI Central Authority, FIEO, and Spices Board',
+    'Standardized assay verification and complete specification matching prior to dispatch',
+    'Full export compliance documentation and packing dossiers provided with every consignment',
+    'Container stuffing verification logs and tamper-evident sealing shared with buyer',
   ];
 
   return (
     <>
       <Helmet>
-        <title>Quality Assurance & Verified Export Certifications — JHS GLOBAL</title>
+        <title>Quality Governance & Verified Export Certifications — JHS GLOBAL</title>
         <meta
           name="description"
-          content="Review verified statutory export certifications (GST, IEC, APEDA, FSSAI, Spices Board, MSME) and NABL laboratory testing protocols of JHS GLOBAL."
+          content="Review verified statutory export credentials (GST, IEC, APEDA, FSSAI, FIEO, Spices Board, MSME) and quality governance standards of JHS GLOBAL."
         />
       </Helmet>
 
@@ -203,11 +218,11 @@ export const QualityPage = () => {
         badge={
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-semibold shadow-xs">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>STATUTORY AUDITED ACCREDITATIONS · NABL TESTING</span>
+            <span>STATUTORY AUDITED ACCREDITATIONS · EXPORT GOVERNANCE</span>
           </div>
         }
         title="Quality Governance & Verified Export Licenses"
-        description="Every consignment leaves India backed by statutory compliance, NABL laboratory certificates of analysis (COA), and optional independent third-party container audits (SGS / Bureau Veritas)."
+        description="Every consignment leaves India backed by statutory compliance, verified product specifications, export-grade packaging, and transparent supply chain documentation."
       />
 
       {/* All 6 Government Approved Certificates Grid with Lightbox Preview */}
@@ -248,19 +263,36 @@ export const QualityPage = () => {
                     onClick={() => setActiveLightboxDoc(cert)}
                     className="relative aspect-[1/1.22] w-full bg-neutral-50 rounded-xl overflow-hidden border border-neutral-200/80 p-2 sm:p-3 flex items-center justify-center cursor-pointer group-hover:border-primary-700/30 transition-colors shadow-inner"
                   >
-                    <picture className="w-full h-full flex items-center justify-center">
-                      <source type="image/avif" srcSet={cert.avifSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
-                      <source type="image/webp" srcSet={cert.webpSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
-                      <img
-                        src={cert.image}
-                        alt={cert.name}
-                        width="300"
-                        height="375"
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-contain rounded filter contrast-[1.02] shadow-2xs group-hover:scale-[1.03] transition-transform duration-300"
-                      />
-                    </picture>
+                    {cert.isTextBadge || !cert.image ? (
+                      <div className="w-full h-full bg-gradient-to-br from-amber-50/90 via-white to-emerald-50/70 rounded-lg border border-amber-200/70 p-3 sm:p-4 flex flex-col items-center justify-center text-center shadow-inner group-hover:border-primary-700/40 transition-colors">
+                        <div className="w-11 h-11 rounded-full bg-amber-100/90 border border-amber-300 flex items-center justify-center mb-2 shadow-2xs group-hover:scale-105 transition-transform">
+                          <Award className="w-5 h-5 text-amber-800" />
+                        </div>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-neutral-900 tracking-tight leading-snug">
+                          Federation of Indian Export Organisations
+                        </span>
+                        <span className="text-[10px] text-amber-800 font-medium uppercase tracking-wider mt-1.5">
+                          Ministry of Commerce · Govt. of India
+                        </span>
+                        <span className="text-[9px] text-neutral-500 font-mono mt-2 bg-white px-2 py-0.5 rounded border border-neutral-200 shadow-2xs">
+                          Official Text Badge
+                        </span>
+                      </div>
+                    ) : (
+                      <picture className="w-full h-full flex items-center justify-center">
+                        <source type="image/avif" srcSet={cert.avifSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
+                        <source type="image/webp" srcSet={cert.webpSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
+                        <img
+                          src={cert.image}
+                          alt={cert.name}
+                          width="300"
+                          height="375"
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-contain rounded filter contrast-[1.02] shadow-2xs group-hover:scale-[1.03] transition-transform duration-300"
+                        />
+                      </picture>
+                    )}
 
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-neutral-950/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-xl p-3">
@@ -300,15 +332,26 @@ export const QualityPage = () => {
                     </span>
                   </div>
 
-                  <a
-                    href={cert.file?.url}
-                    download
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-800 hover:text-accent-600 transition-colors p-1"
-                    title="Download Official PDF"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>PDF</span>
-                  </a>
+                  {cert.file?.url ? (
+                    <a
+                      href={cert.file.url}
+                      download
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-800 hover:text-accent-600 transition-colors p-1"
+                      title="Download Official PDF"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>PDF</span>
+                    </a>
+                  ) : (
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-800 hover:text-accent-600 transition-colors p-1"
+                      title="Request Official Accreditation Dossier"
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>Dossier</span>
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
@@ -336,7 +379,7 @@ export const QualityPage = () => {
             <div className="pt-2">
               <Link to="/contact">
                 <Button variant="cta" size="md">
-                  Request Batch Lab COA Pack
+                  Request Compliance & Specification Dossier
                 </Button>
               </Link>
             </div>
@@ -398,18 +441,39 @@ export const QualityPage = () => {
               {/* Modal Body */}
               <div className="flex-1 overflow-y-auto p-4 sm:p-6 bg-neutral-100 flex flex-col items-center justify-center">
                 <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg border border-neutral-300 p-2 sm:p-4 flex items-center justify-center">
-                  <picture className="flex items-center justify-center max-h-[58vh]">
-                    <source type="image/avif" srcSet={activeLightboxDoc.avifSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
-                    <source type="image/webp" srcSet={activeLightboxDoc.webpSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
-                    <img
-                      src={activeLightboxDoc.image}
-                      alt={activeLightboxDoc.name}
-                      width="768"
-                      height="960"
-                      decoding="async"
-                      className="w-full h-auto max-h-[58vh] object-contain rounded"
-                    />
-                  </picture>
+                  {activeLightboxDoc.isTextBadge || !activeLightboxDoc.image ? (
+                    <div className="w-full aspect-[4/3] bg-gradient-to-br from-amber-50/90 via-white to-emerald-50/70 rounded-xl border border-amber-200/80 p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-inner">
+                      <div className="w-16 h-16 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center mb-3 shadow-xs">
+                        <Award className="w-8 h-8 text-amber-800" />
+                      </div>
+                      <span className="font-serif font-bold text-lg sm:text-xl text-neutral-900 tracking-tight">
+                        Federation of Indian Export Organisations (FIEO)
+                      </span>
+                      <span className="text-xs text-amber-900 font-semibold uppercase tracking-wider mt-1.5">
+                        Apex Trade Facilitation Organisation · Ministry of Commerce, Govt. of India
+                      </span>
+                      <p className="text-xs sm:text-sm text-neutral-600 mt-3 max-w-md leading-relaxed font-sans">
+                        Apex trade facilitation body set up by the Ministry of Commerce, Government of India, representing Indian multi-commodity exporters in global commerce. Official statutory registration certificate dossier is provided with commercial quotations and customs documentation.
+                      </p>
+                      <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Official Trade Organisation Registration</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <picture className="flex items-center justify-center max-h-[58vh]">
+                      <source type="image/avif" srcSet={activeLightboxDoc.avifSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
+                      <source type="image/webp" srcSet={activeLightboxDoc.webpSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
+                      <img
+                        src={activeLightboxDoc.image}
+                        alt={activeLightboxDoc.name}
+                        width="768"
+                        height="960"
+                        decoding="async"
+                        className="w-full h-auto max-h-[58vh] object-contain rounded"
+                      />
+                    </picture>
+                  )}
                 </div>
 
                 <div className="mt-4 text-center max-w-xl text-xs text-neutral-600">
@@ -445,19 +509,35 @@ export const QualityPage = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <a
-                    href={activeLightboxDoc.file?.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-lg border border-neutral-300 hover:border-neutral-400 text-xs font-semibold text-neutral-700 hover:text-neutral-900 transition-colors"
-                  >
-                    Open in New Tab
-                  </a>
-                  <a
-                    href={activeLightboxDoc.file?.url}
-                    download
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cta-500 hover:bg-cta-600 text-white text-xs font-semibold shadow-xs transition-colors"
-                  >
+                  {activeLightboxDoc.file?.url ? (
+                    <>
+                      <a
+                        href={activeLightboxDoc.file.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-lg border border-neutral-300 hover:border-neutral-400 text-xs font-semibold text-neutral-700 hover:text-neutral-900 transition-colors"
+                      >
+                        Open in New Tab
+                      </a>
+                      <a
+                        href={activeLightboxDoc.file.url}
+                        download
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cta-500 hover:bg-cta-600 text-white text-xs font-semibold shadow-xs transition-colors"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>Download Clean PDF</span>
+                      </a>
+                    </>
+                  ) : (
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-cta-500 hover:bg-cta-600 text-white text-xs font-semibold shadow-xs transition-colors"
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>Request Certificate Dossier</span>
+                    </Link>
+                  )}
+                </div>
                     <Download className="w-3.5 h-3.5" />
                     <span>Download Clean PDF</span>
                   </a>

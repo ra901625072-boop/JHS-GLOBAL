@@ -71,11 +71,11 @@ export const Header = () => {
           <div className="flex items-center gap-3 xl:gap-4">
             <span className="inline-flex items-center gap-1.5 text-accent-400 font-semibold whitespace-nowrap">
               <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-              <span>FSSAI Central & APEDA Certified Exporter</span>
+              <span>FSSAI • APEDA • FIEO • Spices Board Certified Exporter</span>
             </span>
             <span className="text-primary-700 select-none">•</span>
             <span className="text-neutral-300 whitespace-nowrap">
-              Port of Loading: Hazira, Mundra & JNPT
+              Port of Loading Agreed per Order
             </span>
           </div>
           <div className="flex items-center gap-3 xl:gap-4 text-neutral-300">

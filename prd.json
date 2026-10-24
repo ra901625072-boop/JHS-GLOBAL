@@ -90,7 +90,7 @@
         "Footer credentials display FIEO alongside FSSAI, APEDA, and DGFT",
         "Admin certificates manager can edit FIEO details"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-008",

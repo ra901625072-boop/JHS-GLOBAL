@@ -5,6 +5,7 @@ import { ShieldCheck, Award, CheckCircle2, FileCheck2, ArrowRight } from 'lucide
 const CERTIFICATIONS = [
   { label: 'APEDA Registered Exporter (Ministry of Commerce)', icon: Award },
   { label: 'FSSAI Central License (10725997001058)', icon: ShieldCheck },
+  { label: 'FIEO Registered Exporter (Federation of Indian Export Organisations)', icon: Award },
   { label: 'Spices Board of India (CRES Registered)', icon: Award },
   { label: 'DGFT Importer-Exporter Code (IEC)', icon: FileCheck2 },
   { label: 'GST Registered Commercial Exporter', icon: CheckCircle2 },

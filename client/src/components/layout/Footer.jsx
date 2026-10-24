@@ -63,17 +63,23 @@ export const Footer = () => {
       slug: 'animal-feed',
       chapter: 'Ch. 23',
     },
+    {
+      name: 'Food & Food Ingredients',
+      slug: 'food-food-ingredients',
+      chapter: 'Ch. 09',
+    },
   ];
 
   const displayedDivisions = useMemo(() => {
     if (Array.isArray(categoriesData) && categoriesData.length > 0) {
-      const topLevel = categoriesData.filter((c) => !c.parentId || c.level === 0);
+      const topLevel = categoriesData.filter((c) => !c.parentId || c.level === 0 || c.level === 1);
       if (topLevel.length > 0) {
         return topLevel.slice(0, 4).map((c) => {
           let chapter = '';
           if (c.slug.includes('personal')) chapter = 'Ch. 33';
           else if (c.slug.includes('nutra')) chapter = 'Ch. 13';
           else if (c.slug.includes('feed')) chapter = 'Ch. 23';
+          else if (c.slug.includes('food')) chapter = 'Ch. 09';
           return {
             name: c.name,
             slug: c.slug,
@@ -181,13 +187,13 @@ export const Footer = () => {
             </div>
           </div>
           <p className="mt-4 text-sm text-neutral-400 leading-relaxed max-w-sm">
-            At JHS GLOBAL, our commitment begins long before the shipment leaves India — and lasts long after it reaches you. Supplying verified Indian personal care raw materials, HPLC-standardized nutraceutical extracts, and animal feed ingredients directly to international manufacturers and importers.
+            At JHS GLOBAL, our commitment begins long before the shipment leaves India — and lasts long after it reaches you. Supplying export-grade food ingredients, personal care raw materials, botanical extracts, and animal feed directly to international manufacturers and commercial importers worldwide.
           </p>
 
           <div className="mt-6 flex flex-col gap-2.5 text-xs text-neutral-400">
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-accent-400 shrink-0" />
-              <span>DGFT IEC Registered • APEDA & Spices Board of India Member</span>
+              <span>DGFT IEC Registered • APEDA, FIEO & Spices Board of India Member</span>
             </div>
             <div className="flex items-center gap-2">
               <FileText className="w-4 h-4 text-accent-400 shrink-0" />
@@ -312,8 +318,8 @@ export const Footer = () => {
               </a>
             </div>
             <div className="pt-2 border-t border-primary-800/80">
-              <span className="block text-[11px] text-neutral-400">Maritime Outlets:</span>
-              <span className="text-white font-medium">Hazira Port (Surat) • Mundra Port (INMUN1) • Pipavav • JNPT</span>
+              <span className="block text-[11px] text-neutral-400">Port of Loading:</span>
+              <span className="text-white font-medium">Agreed per order (India gateway ports)</span>
             </div>
           </div>
         </div>

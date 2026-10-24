@@ -71,6 +71,17 @@ export const seedCertificates = async () => {
       order: 6,
       isPublic: true,
     },
+    {
+      name: 'FIEO Registration',
+      fullName: 'Federation of Indian Export Organisations',
+      issuedBy: 'Federation of Indian Export Organisations (Set up by Ministry of Commerce, Govt. of India)',
+      number: '', // TODO(client): verify exact certificate/registration number and validity
+      scope: 'Apex trade facilitation organisation set up by Ministry of Commerce, Govt. of India, representing Indian exporters in global commerce.',
+      file: { url: '', type: 'text' },
+      logo: { url: '' }, // Text badge used until official logo is supplied by client
+      order: 7,
+      isPublic: true,
+    },
   ];
 
   for (const c of certs) {

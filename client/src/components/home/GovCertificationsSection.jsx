@@ -102,6 +102,21 @@ export const GOV_DOCUMENTS = [
     scope: 'Government enterprise accreditation for trading and export operations.',
     isPrimary: false,
   },
+  {
+    id: 'fieo',
+    code: 'FIEO',
+    title: 'Federation of Indian Export Organisations',
+    authority: 'Set up by Ministry of Commerce, Government of India',
+    regNumber: 'Verified on Request',
+    form: 'FIEO Recognized Exporter',
+    image: '',
+    avifSrcSet: '',
+    webpSrcSet: '',
+    pdf: '',
+    scope: 'Apex trade facilitation organisation set up by Ministry of Commerce, Govt. of India, representing Indian multi-commodity exporters globally.',
+    isPrimary: false,
+    isTextBadge: true,
+  },
 ];
 
 export const GovCertificationsSection = () => {
@@ -192,7 +207,7 @@ export const GovCertificationsSection = () => {
                   : 'text-neutral-600 hover:text-neutral-900'
               }`}
             >
-              All Statutory Accreditations (6)
+              All Statutory Accreditations ({GOV_DOCUMENTS.length})
             </button>
           </div>
         </Reveal>
@@ -227,19 +242,36 @@ export const GovCertificationsSection = () => {
               >
                 {/* Document Thumbnail Paper Mount */}
                 <div className="relative aspect-[1/1.25] sm:aspect-[1/1.22] w-full bg-neutral-50 rounded-xl overflow-hidden border border-neutral-200/70 p-2 sm:p-2.5 flex items-center justify-center shadow-inner group-hover:border-primary-700/30 transition-colors">
-                  <picture className="w-full h-full flex items-center justify-center">
-                    <source type="image/avif" srcSet={doc.avifSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
-                    <source type="image/webp" srcSet={doc.webpSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
-                    <img
-                      src={doc.image}
-                      alt={`${doc.code} Government Document`}
-                      width="300"
-                      height="375"
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-contain rounded filter contrast-[1.02] shadow-2xs group-hover:scale-[1.03] transition-transform duration-300"
-                    />
-                  </picture>
+                  {doc.isTextBadge || !doc.image ? (
+                    <div className="w-full h-full bg-gradient-to-br from-amber-50/90 via-white to-emerald-50/70 rounded-lg border border-amber-200/70 p-3 sm:p-4 flex flex-col items-center justify-center text-center shadow-inner group-hover:border-primary-700/40 transition-colors">
+                      <div className="w-11 h-11 rounded-full bg-amber-100/90 border border-amber-300 flex items-center justify-center mb-2 shadow-2xs group-hover:scale-105 transition-transform">
+                        <Award className="w-5 h-5 text-amber-800" />
+                      </div>
+                      <span className="font-serif font-bold text-xs sm:text-sm text-neutral-900 tracking-tight leading-snug">
+                        Federation of Indian Export Organisations
+                      </span>
+                      <span className="text-[10px] text-amber-800 font-medium uppercase tracking-wider mt-1.5">
+                        Ministry of Commerce · Govt. of India
+                      </span>
+                      <span className="text-[9px] text-neutral-500 font-mono mt-2 bg-white px-2 py-0.5 rounded border border-neutral-200 shadow-2xs">
+                        Official Text Badge
+                      </span>
+                    </div>
+                  ) : (
+                    <picture className="w-full h-full flex items-center justify-center">
+                      <source type="image/avif" srcSet={doc.avifSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
+                      <source type="image/webp" srcSet={doc.webpSrcSet} sizes="(max-width: 640px) 160px, (max-width: 1024px) 240px, 300px" />
+                      <img
+                        src={doc.image}
+                        alt={`${doc.code} Government Document`}
+                        width="300"
+                        height="375"
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-contain rounded filter contrast-[1.02] shadow-2xs group-hover:scale-[1.03] transition-transform duration-300"
+                      />
+                    </picture>
+                  )}
 
                   {/* Interactive Hover Overlay with Inspect Pill */}
                   <div className="absolute inset-0 bg-neutral-950/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-xl p-3">
@@ -349,18 +381,39 @@ export const GovCertificationsSection = () => {
               <div className="flex-1 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 gap-6 p-4 sm:p-6 bg-neutral-50/70">
                 {/* Document Preview Pane */}
                 <div className="lg:col-span-7 bg-white rounded-xl border border-neutral-200 p-3 sm:p-4 shadow-inner flex items-center justify-center overflow-hidden min-h-[300px]">
-                  <picture className="flex items-center justify-center max-h-[62vh]">
-                    <source type="image/avif" srcSet={activeModalDoc.avifSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
-                    <source type="image/webp" srcSet={activeModalDoc.webpSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
-                    <img
-                      src={activeModalDoc.image}
-                      alt={activeModalDoc.title}
-                      width="768"
-                      height="960"
-                      decoding="async"
-                      className="max-h-[62vh] w-auto object-contain rounded shadow-md"
-                    />
-                  </picture>
+                  {activeModalDoc.isTextBadge || !activeModalDoc.image ? (
+                    <div className="w-full aspect-[4/3] bg-gradient-to-br from-amber-50/90 via-white to-emerald-50/70 rounded-xl border border-amber-200/80 p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-inner">
+                      <div className="w-16 h-16 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center mb-3 shadow-xs">
+                        <Award className="w-8 h-8 text-amber-800" />
+                      </div>
+                      <span className="font-serif font-bold text-lg sm:text-xl text-neutral-900 tracking-tight">
+                        Federation of Indian Export Organisations (FIEO)
+                      </span>
+                      <span className="text-xs text-amber-900 font-semibold uppercase tracking-wider mt-1.5">
+                        Apex Trade Facilitation Organisation · Ministry of Commerce, Govt. of India
+                      </span>
+                      <p className="text-xs sm:text-sm text-neutral-600 mt-3 max-w-md leading-relaxed font-sans">
+                        Apex trade facilitation body set up by the Ministry of Commerce, Government of India, representing Indian multi-commodity exporters in global commerce. Official statutory registration certificate dossier is provided with commercial quotations and customs documentation.
+                      </p>
+                      <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Official Trade Organisation Registration</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <picture className="flex items-center justify-center max-h-[62vh]">
+                      <source type="image/avif" srcSet={activeModalDoc.avifSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
+                      <source type="image/webp" srcSet={activeModalDoc.webpSrcSet} sizes="(max-width: 1024px) 100vw, 768px" />
+                      <img
+                        src={activeModalDoc.image}
+                        alt={activeModalDoc.title}
+                        width="768"
+                        height="960"
+                        decoding="async"
+                        className="max-h-[62vh] w-auto object-contain rounded shadow-md"
+                      />
+                    </picture>
+                  )}
                 </div>
 
                 {/* Legal & Regulatory Breakdown Pane */}
@@ -424,23 +477,35 @@ export const GovCertificationsSection = () => {
 
                   {/* Actions: View PDF / Download */}
                   <div className="pt-3 border-t border-neutral-200 flex flex-col sm:flex-row gap-3">
-                    <a
-                      href={activeModalDoc.pdf}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 py-2.5 px-4 rounded-xl bg-primary-900 hover:bg-primary-950 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-all"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      <span>Open Official PDF</span>
-                    </a>
-                    <a
-                      href={activeModalDoc.pdf}
-                      download
-                      className="py-2.5 px-4 rounded-xl border border-neutral-300 hover:bg-neutral-100 text-neutral-800 text-xs font-semibold flex items-center justify-center gap-2 transition-all"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      <span>Download</span>
-                    </a>
+                    {activeModalDoc.pdf ? (
+                      <>
+                        <a
+                          href={activeModalDoc.pdf}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 py-2.5 px-4 rounded-xl bg-primary-900 hover:bg-primary-950 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-all"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          <span>Open Official PDF</span>
+                        </a>
+                        <a
+                          href={activeModalDoc.pdf}
+                          download
+                          className="py-2.5 px-4 rounded-xl border border-neutral-300 hover:bg-neutral-100 text-neutral-800 text-xs font-semibold flex items-center justify-center gap-2 transition-all"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          <span>Download</span>
+                        </a>
+                      </>
+                    ) : (
+                      <Link
+                        to="/contact"
+                        className="flex-1 py-2.5 px-4 rounded-xl bg-primary-900 hover:bg-primary-950 text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-all"
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>Request Official Accreditation Dossier</span>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
