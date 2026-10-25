@@ -47,3 +47,12 @@ logs/
 # Agent Tools
 .agents/
 skills-lock.json
+
+# Local captures, dumps, and media
+artifacts/
+backups/
+jhs-ui-capture/
+video/
+step0_hits.json
+step0_categorized.json
+
