@@ -1,5 +1,21 @@
 {
   "products": {
+    "1121-golden-sella-raw-basmati-rice": {
+      "baseSrc": "/images/products/1121-golden-sella-raw-basmati-rice.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/1121-golden-sella-raw-basmati-rice-176w.webp 176w, /images/products/1121-golden-sella-raw-basmati-rice-380w.webp 380w, /images/products/1121-golden-sella-raw-basmati-rice-640w.webp 640w, /images/products/1121-golden-sella-raw-basmati-rice-800w.webp 800w",
+      "srcSetAvif": "/images/products/1121-golden-sella-raw-basmati-rice-176w.avif 176w, /images/products/1121-golden-sella-raw-basmati-rice-380w.avif 380w, /images/products/1121-golden-sella-raw-basmati-rice-640w.avif 640w, /images/products/1121-golden-sella-raw-basmati-rice-800w.avif 800w",
+      "thumb176Webp": "/images/products/1121-golden-sella-raw-basmati-rice-176w.webp",
+      "thumb176Avif": "/images/products/1121-golden-sella-raw-basmati-rice-176w.avif"
+    },
     "amla-extract": {
       "baseSrc": "/images/products/amla-extract.webp",
       "width": 1200,
@@ -33,6 +49,22 @@
       "thumb176Webp": "/images/products/ashwagandha-extract-176w.webp",
       "thumb176Avif": "/images/products/ashwagandha-extract-176w.avif"
     },
+    "ashwagandha-powder": {
+      "baseSrc": "/images/products/ashwagandha-powder.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/ashwagandha-powder-176w.webp 176w, /images/products/ashwagandha-powder-380w.webp 380w, /images/products/ashwagandha-powder-640w.webp 640w, /images/products/ashwagandha-powder-800w.webp 800w",
+      "srcSetAvif": "/images/products/ashwagandha-powder-176w.avif 176w, /images/products/ashwagandha-powder-380w.avif 380w, /images/products/ashwagandha-powder-640w.avif 640w, /images/products/ashwagandha-powder-800w.avif 800w",
+      "thumb176Webp": "/images/products/ashwagandha-powder-176w.webp",
+      "thumb176Avif": "/images/products/ashwagandha-powder-176w.avif"
+    },
     "bacopa-monnieri-extract": {
       "baseSrc": "/images/products/bacopa-monnieri-extract.webp",
       "width": 1200,
@@ -49,6 +81,22 @@
       "srcSetAvif": "/images/products/bacopa-monnieri-extract-176w.avif 176w, /images/products/bacopa-monnieri-extract-380w.avif 380w, /images/products/bacopa-monnieri-extract-640w.avif 640w, /images/products/bacopa-monnieri-extract-800w.avif 800w, /images/products/bacopa-monnieri-extract-1200w.avif 1200w",
       "thumb176Webp": "/images/products/bacopa-monnieri-extract-176w.webp",
       "thumb176Avif": "/images/products/bacopa-monnieri-extract-176w.avif"
+    },
+    "black-pepper": {
+      "baseSrc": "/images/products/black-pepper.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/black-pepper-176w.webp 176w, /images/products/black-pepper-380w.webp 380w, /images/products/black-pepper-640w.webp 640w, /images/products/black-pepper-800w.webp 800w",
+      "srcSetAvif": "/images/products/black-pepper-176w.avif 176w, /images/products/black-pepper-380w.avif 380w, /images/products/black-pepper-640w.avif 640w, /images/products/black-pepper-800w.avif 800w",
+      "thumb176Webp": "/images/products/black-pepper-176w.webp",
+      "thumb176Avif": "/images/products/black-pepper-176w.avif"
     },
     "boswellia-serrata-extract": {
       "baseSrc": "/images/products/boswellia-serrata-extract.webp",
@@ -99,6 +147,54 @@
       "srcSetAvif": "/images/products/cottonseed-meal-176w.avif 176w, /images/products/cottonseed-meal-380w.avif 380w, /images/products/cottonseed-meal-640w.avif 640w, /images/products/cottonseed-meal-800w.avif 800w, /images/products/cottonseed-meal-1200w.avif 1200w",
       "thumb176Webp": "/images/products/cottonseed-meal-176w.webp",
       "thumb176Avif": "/images/products/cottonseed-meal-176w.avif"
+    },
+    "cumin-seeds": {
+      "baseSrc": "/images/products/cumin-seeds.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/cumin-seeds-176w.webp 176w, /images/products/cumin-seeds-380w.webp 380w, /images/products/cumin-seeds-640w.webp 640w, /images/products/cumin-seeds-800w.webp 800w",
+      "srcSetAvif": "/images/products/cumin-seeds-176w.avif 176w, /images/products/cumin-seeds-380w.avif 380w, /images/products/cumin-seeds-640w.avif 640w, /images/products/cumin-seeds-800w.avif 800w",
+      "thumb176Webp": "/images/products/cumin-seeds-176w.webp",
+      "thumb176Avif": "/images/products/cumin-seeds-176w.avif"
+    },
+    "dehydrated-garlic": {
+      "baseSrc": "/images/products/dehydrated-garlic.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/dehydrated-garlic-176w.webp 176w, /images/products/dehydrated-garlic-380w.webp 380w, /images/products/dehydrated-garlic-640w.webp 640w, /images/products/dehydrated-garlic-800w.webp 800w",
+      "srcSetAvif": "/images/products/dehydrated-garlic-176w.avif 176w, /images/products/dehydrated-garlic-380w.avif 380w, /images/products/dehydrated-garlic-640w.avif 640w, /images/products/dehydrated-garlic-800w.avif 800w",
+      "thumb176Webp": "/images/products/dehydrated-garlic-176w.webp",
+      "thumb176Avif": "/images/products/dehydrated-garlic-176w.avif"
+    },
+    "dehydrated-onion": {
+      "baseSrc": "/images/products/dehydrated-onion.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/dehydrated-onion-176w.webp 176w, /images/products/dehydrated-onion-380w.webp 380w, /images/products/dehydrated-onion-640w.webp 640w, /images/products/dehydrated-onion-800w.webp 800w",
+      "srcSetAvif": "/images/products/dehydrated-onion-176w.avif 176w, /images/products/dehydrated-onion-380w.avif 380w, /images/products/dehydrated-onion-640w.avif 640w, /images/products/dehydrated-onion-800w.avif 800w",
+      "thumb176Webp": "/images/products/dehydrated-onion-176w.webp",
+      "thumb176Avif": "/images/products/dehydrated-onion-176w.avif"
     },
     "feed-grade-vitamins-and-minerals": {
       "baseSrc": "/images/products/feed-grade-vitamins-and-minerals.webp",
@@ -218,6 +314,38 @@
       "thumb176Webp": "/images/products/pea-protein-isolate-176w.webp",
       "thumb176Avif": "/images/products/pea-protein-isolate-176w.avif"
     },
+    "psyllium-husk-powder": {
+      "baseSrc": "/images/products/psyllium-husk-powder.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/psyllium-husk-powder-176w.webp 176w, /images/products/psyllium-husk-powder-380w.webp 380w, /images/products/psyllium-husk-powder-640w.webp 640w, /images/products/psyllium-husk-powder-800w.webp 800w",
+      "srcSetAvif": "/images/products/psyllium-husk-powder-176w.avif 176w, /images/products/psyllium-husk-powder-380w.avif 380w, /images/products/psyllium-husk-powder-640w.avif 640w, /images/products/psyllium-husk-powder-800w.avif 800w",
+      "thumb176Webp": "/images/products/psyllium-husk-powder-176w.webp",
+      "thumb176Avif": "/images/products/psyllium-husk-powder-176w.avif"
+    },
+    "pure-natural-honey": {
+      "baseSrc": "/images/products/pure-natural-honey.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/pure-natural-honey-176w.webp 176w, /images/products/pure-natural-honey-380w.webp 380w, /images/products/pure-natural-honey-640w.webp 640w, /images/products/pure-natural-honey-800w.webp 800w",
+      "srcSetAvif": "/images/products/pure-natural-honey-176w.avif 176w, /images/products/pure-natural-honey-380w.avif 380w, /images/products/pure-natural-honey-640w.avif 640w, /images/products/pure-natural-honey-800w.avif 800w",
+      "thumb176Webp": "/images/products/pure-natural-honey-176w.webp",
+      "thumb176Avif": "/images/products/pure-natural-honey-176w.avif"
+    },
     "rapeseed-mustard-meal": {
       "baseSrc": "/images/products/rapeseed-mustard-meal.webp",
       "width": 1200,
@@ -300,6 +428,22 @@
       "thumb176Webp": "/images/products/turmeric-curcumin-extract-176w.webp",
       "thumb176Avif": "/images/products/turmeric-curcumin-extract-176w.avif"
     },
+    "turmeric-whole-ground": {
+      "baseSrc": "/images/products/turmeric-whole-ground.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/turmeric-whole-ground-176w.webp 176w, /images/products/turmeric-whole-ground-380w.webp 380w, /images/products/turmeric-whole-ground-640w.webp 640w, /images/products/turmeric-whole-ground-800w.webp 800w",
+      "srcSetAvif": "/images/products/turmeric-whole-ground-176w.avif 176w, /images/products/turmeric-whole-ground-380w.avif 380w, /images/products/turmeric-whole-ground-640w.avif 640w, /images/products/turmeric-whole-ground-800w.avif 800w",
+      "thumb176Webp": "/images/products/turmeric-whole-ground-176w.webp",
+      "thumb176Avif": "/images/products/turmeric-whole-ground-176w.avif"
+    },
     "vitamin-e-acetate": {
       "baseSrc": "/images/products/vitamin-e-acetate.webp",
       "width": 1200,
@@ -333,6 +477,22 @@
       "srcSetAvif": "/images/products/xanthan-gum-176w.avif 176w, /images/products/xanthan-gum-380w.avif 380w, /images/products/xanthan-gum-640w.avif 640w, /images/products/xanthan-gum-800w.avif 800w, /images/products/xanthan-gum-1200w.avif 1200w",
       "thumb176Webp": "/images/products/xanthan-gum-176w.webp",
       "thumb176Avif": "/images/products/xanthan-gum-176w.avif"
+    },
+    "yellow-corn-feed": {
+      "baseSrc": "/images/products/yellow-corn-feed.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/yellow-corn-feed-176w.webp 176w, /images/products/yellow-corn-feed-380w.webp 380w, /images/products/yellow-corn-feed-640w.webp 640w, /images/products/yellow-corn-feed-800w.webp 800w",
+      "srcSetAvif": "/images/products/yellow-corn-feed-176w.avif 176w, /images/products/yellow-corn-feed-380w.avif 380w, /images/products/yellow-corn-feed-640w.avif 640w, /images/products/yellow-corn-feed-800w.avif 800w",
+      "thumb176Webp": "/images/products/yellow-corn-feed-176w.webp",
+      "thumb176Avif": "/images/products/yellow-corn-feed-176w.avif"
     }
   },
   "certificates": {

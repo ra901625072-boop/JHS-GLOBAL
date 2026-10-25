@@ -1025,7 +1025,7 @@ export const loadNewProductsFromCSV = () => {
       containerLoad: { fcl20: '', fcl40: '', lcl: '' },
       documents: [],
       certificateIds: [],
-      images: [],
+      images: undefined,
       isFeatured: false,
       isActive: true,
       isPrivateLabelAvailable: true,
@@ -1054,31 +1054,42 @@ export const seedProducts = async (categoryMap) => {
 
   for (const item of allProducts) {
     const parentCat =
-      categoryMap.get(item.category) ||
+      categoryMap?.get(item.category) ||
       (await Product.sequelize.models.Category.findOne({ where: { name: item.category } }));
 
     const subCatKey = `${item.category}::${item.subCategory}`;
     const subCat =
-      categoryMap.get(subCatKey) ||
-      categoryMap.get(item.subCategory) ||
+      categoryMap?.get(subCatKey) ||
+      categoryMap?.get(item.subCategory) ||
       (await Product.sequelize.models.Category.findOne({ where: { name: item.subCategory } }));
 
     const slug = item.slug || createSlug(item.name);
 
-    // Initial illustrative image payload for items without custom images
-    const defaultImagePayload = [
-      {
-        url: `/images/products/${slug}.webp`,
-        alt: `${item.name} commercial export grade - JHS GLOBAL`,
-        isHero: true,
-        width: 800,
-        height: 600,
-        aiGenerated: true,
-        disclaimer: 'Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)',
-      },
-    ];
+    // Resolve illustrative image payload: if image exists on disk or was previously seeded, use it
+    const imageFilePath = path.resolve('client', 'public', 'images', 'products', `${slug}.webp`);
+    const hasImageOnDisk = fs.existsSync(imageFilePath);
 
-    const imagePayload = item.images !== undefined ? item.images : defaultImagePayload;
+    const defaultImagePayload = hasImageOnDisk
+      ? [
+          {
+            url: `/images/products/${slug}.webp`,
+            alt: `${item.name} commercial export grade - JHS GLOBAL`,
+            isHero: true,
+            width: 800,
+            height: 600,
+            aiGenerated: true,
+            disclaimer: 'Illustrative commercial raw material image. Replace with verified batch photography — TODO(client)',
+          },
+        ]
+      : [];
+
+    let product = await Product.findOne({ where: { slug } });
+    const imagePayload =
+      (item.images && item.images.length > 0)
+        ? item.images
+        : (product && product.images && product.images.length > 0)
+          ? product.images
+          : defaultImagePayload;
 
     const productPayload = {
       name: item.name,
@@ -1126,7 +1137,6 @@ export const seedProducts = async (categoryMap) => {
       },
     };
 
-    let product = await Product.findOne({ where: { slug } });
     if (!product) {
       await Product.create(productPayload);
       createdCount++;

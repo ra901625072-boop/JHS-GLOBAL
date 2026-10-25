@@ -127,7 +127,7 @@
         "Client approval gate verified before generating subsequent batches",
         "Images lazy-loaded in WebP format with zero layout shift"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-011",
