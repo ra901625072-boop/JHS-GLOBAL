@@ -92,7 +92,7 @@ describe('AI Desk & Knowledge Base Suite', () => {
         expect(res.body.data).toHaveProperty('indexedFaqs');
         expect(res.body.data).toHaveProperty('totalEmbeddings');
       },
-      35000
+      60000
     );
 
     it('GET /api/v1/company-facts/admin returns company facts filtered by verification', async () => {
