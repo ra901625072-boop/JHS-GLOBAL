@@ -115,7 +115,7 @@
         "Assistant correctly answers commodity queries (cumin, ginger forms, port policy)",
         "Assistant strictly refuses health/medicinal claims for Ashwagandha and herbs"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-010",
