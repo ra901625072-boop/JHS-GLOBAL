@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Package, ShieldCheck } from 'lucide-react';
+import ProductArtwork from './ProductArtwork';
 
-export const ProductGallery = ({ images = [], productName = 'Product' }) => {
+export const ProductGallery = ({ images = [], productName = 'Product', product = null }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
@@ -88,20 +89,11 @@ export const ProductGallery = ({ images = [], productName = 'Product' }) => {
           </div>
         ) : null}
 
-        {/* Placeholder fallback */}
+        {/* Professional Graphic Designer Artwork fallback */}
         <div
-          className={`fallback-placeholder w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-neutral-50 to-neutral-200 ${
-            currentImage?.url ? 'hidden' : 'flex'
-          }`}
+          className={`fallback-placeholder w-full h-full ${currentImage?.url ? 'hidden' : 'block'}`}
         >
-          <Package className="w-16 h-16 text-neutral-400 mb-3" />
-          <span className="font-serif font-bold text-neutral-800 text-lg">{productName}</span>
-          <span className="text-xs text-neutral-500 uppercase tracking-widest mt-1">
-            Verified Indian Origin Export Consignment
-          </span>
-          <span className="inline-flex items-center gap-1.5 mt-3 text-xs text-primary-800 font-medium">
-            <ShieldCheck className="w-4 h-4 text-accent-500" /> Export Quality & Custom Specifications
-          </span>
+          <ProductArtwork product={product || { name: productName }} isLarge />
         </div>
       </div>
 

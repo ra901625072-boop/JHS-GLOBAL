@@ -4,6 +4,7 @@ import { Plus, MapPin, Package } from 'lucide-react';
 import { useQuoteBasket } from '../../features/quoteBasket/context';
 import { useSafeQueryClient, prefetchProductDetail } from '../../utils/prefetch';
 import Button from '../ui/Button';
+import ProductArtwork from './ProductArtwork';
 
 export const ProductCard = ({ product }) => {
   const queryClient = useSafeQueryClient();
@@ -64,17 +65,11 @@ export const ProductCard = ({ product }) => {
             </picture>
           ) : null}
 
-          {/* Clean Placeholder when image is missing */}
+          {/* Professional Graphic Designer Artwork when image is missing or failed */}
           <div
-            className={`fallback-placeholder w-full h-full flex flex-col items-center justify-center p-4 text-center bg-gradient-to-br from-neutral-50 to-neutral-200 ${
-              primaryImage ? 'hidden' : 'flex'
-            }`}
+            className={`fallback-placeholder w-full h-full ${primaryImage ? 'hidden' : 'block'}`}
           >
-            <Package className="w-10 h-10 text-neutral-400 mb-2 group-hover:scale-105 transition-transform duration-300" />
-            <span className="font-serif font-semibold text-neutral-700 text-sm">{product.name}</span>
-            <span className="text-[10px] text-neutral-500 uppercase tracking-widest mt-1">
-              Specification on Request
-            </span>
+            <ProductArtwork product={product} />
           </div>
 
           {/* Top Badges */}
