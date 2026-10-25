@@ -74,13 +74,16 @@ export const ProductsPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const isAllCategories = !selectedCategory;
+  const effectiveLimit = isAllCategories ? 250 : 250;
+
   const { data: categories = [] } = useCategories();
   const { data, isLoading, isError, error, refetch } = useProducts({
     category: selectedCategory,
     q: searchQuery,
     sort: selectedSort,
-    page: currentPage,
-    limit: 24,
+    page: isAllCategories ? 1 : currentPage,
+    limit: effectiveLimit,
   });
 
   const products = data?.items || [];
@@ -230,12 +233,12 @@ export const ProductsPage = () => {
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
                   {products.map((product) => (
-                    <ProductCard key={product._id} product={product} />
+                    <ProductCard key={product.id || product.slug || product._id} product={product} />
                   ))}
                 </Reveal>
 
-                {/* Pagination Controls */}
-                {meta.totalPages > 1 && (
+                {/* Pagination Controls — completely omitted when viewing all categories or single page */}
+                {!isAllCategories && meta.totalPages > 1 && (
                   <div className="flex items-center justify-between border-t border-surface-border pt-6">
                     <span className="text-xs text-neutral-500">
                       Page {meta.page} of {meta.totalPages} ({meta.total} products)
@@ -262,6 +265,15 @@ export const ProductsPage = () => {
                         <ChevronRight className="w-4 h-4" />
                       </Button>
                     </div>
+                  </div>
+                )}
+
+                {/* All Products Indicator when category is not selected */}
+                {isAllCategories && products.length > 0 && (
+                  <div className="flex items-center justify-between border-t border-surface-border pt-6">
+                    <span className="text-xs font-semibold text-neutral-600">
+                      Showing all {meta.total} export commodities across 4 commercial divisions
+                    </span>
                   </div>
                 )}
               </>

@@ -10,7 +10,7 @@ export const getProductsQuerySchema = {
     cert: z.string().optional(),
     isFeatured: z.string().optional(),
     page: z.coerce.number().int().min(1).optional().default(1),
-    limit: z.coerce.number().int().min(1).max(50).optional().default(12),
+    limit: z.coerce.number().int().min(1).max(300).optional().default(12),
     sort: z.string().optional().default('-createdAt'),
   }),
 };
