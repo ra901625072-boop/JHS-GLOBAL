@@ -45,7 +45,7 @@ export const UnlistedSourcingBanner = ({ className = '' }) => {
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-accent-400 shrink-0" />
-              <span>Lab COA Matching Standard</span>
+              <span>Custom Specification Matching</span>
             </div>
           </div>
         </div>

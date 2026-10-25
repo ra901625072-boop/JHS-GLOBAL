@@ -45,7 +45,7 @@ export const HomeFaqSection = () => {
               </h2>
 
               <p className="mt-3 text-sm sm:text-base text-neutral-600 leading-relaxed font-sans">
-                Direct operational facts on container minimums, commercial LC banking, pre-shipment COA lab testing, and export documentation turnaround.
+                Direct operational facts on container minimums, commercial LC banking, product specifications, and export documentation turnaround.
               </p>
 
               {/* Action Buttons */}

@@ -54,7 +54,7 @@ export const WorldTradeMap = () => {
       controlX: 575,
       controlY: 310,
       transit: '16–20 Days',
-      type: 'EU MRL Lab Certified FCL',
+      type: 'EU Compliant Full Container Load',
       volume: 'Curcumin 95%, Psyllium Husk, Botanical Extracts',
     },
     {
@@ -68,7 +68,7 @@ export const WorldTradeMap = () => {
       controlX: 590,
       controlY: 305,
       transit: '18–22 Days',
-      type: 'Direct Vessel Service',
+      type: 'Scheduled International Service',
       volume: 'Castor Oil FSG, 12-HSA, Industrial Raw Materials',
     },
     {

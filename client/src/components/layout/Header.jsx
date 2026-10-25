@@ -75,7 +75,7 @@ export const Header = () => {
             </span>
             <span className="text-primary-700 select-none">•</span>
             <span className="text-neutral-300 whitespace-nowrap">
-              Port of Loading Agreed per Order
+              Complete Indian Supply Chain Management
             </span>
           </div>
           <div className="flex items-center gap-3 xl:gap-4 text-neutral-300">
@@ -85,7 +85,7 @@ export const Header = () => {
             </span>
             <span className="text-primary-700 select-none">•</span>
             <span className="text-accent-400 font-medium whitespace-nowrap">
-              B2B Container Volume (FCL / MT)
+              Multi-Commodity Export Sourcing
             </span>
           </div>
         </div>

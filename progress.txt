@@ -28,3 +28,4 @@ Target: 4-Category Expansion, 96 New Catalogue Products, Messaging Alignment, FI
 
 ## Phase 2 Copy Overhaul Progress Log
 - US-001: Step 0 search completed across repository (655 raw matches analyzed). Documented comprehensive Copy Change Log matrix in docs/copy-change-log.md covering client/index.html, Header, Footer, Home, ProductDetail, ExportProcess, SampleRequest, FAQ, seeds, and AI knowledge base. Statutory lines flagged as KEEP. Passes: true.
+- US-002: Updated Header top bar ('Complete Indian Supply Chain Management', 'Multi-Commodity Export Sourcing'), Footer ('Request Product Samples', 'Supply Chain Control: End-to-end multi-commodity consolidation'), Home page (destination delivery, supply chain management, evaluation samples), HomeFaqSection, UnlistedSourcingBanner, and WorldTradeMap. Verified with npm run lint (0 errors), npm run test:client (69/69 passed), and production build (0 errors). Passes: true.

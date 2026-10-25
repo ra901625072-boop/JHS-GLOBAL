@@ -444,7 +444,7 @@ export const HomePage = () => {
                   We eliminate multi-tier broker chains by establishing direct linkages with primary processing mills, agricultural cooperatives, and certified manufacturers across India. Every consignment is handled with unified documentation and single-point accountability.
                 </p>
                 <p>
-                  Whether you require specialized ingredient cuts, customized mesh sizes, or consolidated multi-category containers — our export team coordinates product handling, export-grade packaging, container stuffing, and customs clearance to your agreed destination port.
+                  Whether you require specialized ingredient cuts, customized mesh sizes, or consolidated multi-category containers — our export team coordinates product handling, export-grade packaging, and delivery fulfillment to your destination.
                 </p>
               </Reveal>
 
@@ -463,9 +463,9 @@ export const HomePage = () => {
                   </span>
                 </div>
                 <div className="p-4 rounded-xl bg-surface-subtle border border-surface-border">
-                  <span className="font-mono text-xs text-accent-700 font-bold block mb-1">AGREED DESTINATION DISCHARGE</span>
+                  <span className="font-mono text-xs text-accent-700 font-bold block mb-1">DESTINATION DELIVERY</span>
                   <span className="text-xs text-neutral-600 font-medium block leading-snug">
-                    Container stuffing and ocean freight coordinated to agreed global ports
+                    Custom packaging, verified documentation, and delivery coordinated to your destination
                   </span>
                 </div>
               </Reveal>
@@ -675,7 +675,7 @@ export const HomePage = () => {
               to="/export-process"
               className="text-xs text-accent-400 hover:text-accent-300 font-semibold link-underline"
             >
-              Learn more about our Incoterms 2020 and export logistics →
+              Learn more about our export process and supply chain management →
             </Link>
           </div>
         </div>
@@ -733,7 +733,7 @@ export const HomePage = () => {
               Request a Quote (Direct Link)
             </Button>
             <Button variant="outline" size="lg" onClick={() => navigate('/sample-request')}>
-              Order Lab Samples
+              Request Evaluation Samples
             </Button>
           </div>
         </Reveal>

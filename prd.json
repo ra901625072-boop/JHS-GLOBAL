@@ -25,7 +25,7 @@
         "Footer sample links updated from 'Lab Samples' to commercial product samples",
         "Surat registered office preserved on footer statutory lines; marketing mentions removed"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-003",

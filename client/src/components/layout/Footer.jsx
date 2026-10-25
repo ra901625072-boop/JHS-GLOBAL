@@ -125,7 +125,7 @@ export const Footer = () => {
               to="/sample-request"
               className="px-5 py-3 rounded-md border border-neutral-600 hover:border-accent-400 text-neutral-200 hover:text-accent-300 text-sm font-medium transition-all"
             >
-              Request Lab Samples
+              Request Product Samples
             </Link>
           </div>
         </div>
@@ -318,8 +318,8 @@ export const Footer = () => {
               </a>
             </div>
             <div className="pt-2 border-t border-primary-800/80">
-              <span className="block text-[11px] text-neutral-400">Port of Loading:</span>
-              <span className="text-white font-medium">Agreed per order (India gateway ports)</span>
+              <span className="block text-[11px] text-neutral-400">Supply Chain Control:</span>
+              <span className="text-white font-medium">End-to-end multi-commodity consolidation</span>
             </div>
           </div>
         </div>
