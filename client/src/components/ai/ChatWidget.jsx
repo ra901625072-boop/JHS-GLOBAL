@@ -130,7 +130,7 @@ const getPagePrompts = (pathname) => {
       'What are the typical specifications?',
       'What packaging formats are available?',
       'How do I request a formal quote?',
-      'Is a lot Certificate of Analysis (COA) provided?',
+      'Can you supply custom forms or mesh sizes?',
     ];
   }
   if (pathname === '/about-us' || pathname === '/about') {

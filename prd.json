@@ -73,7 +73,7 @@
         "Embeddings re-indexed across all products, FAQs, and company facts",
         "AI test battery confirms buyer-outcome responses and routes open questions to staff"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-007",

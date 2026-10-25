@@ -1055,16 +1055,16 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const spicesId = getFactCitation('spices');
     const dgftId = getFactCitation('dgft', 'iec');
 
-    if (lowerMsg.includes('inspection') || lowerMsg.includes('pre-shipment')) {
+    if (lowerMsg.includes('inspection') || lowerMsg.includes('third-party') || lowerMsg.includes('pre-shipment')) {
       return JSON.stringify({
-        answer: `JHS Global welcomes independent pre-shipment inspections by accredited agencies at the agreed port of loading. Inspection parameters, sampling, and verification protocols can be incorporated into the formal export contract.`,
+        answer: `JHS Global focuses on managing the complete export supply chain, ensuring all products match agreed specifications, approved samples, and required packaging standards. While we are an exporter rather than an inspection agency, buyers may coordinate independent pre-shipment inspections at the port of loading if required. Our export trade desk can assist you with your specific order requirements.`,
         intent: 'certifications',
         used_fact_ids: [negId],
-        confidence: 0.98,
+        confidence: 0.95,
         needs_human: false,
         suggested_action: 'open_rfq',
-        follow_up_question: 'Do you require independent pre-shipment sealing and quality verification for your container consignment?',
-        source_chips: [{ label: 'Independent Inspection', type: 'company' }],
+        follow_up_question: 'Would you like to connect with our export team regarding your specification and documentation requirements?',
+        source_chips: [{ label: 'Export Quality & Sourcing', type: 'company' }],
       });
     }
 
@@ -1210,7 +1210,9 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     lowerMsg.includes('legal name') ||
     lowerMsg.includes('trade name') ||
     lowerMsg.includes('headquarter') ||
-    lowerMsg.includes('jhs global')
+    lowerMsg.includes('jhs global') ||
+    lowerMsg.includes('different') ||
+    lowerMsg.includes('why choose')
   ) {
     const addrId = getFactCitation('address', 'registered');
     const brandId = getFactCitation('brand', 'trade', 'legal');
@@ -1218,8 +1220,21 @@ function simulateStructuredBuyerResponse({ context = '', lowerMsg = '' }) {
     const addrCite = addrId ? ` [FACT-ID: ${addrId}]` : '';
     const brandCite = brandId ? ` [FACT-ID: ${brandId}]` : '';
 
+    if (lowerMsg.includes('different') || lowerMsg.includes('why choose')) {
+      return JSON.stringify({
+        answer: `What sets JHS Global apart is our complete supply chain management and single-point accountability. Rather than dealing with fragmented broker chains, we work directly with primary growing regions and processing mills across India. We offer flexible product forms (whole, cut/sifted, powdered, tea-bag cut, flakes), custom export packaging, multi-commodity container consolidation, and guaranteed 48-hour quotation turnaround. Our export team is available to assist with your specific consignment needs.`,
+        intent: 'company_about',
+        used_fact_ids: [brandId].filter(Boolean),
+        confidence: 0.98,
+        needs_human: false,
+        suggested_action: 'contact',
+        follow_up_question: 'Would you like to discuss a custom sourcing requirement with our team?',
+        source_chips: [{ label: 'Supply Chain Advantage', type: 'company' }],
+      });
+    }
+
     return JSON.stringify({
-      answer: `JHS Global (Legal: Jay Sureshbhai Prajapati / Trade Name: JHS GLOBAL) is a merchant exporter and manufacturer-supplier headquartered in Surat, Gujarat, India${addrCite}. We supply personal care raw materials, nutraceutical botanicals, and animal feed ingredients under verified government licenses${brandCite}. Commercial quotes are furnished within 48 business hours.`,
+      answer: `JHS Global (Legal: Jay Sureshbhai Prajapati / Trade Name: JHS GLOBAL) is an international export merchant managing complete supply chains from India${brandCite}. Our statutory registered office is in Surat, Gujarat, India${addrCite}. We supply food ingredients, personal care raw materials, botanical extracts, and animal feed under verified government export licenses. Commercial proforma quotes are furnished within 48 business hours.`,
       intent: 'company_about',
       used_fact_ids: usedIds,
       confidence: 0.98,
@@ -1628,7 +1643,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
       lowerMsg.includes('inspection') ||
       lowerMsg.includes('heavy metal')
     ) {
-      return `All our commodities comply with destination country standards, including pesticide MRL and heavy metal benchmarks. We operate under valid FSSAI Central License (No. 10725997001058), APEDA, FIEO, Spices Board of India, DGFT IEC, and GST registrations. We do NOT hold ISO, Halal, Kosher, or FDA facility registrations. Independent pre-shipment inspections are accommodated upon buyer request.`;
+      return `All our commodities comply with destination country standards, including pesticide MRL and heavy metal benchmarks. We operate under valid FSSAI Central License (No. 10725997001058), APEDA, FIEO, Spices Board of India, DGFT IEC, and GST registrations. We do NOT hold ISO, Halal, Kosher, or FDA facility registrations. Specification dossiers and export documentation are provided per order.`;
     }
 
     if (lowerMsg.includes('incoterm') || lowerMsg.includes('shipping') || lowerMsg.includes('port')) {

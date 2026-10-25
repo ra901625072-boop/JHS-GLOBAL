@@ -1,12 +1,12 @@
 const questions = [
-  "Do you supply cumin?",
-  "What forms is ginger available in?",
   "Which port do you ship from?",
-  "Is Ashwagandha good for stress?"
+  "Do you do third-party inspection?",
+  "Are you based in Surat?",
+  "What makes JHS GLOBAL different?"
 ];
 
 async function testAi() {
-  console.log('=== AI Verification Test Battery ===\n');
+  console.log('=== AI Assistant Quality Gate Test ===\n');
   for (const q of questions) {
     try {
       const res = await fetch('http://localhost:5000/api/v1/ai/chat', {
