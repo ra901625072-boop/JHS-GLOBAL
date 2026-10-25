@@ -1992,6 +1992,7 @@ function simulateMockLlmResponse({ feature, messages = [], context = '', schema 
     }
 
     const isFeed = lowerMsg.includes('feed') || lowerMsg.includes('soybean') || lowerMsg.includes('meal');
+    const isRice = lowerMsg.includes('rice') || lowerMsg.includes('grain');
     const productName = isFeed ? 'Soybean Meal (DOC 48%)' : 'Standardized Ashwagandha Extract (Withanolides 2.5–5%)';
     const hsCode = isFeed ? '2304.00' : '1302.19';
 

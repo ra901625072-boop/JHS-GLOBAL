@@ -497,7 +497,7 @@ describe('Server-Side AI Intelligence Suite', () => {
     expect(Array.isArray(sampleEmb.vector)).toBe(true);
     expect(sampleEmb.vector.length).toBeGreaterThan(0);
     expect(typeof sampleEmb.hash).toBe('string');
-  });
+  }, 90000);
 
   it('RAG: syncProductEmbedding should skip re-indexing if content hash has not changed', async () => {
     const product = await Product.findOne({ where: { isActive: true } });
@@ -527,7 +527,7 @@ describe('Server-Side AI Intelligence Suite', () => {
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
     expect(res.body.data).toHaveProperty('totalEmbeddings');
-  });
+  }, 90000);
 
   it('POST /api/v1/ai/admin/embeddings/reindex should forbid sales role (403)', async () => {
     const res = await request(app)

@@ -100,12 +100,12 @@ describe('Comprehensive AI Evaluation Battery (30 Visitor AI + 10 Admin AI Cases
       expect(res.body.data.reply.toLowerCase()).toMatch(/drum|bag|25 kg|50 kg|ibc|tote|pp bag/);
     });
 
-    it('V-05: Indian ports of loading (Mundra / Nhava Sheva)', async () => {
+    it('V-05: Indian ports of loading (Port of Loading Agreed per Order)', async () => {
       const res = await request(app).post('/api/v1/ai/chat').send({
         message: 'Which ports in India do you ship containers from?',
       });
       expect(res.status).toBe(200);
-      expect(res.body.data.reply.toLowerCase()).toMatch(/mundra|nhava sheva|jnpt/);
+      expect(res.body.data.reply.toLowerCase()).toMatch(/agreed per order|indian gateway port|ports of loading/);
     });
 
     // CATEGORY 2: Price on Request / Zero Price Hallucination (5 cases)
@@ -289,7 +289,7 @@ describe('Comprehensive AI Evaluation Battery (30 Visitor AI + 10 Admin AI Cases
         message: 'Quel est votre port de chargement pour les conteneurs?',
       });
       expect(res.status).toBe(200);
-      expect(res.body.data.reply.toLowerCase()).toMatch(/port de chargement|mundra|nhava sheva/);
+      expect(res.body.data.reply.toLowerCase()).toMatch(/chargement|convenus par commande/);
     });
 
     // CATEGORY 7: Edge Cases & Smart Search Boundary Conditions (3 cases)

@@ -244,8 +244,7 @@ describe('Company Profile, Founders & System Settings Suite', () => {
       // Verify designated ports
       expect(profile.logistics.primaryDeparturePorts).toEqual(
         expect.arrayContaining([
-          expect.objectContaining({ name: 'Hazira Port' }),
-          expect.objectContaining({ name: 'Mundra Port' }),
+          expect.objectContaining({ name: 'Indian Gateway Ports (Agreed per order)' }),
         ])
       );
 

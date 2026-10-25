@@ -215,7 +215,7 @@ Choose **FOB (Agreed Indian Port)** if your company has global enterprise contra
         title: 'Incoterms 2020 for Container Raw Material Cargo: FOB vs CIF vs CFR Guide',
         description:
           'Clear comparison of FOB, CIF, and CFR terms for containerized export imports from Indian ports. Risk transfer and cost breakdowns.',
-        keywords: ['incoterms 2020 export', 'fob vs cif container', 'mundra port shipping terms', 'marine cargo insurance'],
+        keywords: ['incoterms 2020 export', 'fob vs cif container', 'indian port shipping terms', 'marine cargo insurance'],
       },
     },
   ];
