@@ -1,4 +1,4 @@
-export const getPagination = (query, defaultLimit = 12, maxLimit = 300) => {
+export const getPagination = (query, defaultLimit = 12, maxLimit = 250) => {
   const page = Math.max(1, parseInt(query.page, 10) || 1);
   const rawLimit = parseInt(query.limit, 10) || defaultLimit;
   const limit = Math.min(Math.max(1, rawLimit), maxLimit);
