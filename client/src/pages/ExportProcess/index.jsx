@@ -80,20 +80,20 @@ export const ExportProcessPage = () => {
     },
     {
       step: '06',
-      title: 'Final Quality Verification & Container Sealing',
-      headline: 'Pre-Dispatch Quality Audit & Photographic Record',
+      title: 'Specification Verification & Packing Review',
+      headline: 'Pre-Dispatch Verification & Photographic Record',
       detail:
-        'Prior to container sealing, we provide high-resolution photos and video documentation of goods and palletization. Container stuffing is supervised and verified to ensure transit protection and tamper-evident sealing.',
-      turnaround: 'Pre-Seal Verification',
-      documents: ['Container Stuffing Photographic Audit', 'Export Documentation on Request', 'Tamper-Evident Seal Verification Log'],
+        'Prior to final container sealing, we provide high-resolution photos and documentation of packaged goods and palletization to verify transit protection and tamper-evident sealing.',
+      turnaround: 'Pre-Dispatch Review',
+      documents: ['Packaging Verification Photographic Audit', 'Export Documentation on Request', 'Tamper-Evident Seal Verification Log'],
     },
     {
       step: '07',
-      title: 'Port Clearance & Ocean Transit',
-      headline: 'Customs Clearance & Scheduled Transit Dispatch',
+      title: 'Customs Documentation & Carrier Dispatch',
+      headline: 'Export Customs Finalization & Carrier Transit',
       detail:
-        'Export customs processing is completed through designated Indian gateway container terminals. Containers are loaded onto scheduled ocean liners, and the Bill of Lading is issued.',
-      turnaround: 'Scheduled Ocean Liner',
+        'Export customs processing is completed through designated container terminals. Consignments are loaded onto scheduled carriers and official Bills of Lading are released.',
+      turnaround: 'Scheduled Carrier Transit',
       documents: ['Ocean Bill of Lading', 'Export Customs Shipping Bill', 'Export Documentation on Request'],
     },
     {

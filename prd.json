@@ -37,7 +37,7 @@
         "Shipping documents checklist provides neutral 'Export Documentation on Request'",
         "About Us guarantees replace 'Lab reports' with specification and batch documentation"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-004",

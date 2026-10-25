@@ -68,7 +68,7 @@ export const ABOUT_CONTENT = {
       {
         id: 'supply-agreed',
         title: 'Supply What Was Agreed',
-        text: 'Every order begins with a clear understanding of specifications, approved samples, product grade, packaging and shipment terms. From inspection and testing to documentation and dispatch, each stage follows an agreed process — ensuring clarity for everyone involved.',
+        text: 'Every order begins with a clear understanding of specifications, approved samples, product grade, packaging and shipment terms. From product verification and packaging to documentation and dispatch, each stage follows an agreed process — ensuring clarity for everyone involved.',
       },
       {
         id: 'clear-accountable',
@@ -121,7 +121,7 @@ export const ABOUT_CONTENT = {
         id: 'radical-transparency',
         num: '02',
         title: 'Radical transparency',
-        text: 'Lab reports, loading photos and container seal numbers are shared as they happen — before you ask.',
+        text: 'Specification sheets, packaging photos and container dispatch details are shared as they happen — before you ask.',
       },
       {
         id: 'long-term-relationships',
