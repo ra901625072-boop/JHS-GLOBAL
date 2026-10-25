@@ -82,6 +82,22 @@
       "thumb176Webp": "/images/products/bacopa-monnieri-extract-176w.webp",
       "thumb176Avif": "/images/products/bacopa-monnieri-extract-176w.avif"
     },
+    "banana-fresh": {
+      "baseSrc": "/images/products/banana-fresh.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/banana-fresh-176w.webp 176w, /images/products/banana-fresh-380w.webp 380w, /images/products/banana-fresh-640w.webp 640w, /images/products/banana-fresh-800w.webp 800w",
+      "srcSetAvif": "/images/products/banana-fresh-176w.avif 176w, /images/products/banana-fresh-380w.avif 380w, /images/products/banana-fresh-640w.avif 640w, /images/products/banana-fresh-800w.avif 800w",
+      "thumb176Webp": "/images/products/banana-fresh-176w.webp",
+      "thumb176Avif": "/images/products/banana-fresh-176w.avif"
+    },
     "black-pepper": {
       "baseSrc": "/images/products/black-pepper.webp",
       "width": 800,
@@ -163,6 +179,22 @@
       "srcSetAvif": "/images/products/cumin-seeds-176w.avif 176w, /images/products/cumin-seeds-380w.avif 380w, /images/products/cumin-seeds-640w.avif 640w, /images/products/cumin-seeds-800w.avif 800w",
       "thumb176Webp": "/images/products/cumin-seeds-176w.webp",
       "thumb176Avif": "/images/products/cumin-seeds-176w.avif"
+    },
+    "dehydrated-banana": {
+      "baseSrc": "/images/products/dehydrated-banana.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/dehydrated-banana-176w.webp 176w, /images/products/dehydrated-banana-380w.webp 380w, /images/products/dehydrated-banana-640w.webp 640w, /images/products/dehydrated-banana-800w.webp 800w",
+      "srcSetAvif": "/images/products/dehydrated-banana-176w.avif 176w, /images/products/dehydrated-banana-380w.avif 380w, /images/products/dehydrated-banana-640w.avif 640w, /images/products/dehydrated-banana-800w.avif 800w",
+      "thumb176Webp": "/images/products/dehydrated-banana-176w.webp",
+      "thumb176Avif": "/images/products/dehydrated-banana-176w.avif"
     },
     "dehydrated-garlic": {
       "baseSrc": "/images/products/dehydrated-garlic.webp",
@@ -362,6 +394,22 @@
       "srcSetAvif": "/images/products/rapeseed-mustard-meal-176w.avif 176w, /images/products/rapeseed-mustard-meal-380w.avif 380w, /images/products/rapeseed-mustard-meal-640w.avif 640w, /images/products/rapeseed-mustard-meal-800w.avif 800w, /images/products/rapeseed-mustard-meal-1200w.avif 1200w",
       "thumb176Webp": "/images/products/rapeseed-mustard-meal-176w.webp",
       "thumb176Avif": "/images/products/rapeseed-mustard-meal-176w.avif"
+    },
+    "red-chilli": {
+      "baseSrc": "/images/products/red-chilli.webp",
+      "width": 800,
+      "height": 600,
+      "aspectRatio": "800/600",
+      "widths": [
+        176,
+        380,
+        640,
+        800
+      ],
+      "srcSetWebp": "/images/products/red-chilli-176w.webp 176w, /images/products/red-chilli-380w.webp 380w, /images/products/red-chilli-640w.webp 640w, /images/products/red-chilli-800w.webp 800w",
+      "srcSetAvif": "/images/products/red-chilli-176w.avif 176w, /images/products/red-chilli-380w.avif 380w, /images/products/red-chilli-640w.avif 640w, /images/products/red-chilli-800w.avif 800w",
+      "thumb176Webp": "/images/products/red-chilli-176w.webp",
+      "thumb176Avif": "/images/products/red-chilli-176w.avif"
     },
     "salicylic-acid": {
       "baseSrc": "/images/products/salicylic-acid.webp",
