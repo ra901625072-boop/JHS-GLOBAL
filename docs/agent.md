@@ -15,13 +15,14 @@ Help overseas **importers and manufacturers** (a) trust the company, (b) find th
 ## 2. DO
 
 ### Product and content
-- Build the 3 master divisions (20 export products across 10 subcategories) exactly as defined in the client-supplied catalogue (Personal Care Raw Materials, Nutraceutical Raw Materials, Animal Feed).
-- Show on every product: name, images, HS code, origin, forms, packing, MOQ, shelf life, certificates, and an **"Add to Quote"** button.
+- Build the 4 master commercial divisions (115 export products across 18 subcategories) as defined in the catalogue and client Excel (Food & Food Ingredients, Personal Care Raw Materials, Nutraceutical Raw Materials, Animal Feed).
+- Show on every product: name, images, HS code (when verified), origin, forms (whole, cut/sifted, powdered, tea-bag cut, minced, kibbled, flakes, granules), packing, MOQ, shelf life, certificates, and an **"Add to Quote"** button. Hide empty unverified fields cleanly without public placeholders.
 - Put a **Request a Quote** button in the header and on every product / category page; add a WhatsApp button.
-- Use **"Price on request"** wording. Use clear B2B terms: MOQ, FCL, FOB / CIF / CFR, Incoterms, port, HS code.
+- Use **"Price on request"** wording. Use clear B2B terms: MOQ, FCL, FOB / CIF / CFR, Incoterms, agreed-per-order port logistics, HS code.
+- Emphasize JHS GLOBAL's complete supply chain management, direct producer linkages, multi-commodity consolidation, and flexible custom processing forms rather than logistics port claims.
+- Certifications: statutory licenses include FSSAI, APEDA, FIEO (Federation of Indian Export Organisations), Spices Board, and DGFT.
 - Make the RFQ form fields: name, company, email, phone/WhatsApp, country, products (from basket), quantity + unit, destination port, Incoterm, packing, target month, private label (yes/no), sample needed (yes/no), message. Required: name, company, email, country, at least one product or message.
-- Use placeholders for client content (brand name, certificate numbers, photos) and **mark them clearly** with `TODO(client)`.
-- Enforce that nutraceutical products contain NO therapeutic or medical claims ("cures", "treats", "prevents"); state them strictly as raw ingredients for dietary supplements and functional formulations. Store unverified client data with `verified = false`.
+- Enforce that botanical powders and nutraceutical products contain NO therapeutic or medical claims ("cures", "treats", "prevents"); state them strictly as raw ingredients for dietary supplements and functional formulations. Store unverified client data with `verified = false`.
 
 ### Code
 - Follow `folder-structure.md` exactly: backend `routes → controller → service → model`; frontend `pages → components → features → services`.
@@ -151,4 +152,5 @@ Help overseas **importers and manufacturers** (a) trust the company, (b) find th
 | API base | `/api/v1` |
 | Auth | JWT access (15 min) + httpOnly refresh cookie, roles: admin / sales / editor |
 | Main CTA | **Request a Quote** |
-| Categories | 3 primary export divisions: Personal Care Raw Materials, Nutraceutical Raw Materials, Animal Feed (20 verified catalogue commodities) |
+| Categories | 4 primary export divisions: Food & Food Ingredients, Personal Care Raw Materials, Nutraceutical Raw Materials, Animal Feed (115 active catalogue commodities across 18 subcategories) |
+| Certifications | FSSAI, APEDA, FIEO (Federation of Indian Export Organisations), Spices Board, DGFT |

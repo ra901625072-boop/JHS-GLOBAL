@@ -135,7 +135,8 @@ The core export catalogue with product metadata and commercial export trade para
 | `sub_category_id` | `INTEGER` | `REFERENCES categories(id) ON DELETE SET NULL` | Subcategory |
 | `short_description` | `VARCHAR(500)` | `DEFAULT ''` | Card / list preview text |
 | `description` | `TEXT` | `DEFAULT ''` | Full specifications & processing description |
-| `hs_code` | `VARCHAR(20)` | `NOT NULL` | 6-8 digit export HS Code (e.g. `1302.19`) |
+| `hs_code` | `VARCHAR(20)` | `DEFAULT NULL` | Optional verified 6-8 digit export HS Code (e.g. `1302.19`) |
+| `availability` | `VARCHAR(50)` | `DEFAULT 'Year-round'` | Commercial availability: 'Year-round' or 'Seasonal' |
 | `botanical_name` | `VARCHAR(150)` | `DEFAULT ''` | Scientific botanical nomenclature |
 | `origin` | `JSONB` | `DEFAULT '["India"]'` | Array of origin regions (Gujarat, Kerala, etc.) |
 | `forms` | `JSONB` | `DEFAULT '[]'` | Array: Whole, Powder, Cracked, Flakes |
@@ -172,7 +173,10 @@ The core export catalogue with product metadata and commercial export trade para
 
 ---
 
-### 3.4 Product Normalized Child Tables
+### 3.4 Product Normalized Child Tables & Hybrid JSONB Architecture
+
+> **Architecture Design Note (Hybrid JSONB Storage):**  
+> For sub-millisecond atomic read throughput on high-traffic Product Detail Pages (PDP), primary technical specifications, image gallery URLs, and packaging configurations are stored directly in structured JSONB attributes (`specs`, `images`, `packing`) on the `products` table. The normalized child tables defined below (`product_images`, `product_specs`, `product_packing_options`) remain part of the Sequelize database schema for relational integrity, backwards compatibility, and optional normalized analytical queries or third-party ERP synchronization.
 
 #### `product_images`
 | Column | Type | Constraints | Description |
@@ -537,6 +541,6 @@ docker compose up -d postgres
 # 2. Sync database schema (Sequelize auto-syncs models in dev)
 cd server && npm run dev
 
-# 3. Seed initial master catalogue (3 divisions, 10 subcategories, 20 export products)
+# 3. Seed master catalogue (4 divisions, 18 subcategories, 115 active export commodities)
 cd server && npm run seed
 ```

@@ -221,7 +221,7 @@ If Redis is not used in v1: use a simple in-process queue + `node-cron`, then mi
 ## 9. SEO and performance
 
 - **Rendering:** React SPA with **prerendering** (e.g. `vite-plugin-ssr` / `react-snap`) for Home, categories, products, blog — or choose Next.js if SEO is the top priority (default stays plain React per the client brief).
-- `react-helmet-async` for title/meta/OG, JSON-LD (`Organization`, `Product`, `BreadcrumbList`, `FAQPage`), `sitemap.xml`, `robots.txt`, canonical URLs, clean slugs.
+- `react-helmet-async` for title/meta/OG, JSON-LD (`Organization`, `Product`, `BreadcrumbList`, `FAQPage`), dynamic and static `sitemap.xml` (153 verified URLs indexing all 4 divisions, 22 category pathways, 115 commodities, and published articles), `robots.txt`, canonical URLs, clean slugs.
 - Images: WebP/AVIF, responsive `srcset`, lazy load, CDN transform.
 - Code split per route; fonts self-hosted with `font-display: swap`.
 - Targets: LCP < 2.5 s, CLS < 0.1, Lighthouse ≥ 90 mobile.

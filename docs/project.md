@@ -11,33 +11,30 @@ A **premium international B2B export website** for Indian specialty chemicals, b
 
 The business sells to buyers who purchase by the **container / metric tonne / drum**, negotiate price, ask for samples, and verify certificates before paying. So the website works as a **digital catalogue + trust builder + lead-generation machine**.
 
-### Product Divisions & Catalogue (Official Source of Truth — 20 Products across 3 Divisions)
+### Product Divisions & Catalogue (Official Source of Truth — 115 Active Commodities across 4 Divisions)
 
-#### Category 1: Personal Care Raw Materials
-1. Castor oil and its derivatives
-2. Herbal / botanical extracts
-3. Sodium lauryl ether sulfate (SLES)
-4. Salicylic acid
-5. Glycolic acid
-6. Vitamin E acetate
-7. Kaolin clay powder
+#### Category 1: Food & Food Ingredients (62 Commodities)
+- **Spices & Seasoning (20)**: Cumin Seeds, Turmeric (Whole / Ground), Black Pepper, Cardamom, Coriander Seeds, Fennel Seeds, Fenugreek Seeds, Mustard Seeds, Dry Ginger, Red Chilli (Whole / Powder), Cinnamon / Cassia, Clove, Nutmeg / Mace, Bay Leaves, Star Anise, Curry Powder / Garam Masala, Celery Seeds, Dill Seeds, Oregano, Thyme.
+- **Superfoods (10)**: Chia Seeds, Flax Seeds, Pumpkin Seeds, Sunflower Seeds, Quinoa, Spirulina Powder, Moringa Leaf Powder, Wheatgrass Powder, Amla Powder, Pomegranate Seed / Powder.
+- **Pulses, Grains & Agri Commodities (19)**: 1121 Raw Basmati Rice, 1121 Golden Sella Basmati Rice, 1509 Basmati Rice, Sugandha Basmati Rice, Sharbati Basmati Rice, PR11 / PR14 Non-Basmati Rice, IR64 Non-Basmati Rice, Sona Masoori Rice, Chickpeas / Split Chickpeas (Kabuli / Desi), Green Mung Beans / Split Mung, Black Matpe (Urad Whole / Split), Red Lentils (Masoor Whole / Split), Pigeon Peas (Toor Dal), Yellow Peas, Wheat / Wheat Flour (Atta / Maida), Maize / Corn (Food Grade), Pearl Millet (Bajra), Sorghum (Jowar), Finger Millet (Ragi).
+- **Fresh Fruits & Vegetables (7)**: Fresh Red Onion, Fresh White Onion, Fresh Garlic, Fresh Ginger, Fresh Green Cavendish Banana, Fresh Alphonso / Kesar Mango (Seasonal), Fresh Pomegranate.
+- **Dehydrated Vegetables & Fruit (14)**: Dehydrated White Onion (Flakes / Powder / Minced / Chopped), Dehydrated Red Onion, Dehydrated Garlic (Granules / Powder / Minced), Dehydrated Ginger (Flakes / Powder), Dehydrated Green Chilli, Dehydrated Tomato (Flakes / Powder), Dehydrated Carrot (Cubes / Powder), Dehydrated Beetroot (Powder / Flakes), Dehydrated Spinach Powder, Dehydrated Mint Leaves / Powder, Dehydrated Kasuri Methi, Dehydrated Potato (Flakes / Powder), Dehydrated Apple (Dices / Powder), Dehydrated Lemon (Powder / Slices).
+- **Specialty Food Ingredients (2)**: Pure Natural Honey, Aseptic Fruit Pulp (Mango / Guava / Papaya).
 
-#### Category 2: Nutraceutical Raw Materials
-1. Ashwagandha extract
-2. Turmeric / curcumin extract
-3. Boswellia serrata extract
-4. Bacopa monnieri extract
-5. Moringa oleifera extract
-6. Amla extract
-7. Green tea and Garcinia cambogia extracts
-8. Pea protein isolate
-9. Xanthan gum
+#### Category 2: Personal Care Raw Materials (13 Commodities)
+- **Carrier Oils & Specialty Lipids**: Castor oil and its derivatives, Sesame Oil, Black Seed (Nigella Sativa) Oil, Virgin Coconut Oil.
+- **Surfactants & Base Formulations**: Sodium lauryl ether sulfate (SLES), Coco Betaine (CAPB).
+- **Cosmetic Actives & Hydroxy Acids**: Salicylic acid, Glycolic acid.
+- **Functional Ingredients & Minerals**: Vitamin E acetate, Kaolin clay powder, Guar Gum (Cosmetic Grade), Aloe Vera Powder.
+- **Botanical Extracts**: Herbal / botanical extracts.
 
-#### Category 3: Animal Feed
-1. Soybean meal
-2. Rapeseed / mustard meal
-3. Cottonseed meal
-4. Feed-grade vitamins and minerals
+#### Category 3: Nutraceutical Raw Materials (21 Commodities)
+- **Standardized Botanical Extracts (9)**: Ashwagandha extract, Turmeric / curcumin extract, Boswellia serrata extract, Bacopa monnieri extract, Moringa oleifera extract, Amla extract, Green tea and Garcinia cambogia extracts, Pea protein isolate, Xanthan gum.
+- **Herbal & Botanical Powders (12)**: Ashwagandha Powder, Moringa Powder, Tulsi Powder, Neem Powder, Amla Powder, Brahmi Powder, Shatavari Powder, Triphala Powder, Licorice (Mulethi) Powder, Giloy (Guduchi) Powder, Psyllium Husk / Powder, Indigo / Henna Powder.
+
+#### Category 4: Animal Feed (19 Commodities)
+- **Protein Oilseed Meals (4)**: Soybean meal, Rapeseed / mustard meal, Cottonseed meal, Feed-grade vitamins and minerals.
+- **Grains & Feed Ingredients (15)**: De-oiled Rice Bran (DORB), Rice DDGS (Distillers Dried Grains with Solubles), Corn DDGS, Yellow Corn (Maize) - Feed Grade, Feed Wheat, Barley (Feed Grade), Groundnut / Peanut Meal (DOC), Sunflower Meal / Cake, Sesame Meal (DOC), Guar Churi / Guar Korma, Castor De-oiled Cake, Corn Gluten Meal (CGM 60%), Wheat Bran, Molasses (Cane Feed Grade), Limestone Powder (Calcite Feed Grade).
 
 ---
 

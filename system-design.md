@@ -221,7 +221,7 @@ If Redis is not used in v1: use a simple in-process queue + `node-cron`, then mi
 ## 9. SEO and performance
 
 - **Rendering:** React SPA with **prerendering** (e.g. `vite-plugin-ssr` / `react-snap`) for Home, categories, products, blog — or choose Next.js if SEO is the top priority (default stays plain React per the client brief).
-- `react-helmet-async` for title/meta/OG, JSON-LD (`Organization`, `Product`, `BreadcrumbList`, `FAQPage`), `sitemap.xml`, `robots.txt`, canonical URLs, clean slugs.
+- `react-helmet-async` for title/meta/OG, JSON-LD (`Organization`, `Product`, `BreadcrumbList`, `FAQPage`), dynamic and static `sitemap.xml` (153 verified URLs indexing all 4 divisions, 22 category pathways, 115 commodities, and published articles), `robots.txt`, canonical URLs, clean slugs.
 - Images: WebP/AVIF, responsive `srcset`, lazy load, CDN transform.
 - Code split per route; fonts self-hosted with `font-display: swap`.
 - Targets: LCP < 2.5 s, CLS < 0.1, Lighthouse ≥ 90 mobile.
@@ -246,3 +246,96 @@ If Redis is not used in v1: use a simple in-process queue + `node-cron`, then mi
 3. Use PostgreSQL streaming replication with read replicas; add compound and partial indexes from `pg_stat_statements` slow-query log.
 4. Optimize search using PostgreSQL `tsvector` + `pg_trgm` trigram indexes for sub-millisecond typo-tolerant full-text search.
 5. Only then consider splitting AI into its own service.
+
+---
+
+## 12. How Data Flows (End-to-End Sync Architecture)
+
+This section documents the verified data flow paths connecting the **JHS GLOBAL Admin Operations Desk** and the **Public Buyer Portal**, enforcing zero stale cache, server-enforced visibility rules, and strict PII protection.
+
+```
+ DIRECTION A: ADMIN WRITE ──► PUBLIC READ PATH
+ ┌────────────────┐       ┌────────────────┐       ┌────────────────┐       ┌─────────────────┐
+ │ Admin Mutation │──────►│ PostgreSQL DB  │──────►│ Cache Invalidate│─────►│ RAG Vector Sync │
+ │ (JWT + RBAC)   │       │ (Sequelize ORM)│       │(cache.service) │       │ (delete/upsert) │
+ └────────────────┘       └────────────────┘       └────────────────┘       └─────────────────┘
+                                                           │
+                                                           ▼
+ ┌────────────────┐       ┌────────────────┐       ┌────────────────┐
+ │ Public Visitor │◄──────│ TanStack Query │◄──────│ Express REST   │
+ │ DOM (0-Stale)  │       │ (Window Focus) │       │ (/api/v1/...)  │
+ └────────────────┘       └────────────────┘       └────────────────┘
+
+ DIRECTION B: PUBLIC BUYER ──► ADMIN LEAD DESK PATH
+ ┌────────────────┐       ┌────────────────┐       ┌────────────────┐       ┌─────────────────┐
+ │ Buyer Form     │──────►│ Express REST   │──────►│ Zod Validation │──────►│ PostgreSQL DB   │
+ │ (RFQ/Sample)   │       │ Rate Limit     │       │ & Sanitization │       │ (Inquiry/Lead)  │
+ └────────────────┘       └────────────────┘       └────────────────┘       └────────┬────────┘
+                                                                                     │
+ ┌────────────────┐       ┌────────────────┐       ┌────────────────┐                │
+ │ Admin Lead Desk│◄──────│ Notification   │◄──────│ Async Worker/AI│◄───────────────┘
+ │ Inspection     │       │ Dispatch Card  │       │ Lead Scoring   │
+ └────────────────┘       └────────────────┘       └────────────────┘
+```
+
+### 12.1 Direction A: Admin Write to Public Read Path
+
+When an authenticated administrator or editor creates, edits, hides, or deletes catalogue data:
+
+1. **Authentication & RBAC**: Admin mutations require a valid JWT bearer token with either `admin` or `editor` role. Requests are verified by `authenticate` and `authorizeRoles(...)` middlewares.
+2. **Transactional DB Write & Soft Deletes**:
+   - The operation executes via Sequelize models in PostgreSQL.
+   - Deletions are implemented as soft-deletes (`isDeleted: true` or `paranoid: true`), preserving historical audit trails and snapshot references in existing quotes.
+   - Visibility changes toggle `isActive: false` or `status: 'draft' | 'archived'`.
+3. **Central Cache Invalidation (`cache.service.js`)**:
+   - Upon successful database commit, the admin service triggers dedicated invalidation hooks:
+     - `cacheService.invalidateProducts(slug)`: Purges product lists, search queries, category listings, and single product slug caches.
+     - `cacheService.invalidateCategories()`: Purges category tree and taxonomy caches.
+     - `cacheService.invalidateFaqs()`: Purges FAQ listings and search caches.
+     - `cacheService.invalidateBlog(slug)`: Purges blog post listings and individual article slugs.
+     - `cacheService.invalidateCertificates()`: Purges statutory compliance certificate caches.
+4. **AI Vector Knowledge Base Synchronization**:
+   - Whenever an entity is deactivated, archived, or soft-deleted, `deleteProductEmbedding(id)` or `deleteFaqEmbedding(id)` is invoked immediately.
+   - This guarantees that the RAG vector search and the AI Buyer Assistant never retrieve or hallucinate unapproved or draft specifications.
+5. **Public Read & TanStack Query Revalidation**:
+   - Public GET endpoints (`/api/v1/products`, `/categories`, `/faqs`, `/certificates`, `/blog`) execute SQL queries strictly constrained by `isActive: true` and `isDeleted: false`.
+   - The React client uses TanStack Query v5 with calibrated `staleTime` (5m for products/blog, 10m for categories/certificates) and `refetchOnWindowFocus: true`.
+   - Any tab switch or page navigation guarantees that stale data is refreshed within agreed boundaries without manual cache clearing.
+
+---
+
+### 12.2 Direction B: Public Buyer to Admin Lead Desk Path
+
+When an overseas buyer submits an RFQ, sample request, or contact message:
+
+1. **Client Submission & Protection**:
+   - The buyer submits via public forms with client-side validation, honeypot fields, and rate-limiting safeguards (5 submissions per hour per IP).
+   - Commercial payloads capture contact info, corporate identity, destination seaport/airport, incoterms, specifications, and special flags (`needsPrivateLabel`, `needsSample`).
+2. **Strict Server-Side Zod Validation**:
+   - The endpoint (`POST /api/v1/inquiries`, `/samples`, `/contact`) validates payload structures against strict Zod schemas (`createInquirySchema`).
+   - Fields are sanitized; script tags and malicious payloads are stripped or safely escaped.
+3. **Atomic Persistence & Reference Generation**:
+   - The record is persisted to PostgreSQL under an atomic sequence generating a globally unique reference number (e.g., `RFQ-2026-000123`).
+   - Initial status is assigned to `'new'`.
+4. **Asynchronous Notification & AI Lead Scoring**:
+   - An automated background worker triggers dispatch:
+     - Buyer acknowledgment email with reference number and summary dossier.
+     - Sales desk dispatch alert.
+     - AI commercial lead scoring, commodity extraction, and draft reply generation.
+   - Dispatch outcomes are stored directly on the inquiry record (`emailSent.buyer`, `emailSent.team`).
+5. **Admin Operations Lead Desk Inspection**:
+   - The Admin Inquiries desk (`/admin/inquiries`) displays live lead rows.
+   - Opening an inquiry renders the comprehensive inspection drawer:
+     - Full Buyer Corporate Profile: Contact name, company, email, verified phone/WhatsApp, and destination port.
+     - Commercial Requirement Badges: Highlighting containerized volume, private label requirements, and analytical sample requests.
+     - Automated Notification Dispatch Card: Displaying real-time email delivery audit state.
+
+---
+
+### 12.3 Data Integrity & Security Invariants
+
+- **Server-Side Visibility Filtering**: Public endpoints never rely on client-side filtering. Inactive, draft, or archived entities are excluded at the SQL `WHERE` clause level.
+- **Zero PII Leakage**: Buyer emails, direct phone numbers, and financial details are excluded from all public responses, server logs (`pino`), URL query strings, and AI vector prompt embeddings.
+- **Hierarchical TanStack Query Invalidation**: All admin mutations invalidate both collection keys (`['products']`) and individual item keys (`['product', slug]`) using TanStack Query v5 object syntax.
+- **Relic Elimination**: Old catalogue legacy entities (e.g., "Salem Turmeric Finger", "Basmati Rice") are completely excluded from seed registries, AI provider mocks, and sample request dropdowns.
+
