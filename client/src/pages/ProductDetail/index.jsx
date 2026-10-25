@@ -148,7 +148,7 @@ export const ProductDetailPage = () => {
           {/* Left Column: Visual Gallery (Sticky Showcase) */}
           <div className="lg:col-span-6">
             <div className="lg:sticky lg:top-28 xl:top-32 space-y-8 lg:max-h-[calc(100vh-8.5rem)] lg:overflow-y-auto lg:no-scrollbar">
-              <ProductGallery images={product.images} productName={product.name} product={product} />
+              <ProductGallery images={product.images} productName={product.name} />
 
               {/* Quality Seals */}
               <div className="p-4 rounded-xl border border-surface-border bg-surface-subtle flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-600">
