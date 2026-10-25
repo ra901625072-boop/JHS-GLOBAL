@@ -27,7 +27,7 @@ const FAQ_GROUPS = [
   { id: 'packaging', label: 'Packaging & OEM', groupKey: 'Packaging, Labelling & Private Label' },
   { id: 'shipping', label: 'Shipping & Incoterms', groupKey: 'Shipping, Logistics & Incoterms 2020' },
   { id: 'payments', label: 'Payments & Banking', groupKey: 'Payments, Banking & Commercial Terms' },
-  { id: 'regulatory', label: 'Compliance & COA', groupKey: 'Regulatory, COA & Compliance' },
+  { id: 'regulatory', label: 'Compliance & Documentation', groupKey: 'Regulatory, COA & Compliance' },
 ];
 
 export const FaqPage = () => {

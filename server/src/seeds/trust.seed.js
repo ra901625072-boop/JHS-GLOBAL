@@ -316,10 +316,10 @@ export const seedTrustData = async () => {
       order: 20,
     },
     {
-      question: 'Can you arrange independent pre-shipment inspections?',
-      answer: 'Yes. Buyers may nominate international independent inspection agencies to conduct pre-shipment sampling, moisture verification, weight verification, and container stuffing supervision at the port of loading prior to vessel departure. Inspection parameters are coordinated according to mutual sales contract terms.',
+      question: 'How do you verify product specifications prior to dispatch?',
+      answer: 'Every consignment is verified against agreed contract specifications, approved evaluation samples, and packaging requirements before dispatch. We provide high-resolution photographic and video documentation of goods and palletization prior to sealing, ensuring full transparency across the supply chain.',
       group: 'Export Documentation & Regulatory Compliance',
-      slug: 'third-party-pre-shipment-inspection',
+      slug: 'specification-verification-protocol',
       showOnHome: false,
       homeOrder: 0,
       order: 21,

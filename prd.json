@@ -61,7 +61,7 @@
         "client/index.html title updated from 'Export B2B' to 'JHS GLOBAL — Indian Multi-Commodity Supply Chain Exporter'",
         "JsonLd schema reflects 4 divisions and complete supply chain description"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-006",

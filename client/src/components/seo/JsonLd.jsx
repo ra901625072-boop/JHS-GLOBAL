@@ -22,7 +22,7 @@ export const createOrganizationSchema = () => {
     url: siteUrl,
     logo: `${siteUrl}/images/logo.png`,
     description:
-      'Premier Indian exporter of manufacturer-grade personal care raw materials, standardized nutraceutical botanical extracts, and animal feed ingredients.',
+      'Premier Indian exporter managing complete supply chains across food ingredients, personal care raw materials, nutraceutical raw materials, and animal feed.',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'India',
