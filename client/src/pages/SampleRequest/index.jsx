@@ -153,14 +153,14 @@ export const SampleRequestPage = () => {
         <title>Commercial Sample Request (DHL/FedEx Dispatch) — {brandName}</title>
         <meta
           name="description"
-          content="Order formal laboratory testing samples (100g–500g) with Certificate of Analysis (COA) for international importers and food processors."
+          content="Request commercial evaluation samples (100g–500g) with technical specifications for international importers and food processors."
         />
       </Helmet>
 
       {/* Signature Slow Masked Page Header */}
       <PageHeader
         title="Commercial Sample Evaluation Request"
-        description="Verify physical appearance, sensory profiles, and chemical testing parameters before placing container commitments. Samples provided in 100g–500g sealed foil pouches with lot COA."
+        description="Verify physical appearance, sensory profiles, and product specifications before placing container commitments. Samples provided in 100g–500g sealed pouches with technical specification sheets."
         badge={
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-800/90 border border-accent-500/40 text-accent-400 text-xs font-semibold shadow-xs">
             <Truck className="w-3.5 h-3.5 text-accent-400" />
@@ -186,7 +186,7 @@ export const SampleRequestPage = () => {
             </h2>
 
             <p className="mt-3 text-sm sm:text-base text-neutral-600 max-w-xl mx-auto leading-relaxed">
-              Thank you for requesting testing samples from JHS Global. Our quality control lab and dispatch team are preparing your lot sample kit with authentic Certificate of Analysis (COA).
+              Thank you for requesting evaluation samples from JHS Global. Our export fulfillment team is preparing your sample kit with technical specification sheets.
             </p>
 
             {/* Copyable Reference ID */}
@@ -241,7 +241,7 @@ export const SampleRequestPage = () => {
                 <div>
                   <p className="font-semibold text-neutral-900">Dispatch Window: 48–72 Hours</p>
                   <p className="text-neutral-600 text-xs mt-0.5">
-                    Pre-shipment analytical lots are drawn, batch-tested, vacuum sealed in aluminum foil pouches, and released for international courier transit.
+                    Evaluation sample lots are drawn, sealed in protective pouches, and released for international courier transit.
                   </p>
                 </div>
               </div>
@@ -251,9 +251,9 @@ export const SampleRequestPage = () => {
                   <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="font-semibold text-neutral-900">Authentic COA Included</p>
+                  <p className="font-semibold text-neutral-900">Technical Dossier Included</p>
                   <p className="text-neutral-600 text-xs mt-0.5">
-                    Full lot Certificate of Analysis and technical specification sheets accompany each dispatch pouch.
+                    Technical specification sheets and product analysis accompany each dispatch pouch.
                   </p>
                 </div>
               </div>
@@ -288,7 +288,7 @@ export const SampleRequestPage = () => {
                 <span>Sample Policy & Standards</span>
               </div>
               <h3 className="font-serif text-lg font-bold text-white">
-                Pre-Shipment Evaluation Protocol
+                Commercial Evaluation Protocol
               </h3>
               <ul className="space-y-3 text-xs text-neutral-300 leading-relaxed">
                 <li>
@@ -320,7 +320,7 @@ export const SampleRequestPage = () => {
               {/* Contact Info */}
               <div className="space-y-4">
                 <h3 className="font-serif text-lg font-bold text-neutral-900 border-b border-surface-border pb-2">
-                  1. Laboratory Consignee Contact
+                  1. Consignee Contact Information
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -350,7 +350,7 @@ export const SampleRequestPage = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="sample-company" className="block text-xs font-semibold text-neutral-700 mb-1">Company / QA Lab Name *</label>
+                    <label htmlFor="sample-company" className="block text-xs font-semibold text-neutral-700 mb-1">Company Name *</label>
                     <input
                       id="sample-company"
                       type="text"
@@ -358,7 +358,7 @@ export const SampleRequestPage = () => {
                       required
                       value={formData.company}
                       onChange={handleInputChange}
-                      placeholder="e.g. BioPharm Labs Ltd"
+                      placeholder="e.g. EuroFoods GmbH"
                       className="w-full px-3 py-2 text-xs sm:text-sm border border-surface-border rounded-lg bg-surface-canvas focus:bg-white"
                     />
                   </div>
@@ -433,7 +433,7 @@ export const SampleRequestPage = () => {
                       required
                       value={formData.street}
                       onChange={handleInputChange}
-                      placeholder="Facility / Lab street address"
+                      placeholder="Delivery / Office street address"
                       className="w-full px-3 py-2 text-xs sm:text-sm border border-surface-border rounded-lg bg-surface-canvas focus:bg-white"
                     />
                   </div>

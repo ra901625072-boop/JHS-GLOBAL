@@ -49,7 +49,7 @@
         "Empty/unverified specs remain completely hidden on public site",
         "Soybean Meal and product seed notes updated to eliminate fumigation/lab claims"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-005",

@@ -27,7 +27,7 @@ export const productsRawData = [
     shortDescription:
       'High-purity Indian castor oil and functional oleochemical derivatives for cosmetic formulations, surfactants, emollient lipsticks, and industrial lubricants.',
     description:
-      'Origin-direct castor oil and downstream derivatives sourced from the premier Gujarat castor growing belt. Processed under controlled expelling and refining conditions to ensure low acid value and consistent hydroxyl number. High in ricinoleic acid content, serving as a primary emollient, pigment dispersing base, and moisture-barrier lipid in cosmetics and personal care formulations. Raw material supplied for industrial and cosmetic manufacturing. Technical documentation (COA/TDS/SDS) available upon client confirmation — TODO(client).',
+      'Origin-direct castor oil and downstream derivatives sourced from the premier Gujarat castor growing belt. Processed under controlled expelling and refining conditions to ensure low acid value and consistent hydroxyl number. High in ricinoleic acid content, serving as a primary emollient, pigment dispersing base, and moisture-barrier lipid in cosmetics and personal care formulations. Raw material supplied for industrial and cosmetic manufacturing. Technical documentation (TDS/SDS/specification sheet) available upon client confirmation — TODO(client).',
     specs: [
       { key: 'Ricinoleic Acid Content', value: '85.0% – 90.0%', unit: 'GC %', verified: false, notes: 'Typical range; verify via lot COA — TODO(client)' },
       { key: 'Acid Value', value: '≤ 2.0', unit: 'mg KOH/g', verified: false, notes: 'Standard FSG specification' },
@@ -757,7 +757,7 @@ export const productsRawData = [
       subGroup: 'Protein Oilseed Meals',
       gmoStatus: 'Non-GMO Indian Origin — TODO(client)',
       verified: false,
-      todo: 'TODO(client) — confirm protein guarantee (Hi-Pro 48% vs Standard 44%) and fumigation protocol',
+      todo: 'TODO(client) — confirm protein guarantee (Hi-Pro 48% vs Standard 44%) and export packaging protocol',
     },
     packing: [
       { type: 'Polypropylene (PP) Woven Bag', size: '50 kg net', notes: 'Standard export feed bag (~20–22 MT per 20ft FCL)' },

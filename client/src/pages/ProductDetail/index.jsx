@@ -213,12 +213,14 @@ export const ProductDetailPage = () => {
                   <span className="font-semibold text-neutral-900">{product.leadTime}</span>
                 </div>
               ) : null}
-              <div>
-                <span className="text-neutral-400 block text-[11px]">Port of Loading:</span>
-                <span className="font-semibold text-neutral-900">
-                  {product.ports?.[0] || 'Agreed per order'}
-                </span>
-              </div>
+              {Array.isArray(product.forms) && product.forms.length > 0 ? (
+                <div>
+                  <span className="text-neutral-400 block text-[11px]">Forms Available:</span>
+                  <span className="font-semibold text-neutral-900">
+                    {product.forms.join(', ')}
+                  </span>
+                </div>
+              ) : null}
               <div>
                 <span className="text-neutral-400 block text-[11px]">Incoterms 2020:</span>
                 <span className="font-semibold text-neutral-900">FOB / CIF / CFR</span>
@@ -362,7 +364,7 @@ export const ProductDetailPage = () => {
         <div className="mt-16 pt-12 border-t border-surface-border space-y-12">
           <Reveal direction="up">
             <span className="text-xs font-semibold uppercase tracking-widest text-accent-600 block mb-1">
-              Laboratory & Chemical Parameters
+              Product & Chemical Specifications
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-neutral-900 mb-6">
               Technical Specification Sheet
@@ -415,25 +417,25 @@ export const ProductDetailPage = () => {
 
             <div className="p-6 rounded-xl border border-surface-border bg-surface-card shadow-subtle space-y-4">
               <h3 className="font-serif text-lg font-bold text-neutral-900 flex items-center gap-2">
-                <Anchor className="w-5 h-5 text-primary-800" />
-                <span>Container Load & Maritime Transit</span>
+                <CheckCircle2 className="w-5 h-5 text-primary-800" />
+                <span>Export Sourcing & Supply Chain</span>
               </h3>
               <div className="space-y-3 text-xs sm:text-sm text-neutral-600">
                 <div className="flex justify-between border-b border-surface-border pb-2">
-                  <span className="text-neutral-500">Port of Loading:</span>
-                  <span className="font-semibold text-neutral-900">Agreed per order (India gateway ports)</span>
+                  <span className="text-neutral-500">Sourcing Model:</span>
+                  <span className="font-semibold text-neutral-900">Direct Indian growing belts & processing</span>
                 </div>
                 <div className="flex justify-between border-b border-surface-border pb-2">
-                  <span className="text-neutral-500">Consignment Mode:</span>
-                  <span className="font-semibold text-neutral-900">20ft / 40ft FCL or Consolidated LCL</span>
+                  <span className="text-neutral-500">Consolidation:</span>
+                  <span className="font-semibold text-neutral-900">Multi-commodity single container loading</span>
                 </div>
                 <div className="flex justify-between border-b border-surface-border pb-2">
                   <span className="text-neutral-500">Supply Chain Control:</span>
-                  <span className="font-semibold text-neutral-900">End-to-end container tracking & dispatch</span>
+                  <span className="font-semibold text-neutral-900">End-to-end fulfillment & tracking</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-neutral-500">Documentation:</span>
-                  <span className="font-semibold text-neutral-900">Commercial Invoice, Packing List, B/L, Certificate of Origin</span>
+                  <span className="font-semibold text-neutral-900">Export documentation on request</span>
                 </div>
               </div>
             </div>
