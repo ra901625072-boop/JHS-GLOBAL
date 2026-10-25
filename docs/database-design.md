@@ -147,7 +147,7 @@ The core export catalogue with product metadata and commercial export trade para
 | `shelf_life` | `VARCHAR(100)` | `DEFAULT '24 months'` | Shelf life guarantee |
 | `storage` | `VARCHAR(255)` | `DEFAULT 'Store in cool dry place'` | Storage conditions |
 | `incoterms` | `JSONB` | `DEFAULT '["FOB","CIF","CFR"]'` | Supported Incoterms |
-| `ports` | `JSONB` | `DEFAULT '["Hazira (Surat)","Mundra"]'` | Preferred departure sea ports |
+| `ports` | `JSONB` | `DEFAULT '["Port of loading agreed per order"]'` | Preferred departure sea ports (agreed per order) |
 | `lead_time` | `VARCHAR(100)` | `DEFAULT '10–15 business days'` | Production and dispatch turnaround |
 | `tags` | `JSONB` | `DEFAULT '[]'` | Keyword search tags |
 | `is_featured` | `BOOLEAN` | `NOT NULL DEFAULT FALSE` | Homepage featured flag |
@@ -335,7 +335,7 @@ Primary lead generation mechanism. Stores buyer specifications, shipping demands
 | `other_charges` | `NUMERIC(14,2)` | `NOT NULL DEFAULT 0.00` | Certification / inspection charges |
 | `total_amount` | `NUMERIC(14,2)` | `NOT NULL DEFAULT 0.00` | Final commercial total |
 | `incoterm` | `VARCHAR(20)` | `NOT NULL DEFAULT 'CIF'` | Trade term |
-| `port_of_loading` | `VARCHAR(150)` | `DEFAULT 'Hazira Port / Mundra Port, Gujarat, India'` | Departure port |
+| `port_of_loading` | `VARCHAR(150)` | `DEFAULT 'Port of loading agreed per order'` | Departure port (agreed per order) |
 | `port_of_discharge`| `VARCHAR(150)` | `DEFAULT ''` | Destination port |
 | `payment_terms` | `VARCHAR(255)` | `DEFAULT '30% Advance TT, 70% against BL copy'`| Agreed terms |
 | `validity_date` | `TIMESTAMPTZ` | `NOT NULL` | Price expiry date |
@@ -393,7 +393,7 @@ Primary lead generation mechanism. Stores buyer specifications, shipping demands
 | `assigned_salesperson`| `INTEGER` | `REFERENCES users(id) ON DELETE SET NULL` | Order supervisor |
 | `container_number` | `VARCHAR(50)` | `DEFAULT ''` | Shipping container # (e.g. `MSCU1234567`) |
 | `shipping_line` | `VARCHAR(100)` | `DEFAULT ''` | Maersk, MSC, Hapag-Lloyd |
-| `port_of_loading` | `VARCHAR(150)` | `DEFAULT 'Hazira Port / Mundra Port, Gujarat'` | Departure port |
+| `port_of_loading` | `VARCHAR(150)` | `DEFAULT 'Port of loading agreed per order'` | Departure port (agreed per order) |
 | `port_of_discharge`| `VARCHAR(150)` | `DEFAULT ''` | Destination port |
 | `etd` | `TIMESTAMPTZ` | `DEFAULT NULL` | Estimated Departure Date |
 | `eta` | `TIMESTAMPTZ` | `DEFAULT NULL` | Estimated Arrival Date |

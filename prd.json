@@ -84,7 +84,7 @@
         "Documentation files (agent.md, database-design.md, system-design.md) updated",
         "No internal developer placeholders or TODOs exposed to the public"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "US-008",

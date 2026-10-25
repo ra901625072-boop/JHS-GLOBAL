@@ -66,7 +66,7 @@ The business sells to buyers who purchase by the **container / metric tonne / dr
 | Products (listing) | All categories, filters (category, origin, form, certification), search, 48-Hour Unlisted Sourcing Banner |
 | Category page | Products of one category + sub-category tabs + 48-Hour Sourcing Banner |
 | Product detail | Photos, specs table, packing, MOQ, shelf life, HS code, origin, certificates, "Add to Quote" |
-| Quality & Certifications | Verified credentials: FSSAI Central License (10725997001058), APEDA (RCMC/APEDA/15765/2024-2025), Spices Board of India (CRES/SBCB/26585/2025-2026), DGFT IEC, GST, MSME (UDYAM-GJ-22-0460260); PDF downloads; NABL QC matrix |
+| Quality & Certifications | Verified credentials: FSSAI Central License (10725997001058), APEDA (RCMC/APEDA/15765/2024-2025), Spices Board of India (CRES/SBCB/26585/2025-2026), DGFT IEC, GST, MSME (UDYAM-GJ-22-0460260); PDF downloads; Technical specification matrix |
 | Export Process / Workflow | Enquiry → sample → QC → packing → shipment → docs |
 | Private Label / OEM | Custom packing, branding, formulation |
 | Global Reach | Countries / regions served |
