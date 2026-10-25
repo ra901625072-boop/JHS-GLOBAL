@@ -223,17 +223,13 @@ export const ProductsPage = () => {
               </div>
             ) : (
               <>
-                <Reveal
-                  key={`${selectedCategory}-${searchQuery}-${selectedSort}-${currentPage}`}
-                  direction="up"
-                  cascade
-                  stagger={0.06}
+                <div
                   className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
                   {products.map((product) => (
-                    <ProductCard key={product._id} product={product} />
+                    <ProductCard key={product.id || product.slug || product._id} product={product} />
                   ))}
-                </Reveal>
+                </div>
 
                 {/* Single-page footer (when unfiltered) or Pagination Controls (when filtered) */}
                 {!isFilterActive && meta.total > 0 && (

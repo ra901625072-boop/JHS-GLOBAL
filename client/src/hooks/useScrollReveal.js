@@ -136,8 +136,8 @@ export const useScrollReveal = (options = {}) => {
             });
           },
           {
-            threshold: 0.05,
-            rootMargin: '0px 0px -40px 0px', // Must physically enter at least 40px into the viewport
+            threshold: 0,
+            rootMargin: '0px 0px -20px 0px',
           }
         );
 

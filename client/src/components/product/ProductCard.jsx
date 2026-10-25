@@ -94,9 +94,9 @@ export const ProductCard = ({ product }) => {
 
         {/* Card Body */}
         <div className="p-5">
-          {product.categoryId && (
+          {(product.category?.name || product.categoryId?.name) && (
             <span className="text-[11px] font-semibold uppercase tracking-wider text-accent-600 block mb-1">
-              {product.categoryId.name}
+              {product.category?.name || product.categoryId?.name}
             </span>
           )}
 
