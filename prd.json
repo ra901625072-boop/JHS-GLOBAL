@@ -1,157 +1,103 @@
 {
   "project": "JHS GLOBAL B2B Export Platform",
-  "branch": "main",
-  "generatedAt": "2026-10-23T04:30:00.000Z",
-  "description": "Enterprise expansion of JHS GLOBAL B2B export platform: 4-category taxonomy, 96 new catalogue products, complete supply-chain messaging overhaul, FIEO accreditation, and AI assistant synchronization.",
-  "userStories": [
+  "phase": "Copy & Content Overhaul — Product-Focused Supply Chain Messaging",
+  "target": "Remove freight-forwarder, port, inspection, and lab focus across all touchpoints; replace with product flexibility, multi-commodity supply chain management, and buyer outcomes.",
+  "stories": [
     {
       "id": "US-001",
-      "title": "Normalise the Excel and produce the CSV and reconciliation report",
-      "description": "Parse client Products_website.xlsx, fix typos, handle duplicate/seasonal items, and output products.normalized.csv reconciling to 96 new items and 20 existing products (115 total active catalogue commodities).",
+      "title": "Hit list and Copy Change Log",
+      "description": "Exhaustive repository scan for all forbidden terms and variants. Generate comprehensive Copy Change Log with current text, proposed replacement, rationale, and statutory flags.",
       "acceptanceCriteria": [
-        "products.normalized.csv generated with 11 required columns",
-        "Exact count matches: 96 items from Excel, 0 Types rows as products",
-        "Duplicate overlap 'Herbal Extracts' flagged and merged with existing 'herbal-botanical-extracts'",
-        "Seasonal flag applied to fresh mango and pomegranate",
-        "Fresh vs dehydrated slugs strictly differentiated (e.g., onion-fresh vs dehydrated-onion)"
+        "Step 0 search completed across client, server, seeds, AI prompts, and docs",
+        "Copy Change Log documented in detail with before/after text and reasons",
+        "Statutory and legal lines clearly flagged as KEEP",
+        "Zero unhandled or missed public touchpoints"
       ],
       "passes": true
     },
     {
       "id": "US-002",
-      "title": "Category model and migration (additive, reversible), with backup step",
-      "description": "Prepare safe, additive database migration for categories and products supporting up to 3 hierarchy levels, forms array, availability/seasonal attributes, with verified pg_dump backup procedure.",
+      "title": "Banner, header, footer and home copy",
+      "description": "Update top scrolling banner, header utility bar, home hero, capability cards, sourcing guarantees, sample request CTA, and footer directory.",
       "acceptanceCriteria": [
-        "Database backup command verified before schema modification",
-        "Category hierarchy supports level 1, 2, and 3",
-        "Product schema accommodates forms, seasonal availability, and nullable specs without crashing",
-        "All migrations are reversible and strictly additive"
+        "Top banner replaces port/FCL strings with multi-commodity supply chain capabilities",
+        "Home copy emphasizes direct growing regions, flexible forms, and 48-hour quotation",
+        "Footer sample links updated from 'Lab Samples' to commercial product samples",
+        "Surat registered office preserved on footer statutory lines; marketing mentions removed"
       ],
-      "passes": true
+      "passes": false
     },
     {
       "id": "US-003",
-      "title": "Idempotent seed for categories and sub-categories",
-      "description": "Seed 4 top-level master divisions (Personal Care, Nutraceutical, Animal Feed, Food & Food Ingredients) and subcategories idempotently using upsert by slug.",
+      "title": "Export Process and About Us copy",
+      "description": "Rewrite Export Process 8 steps into buyer-outcome language without port/agency names. Refine About Us guarantees to focus on specification matching and delivery.",
       "acceptanceCriteria": [
-        "Seed script runs cleanly without duplicating categories on re-run",
-        "Food & Food Ingredients seeded as 4th master division",
-        "All subcategories linked via parentId with correct order and paths",
-        "Re-running npm run seed produces zero duplicate rows"
+        "Export Process 8 steps reflect buyer outcomes (specification, packing, documentation, delivery)",
+        "Zero inspection agency names (SGS, Intertek, Bureau Veritas) or Indian port names in process steps",
+        "Shipping documents checklist provides neutral 'Export Documentation on Request'",
+        "About Us guarantees replace 'Lab reports' with specification and batch documentation"
       ],
-      "passes": true
+      "passes": false
     },
     {
       "id": "US-004",
-      "title": "Idempotent seed for all new products (names, slugs, categories, forms, availability only)",
-      "description": "Seed all 95 net-new products and merge 1 existing product with verified forms, clean names, and availability, leaving unverified specs empty without public placeholders.",
+      "title": "Product page badges, rows and seeds (hide empty fields)",
+      "description": "Update Product Detail page: replace 'Primary Loading Port' and lab/inspection rows with product-focused rows (forms, packing options, direct sourcing). Ensure empty fields remain cleanly hidden.",
       "acceptanceCriteria": [
-        "Total active products count in database equals 115",
-        "No invented facts (no fake specs, fake HS codes, fake origins)",
-        "Herbal powders distinct from standardized extracts",
-        "Seed is strictly idempotent (upsert by slug)",
-        "Re-running seed results in zero changes"
+        "Product PDP quick metadata matrix shows Forms Available instead of Port of Loading",
+        "Container transit panel replaced with 'Export Sourcing & Supply Chain' panel",
+        "Empty/unverified specs remain completely hidden on public site",
+        "Soybean Meal and product seed notes updated to eliminate fumigation/lab claims"
       ],
-      "passes": true
+      "passes": false
     },
     {
       "id": "US-005",
-      "title": "Admin shows and edits the new categories and products; verify sync both ways",
-      "description": "Verify Admin Operations Desk allows viewing, filtering, creating, editing, and soft-deleting new categories and products, syncing instantaneously with public portal.",
+      "title": "FAQ, SEO and meta, sitemap text",
+      "description": "Align FAQ categories and questions/answers with product flexibility and agreed-per-order port policy. Update client/index.html title/meta and JSON-LD schema.",
       "acceptanceCriteria": [
-        "Admin category manager displays all 4 divisions and subcategories",
-        "Admin product table lists all 115 products with search and category filters",
-        "Editing a product in admin immediately invalidates cache and updates public PDP",
-        "Creating and deactivating a test product works end-to-end"
+        "FAQ answers replace port names and third-party inspection with agreed-per-order and specification matching",
+        "FAQ group 'Compliance & COA' renamed to 'Regulatory & Compliance Documentation'",
+        "client/index.html title updated from 'Export B2B' to 'JHS GLOBAL — Indian Multi-Commodity Supply Chain Exporter'",
+        "JsonLd schema reflects 4 divisions and complete supply chain description"
       ],
-      "passes": true
+      "passes": false
     },
     {
       "id": "US-006",
-      "title": "Public UI: 4-category home grid, navigation, filters, listing pagination, product pages that hide empty fields",
-      "description": "Update public frontend to display 4 balanced category cards, updated navigation, dynamic catalogue counts, paginated product listings, and PDPs that conditionally hide unpopulated specs.",
+      "title": "AI prompts, fact ledger and re-indexed embeddings",
+      "description": "Update AI system prompts, fact ledger, mock responses, and re-index vector database to strictly promote product flexibility and agreed-per-order port logistics.",
       "acceptanceCriteria": [
-        "Home page category grid renders 4 symmetrical cards without layout overflow",
-        "Desktop and mobile navigation displays 4 core divisions",
-        "Products catalogue lists items with 24-item pagination and category pills",
-        "Product detail page cleanly hides empty specs, packing, and ports without displaying 'TODO(client)' or broken blocks",
-        "Responsive across 1440px desktop and 390px mobile viewports"
+        "AI prompts updated to refuse medical claims, ports naming, and third-party lab claims",
+        "Company facts seed updated (sourcing, quality control, agreed port of loading)",
+        "Embeddings re-indexed across all products, FAQs, and company facts",
+        "AI test battery confirms buyer-outcome responses and routes open questions to staff"
       ],
-      "passes": true
+      "passes": false
     },
     {
       "id": "US-007",
-      "title": "FIEO added as a certificate record and shown in the top banner, Quality page, footer, and the home certification strip",
-      "description": "Add FIEO (Federation of Indian Export Organisations) as an official certificate record with text badge representation across header, marquee, quality page, and footer.",
+      "title": "Admin placeholders, dropdowns and docs",
+      "description": "Clean admin desk placeholders, inquiry summaries, and documentation to reflect product-focused supply chain standards.",
       "acceptanceCriteria": [
-        "FIEO seeded into certificates table with TODO(client) placeholder notes in admin only",
-        "Top utility bar in Header displays FIEO",
-        "Certification marquee and Quality page render FIEO text badge cleanly without invented logos",
-        "Footer credentials display FIEO alongside FSSAI, APEDA, and DGFT",
-        "Admin certificates manager can edit FIEO details"
+        "Admin desk inputs and placeholders reflect supply chain and flexible processing terms",
+        "Documentation files (agent.md, database-design.md, system-design.md) updated",
+        "No internal developer placeholders or TODOs exposed to the public"
       ],
-      "passes": true
+      "passes": false
     },
     {
       "id": "US-008",
-      "title": "Copy changes from the approved Change Log across the site, SEO and AI prompts",
-      "description": "Execute approved copy modifications across public pages, components, SEO metadata, seeds, and email templates, replacing port/lab/Surat-centric copy with complete supply chain and product flexibility messaging.",
-      "acceptanceCriteria": [
-        "Zero hits for Mundra, Hazira, Pipavav, JNPT, SGS, NABL, Sortex in marketing copy",
-        "Export Process 8 steps rewritten in buyer-outcome terms",
-        "Legal registered office address in Surat, Gujarat preserved on Contact page and Footer only",
-        "SEO titles, meta descriptions, and JSON-LD schemas updated",
-        "Automated grep scan verifies compliance"
-      ],
-      "passes": true
-    },
-    {
-      "id": "US-009",
-      "title": "Re-index AI retrieval and update the fact ledger and prompts",
-      "description": "Synchronize server-side LLM knowledge base: update company facts, product embeddings, system prompt guardrails against health claims, and port-agreed-per-order answers.",
-      "acceptanceCriteria": [
-        "RAG embeddings rebuilt for all 115 products and updated company facts",
-        "AI system prompt updated with 4 export divisions and FIEO registration",
-        "Assistant correctly answers commodity queries (cumin, ginger forms, port policy)",
-        "Assistant strictly refuses health/medicinal claims for Ashwagandha and herbs"
-      ],
-      "passes": true
-    },
-    {
-      "id": "US-010",
-      "title": "Product images, batch 1 (approval gate), then the rest",
-      "description": "Establish illustrative WebP product imagery in batches of 10 or fewer, in consistent studio style without text or branding, gated by client approval.",
-      "acceptanceCriteria": [
-        "Batch 1 (10 representative products) generated/prepared in consistent studio style",
-        "Metadata marked 'Illustrative' with alt text, width, and height",
-        "Client approval gate verified before generating subsequent batches",
-        "Images lazy-loaded in WebP format with zero layout shift"
-      ],
-      "passes": true
-    },
-    {
-      "id": "US-011",
-      "title": "Update the docs, sitemap and project notes",
-      "description": "Update agent.md, database-design.md, system-design.md, project.md, sitemap.xml, and progress.txt to reflect 4 divisions, 115 products, FIEO accreditation, and supply chain messaging.",
-      "acceptanceCriteria": [
-        "agent.md, database-design.md, and system-design.md updated to reflect 4 divisions and 115 products",
-        "Sitemap generation includes all new category and product URLs",
-        "Documentation maintains 100% truth against actual code implementation"
-      ],
-      "passes": true
-    },
-    {
-      "id": "US-012",
-      "title": "Full verification and delivery report",
-      "description": "Run full test suite (lint, server vitest, client vitest, build), Playwright visual screenshots, automated copy search audit, AI verification tests, and produce final report.",
+      "title": "Full verification and report",
+      "description": "Run lint, client vitest, server vitest, production build, automated copy audit, Playwright visual screenshots, and generate final verification delivery report.",
       "acceptanceCriteria": [
         "npm run lint passes with 0 errors",
-        "npm test and npm run test:client pass cleanly",
+        "npm test and npm run test:client pass with 100% success",
         "npm run build completes with zero errors",
-        "Automated search confirms zero forbidden copy terms on public site",
+        "Automated copy search confirms zero forbidden terms across public site",
         "Playwright desktop and mobile screenshots captured across key pages"
       ],
-      "passes": true
+      "passes": false
     }
   ]
 }
