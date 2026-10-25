@@ -90,18 +90,18 @@ export const ExportProcessPage = () => {
     {
       step: '07',
       title: 'Port Clearance & Ocean Transit',
-      headline: 'Customs Clearance & Scheduled Vessel Dispatch',
+      headline: 'Customs Clearance & Scheduled Transit Dispatch',
       detail:
-        'Export customs processing is completed through designated Indian gateway container terminals. Containers are loaded onto scheduled ocean liners, and the Clean on Board Ocean Bill of Lading is issued.',
+        'Export customs processing is completed through designated Indian gateway container terminals. Containers are loaded onto scheduled ocean liners, and the Bill of Lading is issued.',
       turnaround: 'Scheduled Ocean Liner',
-      documents: ['Ocean Bill of Lading (Clean on Board)', 'Export Customs Shipping Bill', 'Phytosanitary Certificate', 'Fumigation Certificate'],
+      documents: ['Ocean Bill of Lading', 'Export Customs Shipping Bill', 'Export Documentation on Request'],
     },
     {
       step: '08',
       title: 'Delivery & Quality Guarantee',
       headline: 'Destination Discharge & Complete Dossier',
       detail:
-        'Full set of original shipping documents (BL, Invoice, Packing List, Certificate of Origin, Phytosanitary, COA) is dispatched via bank courier. Cargo arrives at destination port for smooth customs clearance, backed by our after-sales guarantee.',
+        'Full set of original shipping documents (Bill of Lading, Invoice, Packing List, Certificate of Origin) is dispatched via courier. Cargo arrives at destination port for smooth customs clearance, backed by our after-sales guarantee.',
       turnaround: 'Port Discharge',
       documents: ['Original Certificate of Origin (COO)', 'Commercial Invoice & Packing List', 'Marine Cargo Insurance Policy', 'Post-Discharge Quality Warranty'],
     },
@@ -187,8 +187,8 @@ export const ExportProcessPage = () => {
   const shippingDocs = [
     {
       name: 'Ocean Bill of Lading (B/L)',
-      issuer: 'Shipping Line (Maersk / MSC / Hapag)',
-      purpose: 'Document of title, receipt of cargo loaded clean on board ocean vessel.',
+      issuer: 'International Shipping Line',
+      purpose: 'Document of title, receipt of cargo loaded for ocean transit.',
       mandatory: true,
     },
     {
@@ -199,32 +199,26 @@ export const ExportProcessPage = () => {
     },
     {
       name: 'Certificate of Origin (COO)',
-      issuer: 'Chamber of Commerce / APEDA',
+      issuer: 'Chamber of Commerce / Trade Authority',
       purpose: 'Statutory proof of 100% Indian origin for preferential tariff & customs clearance.',
       mandatory: true,
     },
     {
-      name: 'Phytosanitary Certificate',
-      issuer: 'Plant Protection Dept, Ministry of Agriculture',
-      purpose: 'Certifies plant cargo is free from quarantine pests, weeds, and pathogens.',
+      name: 'Export Documentation on Request',
+      issuer: 'Designated Regulatory Authorities',
+      purpose: 'Statutory plant health declarations, transit treatment verifications, and compliance records provided on request.',
+      mandatory: false,
+    },
+    {
+      name: 'Technical Specification Dossier',
+      issuer: 'Quality Control Department',
+      purpose: 'Lot-specific chemical purity, physical grade verification, and technical specification sheet.',
       mandatory: true,
     },
     {
-      name: 'Fumigation Certificate',
-      issuer: 'Authorized Federal Fumigator',
-      purpose: 'Phosphine (ALP) or Methyl Bromide container treatment certificate.',
-      mandatory: true,
-    },
-    {
-      name: 'Specification Compliance & Analysis Dossier',
-      issuer: 'Authorized Quality Assurance Laboratory',
-      purpose: 'Lot-specific chemical purity, moisture %, active biomarkers, and physical grade verification.',
-      mandatory: true,
-    },
-    {
-      name: 'Non-GMO / Health Certificate',
-      issuer: 'Export Inspection Council / Government Agency',
-      purpose: 'Guarantees cargo is natural non-genetically modified agriculture.',
+      name: 'Non-GMO / Quality Declaration',
+      issuer: 'Statutory Export Authority',
+      purpose: 'Guarantees commodity conforms to non-genetically modified agriculture standards.',
       mandatory: false,
     },
     {

@@ -379,9 +379,9 @@ export const ProductDetailPage = () => {
                 {(product.categoryId?.slug === 'nutraceutical-raw-materials' || product.categorySlug === 'nutraceutical-raw-materials') ? (
                   'Regulatory Notice: Sourced strictly as bulk raw material ingredients for dietary supplement, nutraceutical, and functional nutrition manufacturers. Regulatory classification, allowable claims, and maximum dosage levels vary by destination market; importing buyers are responsible for compliance with statutory food and supplement regulations in their destination country.'
                 ) : (product.categoryId?.slug === 'animal-feed' || product.categorySlug === 'animal-feed') ? (
-                  'Feed Ingredient Notice: Supplied strictly as commercial livestock, poultry, and aquaculture feed ingredients. Batch-specific protein analysis, moisture certificates, and phytosanitary certificates are provided with ocean shipping documents.'
+                  'Feed Ingredient Notice: Supplied strictly as commercial livestock, poultry, and aquaculture feed ingredients. Export documentation provided per order with commercial shipping documents.'
                 ) : (
-                  'Technical Notice: Supplied strictly as industrial raw materials and cosmetic ingredients for registered manufacturers. Technical Data Sheets (TDS), lot-specific Certificates of Analysis (COA), and Safety Data Sheets (SDS) are provided per production lot upon formal request.'
+                  'Technical Notice: Supplied strictly as raw materials and cosmetic ingredients for registered manufacturers. Technical specifications, compliance sheets, and export documentation provided upon formal request.'
                 )}
               </p>
             </div>

@@ -298,7 +298,7 @@ export const SampleRequestPage = () => {
                   <strong>International Courier Freight:</strong> Borne by consignee via their DHL / FedEx corporate account number, or billed on actuals.
                 </li>
                 <li>
-                  <strong>Documentation Included:</strong> Lot-specific HPLC/GC-MS testing report, phytosanitary declaration, and product technical data sheet.
+                  <strong>Documentation Included:</strong> Lot-specific specification sheet, product technical data sheet, and export documentation on request.
                 </li>
                 <li>
                   <strong>Standard Quantity:</strong> 250 grams per commodity (custom quantities available for pilot production runs).

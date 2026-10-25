@@ -939,7 +939,7 @@ export const QuoteForm = () => {
             rows="4"
             value={formData.message}
             onChange={handleInputChange}
-            placeholder="e.g. Require minimum 3.5% Curcumin in Turmeric, packing in 25kg vacuum-sealed foil liner bags. Please quote CIF Hamburg with phytosanitary certificate."
+            placeholder="e.g. Require Turmeric powder, packing in 25kg bags. Please quote CIF Hamburg with export documentation on request."
             className={`w-full p-3 text-xs sm:text-sm rounded-lg border bg-surface-canvas focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-800 ${
               formErrors.items && items.length === 0
                 ? 'border-status-error ring-1 ring-status-error'
