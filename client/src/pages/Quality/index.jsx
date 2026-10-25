@@ -538,10 +538,6 @@ export const QualityPage = () => {
                     </Link>
                   )}
                 </div>
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Download Clean PDF</span>
-                  </a>
-                </div>
               </div>
             </div>
           </div>,
