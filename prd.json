@@ -97,7 +97,7 @@
         "Automated copy search confirms zero forbidden terms across public site",
         "Playwright desktop and mobile screenshots captured across key pages"
       ],
-      "passes": false
+      "passes": true
     }
   ]
 }
