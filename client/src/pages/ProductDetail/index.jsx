@@ -95,10 +95,11 @@ export const ProductDetailPage = () => {
   )}`;
 
   const siteUrl = import.meta.env.VITE_CLIENT_URL || window.location.origin;
+  const categoryObj = product.category || (typeof product.categoryId === 'object' ? product.categoryId : null);
   const breadcrumbs = [
     { name: 'Home', url: `${siteUrl}/` },
     { name: 'Catalogue', url: `${siteUrl}/products` },
-    ...(product.categoryId ? [{ name: product.categoryId.name, url: `${siteUrl}/products?category=${product.categoryId.slug}` }] : []),
+    ...(categoryObj ? [{ name: categoryObj.name, url: `${siteUrl}/products?category=${categoryObj.slug}` }] : []),
     { name: product.name, url: `${siteUrl}/products/${product.slug}` },
   ];
 
@@ -129,11 +130,11 @@ export const ProductDetailPage = () => {
           <Link to="/" className="hover:text-primary-800 transition-colors">Home</Link>
           <ChevronRight className="w-3 h-3 text-neutral-400 shrink-0" />
           <Link to="/products" className="hover:text-primary-800 transition-colors">Catalogue</Link>
-          {product.categoryId && (
+          {categoryObj && (
             <>
               <ChevronRight className="w-3 h-3 text-neutral-400 shrink-0" />
-              <Link to={`/products?category=${product.categoryId.slug}`} className="hover:text-primary-800 truncate transition-colors">
-                {product.categoryId.name}
+              <Link to={`/products?category=${categoryObj.slug}`} className="hover:text-primary-800 truncate transition-colors">
+                {categoryObj.name}
               </Link>
             </>
           )}
@@ -144,7 +145,7 @@ export const ProductDetailPage = () => {
 
       {/* Product Main Showcase */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <Reveal direction="up" className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Visual Gallery (Sticky Showcase) */}
           <div className="lg:col-span-6">
             <div className="lg:sticky lg:top-28 xl:top-32 space-y-8 lg:max-h-[calc(100vh-8.5rem)] lg:overflow-y-auto lg:no-scrollbar">
@@ -358,7 +359,7 @@ export const ProductDetailPage = () => {
               </div>
             </div>
           </div>
-        </Reveal>
+        </div>
 
         {/* Technical Specifications Section */}
         <div className="mt-16 pt-12 border-t border-surface-border space-y-12">
@@ -378,9 +379,9 @@ export const ProductDetailPage = () => {
                 <span>Trade & Regulatory Compliance Information</span>
               </span>
               <p className="leading-relaxed">
-                {(product.categoryId?.slug === 'nutraceutical-raw-materials' || product.categorySlug === 'nutraceutical-raw-materials') ? (
+                {(categoryObj?.slug === 'nutraceutical-raw-materials' || product.categorySlug === 'nutraceutical-raw-materials') ? (
                   'Regulatory Notice: Sourced strictly as bulk raw material ingredients for dietary supplement, nutraceutical, and functional nutrition manufacturers. Regulatory classification, allowable claims, and maximum dosage levels vary by destination market; importing buyers are responsible for compliance with statutory food and supplement regulations in their destination country.'
-                ) : (product.categoryId?.slug === 'animal-feed' || product.categorySlug === 'animal-feed') ? (
+                ) : (categoryObj?.slug === 'animal-feed' || product.categorySlug === 'animal-feed') ? (
                   'Feed Ingredient Notice: Supplied strictly as commercial livestock, poultry, and aquaculture feed ingredients. Export documentation provided per order with commercial shipping documents.'
                 ) : (
                   'Technical Notice: Supplied strictly as raw materials and cosmetic ingredients for registered manufacturers. Technical specifications, compliance sheets, and export documentation provided upon formal request.'
@@ -449,7 +450,7 @@ export const ProductDetailPage = () => {
                   Related Export Products
                 </h3>
                 <Link
-                  to={`/products?category=${product.categoryId?.slug}`}
+                  to={`/products?category=${categoryObj?.slug || ''}`}
                   className="text-xs font-semibold text-primary-800 hover:text-accent-600 link-underline"
                 >
                   View all in division →

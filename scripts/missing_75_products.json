@@ -1,0 +1,770 @@
+[
+  {
+    "slug": "chemical-raw-materials-cosmetic",
+    "name": "Chemical Raw Materials (Cosmetic Grade)",
+    "categoryId": 39,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "essential-oils-cosmetic",
+    "name": "Essential Oils (Cosmetic Grade)",
+    "categoryId": 39,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "guar-gum",
+    "name": "Guar Gum (Cosmetic / Technical Grade)",
+    "categoryId": 39,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "isopropyl-alcohol",
+    "name": "Isopropyl Alcohol (IPA)",
+    "categoryId": 39,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "vegetable-oils-cosmetic",
+    "name": "Vegetable Oils (Cosmetic Grade)",
+    "categoryId": 39,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "alfalfa-powder",
+    "name": "Alfalfa Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "aloe-vera-powder",
+    "name": "Aloe Vera Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "amla-powder",
+    "name": "Amla Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "chamomile-powder",
+    "name": "Chamomile Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "hibiscus-powder",
+    "name": "Hibiscus Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "indigo-henna-powder",
+    "name": "Indigo / Henna Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "moringa-powder",
+    "name": "Moringa Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "neem-powder",
+    "name": "Neem Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "rose-petal-powder",
+    "name": "Rose Petal Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "tulsi-holy-basil-powder",
+    "name": "Tulsi (Holy Basil) Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "wheatgrass-powder",
+    "name": "Wheatgrass Powder",
+    "categoryId": 46,
+    "forms": [
+      "Whole",
+      "Cut/sifted (C/S)",
+      "Powdered",
+      "Tea-bag Cut (TBC)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "animal-feed-millet",
+    "name": "Animal Feed Millet",
+    "categoryId": 49,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "corn-grits-feed",
+    "name": "Corn Grits (Animal Feed)",
+    "categoryId": 49,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "green-millet-feed",
+    "name": "Green Millet (Feed Bajra)",
+    "categoryId": 49,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "safflower-feed",
+    "name": "Safflower Meal / Seeds",
+    "categoryId": 49,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "soya-feed-grain",
+    "name": "Soya (Feed Grain / Meal)",
+    "categoryId": 49,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "1509-basmati-rice",
+    "name": "1509 Basmati Rice",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "ajwain-carom-seeds",
+    "name": "Ajwain (Carom Seeds)",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "aseptic-fruit-pulp",
+    "name": "Aseptic Fruit Pulp",
+    "categoryId": 68,
+    "forms": [
+      "Aseptic bag in drum (215 kg)"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "basil-seeds",
+    "name": "Basil Seeds",
+    "categoryId": 68,
+    "forms": [
+      "Whole seeds",
+      "kernels",
+      "flakes",
+      "powder"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "bay-leaf",
+    "name": "Bay Leaf",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "black-lentils-urad",
+    "name": "Black Lentils (Urad Dal)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "black-seed-nigella",
+    "name": "Black Seed (Nigella Seeds)",
+    "categoryId": 68,
+    "forms": [
+      "Whole seeds",
+      "kernels",
+      "flakes",
+      "powder"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "celery-seeds",
+    "name": "Celery Seeds",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "chia-seeds",
+    "name": "Chia Seeds",
+    "categoryId": 68,
+    "forms": [
+      "Whole seeds",
+      "kernels",
+      "flakes",
+      "powder"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "chickpeas-split-chickpeas",
+    "name": "Chickpeas / Split Chickpeas (Chana Dal)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "cinnamon-cassia",
+    "name": "Cinnamon / Cassia",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "curry-powder",
+    "name": "Curry Powder",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-beetroot",
+    "name": "Dehydrated Beetroot",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-carrot",
+    "name": "Dehydrated Carrot",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-ginger",
+    "name": "Dehydrated Ginger",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-lemon",
+    "name": "Dehydrated Lemon",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-mango",
+    "name": "Dehydrated Mango",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-pineapple",
+    "name": "Dehydrated Pineapple",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-potato",
+    "name": "Dehydrated Potato",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-spinach",
+    "name": "Dehydrated Spinach",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-strawberry",
+    "name": "Dehydrated Strawberry",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dehydrated-tomato",
+    "name": "Dehydrated Tomato",
+    "categoryId": 68,
+    "forms": [
+      "Minced",
+      "Chopped",
+      "flakes",
+      "kibbled",
+      "granules",
+      "powdered"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "dill-seeds",
+    "name": "Dill Seeds",
+    "categoryId": 68,
+    "forms": [
+      "Whole seeds",
+      "kernels",
+      "flakes",
+      "powder"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "fenugreek-seeds",
+    "name": "Fenugreek Seeds",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "flax-seeds",
+    "name": "Flax Seeds",
+    "categoryId": 68,
+    "forms": [
+      "Whole seeds",
+      "kernels",
+      "flakes",
+      "powder"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "drumstick-fresh",
+    "name": "Fresh Drumstick (Moringa Pods)",
+    "categoryId": 68,
+    "forms": [
+      "Fresh whole",
+      "sorted",
+      "graded"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "ginger-fresh",
+    "name": "Fresh Ginger",
+    "categoryId": 68,
+    "forms": [
+      "Fresh whole",
+      "sorted",
+      "graded"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "green-chilli-fresh",
+    "name": "Fresh Green Chilli",
+    "categoryId": 68,
+    "forms": [
+      "Fresh whole",
+      "sorted",
+      "graded"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "mango-fresh",
+    "name": "Fresh Mango",
+    "categoryId": 68,
+    "forms": [
+      "Fresh whole",
+      "sorted",
+      "graded"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "onion-fresh",
+    "name": "Fresh Onion",
+    "categoryId": 68,
+    "forms": [
+      "Fresh whole",
+      "sorted",
+      "graded"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "pomegranate-fresh",
+    "name": "Fresh Pomegranate",
+    "categoryId": 68,
+    "forms": [
+      "Fresh whole",
+      "sorted",
+      "graded"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "fried-crispy-onion",
+    "name": "Fried Crispy Onion",
+    "categoryId": 68,
+    "forms": [
+      "Flakes",
+      "crispy kibbled"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "gram-flour-besan",
+    "name": "Gram Flour (Besan)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "himalayan-pink-salt",
+    "name": "Himalayan Pink Salt",
+    "categoryId": 68,
+    "forms": [
+      "Granules",
+      "fine powder",
+      "coarse rocks"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "coconut-husked-desiccated",
+    "name": "Husked Coconut / Desiccated Coconut",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "ir64-non-basmati-rice",
+    "name": "IR64 Non-Basmati Rice",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "jaggery",
+    "name": "Jaggery (Cane Sugar / Blocks / Powder)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "kidney-beans",
+    "name": "Kidney Beans (Rajma)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "makhana-fox-nuts",
+    "name": "Makhana (Fox Nuts)",
+    "categoryId": 68,
+    "forms": [
+      "Whole seeds",
+      "kernels",
+      "flakes",
+      "powder"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "millets-sorghum-ragi-pearl",
+    "name": "Millets (Sorghum, Ragi, Pearl Millet)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "mung-bean",
+    "name": "Mung Bean (Green Gram)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "non-basmati-rice",
+    "name": "Non-Basmati Rice",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "oregano",
+    "name": "Oregano",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "peanuts-groundnuts",
+    "name": "Peanuts (Groundnuts)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "pigeon-pea-toor-dal",
+    "name": "Pigeon Pea (Toor Dal)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "pusa-basmati-rice",
+    "name": "Pusa Basmati Rice",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "quinoa",
+    "name": "Quinoa",
+    "categoryId": 68,
+    "forms": [
+      "Whole seeds",
+      "kernels",
+      "flakes",
+      "powder"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "red-lentils",
+    "name": "Red Lentils (Masoor Dal)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "refined-wheat-flour-maida",
+    "name": "Refined Wheat Flour (Maida)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "rice-flour",
+    "name": "Rice Flour",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  },
+  {
+    "slug": "sesame-seeds",
+    "name": "Sesame Seeds",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "star-anise",
+    "name": "Star Anise",
+    "categoryId": 68,
+    "forms": [
+      "Whole",
+      "ground",
+      "blends",
+      "seeds"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "watermelon-seeds",
+    "name": "Watermelon Seeds",
+    "categoryId": 68,
+    "forms": [
+      "Whole seeds",
+      "kernels",
+      "flakes",
+      "powder"
+    ],
+    "botanicalName": null
+  },
+  {
+    "slug": "wheat-flour-atta",
+    "name": "Wheat Flour (Atta)",
+    "categoryId": 68,
+    "forms": [],
+    "botanicalName": null
+  }
+]
